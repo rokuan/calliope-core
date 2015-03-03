@@ -37,7 +37,9 @@ public class Word {
         PREPOSITION_TO,
         DATE_MONTH,
         DATE,
-        DATE_UNIT
+        DATE_UNIT,
+        // New
+        QUANTITY
     }
 
     private List<WordType> types = new ArrayList<WordType>();
