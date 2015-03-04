@@ -39,7 +39,11 @@ public class Word {
         DATE,
         DATE_UNIT,
         // New
-        QUANTITY
+        QUANTITY,
+        PREPOSITION_BETWEEN,
+        PREPOSITION_AND,
+        PREPOSITION_AT,
+        DATE_UNIT_HOUR
     }
 
     private List<WordType> types = new ArrayList<WordType>();

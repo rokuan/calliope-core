@@ -10,6 +10,8 @@ public class RelativeTimeObject extends TimeObject {
     public int[] periods = new int[TimeUnit.values().length];
 
     public RelativeTimeObject(){
+    	super(TimeType.RELATIVE);
+    	
         for(int i=0; i<periods.length; i++){
             periods[i] = 0;
         }

@@ -33,14 +33,20 @@ public abstract class TimeObject {
     }
 
     public enum TimeType {
-    	
+    	SINGLE,
+    	RELATIVE,
+    	PERIOD
     }
 
     public TimeTense tense = TimeTense.PRESENT;
-    public TimeType type;
+    private TimeType type;
     public TimeInterval interval = TimeInterval.SINGLE;
 
-    public TimeObject(){
-
+    public TimeObject(TimeType ty){
+    	type = ty;
+    }
+    
+    public TimeType getType(){
+    	return type;
     }
 }

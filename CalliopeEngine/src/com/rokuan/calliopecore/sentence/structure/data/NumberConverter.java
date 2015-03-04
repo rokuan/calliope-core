@@ -83,6 +83,7 @@ public class NumberConverter {
                 return (i+1);
             }
         }
+        
         return 0;
     }
 

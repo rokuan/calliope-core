@@ -2,6 +2,7 @@ package com.rokuan.calliopecore.parser;
 
 import java.util.List;
 
+import com.rokuan.calliopecore.pattern.WordPattern;
 import com.rokuan.calliopecore.sentence.Word;
 
 /**
@@ -45,5 +46,9 @@ public class WordBuffer extends TokenBuffer<Word> {
         }
 
         return matchesSyntax(types.length, types);
+    }
+    
+    public boolean syntaxStartsWith(WordPattern... patterns){
+    	return WordPattern.syntaxStartsWith(this, patterns);
     }
 }

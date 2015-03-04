@@ -8,6 +8,10 @@ import java.util.Date;
 public class TimePeriodObject extends TimeObject {
     public Date from;
     public Date to;
+    
+    public TimePeriodObject(){
+    	super(TimeType.PERIOD);
+    }
 
     public Date getFrom(){
         return from;
