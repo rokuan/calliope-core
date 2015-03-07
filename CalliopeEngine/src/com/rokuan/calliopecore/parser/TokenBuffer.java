@@ -1,7 +1,6 @@
 package com.rokuan.calliopecore.parser;
 
 import java.util.ArrayList;
-import java.util.NoSuchElementException;
 import java.util.Stack;
 
 /**
@@ -32,6 +31,9 @@ public class TokenBuffer<T> extends ArrayList<T> {
         /*if(!hasPrevious()){
             throw new NoSuchElementException();
         }*/
+    	if(currentIndex <= 0){
+    		throw new IndexOutOfBoundsException();
+    	}
 
         currentIndex--;
     }
@@ -40,6 +42,10 @@ public class TokenBuffer<T> extends ArrayList<T> {
         /*if(!hasNext()){
             throw new NoSuchElementException();
         }*/
+    	if(currentIndex >= this.size()){
+    		throw new IndexOutOfBoundsException();
+    	}
+    	
         currentIndex++;
     }
 
@@ -63,5 +69,13 @@ public class TokenBuffer<T> extends ArrayList<T> {
     	if(!tmpIndexes.empty()){
     		currentIndex = tmpIndexes.pop();
     	}
+    }
+    
+    public void truncate(){
+    	this.removeRange(0, currentIndex);
+    }
+    
+    public void consume(){
+    	this.remove(currentIndex);
     }
 }

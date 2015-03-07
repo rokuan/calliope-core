@@ -3,8 +3,11 @@ package com.rokuan.calliopecore.sentence.structure.data;
 import java.util.regex.Pattern;
 
 import com.rokuan.calliopecore.parser.WordBuffer;
+import com.rokuan.calliopecore.pattern.WordPattern;
 import com.rokuan.calliopecore.sentence.Word;
+import com.rokuan.calliopecore.sentence.Word.WordType;
 import com.rokuan.calliopecore.sentence.structure.CountObject;
+import com.rokuan.calliopecore.sentence.structure.CountObject.CountType;
 
 
 /**
@@ -38,6 +41,19 @@ public class NumberConverter {
             "cinquante",
             "soixante"
     };
+    
+    public static final WordPattern fixedItemPattern = WordPattern.sequence(
+    		WordPattern.simple(WordType.DEFINITE_ARTICLE), 
+    		WordPattern.simple(Word.WordType.NUMERICAL_POSITION));
+    
+    public static final WordPattern fixedRangePattern = WordPattern.sequence(
+    		WordPattern.simple(WordType.DEFINITE_ARTICLE), 
+    		WordPattern.simple(Word.WordType.NUMBER), 
+    		WordPattern.simple(Word.WordType.NUMERICAL_POSITION));
+    
+    public static final WordPattern quantityPattern = WordPattern.sequence(
+    		WordPattern.simple(Word.WordType.QUANTITY), 
+    		WordPattern.simple(Word.WordType.DEFINITE_ARTICLE));
 
     public static long parsePosition(String posStr){
         if(posStr.equals("premier") || posStr.equals("première")){
@@ -89,9 +105,12 @@ public class NumberConverter {
 
     public static boolean isACountData(WordBuffer words){
         // TODO:
-        return words.syntaxStartsWith(Word.WordType.NUMERICAL_POSITION) // le premier
-                || words.syntaxStartsWith(Word.WordType.NUMBER, Word.WordType.NUMERICAL_POSITION)  // les 5 premiers
-                || words.syntaxStartsWith(Word.WordType.QUANTITY, Word.WordType.DEFINITE_ARTICLE);	// tou(te)s les
+        /*return words.syntaxStartsWith(WordType.DEFINITE_ARTICLE, Word.WordType.NUMERICAL_POSITION) // le premier
+                || words.syntaxStartsWith(WordType.DEFINITE_ARTICLE, Word.WordType.NUMBER, Word.WordType.NUMERICAL_POSITION)  // les 5 premiers
+                || words.syntaxStartsWith(Word.WordType.QUANTITY, Word.WordType.DEFINITE_ARTICLE);	// tou(te)s les*/
+    	return words.syntaxStartsWith(fixedItemPattern)
+    			|| words.syntaxStartsWith(fixedRangePattern)
+    			|| words.syntaxStartsWith(quantityPattern);
     }
 
     public static CountObject parseCountObject(WordBuffer words){
@@ -102,7 +121,7 @@ public class NumberConverter {
     	
         CountObject result = new CountObject();
 
-        if(words.getCurrentElement().isOfType(Word.WordType.NUMERICAL_POSITION)){
+        /*if(words.getCurrentElement().isOfType(Word.WordType.NUMERICAL_POSITION)){
             result.count = 1;
             result.countType = CountObject.CountType.LIMIT;
             //result.position = Long.parseLong(words.getCurrentElement().getValue());
@@ -127,7 +146,43 @@ public class NumberConverter {
             } catch(Exception e) {
 
             }
-        } 
+        }*/
+        if(words.syntaxStartsWith(fixedItemPattern)){        	
+        	words.consume();
+        	result.count = 1;
+            result.countType = CountObject.CountType.LIMIT;
+            //result.position = Long.parseLong(words.getCurrentElement().getValue());
+            result.position = parsePosition(words.getCurrentElement().getValue());
+            result.range = CountObject.Range.FIXED;
+            words.consume();
+        } else if(words.syntaxStartsWith(fixedRangePattern)){
+        	words.consume();
+        	
+        	try{
+                result.count = Long.parseLong(words.getCurrentElement().getValue());
+                result.countType = CountObject.CountType.LIMIT;
+                words.consume();
+
+                String posValue = words.getCurrentElement().getValue();
+
+                if(posValue.startsWith("premi")){
+                    result.position = 1;
+                    result.range = CountObject.Range.FIRST;
+                } else if(posValue.startsWith("derni")){
+                    result.range = CountObject.Range.LAST;
+                } else {
+                    // TODO: error
+                }
+                
+                words.consume();
+            } catch(Exception e) {
+
+            }
+        } else if(words.syntaxStartsWith(quantityPattern)){
+        	result.countType = CountType.ALL;
+        	words.consume();
+        	words.consume();
+        }
 
         return result;
     }

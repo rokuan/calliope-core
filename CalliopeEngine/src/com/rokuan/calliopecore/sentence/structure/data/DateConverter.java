@@ -82,11 +82,11 @@ public class DateConverter {
 		if(WordPattern.syntaxStartsWith(words, fromToDatePattern)){
 			TimePeriodObject period = new TimePeriodObject();
 
-			words.next();	// PREPOSITION_FROM
+			words.consume();	// PREPOSITION_FROM
 			
 			int[] fromDateFields = parseDate(words);
 			
-			words.next();	// PREPOSITION_TO
+			words.consume();	// PREPOSITION_TO
 			
 			int[] toDateFields = parseDate(words);
 
@@ -99,13 +99,13 @@ public class DateConverter {
 		} else if(WordPattern.syntaxStartsWith(words, betweenDatePattern)){
 			TimePeriodObject period = new TimePeriodObject();
 			
-			words.next();	// PREPOSITION_BETWEEN
-			words.next();	// DEFINITE_ARTICLE
+			words.consume();	// PREPOSITION_BETWEEN
+			words.consume();	// DEFINITE_ARTICLE
 			
 			int[] fromDateFields = parseDate(words);
 			
-			words.next();	// PREPOSITION_AND
-			words.next();	// DEFINITE_ARTICLE			
+			words.consume();	// PREPOSITION_AND
+			words.consume();	// DEFINITE_ARTICLE			
 			
 			int[] toDateFields = parseDate(words);
 
@@ -128,10 +128,10 @@ public class DateConverter {
 
 		if(words.getCurrentElement().isOfType(WordType.NUMBER)){
 			date[0] = Integer.parseInt(words.getCurrentElement().getValue());
-			words.next();
+			words.consume();
 		} else if(words.getCurrentElement().isOfType(WordType.NUMERICAL_POSITION)){
 			date[0] = (int)NumberConverter.parsePosition(words.getCurrentElement().getValue());
-			words.next();
+			words.consume();
 		}
 
 		if(words.getCurrentElement().isOfType(WordType.DATE_MONTH)){
@@ -146,12 +146,12 @@ public class DateConverter {
 				// TODO: gerer ce cas				
 			}
 
-			words.next();
+			words.consume();
 		}
 
 		if(words.getCurrentElement().isOfType(WordType.NUMBER)){
 			date[2] = Integer.parseInt(words.getCurrentElement().getValue());
-			words.next();
+			words.consume();
 		}
 
 		return date;

@@ -6,7 +6,5 @@ package com.rokuan.calliopecore.sentence.structure;
 public class OrderObject extends InterpretationObject {
     public OrderObject(){
         super(RequestType.ORDER);
-
-
     }
 }
