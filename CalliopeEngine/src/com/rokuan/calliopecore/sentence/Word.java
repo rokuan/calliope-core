@@ -40,9 +40,11 @@ public class Word {
         DATE_UNIT,
         // New
         QUANTITY,
-        PREPOSITION_BETWEEN,
-        PREPOSITION_AND,
-        PREPOSITION_AT,
+        PREPOSITION_BETWEEN,	// entre
+        PREPOSITION_AND,	// et
+        PREPOSITION_AT,	// à/au
+        PREPOSITION_OF,	// de
+        PREPOSITION_IN,	// en
         DATE_UNIT_HOUR
     }
 

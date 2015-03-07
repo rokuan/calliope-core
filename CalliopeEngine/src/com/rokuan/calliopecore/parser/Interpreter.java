@@ -4,15 +4,14 @@ import com.rokuan.calliopecore.sentence.Type;
 import com.rokuan.calliopecore.sentence.Word;
 import com.rokuan.calliopecore.sentence.Word.WordType;
 import com.rokuan.calliopecore.sentence.structure.ComplementObject;
-import com.rokuan.calliopecore.sentence.structure.CountObject;
 import com.rokuan.calliopecore.sentence.structure.InterpretationObject;
 import com.rokuan.calliopecore.sentence.structure.OrderObject;
-import com.rokuan.calliopecore.sentence.structure.InterpretationObject.RequestType;
 import com.rokuan.calliopecore.sentence.structure.QuestionObject;
 import com.rokuan.calliopecore.sentence.structure.Target;
 import com.rokuan.calliopecore.sentence.structure.data.DateConverter;
 import com.rokuan.calliopecore.sentence.structure.data.NumberConverter;
 import com.rokuan.calliopecore.sentence.structure.data.PhoneNumberConverter;
+import com.rokuan.calliopecore.sentence.structure.data.PlaceConverter;
 
 
 /**
@@ -43,14 +42,33 @@ public class Interpreter {
 			// db.findConjugatedVerb(words.get(0)).form == IMPERATIVE
 			inter = new OrderObject();
 			inter.target = new Target(Type.parseTargetPronoun(words.get(1).getValue()));
-			inter.action = db.getVerb(words.get(0).getValue()).getAction();
+			inter.action = db.getVerb(words.getCurrentElement().getValue()).getAction();
 
-			words.next();
-			words.next();
+			words.consume();
+			words.consume();
 
 			inter.what = parseComplementObject(words);
 
 			return inter;
+		} else if(words.syntaxStartsWith(WordType.INTERROGATIVE_PRONOUN, WordType.VERB)){
+			// Quel est/Quelle a ete
+			QuestionObject qObject = new QuestionObject();
+			
+			qObject.qType = QuestionObject.parseInterrogativePronoun(words.getCurrentElement().getValue());
+			
+			words.next();
+			
+			if(words.syntaxStartsWith(WordType.AUXILIARY, WordType.VERB)){
+				// TODO: gerer le cas en allant chercher le verbe conjugue (AUXILIAIRE + VERB) ?
+				words.next();
+			}
+			
+			qObject.action = db.getVerb(words.getCurrentElement().getValue()).getAction();	
+			words.next();
+			
+			qObject.what = parseComplementObject(words);
+			
+			inter = qObject;
 		}
 
 		return inter;
@@ -73,12 +91,14 @@ public class Interpreter {
 			} else if(NumberConverter.isACountData(words)){
 				complement.count = NumberConverter.parseCountObject(words);
 			} else if(PhoneNumberConverter.isAPhoneNumber(words)){				
-				// TODO: numero de telephone
+				// TODO: creer une classe pour les numeros de telephone ?
 				complement.object = PhoneNumberConverter.parsePhoneNumber(words);
 			} else if(words.syntaxStartsWith(WordType.DEFINITE_ARTICLE, WordType.COMMON_NAME)){
 				words.consume();
 				complement.object = words.getCurrentElement().getValue();
 				words.consume();
+			} else if(PlaceConverter.isAPlaceData(words)){
+				complement.where = PlaceConverter.parsePlaceObject(words);
 			} else {
 				break;
 			}

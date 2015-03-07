@@ -1,5 +1,6 @@
 package com.rokuan.calliopecore.sentence.structure;
 
+import com.rokuan.calliopecore.sentence.structure.data.place.PlaceObject;
 import com.rokuan.calliopecore.sentence.structure.data.time.TimeObject;
 
 
@@ -12,7 +13,7 @@ public class ComplementObject {
     public ComplementObject of;
     public TimeObject when;
     public ComplementObject why;
-    public ComplementObject where;
+    public PlaceObject where;
 
     public ComplementObject(){
 
