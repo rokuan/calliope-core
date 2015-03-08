@@ -1,5 +1,6 @@
 package com.rokuan.calliopecore.parser;
 
+import com.rokuan.calliopecore.pattern.WordPattern;
 import com.rokuan.calliopecore.sentence.Type;
 import com.rokuan.calliopecore.sentence.Word;
 import com.rokuan.calliopecore.sentence.Word.WordType;
@@ -50,7 +51,10 @@ public class Interpreter {
 			inter.what = parseComplementObject(words);
 
 			return inter;
-		} else if(words.syntaxStartsWith(WordType.INTERROGATIVE_PRONOUN, WordType.VERB)){
+		} else if(words.syntaxStartsWith(WordPattern.sequence(
+				WordPattern.or(WordPattern.simple(WordType.INTERROGATIVE_PRONOUN), WordPattern.simple(WordType.INTERROGATIVE_ADJECTIVE)),
+				WordPattern.simple(WordType.VERB))
+				)){
 			// Quel est/Quelle a ete
 			QuestionObject qObject = new QuestionObject();
 			
