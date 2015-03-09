@@ -1,7 +1,10 @@
 package com.rokuan.calliopecore.parser;
 
 import com.rokuan.calliopecore.pattern.WordPattern;
+import com.rokuan.calliopecore.sentence.Action;
+import com.rokuan.calliopecore.sentence.SentencePattern;
 import com.rokuan.calliopecore.sentence.Type;
+import com.rokuan.calliopecore.sentence.VerbConjugation;
 import com.rokuan.calliopecore.sentence.Word;
 import com.rokuan.calliopecore.sentence.Word.WordType;
 import com.rokuan.calliopecore.sentence.structure.ComplementObject;
@@ -9,6 +12,7 @@ import com.rokuan.calliopecore.sentence.structure.InterpretationObject;
 import com.rokuan.calliopecore.sentence.structure.OrderObject;
 import com.rokuan.calliopecore.sentence.structure.QuestionObject;
 import com.rokuan.calliopecore.sentence.structure.Target;
+import com.rokuan.calliopecore.sentence.structure.QuestionObject.QuestionType;
 import com.rokuan.calliopecore.sentence.structure.data.DateConverter;
 import com.rokuan.calliopecore.sentence.structure.data.NumberConverter;
 import com.rokuan.calliopecore.sentence.structure.data.PhoneNumberConverter;
@@ -19,60 +23,84 @@ import com.rokuan.calliopecore.sentence.structure.data.PlaceConverter;
  * Created by LEBEAU Christophe on 27/02/2015.
  */
 public class Interpreter {
-	private WordDatabase db;
-
-	public Interpreter(WordDatabase wd){
-		db = wd;
+	//private WordDatabase db;
+	
+	public Interpreter(){
+		
 	}
+
+	/*public Interpreter(WordDatabase wd){
+		db = wd;
+	}*/
 
 	public InterpretationObject parseInterpretationObject(WordBuffer words){
 		InterpretationObject inter = null;
 
-		if(words.syntaxStartsWith(Word.WordType.AUXILIARY, Word.WordType.PERSONAL_PRONOUN, Word.WordType.VERB)){
-			inter = new QuestionObject();
-			inter.target = new Target(Type.parseSubjectPronoun(words.get(1).getValue()));
-			inter.action = db.getVerb(words.get(2).getValue()).getAction();
+		//if(words.syntaxStartsWith(Word.WordType.AUXILIARY, Word.WordType.PERSONAL_PRONOUN, Word.WordType.VERB)){
+		if(words.syntaxStartsWith(SentencePattern.yesNoQuestionPattern)){
+			// TODO: les Yes/No question au present (ex: Aimes-tu ...)
+			QuestionObject qObj = new QuestionObject();
+			
+			qObj.qType = QuestionType.YES_NO;
+			
+			if(words.getCurrentElement().isOfType(WordType.PERSONAL_PRONOUN)){
+				qObj.target = new Target(Type.parseTargetPronoun(words.getCurrentElement().getValue()));
+				words.consume();
+			}
+		
+			words.consume();	// AUXILIARY
+			qObj.subject = new Target(Type.parseSubjectPronoun(words.getCurrentElement().getValue()));
+			words.consume();
+			
+			if(words.getCurrentElement().isOfType(WordType.CONJUGATION_LINK)){
+				words.consume();
+			}
+			
+			qObj.action = getActionFromVerb(words.getCurrentElement().getVerbInfo());
+			words.consume();
 
-			words.moveTo(3);
+			qObj.what = parseComplementObject(words);
 
-			inter.what = parseComplementObject(words);
-
-			return inter;
-		} else if(words.syntaxStartsWith(Word.WordType.VERB, Word.WordType.PERSONAL_PRONOUN)){
+			inter = qObj;			
+			//return inter;
+		//} else if(words.syntaxStartsWith(Word.WordType.VERB, Word.WordType.PERSONAL_PRONOUN)){
+		} else if(words.syntaxStartsWith(SentencePattern.orderPattern)){
 			// Ordre
 			// db.findConjugatedVerb(words.get(0)).form == IMPERATIVE
 			inter = new OrderObject();
-			inter.target = new Target(Type.parseTargetPronoun(words.get(1).getValue()));
-			inter.action = db.getVerb(words.getCurrentElement().getValue()).getAction();
-
+			
+			//inter.action = db.getVerb(words.getCurrentElement().getValue()).getAction();
+			
+			inter.action = getActionFromVerb(words.getCurrentElement().getVerbInfo());
 			words.consume();
+			inter.target = new Target(Type.parseTargetPronoun(words.getCurrentElement().getValue()));
 			words.consume();
 
 			inter.what = parseComplementObject(words);
-
-			return inter;
-		} else if(words.syntaxStartsWith(WordPattern.sequence(
-				WordPattern.or(WordPattern.simple(WordType.INTERROGATIVE_PRONOUN), WordPattern.simple(WordType.INTERROGATIVE_ADJECTIVE)),
-				WordPattern.simple(WordType.VERB))
-				)){
+			//return inter;
+		} else if(words.syntaxStartsWith(SentencePattern.resultQuestionPattern)){
 			// Quel est/Quelle a ete
 			QuestionObject qObject = new QuestionObject();
 			
-			qObject.qType = QuestionObject.parseInterrogativePronoun(words.getCurrentElement().getValue());
+			qObject.qType = QuestionObject.parseInterrogativePronoun(words.getCurrentElement().getValue());			
+			words.consume();
 			
-			words.next();
-			
+			// TODO: gerer les questions de la forme "Combien existe-t-il ..."
 			if(words.syntaxStartsWith(WordType.AUXILIARY, WordType.VERB)){
-				// TODO: gerer le cas en allant chercher le verbe conjugue (AUXILIAIRE + VERB) ?
-				words.next();
-			}
+				// TOCHECK: gerer le cas en allant chercher le verbe conjugue (AUXILIAIRE + VERB) ?
+				words.consume();
+			} 
 			
-			qObject.action = db.getVerb(words.getCurrentElement().getValue()).getAction();	
-			words.next();
+			qObject.action = getActionFromVerb(words.getCurrentElement().getVerbInfo());
+			//qObject.action = db.getVerb(words.getCurrentElement().getValue()).getAction();	
+			words.consume();
 			
 			qObject.what = parseComplementObject(words);
 			
 			inter = qObject;
+		} else {
+			// TODO: Le sujet est un groupe nominal ?
+			// ComplementObject
 		}
 
 		return inter;
@@ -97,10 +125,31 @@ public class Interpreter {
 			} else if(PhoneNumberConverter.isAPhoneNumber(words)){				
 				// TODO: creer une classe pour les numeros de telephone ?
 				complement.object = PhoneNumberConverter.parsePhoneNumber(words);
-			} else if(words.syntaxStartsWith(WordType.DEFINITE_ARTICLE, WordType.COMMON_NAME)){
+			} else if(words.syntaxStartsWith(
+					WordPattern.or(WordPattern.simple(WordType.DEFINITE_ARTICLE), WordPattern.simple(WordType.INDEFINITE_ARTICLE)), 
+					WordPattern.simple(WordType.COMMON_NAME))){
 				words.consume();
 				complement.object = words.getCurrentElement().getValue();
 				words.consume();
+				
+				if(words.hasNext() && words.getCurrentElement().isOfType(WordType.PREPOSITION_OF)){
+					words.consume();
+					
+					if(words.hasNext() && words.getCurrentElement().isOfType(WordType.DEFINITE_ARTICLE)){
+						words.consume();
+					}
+					
+					if(words.hasNext() && words.getCurrentElement().isOfType(WordType.COMMON_NAME)){
+						ComplementObject ofObj = new ComplementObject();
+						
+						ofObj.object = words.getCurrentElement().getValue();
+						words.consume();
+						
+						complement.of = ofObj;
+					}
+				} else if(words.hasNext() && words.getCurrentElement().isOfType(WordType.DEFINITE_ARTICLE)){
+					// TODO:
+				}
 			} else if(PlaceConverter.isAPlaceData(words)){
 				complement.where = PlaceConverter.parsePlaceObject(words);
 			} else {
@@ -109,5 +158,9 @@ public class Interpreter {
 		}
 
 		return complement;
+	}
+	
+	private static Enum<?> getActionFromVerb(VerbConjugation conjug){
+		return (conjug == null || conjug.getVerb() == null) ? Action.VerbAction.UNDEFINED : conjug.getVerb().getAction();
 	}
 }

@@ -44,8 +44,10 @@ public class Type {
         } catch (Exception e){
             if(str.equals("on")){
                 return Pronoun.NOUS;
-            }else if(str.equals("il") || str.equals("elle") || str.equals("on")){
-
+            } else if(str.equals("il") || str.equals("elle")) {
+            	return Pronoun.IL_ELLE_ON;
+            } else if(str.equals("ils") || str.equals("elles")){
+            	return Pronoun.ILS_ELLES;
             }
         }
 
@@ -53,9 +55,9 @@ public class Type {
     }
 
     public static Pronoun parseTargetPronoun(String str){
-        if(str.equals("moi")){
+        if(str.equals("moi") || str.equals("me") || str.equals("m")){
             return Pronoun.JE;
-        } else if(str.equals("toi")){
+        } else if(str.equals("toi") || str.equals("te") || str.equals("t")){
             return Pronoun.TU;
         } else if(str.equals("lui") || str.equals("le") || str.equals("la") || str.equals("y")){
             return Pronoun.IL_ELLE_ON;

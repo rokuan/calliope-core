@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.rokuan.calliopecore.parser.WordBuffer;
 import com.rokuan.calliopecore.sentence.Word;
+import com.rokuan.calliopecore.sentence.Word.WordType;
 
 /**
  * Created by LEBEAU Christophe on 02/03/2015.
@@ -95,10 +96,16 @@ public abstract class WordPattern {
 
     static class WordSimplePattern extends WordPattern {
         private Word.WordType type;
+        private String valuePattern = null;
 
         public WordSimplePattern(Word.WordType ty){
             type = ty;
         }
+        
+        public WordSimplePattern(WordType ty, String pattern) {
+			this(ty);
+			valuePattern = pattern;
+		}
 
         @Override
         protected int getLength() {
@@ -121,6 +128,10 @@ public abstract class WordPattern {
 
     public static WordPattern simple(Word.WordType ty){
         return new WordSimplePattern(ty);
+    }
+    
+    public static WordPattern simple(Word.WordType ty, String regex){
+        return new WordSimplePattern(ty, regex);
     }
     
     public static WordPattern sequence(WordPattern... patterns){
@@ -173,6 +184,16 @@ public abstract class WordPattern {
 
                 if(!words.getCurrentElement().isOfType(simple.type)){
                     return false;
+                }
+                
+                if(simple.valuePattern != null){
+                	try{
+                		if(!words.getCurrentElement().getValue().matches(simple.valuePattern)){
+                			return false;
+                		}
+                	}catch(Exception e){
+                		return false;
+                	}
                 }
 
                 words.next();

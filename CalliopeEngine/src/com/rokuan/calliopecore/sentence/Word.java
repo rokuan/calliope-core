@@ -45,11 +45,15 @@ public class Word {
         PREPOSITION_AT,	// à/au
         PREPOSITION_OF,	// de
         PREPOSITION_IN,	// en
+        PREPOSITION_WITH,	// avec
+        CONJUGATION_LINK,	// t
+        SUPERLATIVE,	// moins/plus
         DATE_UNIT_HOUR
     }
 
     private List<WordType> types = new ArrayList<WordType>();
     private String value;
+    private VerbConjugation verbInfo;
     
     public Word(String v, WordType t){
         types.add(t);
@@ -79,4 +83,14 @@ public class Word {
     public String getValue() {
         return value;
     }
+    
+    public VerbConjugation getVerbInfo() {
+		return verbInfo;
+	}
+
+	public void setVerbInfo(VerbConjugation verbInfo) {
+		this.verbInfo = verbInfo;
+	}
+
+	
 }
