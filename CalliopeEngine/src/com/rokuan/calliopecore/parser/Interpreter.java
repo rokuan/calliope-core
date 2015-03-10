@@ -13,6 +13,7 @@ import com.rokuan.calliopecore.sentence.structure.OrderObject;
 import com.rokuan.calliopecore.sentence.structure.QuestionObject;
 import com.rokuan.calliopecore.sentence.structure.Target;
 import com.rokuan.calliopecore.sentence.structure.QuestionObject.QuestionType;
+import com.rokuan.calliopecore.sentence.structure.data.CriterionConverter;
 import com.rokuan.calliopecore.sentence.structure.data.DateConverter;
 import com.rokuan.calliopecore.sentence.structure.data.NumberConverter;
 import com.rokuan.calliopecore.sentence.structure.data.PhoneNumberConverter;
@@ -98,6 +99,29 @@ public class Interpreter {
 			qObject.what = parseComplementObject(words);
 			
 			inter = qObject;
+		} else if(words.syntaxStartsWith(SentencePattern.indirectOrderPattern)){
+			OrderObject oObject = new OrderObject();
+			
+			if(words.syntaxStartsWith(SentencePattern.isArePattern)){
+				words.consume();	// est-ce
+				words.consume();	// que
+				words.consume();	// tu
+				words.consume();	// peux/pourrais				
+			} else {
+				words.consume();	// peux/pourrais
+				words.consume();	// tu
+			}
+			
+			if(words.getCurrentElement().isOfType(WordType.PERSONAL_PRONOUN)){
+				oObject.target = new Target(Type.parseTargetPronoun(words.getCurrentElement().getValue()));
+				words.consume();
+			}
+			
+			oObject.action = getActionFromVerb(words.getCurrentElement().getVerbInfo());
+			words.consume();
+			oObject.what = parseComplementObject(words);
+			
+			inter = oObject;
 		} else {
 			// TODO: Le sujet est un groupe nominal ?
 			// ComplementObject
@@ -125,8 +149,11 @@ public class Interpreter {
 			} else if(PhoneNumberConverter.isAPhoneNumber(words)){				
 				// TODO: creer une classe pour les numeros de telephone ?
 				complement.object = PhoneNumberConverter.parsePhoneNumber(words);
-			} else if(words.syntaxStartsWith(
+			/*} else if(words.syntaxStartsWith(
 					WordPattern.or(WordPattern.simple(WordType.DEFINITE_ARTICLE), WordPattern.simple(WordType.INDEFINITE_ARTICLE)), 
+					WordPattern.simple(WordType.COMMON_NAME))){*/
+			} else if(words.syntaxStartsWith(
+					WordPattern.optional(WordPattern.or(WordPattern.simple(WordType.DEFINITE_ARTICLE), WordPattern.simple(WordType.INDEFINITE_ARTICLE))), 
 					WordPattern.simple(WordType.COMMON_NAME))){
 				words.consume();
 				complement.object = words.getCurrentElement().getValue();
@@ -147,8 +174,10 @@ public class Interpreter {
 						
 						complement.of = ofObj;
 					}
-				} else if(words.hasNext() && words.getCurrentElement().isOfType(WordType.DEFINITE_ARTICLE)){
+				//} else if(words.hasNext() && words.getCurrentElement().isOfType(WordType.DEFINITE_ARTICLE)){
+				} else if(CriterionConverter.isACriterionData(words)){
 					// TODO:
+					complement.criteria = CriterionConverter.parseCriterionData(words); 
 				}
 			} else if(PlaceConverter.isAPlaceData(words)){
 				complement.where = PlaceConverter.parsePlaceObject(words);

@@ -1,5 +1,9 @@
 package com.rokuan.calliopecore.sentence.structure;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.rokuan.calliopecore.sentence.structure.data.criteria.CriterionObject;
 import com.rokuan.calliopecore.sentence.structure.data.place.PlaceObject;
 import com.rokuan.calliopecore.sentence.structure.data.time.TimeObject;
 
@@ -14,6 +18,7 @@ public class ComplementObject {
     public TimeObject when;
     public ComplementObject why;
     public PlaceObject where;
+    public List<CriterionObject> criteria = new ArrayList<CriterionObject>();
 
     public ComplementObject(){
 

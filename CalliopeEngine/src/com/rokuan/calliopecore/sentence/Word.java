@@ -8,6 +8,7 @@ import java.util.List;
  */
 public class Word {
     public enum WordType {
+    	ANY,
         PROPER_NAME,
         COMMON_NAME,
         ADVERB,
@@ -77,6 +78,10 @@ public class Word {
     }
 
     public boolean isOfType(WordType type){
+    	if(type == WordType.ANY){
+    		return true;
+    	}
+    	
         return types.contains(type);
     }
 
@@ -92,5 +97,7 @@ public class Word {
 		this.verbInfo = verbInfo;
 	}
 
-	
+	public List<WordType> getTypes(){
+		return types;
+	}
 }

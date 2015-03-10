@@ -13,7 +13,7 @@ public abstract class InterpretationObject {
 
     //public EngineAction action;
     //public Verb verb;
-    public RequestType type;
+    private RequestType type;
     public Enum<?> action;
     public Target subject = new Target(Pronoun.TU);	// Calliope
     public Target target;	
@@ -43,5 +43,9 @@ public abstract class InterpretationObject {
     	//result.append(null);
     	
     	return result.toString();
+    }
+    
+    public RequestType getType(){
+    	return type;
     }
 }
