@@ -1,4 +1,4 @@
-package com.rokuan.calliopecore.sentence.structure;
+package com.rokuan.calliopecore.sentence.structure.data.count;
 
 /**
  * Created by LEBEAU Christophe on 01/03/2015.

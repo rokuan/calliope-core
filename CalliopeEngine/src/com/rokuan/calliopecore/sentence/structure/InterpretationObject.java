@@ -24,6 +24,12 @@ public abstract class InterpretationObject {
         type = t;
     }
     
+    public String getDescription(){
+    	String leftPart = (action == null) ? "" : action.toString();
+    	String rightPart = (what == null || what.object == null) ? "" : what.object;
+    	return leftPart + ':' + rightPart;
+    }
+    
     @Override
     public String toString(){
     	StringBuilder result = new StringBuilder();
@@ -40,6 +46,8 @@ public abstract class InterpretationObject {
     	result.append(", ");
     	result.append("subject: ");
     	result.append(subject);
+    	
+    	// TODO:
     	//result.append(null);
     	
     	return result.toString();

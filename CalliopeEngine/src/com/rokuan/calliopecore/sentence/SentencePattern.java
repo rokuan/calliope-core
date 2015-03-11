@@ -26,16 +26,28 @@ public class SentencePattern {
 					WordPattern.optional(WordPattern.simple(WordType.PERSONAL_PRONOUN)),
 					WordPattern.simple(WordType.VERB)
 			);
+	
+	public static final String orderVerbRegex = "ordonner|demander|souhaiter|vouloir|exiger|aimer|sommer";
+	// Je t'ordonne de ... || Je souhaite que tu (me/te/...)...
+	// TODO: voir les autres cas
+	public static final WordPattern affirmativeOrder = WordPattern.sequence(
+			WordPattern.simple(WordType.PERSONAL_PRONOUN, "je"),
+			WordPattern.optional(WordPattern.simple(WordType.PERSONAL_PRONOUN)),
+			WordPattern.simple(WordType.VERB, null, orderVerbRegex),
+			WordPattern.or(
+					WordPattern.sequence(WordPattern.simple(WordType.ANY, "que"), WordPattern.simple(WordType.PERSONAL_PRONOUN, "tu"), WordPattern.optional(WordPattern.simple(WordType.PERSONAL_PRONOUN))),
+					WordPattern.simple(WordType.ANY, "de"))
+					);
 
 	// Affiche-moi
 	public static final WordPattern orderPattern = WordPattern.sequence(
 			WordPattern.simple(WordType.VERB), 
-			WordPattern.optional(WordPattern.simple(WordType.PERSONAL_PRONOUN))
+			WordPattern.optional(WordPattern.simple(WordType.TARGET_PRONOUN))
 			);
-	// Quel est
+	// Quel(s/le(s)) est/sont
 	public static final WordPattern resultQuestionPattern = WordPattern.sequence(
 			WordPattern.or(WordPattern.simple(WordType.INTERROGATIVE_PRONOUN), WordPattern.simple(WordType.INTERROGATIVE_ADJECTIVE)),
-			WordPattern.simple(WordType.VERB)
+			WordPattern.simple(WordType.VERB, "être")
 			);
 
 	/*public static final WordPattern nominalGroupPattern = WordPattern.sequence(

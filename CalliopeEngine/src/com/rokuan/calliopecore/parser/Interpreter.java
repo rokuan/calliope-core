@@ -25,9 +25,9 @@ import com.rokuan.calliopecore.sentence.structure.data.PlaceConverter;
  */
 public class Interpreter {
 	//private WordDatabase db;
-	
+
 	public Interpreter(){
-		
+
 	}
 
 	/*public Interpreter(WordDatabase wd){
@@ -41,37 +41,60 @@ public class Interpreter {
 		if(words.syntaxStartsWith(SentencePattern.yesNoQuestionPattern)){
 			// TODO: les Yes/No question au present (ex: Aimes-tu ...)
 			QuestionObject qObj = new QuestionObject();
-			
+
 			qObj.qType = QuestionType.YES_NO;
-			
+
 			if(words.getCurrentElement().isOfType(WordType.PERSONAL_PRONOUN)){
 				qObj.target = new Target(Type.parseTargetPronoun(words.getCurrentElement().getValue()));
 				words.consume();
 			}
-		
+
 			words.consume();	// AUXILIARY
 			qObj.subject = new Target(Type.parseSubjectPronoun(words.getCurrentElement().getValue()));
 			words.consume();
-			
+
 			if(words.getCurrentElement().isOfType(WordType.CONJUGATION_LINK)){
 				words.consume();
 			}
-			
+
 			qObj.action = getActionFromVerb(words.getCurrentElement().getVerbInfo());
 			words.consume();
 
 			qObj.what = parseComplementObject(words);
 
 			inter = qObj;			
-			//return inter;
-		//} else if(words.syntaxStartsWith(Word.WordType.VERB, Word.WordType.PERSONAL_PRONOUN)){
+			//return inter;			
+		} else if(words.syntaxStartsWith(SentencePattern.indirectOrderPattern)){
+			OrderObject oObject = new OrderObject();
+
+			if(words.syntaxStartsWith(SentencePattern.isArePattern)){
+				words.consume();	// est-ce
+				words.consume();	// que
+				words.consume();	// tu
+				words.consume();	// peux/pourrais				
+			} else {
+				words.consume();	// peux/pourrais
+				words.consume();	// tu
+			}
+
+			if(words.getCurrentElement().isOfType(WordType.PERSONAL_PRONOUN)){
+				oObject.target = new Target(Type.parseTargetPronoun(words.getCurrentElement().getValue()));
+				words.consume();
+			}
+
+			oObject.action = getActionFromVerb(words.getCurrentElement().getVerbInfo());
+			words.consume();
+			oObject.what = parseComplementObject(words);
+
+			inter = oObject;
 		} else if(words.syntaxStartsWith(SentencePattern.orderPattern)){
+			//} else if(words.syntaxStartsWith(Word.WordType.VERB, Word.WordType.PERSONAL_PRONOUN)){
 			// Ordre
 			// db.findConjugatedVerb(words.get(0)).form == IMPERATIVE
 			inter = new OrderObject();
-			
+
 			//inter.action = db.getVerb(words.getCurrentElement().getValue()).getAction();
-			
+
 			inter.action = getActionFromVerb(words.getCurrentElement().getVerbInfo());
 			words.consume();
 			inter.target = new Target(Type.parseTargetPronoun(words.getCurrentElement().getValue()));
@@ -82,46 +105,23 @@ public class Interpreter {
 		} else if(words.syntaxStartsWith(SentencePattern.resultQuestionPattern)){
 			// Quel est/Quelle a ete
 			QuestionObject qObject = new QuestionObject();
-			
+
 			qObject.qType = QuestionObject.parseInterrogativePronoun(words.getCurrentElement().getValue());			
 			words.consume();
-			
+
 			// TODO: gerer les questions de la forme "Combien existe-t-il ..."
 			if(words.syntaxStartsWith(WordType.AUXILIARY, WordType.VERB)){
 				// TOCHECK: gerer le cas en allant chercher le verbe conjugue (AUXILIAIRE + VERB) ?
 				words.consume();
 			} 
-			
+
 			qObject.action = getActionFromVerb(words.getCurrentElement().getVerbInfo());
 			//qObject.action = db.getVerb(words.getCurrentElement().getValue()).getAction();	
 			words.consume();
-			
+
 			qObject.what = parseComplementObject(words);
-			
+
 			inter = qObject;
-		} else if(words.syntaxStartsWith(SentencePattern.indirectOrderPattern)){
-			OrderObject oObject = new OrderObject();
-			
-			if(words.syntaxStartsWith(SentencePattern.isArePattern)){
-				words.consume();	// est-ce
-				words.consume();	// que
-				words.consume();	// tu
-				words.consume();	// peux/pourrais				
-			} else {
-				words.consume();	// peux/pourrais
-				words.consume();	// tu
-			}
-			
-			if(words.getCurrentElement().isOfType(WordType.PERSONAL_PRONOUN)){
-				oObject.target = new Target(Type.parseTargetPronoun(words.getCurrentElement().getValue()));
-				words.consume();
-			}
-			
-			oObject.action = getActionFromVerb(words.getCurrentElement().getVerbInfo());
-			words.consume();
-			oObject.what = parseComplementObject(words);
-			
-			inter = oObject;
 		} else {
 			// TODO: Le sujet est un groupe nominal ?
 			// ComplementObject
@@ -141,7 +141,7 @@ public class Interpreter {
 			if(words.syntaxStartsWith(Word.WordType.PROPER_NAME)){
 				// TODO: gerer les monuments
 				complement.object = words.getCurrentElement().getValue();
-				words.next();
+				words.consume();
 			} else if(DateConverter.isADateData(words)){
 				complement.when = DateConverter.parseDateObject(words);
 			} else if(NumberConverter.isACountData(words)){
@@ -149,7 +149,7 @@ public class Interpreter {
 			} else if(PhoneNumberConverter.isAPhoneNumber(words)){				
 				// TODO: creer une classe pour les numeros de telephone ?
 				complement.object = PhoneNumberConverter.parsePhoneNumber(words);
-			/*} else if(words.syntaxStartsWith(
+				/*} else if(words.syntaxStartsWith(
 					WordPattern.or(WordPattern.simple(WordType.DEFINITE_ARTICLE), WordPattern.simple(WordType.INDEFINITE_ARTICLE)), 
 					WordPattern.simple(WordType.COMMON_NAME))){*/
 			} else if(words.syntaxStartsWith(
@@ -158,23 +158,23 @@ public class Interpreter {
 				words.consume();
 				complement.object = words.getCurrentElement().getValue();
 				words.consume();
-				
+
 				if(words.hasNext() && words.getCurrentElement().isOfType(WordType.PREPOSITION_OF)){
 					words.consume();
-					
+
 					if(words.hasNext() && words.getCurrentElement().isOfType(WordType.DEFINITE_ARTICLE)){
 						words.consume();
 					}
-					
+
 					if(words.hasNext() && words.getCurrentElement().isOfType(WordType.COMMON_NAME)){
 						ComplementObject ofObj = new ComplementObject();
-						
+
 						ofObj.object = words.getCurrentElement().getValue();
 						words.consume();
-						
+
 						complement.of = ofObj;
 					}
-				//} else if(words.hasNext() && words.getCurrentElement().isOfType(WordType.DEFINITE_ARTICLE)){
+					//} else if(words.hasNext() && words.getCurrentElement().isOfType(WordType.DEFINITE_ARTICLE)){
 				} else if(CriterionConverter.isACriterionData(words)){
 					// TODO:
 					complement.criteria = CriterionConverter.parseCriterionData(words); 
@@ -188,7 +188,7 @@ public class Interpreter {
 
 		return complement;
 	}
-	
+
 	private static Enum<?> getActionFromVerb(VerbConjugation conjug){
 		return (conjug == null || conjug.getVerb() == null) ? Action.VerbAction.UNDEFINED : conjug.getVerb().getAction();
 	}

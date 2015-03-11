@@ -49,6 +49,7 @@ public class Word {
         PREPOSITION_WITH,	// avec
         CONJUGATION_LINK,	// t
         SUPERLATIVE,	// moins/plus
+        TARGET_PRONOUN,	// moi/toi/me/te/...
         DATE_UNIT_HOUR
     }
 

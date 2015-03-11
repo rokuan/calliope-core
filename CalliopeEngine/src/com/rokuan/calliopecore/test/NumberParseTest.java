@@ -7,10 +7,10 @@ import org.junit.Test;
 import com.rokuan.calliopecore.parser.WordBuffer;
 import com.rokuan.calliopecore.sentence.Word;
 import com.rokuan.calliopecore.sentence.Word.WordType;
-import com.rokuan.calliopecore.sentence.structure.CountObject;
-import com.rokuan.calliopecore.sentence.structure.CountObject.CountType;
-import com.rokuan.calliopecore.sentence.structure.CountObject.Range;
 import com.rokuan.calliopecore.sentence.structure.data.NumberConverter;
+import com.rokuan.calliopecore.sentence.structure.data.count.CountObject;
+import com.rokuan.calliopecore.sentence.structure.data.count.CountObject.CountType;
+import com.rokuan.calliopecore.sentence.structure.data.count.CountObject.Range;
 
 public class NumberParseTest {
 

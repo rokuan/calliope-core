@@ -3,6 +3,8 @@ package com.rokuan.calliopecore.sentence.structure;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.rokuan.calliopecore.sentence.Adjective;
+import com.rokuan.calliopecore.sentence.structure.data.count.CountObject;
 import com.rokuan.calliopecore.sentence.structure.data.criteria.CriterionObject;
 import com.rokuan.calliopecore.sentence.structure.data.place.PlaceObject;
 import com.rokuan.calliopecore.sentence.structure.data.time.TimeObject;
@@ -13,6 +15,7 @@ import com.rokuan.calliopecore.sentence.structure.data.time.TimeObject;
  */
 public class ComplementObject {
 	public CountObject count;
+	public List<Adjective> acjectives = new ArrayList<Adjective>();
     public String object;
     public ComplementObject of;
     public TimeObject when;

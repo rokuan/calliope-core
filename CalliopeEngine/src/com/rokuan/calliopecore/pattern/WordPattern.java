@@ -244,7 +244,6 @@ public abstract class WordPattern {
 					return false;
 				}
 
-
 				try{
 					if(simple.valuePattern != null && !words.getCurrentElement().getValue().matches(simple.valuePattern)){
 						return false;
@@ -255,6 +254,7 @@ public abstract class WordPattern {
 					}
 				}catch(Exception e){
 					// TODO: lancer l'exception quoi qu'il arrive ?
+					System.out.println(e);
 					return false;
 				}
 
