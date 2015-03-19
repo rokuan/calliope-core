@@ -97,8 +97,11 @@ public class Interpreter {
 
 			inter.action = getActionFromVerb(words.getCurrentElement().getVerbInfo());
 			words.consume();
-			inter.target = new Target(Type.parseTargetPronoun(words.getCurrentElement().getValue()));
-			words.consume();
+
+			if(words.isIntoBounds() && words.getCurrentElement().isOfType(WordType.TARGET_PRONOUN)){
+				inter.target = new Target(Type.parseTargetPronoun(words.getCurrentElement().getValue()));
+				words.consume();
+			}
 
 			inter.what = parseComplementObject(words);
 			//return inter;
@@ -137,7 +140,7 @@ public class Interpreter {
 
 		ComplementObject complement = new ComplementObject();
 
-		while(words.hasNext()){
+		while(words.isIntoBounds()){
 			if(words.syntaxStartsWith(Word.WordType.PROPER_NAME)){
 				// TODO: gerer les monuments
 				complement.object = words.getCurrentElement().getValue();
@@ -146,9 +149,17 @@ public class Interpreter {
 				complement.when = DateConverter.parseDateObject(words);
 			} else if(NumberConverter.isACountData(words)){
 				complement.count = NumberConverter.parseCountObject(words);
-			} else if(PhoneNumberConverter.isAPhoneNumber(words)){				
+			} else if(PhoneNumberConverter.isAPhoneNumber(words)){	
 				// TODO: creer une classe pour les numeros de telephone ?
-				complement.object = PhoneNumberConverter.parsePhoneNumber(words);
+				boolean objectField = words.getCurrentElement().isOfType(WordType.DEFINITE_ARTICLE);
+				
+				String phoneNumber = PhoneNumberConverter.parsePhoneNumber(words);
+				
+				if(objectField){
+					complement.object = phoneNumber;
+				} else {
+					complement.to = phoneNumber;
+				}
 				/*} else if(words.syntaxStartsWith(
 					WordPattern.or(WordPattern.simple(WordType.DEFINITE_ARTICLE), WordPattern.simple(WordType.INDEFINITE_ARTICLE)), 
 					WordPattern.simple(WordType.COMMON_NAME))){*/
@@ -159,14 +170,14 @@ public class Interpreter {
 				complement.object = words.getCurrentElement().getValue();
 				words.consume();
 
-				if(words.hasNext() && words.getCurrentElement().isOfType(WordType.PREPOSITION_OF)){
+				if(words.isIntoBounds() && words.getCurrentElement().isOfType(WordType.PREPOSITION_OF)){
 					words.consume();
 
-					if(words.hasNext() && words.getCurrentElement().isOfType(WordType.DEFINITE_ARTICLE)){
+					if(words.isIntoBounds() && words.getCurrentElement().isOfType(WordType.DEFINITE_ARTICLE)){
 						words.consume();
 					}
 
-					if(words.hasNext() && words.getCurrentElement().isOfType(WordType.COMMON_NAME)){
+					if(words.isIntoBounds() && words.getCurrentElement().isOfType(WordType.COMMON_NAME)){
 						ComplementObject ofObj = new ComplementObject();
 
 						ofObj.object = words.getCurrentElement().getValue();

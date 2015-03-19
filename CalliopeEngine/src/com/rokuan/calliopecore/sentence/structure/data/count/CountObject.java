@@ -12,11 +12,14 @@ public class CountObject {
 
     public enum CountType {
         ALL,
-        LIMIT
+        LIMIT,
+        INTERVAL
     }
 
     public long position = 1;
     public Range range = Range.FIRST;
     public CountType countType = CountType.ALL;
     public long count = 1;
+    
+    // TODO: ajouter les intervalles du type "du 5eme au dernier"
 }

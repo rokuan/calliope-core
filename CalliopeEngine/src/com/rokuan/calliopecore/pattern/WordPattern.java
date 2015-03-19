@@ -197,6 +197,10 @@ public abstract class WordPattern {
 	}
 
 	public static boolean syntaxStartsWith(WordBuffer words, WordPattern... patterns){
+		if(!words.hasNext()){
+			return false;
+		}
+		
 		WordBuffer copy = new WordBuffer(words);
 		return realSyntaxStartsWith(copy, patterns);
 	}

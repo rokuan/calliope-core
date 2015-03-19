@@ -8,8 +8,11 @@ import com.rokuan.calliopecore.sentence.structure.data.criteria.CriterionObject;
 public interface DataSource<DataType> {	
 	public DataSource<DataType> getData(CountObject count);
 	public DataSource<DataType> getData(CountObject count, List<CriterionObject> criteria);
+	public DataSource<DataType> removeData(CountObject count);
+	public DataSource<DataType> removeData(CountObject count, List<CriterionObject> criteria);
 		
 	public DataType getData(int index);
+	public DataType removeData(int index);
 	public DataType previousData();
 	public DataType currentData();
 	public DataType nextData();

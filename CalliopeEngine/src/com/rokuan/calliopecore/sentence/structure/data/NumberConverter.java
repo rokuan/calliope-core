@@ -1,5 +1,6 @@
 package com.rokuan.calliopecore.sentence.structure.data;
 
+import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 import com.rokuan.calliopecore.parser.WordBuffer;
@@ -42,6 +43,18 @@ public class NumberConverter {
             "soixante"
     };
     
+    private static final String[] tenPowerMap = {
+    	"dix",
+    	"cent",
+    	"mille",
+    	"_",
+    	"_",
+    	"million",
+    	"_",
+    	"_",
+    	"milliard"
+    };
+    
     public static final WordPattern fixedItemPattern = WordPattern.sequence(
     		WordPattern.simple(WordType.DEFINITE_ARTICLE), 
     		WordPattern.simple(Word.WordType.NUMERICAL_POSITION));
@@ -68,12 +81,17 @@ public class NumberConverter {
                 return 0;
             }
 
-            char lastChar = base.charAt(base.length());
+            char lastChar = base.charAt(base.length() - 1);
 
-            if(lastChar == 'a' || lastChar == 'e' || lastChar == 'i' || lastChar == 'o' || lastChar == 'i'){
+            //if(lastChar == 'a' || lastChar == 'e' || lastChar == 'i' || lastChar == 'o' || lastChar == 'u'){
+            // Voyelle supplementaire pour conserver la sonorite
+            if(lastChar == 'u'){
                 base = base.substring(0, base.length() - 1);
             }
+            
+            /*String[] parts = base.split("-");
 
+            return parseNumber(parts);*/
             return parseCount(base);
         }
 
@@ -87,20 +105,138 @@ public class NumberConverter {
         return 0;
     }
 
-    private static long parseCount(String countStr){
+    private static long parseCount(String countStr){        
+        for(int i=0; i<tenPowerMap.length; i++){
+        	if(Math.abs(tenPowerMap[i].length() - countStr.length()) <=1 && tenPowerMap[i].startsWith(countStr)){
+                return (int)Math.pow(10, (i+1));
+            }
+        }
+    	
         for(int i=0; i<tenStepMap.length; i++){
-            if(tenStepMap[i].startsWith(countStr)){
+            if(Math.abs(tenStepMap[i].length() - countStr.length()) <=1 && tenStepMap[i].startsWith(countStr)){
                 return (i+1) * 10;
             }
         }
 
         for(int i=0; i<numberMap.length; i++){
-            if(numberMap[i].startsWith(countStr)){
+            if(Math.abs(numberMap[i].length() - countStr.length()) <=1 && numberMap[i].startsWith(countStr)){
                 return (i+1);
             }
         }
         
         return 0;
+    }
+    
+    private static long parseNumber(String[] parts){
+    	long lastFactor = 1;
+    	long result = 0;
+    	long currentValue = 0;
+    	
+    	if(parts.length == 1){
+    		return parseCount(parts[0]);
+    	}
+    	
+    	/*currentValue = parseCount(parts[0]);
+    	lastFactor = currentValue;
+    	
+    	for(int i=1; i<parts.length; i++){
+    		long tmpValue = parseCount(parts[i]);
+    		
+    		if(tmpValue > currentValue){
+    			lastFactor *= tmpValue;
+    		} else {
+    			lastFactor += tmpValue;
+    		}
+    		
+    		currentValue = tmpValue;
+    	}
+    	
+    	result += lastFactor;*/
+    	
+    	ArrayList<Long> numberParts = new ArrayList<Long>();
+    	//int i = 1;
+    	//int currentValue = 0;
+    	int i = 0;
+    	
+    	while(i < parts.length){
+    		if(parts[i].equals("et")){
+    			i++;
+    		}
+    		
+    		if(i >= parts.length){
+    			break;
+    		}
+    		
+    		currentValue = parseCount(parts[i]);
+    		long tmpValue = 0;
+    		
+    		i++;
+    		
+    		while(i < parts.length){    			
+    			tmpValue = parseCount(parts[i]);
+    			
+    			if(tmpValue < currentValue){
+    				currentValue += tmpValue;
+    				i++;
+    			} else {
+    				currentValue *= tmpValue;
+    				i++;
+    				numberParts.add(currentValue);
+    				break;
+    			}
+    		}
+    	}
+    	
+    	numberParts.add(currentValue);
+    	System.out.println(numberParts);
+    	
+    	/*currentValue = parseCount(parts[0]);
+    	
+    	while(i < parts.length){
+    		if(!parts[i].equals("et")){
+    			long tmpValue = parseCount(parts[i]);
+    			
+    			if(tmpValue > currentValue){
+    				numberParts.add(currentValue);
+    				currentValue = tmpValue;
+    			} else {
+    				currentValue += tmpValue;
+    			}    			
+    		}
+    		
+    		i++;
+    	}
+    	
+    	numberParts.add(currentValue);
+    	
+    	result = numberParts.get(0);
+    	currentValue = numberParts.get(0);
+    	
+    	for(i=1; i<numberParts.size(); i++){
+    		if(currentValue < numberParts.get(i)){
+    			currentValue *= numberParts.get(i);
+    		} else {
+    			result += currentValue;
+    		}
+    	}
+    	
+    	result += currentValue;
+    	
+    	/*for(String nb: parts){    		
+    		if(nb.equals("et")){
+    			
+    		} else {
+        		currentValue = parseCount(nb);
+        		
+        		if(currentValue > lastFactor){
+        			lastFactor *= currentValue;
+        		} else {
+        			lastFactor += currentValue;
+        		}
+    		}
+    	}*/
+    	
+    	return result;
     }
 
     public static boolean isACountData(WordBuffer words){

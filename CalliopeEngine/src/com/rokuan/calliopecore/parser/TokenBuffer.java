@@ -18,6 +18,10 @@ public class TokenBuffer<T> extends ArrayList<T> {
     	super(other);
     	this.currentIndex = other.currentIndex;
     }
+    
+    public boolean isIntoBounds(){
+    	return (currentIndex >= 0 && currentIndex < this.size());
+    }
 
     public boolean hasPrevious(){
     	return currentIndex > 0;

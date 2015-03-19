@@ -47,7 +47,7 @@ public class SentencePattern {
 	// Quel(s/le(s)) est/sont
 	public static final WordPattern resultQuestionPattern = WordPattern.sequence(
 			WordPattern.or(WordPattern.simple(WordType.INTERROGATIVE_PRONOUN), WordPattern.simple(WordType.INTERROGATIVE_ADJECTIVE)),
-			WordPattern.simple(WordType.VERB, "être")
+			WordPattern.simple(WordType.VERB, null, "être")
 			);
 
 	/*public static final WordPattern nominalGroupPattern = WordPattern.sequence(

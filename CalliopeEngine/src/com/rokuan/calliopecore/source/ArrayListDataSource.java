@@ -101,4 +101,62 @@ public class ArrayListDataSource<DataType> extends ArrayList<DataType> implement
 	public boolean hasNextData(){
 		return currentIndex < this.size() - 1;
 	}
+
+	@Override
+	public DataSource<DataType> removeData(CountObject count) {
+		return removeData(count, null);
+	}
+
+	@Override
+	public DataSource<DataType> removeData(CountObject count,
+			List<CriterionObject> criteria) {
+		ArrayListDataSource<DataType> result = new ArrayListDataSource<DataType>();
+		int fromIndex = 0, toIndex = 0;
+
+		if(count != null){
+			switch(count.countType){
+			case ALL:
+				result.addAll(this);
+				this.clear();
+				break;
+
+			case LIMIT:
+				switch(count.range){
+				case FIRST:
+					fromIndex = 0;
+					toIndex = (int)Math.min(this.size(), count.count);
+					result.addAll(this.subList(fromIndex, toIndex));
+					this.removeRange(fromIndex, toIndex);
+					break;
+
+				case FIXED:
+					result.add(this.remove((int)count.position - 1));
+					break;
+
+				case LAST:
+					fromIndex = (int)Math.max(0, this.size() - count.count);
+					toIndex = this.size();
+					result.addAll(this.subList(fromIndex, toIndex));
+					this.removeRange(fromIndex, toIndex);
+					break;
+				}
+				break;
+				
+			case INTERVAL:
+				// TODO:
+				break;
+			}
+		}
+		
+		if(criteria != null){
+			
+		}
+		
+		return result;
+	}
+
+	@Override
+	public DataType removeData(int index) {
+		return this.remove(index);
+	}
 }

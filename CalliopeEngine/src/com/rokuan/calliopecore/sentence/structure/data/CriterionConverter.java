@@ -93,7 +93,7 @@ public class CriterionConverter {
 
 				criteria.add(fCriterion);
 
-				if(words.getCurrentElement().isOfType(WordType.PREPOSITION_AND)){
+				if(words.hasNext() && words.getCurrentElement().isOfType(WordType.PREPOSITION_AND)){
 					words.consume();
 				}
 			} while(words.syntaxStartsWith(fieldCriteriaPattern));
@@ -115,7 +115,7 @@ public class CriterionConverter {
 				
 				criteria.add(sCriterion);
 				
-				if(words.getCurrentElement().isOfType(WordType.PREPOSITION_AND)){
+				if(words.hasNext() && words.getCurrentElement().isOfType(WordType.PREPOSITION_AND)){
 					words.consume();
 				}
 			} while(words.syntaxStartsWith(criteriaPattern));
@@ -132,7 +132,7 @@ public class CriterionConverter {
 				
 				criteria.add(sCriterion);
 				
-				if(words.getCurrentElement().isOfType(WordType.PREPOSITION_AND)){
+				if(words.hasNext() && words.getCurrentElement().isOfType(WordType.PREPOSITION_AND)){
 					words.consume();
 				}
 			} while(words.syntaxStartsWith(criteriaPattern));

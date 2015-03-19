@@ -14,10 +14,11 @@ import com.rokuan.calliopecore.sentence.structure.data.time.TimeObject;
  * Created by LEBEAU Christophe on 20/02/2015.
  */
 public class ComplementObject {
-	public CountObject count;
+	public CountObject count = new CountObject();
 	public List<Adjective> acjectives = new ArrayList<Adjective>();
-    public String object;
+    public String object = "";
     public ComplementObject of;
+    public String to;
     public TimeObject when;
     public ComplementObject why;
     public PlaceObject where;

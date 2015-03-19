@@ -99,7 +99,7 @@ public class DataSourceTest extends TestCase {
 
 			result.toArray(resultsArray);
 
-			assertTrue(result.size() <= 7);
+			assertTrue(result.size() <= 3);
 			assertTrue(Arrays.deepEquals(new String[]{ "x", "y", "z" }, resultsArray));
 		}
 	}
@@ -113,5 +113,73 @@ public class DataSourceTest extends TestCase {
 		ArrayListDataSource<String> result = (ArrayListDataSource<String>)dataSource.getData(count);
 		
 		assertEquals(dataSource.size(), result.size());
+	}
+	
+	@Test
+	public void testRemoveAll(){
+		CountObject count = new CountObject();
+		
+		count.countType = CountType.ALL;
+		
+		dataSource.removeData(count);		
+		assertTrue(dataSource.isEmpty());
+	}
+	
+	@Test
+	public void testRemoveFirst(){
+		CountObject count = new CountObject();
+		
+		count.countType = CountType.LIMIT;
+		count.count = 3;
+		count.range = Range.FIRST;
+		
+		ArrayListDataSource<String> removed = (ArrayListDataSource<String>)dataSource.removeData(count);
+		
+		assertEquals(23, dataSource.size());
+		assertEquals(3, removed.size());
+		assertEquals("d", dataSource.get(0));
+		
+		System.out.println("-- REMOVE FIRST");
+		System.out.println("Current:" + dataSource.toString());
+		System.out.println("Removed:" + removed.toString());
+	}
+	
+	@Test
+	public void testRemoveLast(){
+		CountObject count = new CountObject();
+		
+		count.countType = CountType.LIMIT;
+		count.count = 5;
+		count.range = Range.LAST;
+		
+		ArrayListDataSource<String> removed = (ArrayListDataSource<String>)dataSource.removeData(count);
+		
+		assertEquals(21, dataSource.size());
+		assertEquals(5, removed.size());
+		assertEquals("u", dataSource.get(dataSource.size() - 1));
+		
+		System.out.println("-- REMOVE LAST");
+		System.out.println("Current:" + dataSource.toString());
+		System.out.println("Removed:" + removed.toString());
+	}
+	
+	@Test
+	public void testRemoveFixed(){
+		CountObject count = new CountObject();
+		
+		count.countType = CountType.LIMIT;
+		count.count = 1;
+		count.range = Range.FIXED;
+		count.position = 7;
+		
+		ArrayListDataSource<String> removed = (ArrayListDataSource<String>)dataSource.removeData(count);
+		
+		assertEquals(25, dataSource.size());
+		assertEquals(1, removed.size());
+		assertEquals("g", removed.get(0));
+		
+		System.out.println("-- REMOVE LAST");
+		System.out.println("Current:" + dataSource.toString());
+		System.out.println("Removed:" + removed.toString());
 	}
 }
