@@ -50,7 +50,8 @@ public class Word {
         CONJUGATION_LINK,	// t
         SUPERLATIVE,	// moins/plus
         TARGET_PRONOUN,	// moi/toi/me/te/...
-        DATE_UNIT_HOUR
+        DATE_UNIT_HOUR,
+        MEAN_OF_TRANSPORT // pied/voiture/bus/avion
     }
 
     private List<WordType> types = new ArrayList<WordType>();

@@ -8,7 +8,8 @@ import com.rokuan.calliopecore.sentence.Type.Pronoun;
 public abstract class InterpretationObject {
     public enum RequestType {
         ORDER,
-        QUESTION
+        QUESTION,
+        AFFIRMATION
     }
 
     //public EngineAction action;

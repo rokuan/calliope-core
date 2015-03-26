@@ -22,6 +22,7 @@ public class ComplementObject {
     public TimeObject when;
     public ComplementObject why;
     public PlaceObject where;
+    public String how;
     public List<CriterionObject> criteria = new ArrayList<CriterionObject>();
 
     public ComplementObject(){

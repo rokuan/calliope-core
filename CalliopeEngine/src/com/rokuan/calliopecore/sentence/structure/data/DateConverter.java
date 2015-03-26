@@ -21,28 +21,28 @@ public class DateConverter {
 	private static final int DEFAULT_DATE_FIELD_VALUE = -1;
 
 	// (NUMBER | NUMERICAL_POSITION) (DATE_MONTH NUMBER?)?
-	private static WordPattern fromDatePattern = WordPattern.sequence(
+	private static final WordPattern fromDatePattern = WordPattern.sequence(
 			WordPattern.or(WordPattern.simple(WordType.NUMBER), WordPattern.simple(WordType.NUMERICAL_POSITION)),
 			WordPattern.optional(WordPattern.sequence(
 					WordPattern.simple(WordType.DATE_MONTH), 
 					WordPattern.optional(WordPattern.simple(WordType.NUMBER))))
 			);
 	// (NUMBER | NUMERICAL_POSITION) DATE_MONTH NUMBER?
-	private static WordPattern toDatePattern = WordPattern.sequence(
+	private static final WordPattern toDatePattern = WordPattern.sequence(
 			WordPattern.or(WordPattern.simple(WordType.NUMBER), WordPattern.simple(WordType.NUMERICAL_POSITION)),
 			WordPattern.sequence(
 					WordPattern.simple(WordType.DATE_MONTH), 
 					WordPattern.optional(WordPattern.simple(WordType.NUMBER)))
 			);
 
-	public static WordPattern fromToDatePattern = WordPattern.sequence(
+	public static final WordPattern fromToDatePattern = WordPattern.sequence(
 			WordPattern.simple(Word.WordType.PREPOSITION_FROM),
 			WordPattern.or(fromDatePattern, WordPattern.simple(WordType.DATE)),
 			WordPattern.simple(Word.WordType.PREPOSITION_TO),
 			WordPattern.or(toDatePattern, WordPattern.simple(WordType.DATE))
 			);
 
-	public static WordPattern betweenDatePattern = WordPattern.sequence(
+	public static final WordPattern betweenDatePattern = WordPattern.sequence(
 			WordPattern.simple(WordType.PREPOSITION_BETWEEN),
 			WordPattern.or(
 					WordPattern.sequence(WordPattern.simple(WordType.DEFINITE_ARTICLE), fromDatePattern),
@@ -61,13 +61,29 @@ public class DateConverter {
 			WordPattern.optional(WordPattern.simple(WordType.NUMBER))
 			);*/
 
-	public static WordPattern fixedDatePattern = WordPattern.sequence(
+	public static final WordPattern fixedDatePattern = WordPattern.sequence(
 			WordPattern.simple(WordType.DEFINITE_ARTICLE),
 			WordPattern.or(WordPattern.simple(WordType.NUMBER), WordPattern.simple(WordType.NUMERICAL_POSITION)),
 			WordPattern.simple(WordType.DATE_MONTH),
 			WordPattern.optional(WordPattern.simple(WordType.NUMBER))
 			//WordPattern.optional(timePattern)
 			);
+	public static final WordPattern minutesDefinitionPattern = WordPattern.or(
+			WordPattern.sequence(
+					WordPattern.or(WordPattern.simple(WordType.ANY, "moins"), WordPattern.simple(WordType.PREPOSITION_AND), WordPattern.simple(WordType.INDEFINITE_ARTICLE, "un(e?)")),
+			WordPattern.optional(WordPattern.simple(WordType.DEFINITE_ARTICLE)),
+			WordPattern.simple(WordType.ANY, "quart|demi(e?)")
+			));
+	public static final WordPattern timePattern = WordPattern.or(
+			// TODO:
+			);
+	
+	public static final WordPattern timeDeclarationPattern = WordPattern.sequence(
+			WordPattern.optional(WordPattern.sequence(WordPattern.simple(WordType.ANY, "quand"), WordPattern.simple(WordType.PERSONAL_PRONOUN, "il"), WordPattern.simple(WordType.VERB, "sera"))
+					),
+					timePattern
+					);
+			
 
 	public static boolean isADateData(WordBuffer words){
 		return WordPattern.syntaxStartsWith(words, fromToDatePattern)

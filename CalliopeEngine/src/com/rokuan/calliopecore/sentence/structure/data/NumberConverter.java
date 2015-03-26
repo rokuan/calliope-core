@@ -67,6 +67,8 @@ public class NumberConverter {
     public static final WordPattern quantityPattern = WordPattern.sequence(
     		WordPattern.simple(Word.WordType.QUANTITY), 
     		WordPattern.simple(Word.WordType.DEFINITE_ARTICLE));
+    
+    // TODO: les intervalles (du 3eme au 5eme)
 
     public static long parsePosition(String posStr){
         if(posStr.equals("premier") || posStr.equals("première")){
@@ -95,7 +97,7 @@ public class NumberConverter {
             return parseCount(base);
         }
 
-        if(Pattern.compile("\\d+ème$").matcher(posStr).find()){
+        if(Pattern.compile("\\d+(è|e)me$").matcher(posStr).find()){
             return Long.parseLong(posStr.substring(0, posStr.length() - 3));
         } else if(Pattern.compile("\\d+e$").matcher(posStr).find()){
             return Long.parseLong(posStr.substring(0, posStr.length() - 1));
@@ -256,33 +258,7 @@ public class NumberConverter {
     	}
     	
         CountObject result = new CountObject();
-
-        /*if(words.getCurrentElement().isOfType(Word.WordType.NUMERICAL_POSITION)){
-            result.count = 1;
-            result.countType = CountObject.CountType.LIMIT;
-            //result.position = Long.parseLong(words.getCurrentElement().getValue());
-            result.position = parsePosition(words.getCurrentElement().getValue());
-            result.range = CountObject.Range.FIXED;
-        } else if(words.syntaxStartsWith(Word.WordType.NUMBER, Word.WordType.NUMERICAL_POSITION)){
-            try{
-                result.count = Long.parseLong(words.getCurrentElement().getValue());
-                result.countType = CountObject.CountType.LIMIT;
-                words.next();
-
-                String posValue = words.getCurrentElement().getValue();
-
-                if(posValue.startsWith("premi")){
-                    result.position = 1;
-                    result.range = CountObject.Range.FIRST;
-                } else if(posValue.startsWith("derni")){
-                    result.range = CountObject.Range.LAST;
-                } else {
-                    // TODO: error
-                }
-            } catch(Exception e) {
-
-            }
-        }*/
+        
         if(words.syntaxStartsWith(fixedItemPattern)){        	
         	words.consume();
         	result.count = 1;

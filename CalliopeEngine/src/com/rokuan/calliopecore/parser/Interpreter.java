@@ -18,6 +18,7 @@ import com.rokuan.calliopecore.sentence.structure.data.DateConverter;
 import com.rokuan.calliopecore.sentence.structure.data.NumberConverter;
 import com.rokuan.calliopecore.sentence.structure.data.PhoneNumberConverter;
 import com.rokuan.calliopecore.sentence.structure.data.PlaceConverter;
+import com.rokuan.calliopecore.sentence.structure.data.WayConverter;
 
 
 /**
@@ -163,6 +164,8 @@ public class Interpreter {
 				/*} else if(words.syntaxStartsWith(
 					WordPattern.or(WordPattern.simple(WordType.DEFINITE_ARTICLE), WordPattern.simple(WordType.INDEFINITE_ARTICLE)), 
 					WordPattern.simple(WordType.COMMON_NAME))){*/
+			} else if(WayConverter.isAWayData(words)){ 
+				complement.how = WayConverter.parseWayData(words);
 			} else if(words.syntaxStartsWith(
 					WordPattern.optional(WordPattern.or(WordPattern.simple(WordType.DEFINITE_ARTICLE), WordPattern.simple(WordType.INDEFINITE_ARTICLE))), 
 					WordPattern.simple(WordType.COMMON_NAME))){
