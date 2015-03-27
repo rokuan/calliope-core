@@ -1,7 +1,9 @@
 package com.rokuan.calliopecore.sentence;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by LEBEAU Christophe on 22/02/2015.
@@ -39,6 +41,7 @@ public class Word {
         DATE_MONTH,
         DATE,
         DATE_UNIT,
+        TIME,
         // New
         QUANTITY,
         PREPOSITION_BETWEEN,	// entre
@@ -50,11 +53,12 @@ public class Word {
         CONJUGATION_LINK,	// t
         SUPERLATIVE,	// moins/plus
         TARGET_PRONOUN,	// moi/toi/me/te/...
-        DATE_UNIT_HOUR,
+        DATE_UNIT_HOUR,	// midi/minuit
         MEAN_OF_TRANSPORT // pied/voiture/bus/avion
     }
 
-    private List<WordType> types = new ArrayList<WordType>();
+    //private List<WordType> types = new ArrayList<WordType>();
+    private Set<WordType> types = new HashSet<WordType>();
     private String value;
     private VerbConjugation verbInfo;
     
@@ -99,7 +103,7 @@ public class Word {
 		this.verbInfo = verbInfo;
 	}
 
-	public List<WordType> getTypes(){
+	public Set<WordType> getTypes(){
 		return types;
 	}
 }

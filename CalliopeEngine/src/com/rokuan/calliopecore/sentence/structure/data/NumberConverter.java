@@ -71,7 +71,7 @@ public class NumberConverter {
     // TODO: les intervalles (du 3eme au 5eme)
 
     public static long parsePosition(String posStr){
-        if(posStr.equals("premier") || posStr.equals("première")){
+        if(posStr.equals("premier") || posStr.equals("première") || posStr.equals("1er") || posStr.equals("1ère") || posStr.equals("1ere")){
             return 1;
         }
 

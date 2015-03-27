@@ -37,6 +37,12 @@ public abstract class TimeObject {
     	RELATIVE,
     	PERIOD
     }
+    
+    public enum DateDefinition {
+    	DATE_AND_TIME,
+    	DATE_ONLY,
+    	TIME_ONLY
+    }
 
     public TimeTense tense = TimeTense.PRESENT;
     private TimeType type;

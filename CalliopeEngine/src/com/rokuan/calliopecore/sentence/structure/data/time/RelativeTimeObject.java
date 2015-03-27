@@ -8,6 +8,7 @@ import java.util.Date;
  */
 public class RelativeTimeObject extends TimeObject {
     public int[] periods = new int[TimeUnit.values().length];
+    public DateDefinition dateDefinition = DateDefinition.DATE_AND_TIME;
 
     public RelativeTimeObject(){
     	super(TimeType.RELATIVE);
