@@ -54,7 +54,10 @@ public class Word {
         SUPERLATIVE,	// moins/plus
         TARGET_PRONOUN,	// moi/toi/me/te/...
         DATE_UNIT_HOUR,	// midi/minuit
-        MEAN_OF_TRANSPORT // pied/voiture/bus/avion
+        MEAN_OF_TRANSPORT, // pied/voiture/bus/avion
+        PLACE_TYPE,	// restaurant/cinéma/...
+        CITY,
+        COUNTRY
     }
 
     //private List<WordType> types = new ArrayList<WordType>();
