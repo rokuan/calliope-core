@@ -7,7 +7,12 @@ import java.util.Stack;
  * Created by LEBEAU Christophe on 24/02/2015.
  */
 public class TokenBuffer<T> extends ArrayList<T> {
-    private int currentIndex = 0;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7427977638775743861L;
+	
+	private int currentIndex = 0;
     private Stack<Integer> tmpIndexes = new Stack<Integer>();
     
     public TokenBuffer(){

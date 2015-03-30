@@ -61,7 +61,8 @@ public class Interpreter {
 			qObj.action = getActionFromVerb(words.getCurrentElement().getVerbInfo());
 			words.consume();
 
-			qObj.what = parseComplementObject(words);
+			//qObj.what = parseComplementObject(words);
+			parseObject(words, qObj);
 
 			inter = qObj;			
 			//return inter;			
@@ -85,7 +86,8 @@ public class Interpreter {
 
 			oObject.action = getActionFromVerb(words.getCurrentElement().getVerbInfo());
 			words.consume();
-			oObject.what = parseComplementObject(words);
+			//oObject.what = parseComplementObject(words);
+			parseObject(words, oObject);
 
 			inter = oObject;
 		} else if(words.syntaxStartsWith(SentencePattern.orderPattern)){
@@ -104,7 +106,8 @@ public class Interpreter {
 				words.consume();
 			}
 
-			inter.what = parseComplementObject(words);
+			//inter.what = parseComplementObject(words);
+			parseObject(words, inter);
 			//return inter;
 		} else if(words.syntaxStartsWith(SentencePattern.resultQuestionPattern)){
 			// Quel est/Quelle a ete
@@ -123,7 +126,8 @@ public class Interpreter {
 			//qObject.action = db.getVerb(words.getCurrentElement().getValue()).getAction();	
 			words.consume();
 
-			qObject.what = parseComplementObject(words);
+			//qObject.what = parseComplementObject(words);
+			parseObject(words, qObject);
 
 			inter = qObject;
 		} else {
@@ -134,7 +138,7 @@ public class Interpreter {
 		return inter;
 	}
 
-	public ComplementObject parseComplementObject(WordBuffer words){
+	/*public ComplementObject parseComplementObject(WordBuffer words){
 		if(words.getCurrentIndex() > words.size()){
 			return null;
 		}
@@ -161,9 +165,6 @@ public class Interpreter {
 				} else {
 					complement.to = phoneNumber;
 				}
-				/*} else if(words.syntaxStartsWith(
-					WordPattern.or(WordPattern.simple(WordType.DEFINITE_ARTICLE), WordPattern.simple(WordType.INDEFINITE_ARTICLE)), 
-					WordPattern.simple(WordType.COMMON_NAME))){*/
 			} else if(WayConverter.isAWayData(words)){ 
 				complement.how = WayConverter.parseWayData(words);
 			} else if(words.syntaxStartsWith(
@@ -201,6 +202,68 @@ public class Interpreter {
 		}
 
 		return complement;
+	}*/
+	
+	public void parseObject(WordBuffer words, InterpretationObject obj){
+		if(words.getCurrentIndex() > words.size()){
+			return;
+		}
+
+		while(words.isIntoBounds()){
+			if(words.syntaxStartsWith(Word.WordType.PROPER_NAME)){
+				// TODO: gerer les monuments
+				obj.what = words.getCurrentElement().getValue();
+				words.consume();
+			} else if(DateConverter.isADateData(words)){
+				obj.when = DateConverter.parseDateObject(words);
+			} else if(NumberConverter.isACountData(words)){
+				obj.count = NumberConverter.parseCountObject(words);
+			} else if(PhoneNumberConverter.isAPhoneNumber(words)){	
+				// TODO: creer une classe pour les numeros de telephone ?
+				boolean objectField = words.getCurrentElement().isOfType(WordType.DEFINITE_ARTICLE);
+				
+				String phoneNumber = PhoneNumberConverter.parsePhoneNumber(words);
+				
+				if(objectField){
+					obj.what = phoneNumber;
+				} else {
+					obj.to = phoneNumber;
+				}
+			} else if(WayConverter.isAWayData(words)){ 
+				obj.how = WayConverter.parseWayData(words);
+			} else if(words.syntaxStartsWith(
+					WordPattern.optional(WordPattern.or(WordPattern.simple(WordType.DEFINITE_ARTICLE), WordPattern.simple(WordType.INDEFINITE_ARTICLE))), 
+					WordPattern.simple(WordType.COMMON_NAME))){
+				words.consume();
+				obj.what = words.getCurrentElement().getValue();
+				words.consume();
+
+				if(words.isIntoBounds() && words.getCurrentElement().isOfType(WordType.PREPOSITION_OF)){
+					words.consume();
+
+					if(words.isIntoBounds() && words.getCurrentElement().isOfType(WordType.DEFINITE_ARTICLE)){
+						words.consume();
+					}
+
+					if(words.isIntoBounds() && words.getCurrentElement().isOfType(WordType.COMMON_NAME)){
+						ComplementObject ofObj = new ComplementObject();
+
+						ofObj.what = words.getCurrentElement().getValue();
+						words.consume();
+
+						obj.of = ofObj;
+					}
+					//} else if(words.hasNext() && words.getCurrentElement().isOfType(WordType.DEFINITE_ARTICLE)){
+				} else if(CriterionConverter.isACriterionData(words)){
+					// TODO:
+					obj.criteria = CriterionConverter.parseCriterionData(words); 
+				}
+			} else if(PlaceConverter.isAPlaceData(words)){
+				obj.where = PlaceConverter.parsePlaceObject(words);
+			} else {
+				break;
+			}
+		}
 	}
 
 	private static Enum<?> getActionFromVerb(VerbConjugation conjug){

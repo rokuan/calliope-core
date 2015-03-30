@@ -9,6 +9,11 @@ import com.rokuan.calliopecore.sentence.Word;
  * Created by LEBEAU Christophe on 01/03/2015.
  */
 public class WordBuffer extends TokenBuffer<Word> {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -403337949871603827L;
+
 	public WordBuffer(){
 		super();
 	}

@@ -1,6 +1,5 @@
 package com.rokuan.calliopecore.sentence.structure.data;
 
-import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 import com.rokuan.calliopecore.parser.WordBuffer;
@@ -129,7 +128,7 @@ public class NumberConverter {
         return 0;
     }
     
-    private static long parseNumber(String[] parts){
+    /*private static long parseNumber(String[] parts){
     	long lastFactor = 1;
     	long result = 0;
     	long currentValue = 0;
@@ -137,23 +136,6 @@ public class NumberConverter {
     	if(parts.length == 1){
     		return parseCount(parts[0]);
     	}
-    	
-    	/*currentValue = parseCount(parts[0]);
-    	lastFactor = currentValue;
-    	
-    	for(int i=1; i<parts.length; i++){
-    		long tmpValue = parseCount(parts[i]);
-    		
-    		if(tmpValue > currentValue){
-    			lastFactor *= tmpValue;
-    		} else {
-    			lastFactor += tmpValue;
-    		}
-    		
-    		currentValue = tmpValue;
-    	}
-    	
-    	result += lastFactor;*/
     	
     	ArrayList<Long> numberParts = new ArrayList<Long>();
     	//int i = 1;
@@ -192,54 +174,8 @@ public class NumberConverter {
     	numberParts.add(currentValue);
     	System.out.println(numberParts);
     	
-    	/*currentValue = parseCount(parts[0]);
-    	
-    	while(i < parts.length){
-    		if(!parts[i].equals("et")){
-    			long tmpValue = parseCount(parts[i]);
-    			
-    			if(tmpValue > currentValue){
-    				numberParts.add(currentValue);
-    				currentValue = tmpValue;
-    			} else {
-    				currentValue += tmpValue;
-    			}    			
-    		}
-    		
-    		i++;
-    	}
-    	
-    	numberParts.add(currentValue);
-    	
-    	result = numberParts.get(0);
-    	currentValue = numberParts.get(0);
-    	
-    	for(i=1; i<numberParts.size(); i++){
-    		if(currentValue < numberParts.get(i)){
-    			currentValue *= numberParts.get(i);
-    		} else {
-    			result += currentValue;
-    		}
-    	}
-    	
-    	result += currentValue;
-    	
-    	/*for(String nb: parts){    		
-    		if(nb.equals("et")){
-    			
-    		} else {
-        		currentValue = parseCount(nb);
-        		
-        		if(currentValue > lastFactor){
-        			lastFactor *= currentValue;
-        		} else {
-        			lastFactor += currentValue;
-        		}
-    		}
-    	}*/
-    	
     	return result;
-    }
+    }*/
 
     public static boolean isACountData(WordBuffer words){
         // TODO:

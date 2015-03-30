@@ -16,7 +16,7 @@ import com.rokuan.calliopecore.sentence.structure.data.time.TimeObject;
 public class ComplementObject {
 	public CountObject count = new CountObject();
 	public List<Adjective> acjectives = new ArrayList<Adjective>();
-    public String object = "";
+    public String what = "";
     public ComplementObject of;
     public String to;
     public TimeObject when;

@@ -8,6 +8,11 @@ import com.rokuan.calliopecore.sentence.structure.data.count.CountObject;
 import com.rokuan.calliopecore.sentence.structure.data.criteria.CriterionObject;
 
 public class ArrayListDataSource<DataType> extends ArrayList<DataType> implements DataSource<DataType> {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1908414990889304385L;
+	
 	private int currentIndex = 0;
 
 	public ArrayListDataSource() {
@@ -53,6 +58,10 @@ public class ArrayListDataSource<DataType> extends ArrayList<DataType> implement
 					result.addAll(this.subList((int)Math.max(0, this.size() - count.count), this.size()));
 					break;
 				}
+				break;
+				
+			case INTERVAL:
+				// TODO:
 				break;
 			}
 		}
