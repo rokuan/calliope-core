@@ -24,10 +24,8 @@ public abstract class InterpretationObject {
     //public Verb verb;
     private RequestType type;
     public Enum<?> action;
-    public Target subject = new Target(Pronoun.TU);	// Calliope
-    public Target target;	
-    //public List<ComplementObject> what;
-    //public ComplementObject what;
+    public NominalGroup subject = new PronounTarget(Pronoun.TU);	// Calliope
+    public NominalGroup target;	
     public CountObject count = new CountObject();
 	public List<Adjective> acjectives = new ArrayList<Adjective>();
     public String what = "";

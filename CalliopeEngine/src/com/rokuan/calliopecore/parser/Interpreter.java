@@ -10,8 +10,8 @@ import com.rokuan.calliopecore.sentence.Word.WordType;
 import com.rokuan.calliopecore.sentence.structure.ComplementObject;
 import com.rokuan.calliopecore.sentence.structure.InterpretationObject;
 import com.rokuan.calliopecore.sentence.structure.OrderObject;
+import com.rokuan.calliopecore.sentence.structure.PronounTarget;
 import com.rokuan.calliopecore.sentence.structure.QuestionObject;
-import com.rokuan.calliopecore.sentence.structure.Target;
 import com.rokuan.calliopecore.sentence.structure.QuestionObject.QuestionType;
 import com.rokuan.calliopecore.sentence.structure.data.CriterionConverter;
 import com.rokuan.calliopecore.sentence.structure.data.DateConverter;
@@ -46,12 +46,12 @@ public class Interpreter {
 			qObj.qType = QuestionType.YES_NO;
 
 			if(words.getCurrentElement().isOfType(WordType.PERSONAL_PRONOUN)){
-				qObj.target = new Target(Type.parseTargetPronoun(words.getCurrentElement().getValue()));
+				qObj.target = new PronounTarget(Type.parseTargetPronoun(words.getCurrentElement().getValue()));
 				words.consume();
 			}
 
 			words.consume();	// AUXILIARY
-			qObj.subject = new Target(Type.parseSubjectPronoun(words.getCurrentElement().getValue()));
+			qObj.subject = new PronounTarget(Type.parseSubjectPronoun(words.getCurrentElement().getValue()));
 			words.consume();
 
 			if(words.getCurrentElement().isOfType(WordType.CONJUGATION_LINK)){
@@ -80,7 +80,7 @@ public class Interpreter {
 			}
 
 			if(words.getCurrentElement().isOfType(WordType.PERSONAL_PRONOUN)){
-				oObject.target = new Target(Type.parseTargetPronoun(words.getCurrentElement().getValue()));
+				oObject.target = new PronounTarget(Type.parseTargetPronoun(words.getCurrentElement().getValue()));
 				words.consume();
 			}
 
@@ -102,7 +102,8 @@ public class Interpreter {
 			words.consume();
 
 			if(words.isIntoBounds() && words.getCurrentElement().isOfType(WordType.TARGET_PRONOUN)){
-				inter.target = new Target(Type.parseTargetPronoun(words.getCurrentElement().getValue()));
+				//inter.target = new PronounTarget(Type.parseTargetPronoun(words.getCurrentElement().getValue()));
+				inter.target = new PronounTarget(Type.parsePossessivePronoun(words.getCurrentElement().getValue()));
 				words.consume();
 			}
 

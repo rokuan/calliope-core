@@ -13,7 +13,7 @@ import com.rokuan.calliopecore.sentence.structure.data.time.TimeObject;
 /**
  * Created by LEBEAU Christophe on 20/02/2015.
  */
-public class ComplementObject {
+public class ComplementObject extends NominalGroup {
 	public CountObject count = new CountObject();
 	public List<Adjective> acjectives = new ArrayList<Adjective>();
     public String what = "";
@@ -26,6 +26,6 @@ public class ComplementObject {
     public List<CriterionObject> criteria = new ArrayList<CriterionObject>();
 
     public ComplementObject(){
-
+    	super(TargetType.NOMINAL_GROUP);
     }
 }

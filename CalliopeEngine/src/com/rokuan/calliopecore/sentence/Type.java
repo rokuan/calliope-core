@@ -71,4 +71,22 @@ public class Type {
 
         return Pronoun.UNDEFINED;
     }
+    
+    public static Pronoun parsePossessivePronoun(String str){
+    	if(str.equals("moi")){
+    		return Pronoun.JE;
+    	} else if(str.equals("toi")){
+    		return Pronoun.TU;
+    	} else if(str.equals("lui")){
+    		return Pronoun.IL_ELLE_ON;
+    	} else if(str.equals("nous")){
+    		return Pronoun.NOUS;
+    	} else if(str.equals("vous")){
+    		return Pronoun.VOUS;
+    	} else if(str.equals("leur")){
+    		return Pronoun.ILS_ELLES;
+    	}
+    	
+    	return Pronoun.UNDEFINED;
+    }
 }
