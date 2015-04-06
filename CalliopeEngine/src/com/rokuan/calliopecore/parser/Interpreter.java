@@ -213,8 +213,12 @@ public class Interpreter {
 		while(words.isIntoBounds()){
 			if(words.syntaxStartsWith(Word.WordType.PROPER_NAME)){
 				// TODO: gerer les monuments
-				obj.what = words.getCurrentElement().getValue();
+				ComplementObject what = new ComplementObject();
+				
+				what.object = words.getCurrentElement().getValue();
 				words.consume();
+				
+				obj.what = what;
 			} else if(DateConverter.isADateData(words)){
 				obj.when = DateConverter.parseDateObject(words);
 			} else if(NumberConverter.isACountData(words)){
@@ -226,7 +230,10 @@ public class Interpreter {
 				String phoneNumber = PhoneNumberConverter.parsePhoneNumber(words);
 				
 				if(objectField){
-					obj.what = phoneNumber;
+					ComplementObject phoneObj = new ComplementObject();
+					
+					phoneObj.object = phoneNumber;
+					obj.what = phoneObj;
 				} else {
 					obj.to = phoneNumber;
 				}
@@ -235,8 +242,10 @@ public class Interpreter {
 			} else if(words.syntaxStartsWith(
 					WordPattern.optional(WordPattern.or(WordPattern.simple(WordType.DEFINITE_ARTICLE), WordPattern.simple(WordType.INDEFINITE_ARTICLE))), 
 					WordPattern.simple(WordType.COMMON_NAME))){
+				ComplementObject what = new ComplementObject();
+				
 				words.consume();
-				obj.what = words.getCurrentElement().getValue();
+				what.object = words.getCurrentElement().getValue();
 				words.consume();
 
 				if(words.isIntoBounds() && words.getCurrentElement().isOfType(WordType.PREPOSITION_OF)){
@@ -249,16 +258,18 @@ public class Interpreter {
 					if(words.isIntoBounds() && words.getCurrentElement().isOfType(WordType.COMMON_NAME)){
 						ComplementObject ofObj = new ComplementObject();
 
-						ofObj.what = words.getCurrentElement().getValue();
+						ofObj.object = words.getCurrentElement().getValue();
 						words.consume();
 
-						obj.of = ofObj;
+						what.of = ofObj;
 					}
 					//} else if(words.hasNext() && words.getCurrentElement().isOfType(WordType.DEFINITE_ARTICLE)){
 				} else if(CriterionConverter.isACriterionData(words)){
 					// TODO:
-					obj.criteria = CriterionConverter.parseCriterionData(words); 
+					what.criteria = CriterionConverter.parseCriterionData(words); 
 				}
+				
+				obj.what = what;
 			} else if(PlaceConverter.isAPlaceData(words)){
 				obj.where = PlaceConverter.parsePlaceObject(words);
 			} else {

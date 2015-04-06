@@ -96,7 +96,7 @@ public class DateConverter {
 			);
 
 	public static final WordPattern timeDeclarationPattern = WordPattern.sequence(
-			WordPattern.or(WordPattern.simple(WordType.PREPOSITION_AT), WordPattern.optional(WordPattern.sequence(WordPattern.simple(WordType.ANY, "quand"), WordPattern.simple(WordType.PERSONAL_PRONOUN, "il"), WordPattern.simple(WordType.VERB, "sera")))),
+			WordPattern.or(WordPattern.simple(WordType.PREPOSITION_AT), WordPattern.sequence(WordPattern.simple(WordType.ANY, "quand"), WordPattern.simple(WordType.PERSONAL_PRONOUN, "il"), WordPattern.simple(WordType.VERB, "sera"))),
 			timePattern
 			);
 

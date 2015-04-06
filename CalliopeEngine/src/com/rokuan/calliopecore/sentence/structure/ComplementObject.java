@@ -16,9 +16,8 @@ import com.rokuan.calliopecore.sentence.structure.data.time.TimeObject;
 public class ComplementObject extends NominalGroup {
 	public CountObject count = new CountObject();
 	public List<Adjective> acjectives = new ArrayList<Adjective>();
-    public String what = "";
+    public String object = "";
     public ComplementObject of;
-    public String to;
     public TimeObject when;
     public ComplementObject why;
     public PlaceObject where;

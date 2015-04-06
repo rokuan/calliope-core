@@ -8,6 +8,7 @@ import com.rokuan.calliopecore.sentence.Word;
 import com.rokuan.calliopecore.sentence.Word.WordType;
 import com.rokuan.calliopecore.sentence.structure.data.count.CountObject;
 import com.rokuan.calliopecore.sentence.structure.data.count.CountObject.CountType;
+import com.rokuan.calliopecore.sentence.structure.data.count.CountObject.Range;
 
 
 /**
@@ -66,6 +67,12 @@ public class NumberConverter {
     public static final WordPattern quantityPattern = WordPattern.sequence(
     		WordPattern.simple(Word.WordType.QUANTITY), 
     		WordPattern.simple(Word.WordType.DEFINITE_ARTICLE));
+    
+    public static final WordPattern simpleArticles = WordPattern.or(
+    		WordPattern.simple(WordType.DEFINITE_ARTICLE),
+    		WordPattern.simple(WordType.INDEFINITE_ARTICLE));
+    
+    public static final WordPattern countPattern = WordPattern.or(fixedItemPattern, fixedRangePattern, quantityPattern);
     
     // TODO: les intervalles (du 3eme au 5eme)
 
@@ -128,55 +135,6 @@ public class NumberConverter {
         return 0;
     }
     
-    /*private static long parseNumber(String[] parts){
-    	long lastFactor = 1;
-    	long result = 0;
-    	long currentValue = 0;
-    	
-    	if(parts.length == 1){
-    		return parseCount(parts[0]);
-    	}
-    	
-    	ArrayList<Long> numberParts = new ArrayList<Long>();
-    	//int i = 1;
-    	//int currentValue = 0;
-    	int i = 0;
-    	
-    	while(i < parts.length){
-    		if(parts[i].equals("et")){
-    			i++;
-    		}
-    		
-    		if(i >= parts.length){
-    			break;
-    		}
-    		
-    		currentValue = parseCount(parts[i]);
-    		long tmpValue = 0;
-    		
-    		i++;
-    		
-    		while(i < parts.length){    			
-    			tmpValue = parseCount(parts[i]);
-    			
-    			if(tmpValue < currentValue){
-    				currentValue += tmpValue;
-    				i++;
-    			} else {
-    				currentValue *= tmpValue;
-    				i++;
-    				numberParts.add(currentValue);
-    				break;
-    			}
-    		}
-    	}
-    	
-    	numberParts.add(currentValue);
-    	System.out.println(numberParts);
-    	
-    	return result;
-    }*/
-
     public static boolean isACountData(WordBuffer words){
         // TODO:
         /*return words.syntaxStartsWith(WordType.DEFINITE_ARTICLE, Word.WordType.NUMERICAL_POSITION) // le premier
@@ -184,7 +142,22 @@ public class NumberConverter {
                 || words.syntaxStartsWith(Word.WordType.QUANTITY, Word.WordType.DEFINITE_ARTICLE);	// tou(te)s les*/
     	return words.syntaxStartsWith(fixedItemPattern)
     			|| words.syntaxStartsWith(fixedRangePattern)
-    			|| words.syntaxStartsWith(quantityPattern);
+    			|| words.syntaxStartsWith(quantityPattern)
+    			|| words.syntaxStartsWith(simpleArticles);
+    }
+    
+    private static boolean isSingular(String article){
+    	String[] parts = article.split("-");
+    	
+    	for(String word: parts){
+    		char lastChar = word.charAt(word.length() - 1);
+    		
+    		if(lastChar == 's' || lastChar == 'x'){
+    			return false;
+    		}
+    	}
+    	
+    	return true;
     }
 
     public static CountObject parseCountObject(WordBuffer words){
@@ -195,7 +168,7 @@ public class NumberConverter {
     	
         CountObject result = new CountObject();
         
-        if(words.syntaxStartsWith(fixedItemPattern)){        	
+        if (words.syntaxStartsWith(fixedItemPattern)) {        	
         	words.consume();
         	result.count = 1;
             result.countType = CountObject.CountType.LIMIT;
@@ -203,7 +176,7 @@ public class NumberConverter {
             result.position = parsePosition(words.getCurrentElement().getValue());
             result.range = CountObject.Range.FIXED;
             words.consume();
-        } else if(words.syntaxStartsWith(fixedRangePattern)){
+        } else if(words.syntaxStartsWith(fixedRangePattern)) {
         	words.consume();
         	
         	try{
@@ -226,10 +199,23 @@ public class NumberConverter {
             } catch(Exception e) {
 
             }
-        } else if(words.syntaxStartsWith(quantityPattern)){
+        } else if(words.syntaxStartsWith(quantityPattern)) {
         	result.countType = CountType.ALL;
         	words.consume();
         	words.consume();
+        } else if(words.syntaxStartsWith(simpleArticles)) {
+        	boolean singular = isSingular(words.getCurrentElement().getValue());
+        	
+        	words.consume();
+        	
+        	if(singular){
+        		result.count = 1;
+        		result.countType = CountType.LIMIT;
+        		result.range = Range.FIXED;
+        		result.position = 1;
+        	} else {
+        		result.countType = CountType.ALL; 
+        	}
         }
 
         return result;

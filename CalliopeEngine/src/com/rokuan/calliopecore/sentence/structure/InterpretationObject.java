@@ -6,7 +6,6 @@ import java.util.List;
 import com.rokuan.calliopecore.sentence.Adjective;
 import com.rokuan.calliopecore.sentence.Type.Pronoun;
 import com.rokuan.calliopecore.sentence.structure.data.count.CountObject;
-import com.rokuan.calliopecore.sentence.structure.data.criteria.CriterionObject;
 import com.rokuan.calliopecore.sentence.structure.data.place.PlaceObject;
 import com.rokuan.calliopecore.sentence.structure.data.time.TimeObject;
 
@@ -28,14 +27,14 @@ public abstract class InterpretationObject {
     public NominalGroup target;	
     public CountObject count = new CountObject();
 	public List<Adjective> acjectives = new ArrayList<Adjective>();
-    public String what = "";
-    public ComplementObject of;
+    //public String what = "";
+	public ComplementObject what;
+    //public ComplementObject of;
     public String to;
     public TimeObject when;
-    public ComplementObject why;
+    //public ComplementObject why;
     public PlaceObject where;
-    public String how;
-    public List<CriterionObject> criteria = new ArrayList<CriterionObject>();    
+    public String how; 
     
     protected InterpretationObject(RequestType t){
         type = t;
@@ -44,8 +43,8 @@ public abstract class InterpretationObject {
     public String getDescription(){
     	// TODO:
     	String leftPart = (action == null) ? "" : action.toString();
-    	//String rightPart = (what == null) ? "" : what.object;
-    	String rightPart = (what == null) ? "" : what;
+    	String rightPart = (what == null) ? "" : what.object;
+    	//String rightPart = (what == null) ? "" : what;
     	return leftPart + ':' + rightPart;
     }
     
