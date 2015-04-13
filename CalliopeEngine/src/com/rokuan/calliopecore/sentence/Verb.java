@@ -41,9 +41,19 @@ public class Verb<ActionType extends Enum<ActionType>> {
         UNDEFINED
     }
     
-    protected String verb;
+    protected String verb = "";
     protected Enum<ActionType> action;
-    protected boolean auxiliary;
+    protected boolean auxiliary = false;
+    
+    public Verb(){
+    	
+    }
+    
+    public Verb(String infinitiveForm, Enum<ActionType> verbAction, boolean aux){
+    	verb = infinitiveForm;
+    	action = verbAction;
+    	auxiliary = aux;
+    }
 
     public String getVerb() {
         return verb;

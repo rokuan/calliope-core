@@ -104,7 +104,8 @@ public class DateConverter {
 	public static boolean isADateData(WordBuffer words){
 		return WordPattern.syntaxStartsWith(words, fromToDatePattern)
 				|| WordPattern.syntaxStartsWith(words, betweenDatePattern)
-				|| WordPattern.syntaxStartsWith(words, fixedDatePattern);
+				|| WordPattern.syntaxStartsWith(words, fixedDatePattern)
+				|| WordPattern.syntaxStartsWith(words, timeDeclarationPattern);
 		//|| WordPattern.syntaxStartsWith(words, timePattern); 
 	}
 
@@ -226,6 +227,7 @@ public class DateConverter {
 			if(words.getCurrentElement().isOfType(WordType.PREPOSITION_AT)){
 				words.consume();
 			} else {
+				System.out.println("Quand il sera 2");
 				words.consume();
 				words.consume();
 				words.consume();

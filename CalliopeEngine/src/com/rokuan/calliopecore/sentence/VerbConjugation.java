@@ -11,6 +11,18 @@ public class VerbConjugation {
     protected String name;
     protected Verb<?> verb;
     
+    public VerbConjugation(){
+    	
+    }
+    
+    public VerbConjugation(Verb.ConjugationTense conjugTense, Verb.Form conjugForm, Verb.Pronoun conjugPerson, String conjugValue, Verb<?> conjugVerb){
+    	tense = conjugTense;
+    	form = conjugForm;
+    	pronoun = conjugPerson;
+    	name = conjugValue;
+    	verb = conjugVerb;
+    }
+    
     public Verb<?> getVerb() {
         return verb;
     }

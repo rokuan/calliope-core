@@ -49,6 +49,12 @@ public class SentencePattern {
 			WordPattern.or(WordPattern.simple(WordType.INTERROGATIVE_PRONOUN), WordPattern.simple(WordType.INTERROGATIVE_ADJECTIVE)),
 			WordPattern.simple(WordType.VERB, null, "être")
 			);
+	
+	public static final WordPattern interrogativePattern = WordPattern.sequence(
+			WordPattern.simple(WordType.INTERROGATIVE_PRONOUN),
+			WordPattern.optional(WordPattern.simple(WordType.AUXILIARY)),
+			WordPattern.simple(WordType.VERB)
+			);
 
 	/*public static final WordPattern nominalGroupPattern = WordPattern.sequence(
 			WordPattern.simple(WordType.DEFINITE_ARTICLE)

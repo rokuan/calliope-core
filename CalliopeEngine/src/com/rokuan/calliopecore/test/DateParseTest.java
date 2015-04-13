@@ -6,9 +6,17 @@ import java.text.SimpleDateFormat;
 
 import org.junit.Test;
 
+import com.rokuan.calliopecore.parser.Interpreter;
 import com.rokuan.calliopecore.parser.WordBuffer;
+import com.rokuan.calliopecore.sentence.Action;
+import com.rokuan.calliopecore.sentence.Verb;
+import com.rokuan.calliopecore.sentence.Verb.ConjugationTense;
+import com.rokuan.calliopecore.sentence.Verb.Form;
+import com.rokuan.calliopecore.sentence.Verb.Pronoun;
+import com.rokuan.calliopecore.sentence.VerbConjugation;
 import com.rokuan.calliopecore.sentence.Word;
 import com.rokuan.calliopecore.sentence.Word.WordType;
+import com.rokuan.calliopecore.sentence.structure.InterpretationObject;
 import com.rokuan.calliopecore.sentence.structure.data.DateConverter;
 import com.rokuan.calliopecore.sentence.structure.data.time.SingleTimeObject;
 import com.rokuan.calliopecore.sentence.structure.data.time.TimeObject;
@@ -17,6 +25,7 @@ import com.rokuan.calliopecore.sentence.structure.data.time.TimeObject.DateDefin
 
 public class DateParseTest {
 	private static final SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy, HH:mm");
+	private static final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
 
 	@Test
 	public void testParseFromToDate(){
@@ -198,6 +207,44 @@ public class DateParseTest {
 
 		System.out.println("--- testParseDateAndTime");
 		System.out.println(dateFormat.format(fixedTime.date));
+		System.out.println();
+	}
+	
+	@Test
+	public void testParseWhenTime(){
+		WordBuffer words = new WordBuffer();
+
+		Word futureBe = new Word("sera", Word.WordType.VERB);
+		Verb<Action.VerbAction> toBeVerb = new Verb<Action.VerbAction>("être", Action.VerbAction.BE, true);
+		VerbConjugation toBeConjug = new VerbConjugation(ConjugationTense.FUTURE, Form.INDICATIVE, Pronoun.IL_ELLE_ON, "sera", toBeVerb);		
+		toBeConjug.setVerb(toBeVerb);
+		futureBe.setVerbInfo(toBeConjug);
+		
+		Word imperativeAlert = new Word("préviens", Word.WordType.VERB);
+		Verb<Action.VerbAction> toAlert = new Verb<Action.VerbAction>("prévenir", Action.VerbAction.ALERT, false);
+		VerbConjugation alertConjug = new VerbConjugation(ConjugationTense.PRESENT, Form.IMPERATIVE, Pronoun.TU, "préviens", toAlert);		
+		alertConjug.setVerb(toAlert);
+		imperativeAlert.setVerbInfo(alertConjug);
+		
+		words.add(imperativeAlert);
+		words.add(new Word("moi", WordType.TARGET_PRONOUN));
+		words.add(new Word("quand", Word.WordType.ANY));
+		words.add(new Word("il", Word.WordType.PERSONAL_PRONOUN));		
+		words.add(futureBe);
+		words.add(new Word("15h47", WordType.TIME));
+		
+		InterpretationObject object = new Interpreter().parseInterpretationObject(words);
+		//TimeObject dateObj = DateConverter.parseDateObject(words);
+		TimeObject dateObj = object.when;
+		
+		assertEquals(dateObj.getType(), TimeObject.TimeType.SINGLE);
+		
+		SingleTimeObject fixedHour = (SingleTimeObject)dateObj;
+		
+		assertEquals(fixedHour.dateDefinition, DateDefinition.TIME_ONLY);
+		
+		System.out.println("--- testParseWhenTime");
+		System.out.println(timeFormat.format(fixedHour.date));
 		System.out.println();
 	}
 }
