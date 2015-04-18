@@ -42,8 +42,10 @@ public class SentencePattern {
 	// Affiche-moi
 	public static final WordPattern orderPattern = WordPattern.sequence(
 			WordPattern.simple(WordType.VERB), 
-			WordPattern.optional(WordPattern.simple(WordType.TARGET_PRONOUN))
-			);
+			WordPattern.optional(WordPattern.sequence(
+					WordPattern.optional(WordPattern.simple(WordType.DEFINITE_ARTICLE)),
+					WordPattern.optional(WordPattern.simple(WordType.TARGET_PRONOUN))
+			)));
 	// Quel(s/le(s)) est/sont
 	public static final WordPattern resultQuestionPattern = WordPattern.sequence(
 			WordPattern.or(WordPattern.simple(WordType.INTERROGATIVE_PRONOUN), WordPattern.simple(WordType.INTERROGATIVE_ADJECTIVE)),
@@ -55,6 +57,8 @@ public class SentencePattern {
 			WordPattern.optional(WordPattern.simple(WordType.AUXILIARY)),
 			WordPattern.simple(WordType.VERB)
 			);
+	
+	
 
 	/*public static final WordPattern nominalGroupPattern = WordPattern.sequence(
 			WordPattern.simple(WordType.DEFINITE_ARTICLE)

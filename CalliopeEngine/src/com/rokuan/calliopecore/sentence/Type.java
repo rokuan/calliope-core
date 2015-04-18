@@ -38,6 +38,17 @@ public class Type {
         UNDEFINED
     }
     
+    public enum SourcePronoun {
+    	JE,
+    	TU,
+    	IL,
+    	ELLE,
+    	NOUS,
+    	VOUS,
+    	ILS,
+    	ELLES
+    }
+    
     public static Pronoun parseSubjectPronoun(String str){
         try{
             Pronoun.valueOf(str.toUpperCase());
@@ -70,6 +81,45 @@ public class Type {
         }
 
         return Pronoun.UNDEFINED;
+    }
+    
+    public static SourcePronoun parseDirectPronoun(String str){
+    	if(str.equals("moi")){
+    		return SourcePronoun.JE;
+    	} else if(str.equals("toi")){
+    		return SourcePronoun.TU;
+    	} else if(str.equals("le")){ 
+    		return SourcePronoun.IL;
+    	} else if(str.equals("la")){
+    		return SourcePronoun.ELLE;
+    	} else if(str.equals("nous")){
+    		return SourcePronoun.NOUS;
+    	} else if(str.equals("vous")){
+    		return SourcePronoun.VOUS;
+    	}/* else if(str.equals("les")){
+    		return SourcePronoun.ILS;
+    	}*/
+    	else {
+    		return SourcePronoun.ILS;
+    	}
+    }
+    
+    public static Pronoun parseIndirectPronoun(String str){
+    	if(str.equals("me") || str.equals("m")){
+    		return Pronoun.JE;
+    	} else if(str.equals("te") || str.equals("t")){
+    		return Pronoun.TU;
+    	} else if(str.equals("lui")){
+    		return Pronoun.IL_ELLE_ON;
+    	} else if(str.equals("nous")){
+    		return Pronoun.NOUS;
+    	} else if(str.equals("vous")){
+    		return Pronoun.VOUS;
+    	} else if(str.equals("leur")){
+    		return Pronoun.ILS_ELLES;
+    	}
+    	
+    	return Pronoun.UNDEFINED;
     }
     
     public static Pronoun parsePossessivePronoun(String str){

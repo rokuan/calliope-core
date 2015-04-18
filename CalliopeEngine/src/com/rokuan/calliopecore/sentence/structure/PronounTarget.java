@@ -7,7 +7,7 @@ public class PronounTarget extends NominalGroup {
 	public Pronoun pronoun;
 
 	public PronounTarget(Type.Pronoun pro){
-		super(TargetType.PRONOUN);
+		super(GroupType.PRONOUN);
 		pronoun = pro;
     }
 }

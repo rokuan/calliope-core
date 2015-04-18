@@ -5,19 +5,20 @@ package com.rokuan.calliopecore.sentence.structure;
  * Created by LEBEAU Christophe on 27/02/2015.
  */
 public abstract class NominalGroup {	
-    public enum TargetType {
+    public enum GroupType {
     	PRONOUN,
     	NOMINAL_GROUP,
-    	VERB
+    	VERB,
+    	ABSTRACT
     }
     
-    private TargetType type;
+    private GroupType type;
     
-    protected NominalGroup(TargetType ty){
+    protected NominalGroup(GroupType ty){
     	type = ty;
     }
     
-    public TargetType getType(){
+    public GroupType getType(){
     	return type;
     }
 }

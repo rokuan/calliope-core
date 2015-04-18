@@ -227,7 +227,6 @@ public class DateConverter {
 			if(words.getCurrentElement().isOfType(WordType.PREPOSITION_AT)){
 				words.consume();
 			} else {
-				System.out.println("Quand il sera 2");
 				words.consume();
 				words.consume();
 				words.consume();

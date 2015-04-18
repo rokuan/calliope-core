@@ -16,6 +16,7 @@ import com.rokuan.calliopecore.sentence.Word.WordType;
 import com.rokuan.calliopecore.sentence.structure.InterpretationObject;
 import com.rokuan.calliopecore.sentence.structure.QuestionObject;
 import com.rokuan.calliopecore.sentence.structure.QuestionObject.QuestionType;
+import com.rokuan.calliopecore.sentence.structure.data.place.MonumentObject;
 import com.rokuan.calliopecore.sentence.structure.data.place.PlaceObject;
 
 public class SentenceParseTest {
@@ -50,6 +51,10 @@ public class SentenceParseTest {
 		PlaceObject place = obj.where;
 		
 		assertEquals(place.getType(), PlaceObject.PlaceType.MONUMENT);
+		
+		MonumentObject monument = (MonumentObject)place; 
+
+		System.out.println(monument.name);
 		
 		assertEquals(obj.how, "voiture");
 	}

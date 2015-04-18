@@ -28,9 +28,9 @@ public abstract class InterpretationObject {
     public CountObject count = new CountObject();
 	public List<Adjective> acjectives = new ArrayList<Adjective>();
     //public String what = "";
-	public ComplementObject what;
+	public NominalGroup what;
     //public ComplementObject of;
-    public String to;
+    //public String to;
     public TimeObject when;
     //public ComplementObject why;
     public PlaceObject where;
@@ -43,7 +43,7 @@ public abstract class InterpretationObject {
     public String getDescription(){
     	// TODO:
     	String leftPart = (action == null) ? "" : action.toString();
-    	String rightPart = (what == null) ? "" : what.object;
+    	String rightPart = (what == null) ? "" : what.toString();
     	//String rightPart = (what == null) ? "" : what;
     	return leftPart + ':' + rightPart;
     }

@@ -213,7 +213,8 @@ public abstract class WordPattern {
 				return true;
 			}
 
-			if(words.getCurrentIndex() >= words.size()){
+			//if(words.getCurrentIndex() >= words.size()){
+			if(!words.isIntoBounds()){
 				for(int pi=patternsIndex; pi<patterns.length; pi++){
 					if(!patterns[pi].mayBeOptional()){
 						return false;
@@ -258,7 +259,8 @@ public abstract class WordPattern {
 					}
 				}catch(Exception e){
 					// TODO: lancer l'exception quoi qu'il arrive ?
-					System.out.println(e);
+					//System.out.println(e);
+					e.printStackTrace();
 					return false;
 				}
 

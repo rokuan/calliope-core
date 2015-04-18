@@ -25,6 +25,12 @@ public class ComplementObject extends NominalGroup {
     public List<CriterionObject> criteria = new ArrayList<CriterionObject>();
 
     public ComplementObject(){
-    	super(TargetType.NOMINAL_GROUP);
+    	super(GroupType.NOMINAL_GROUP);
+    }
+    
+    @Override
+    public String toString(){
+    	// TODO: ajouter les autres attributs si besoin
+    	return object;
     }
 }

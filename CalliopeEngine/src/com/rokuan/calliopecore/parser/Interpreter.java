@@ -1,19 +1,18 @@
 package com.rokuan.calliopecore.parser;
 
-import com.rokuan.calliopecore.pattern.WordPattern;
 import com.rokuan.calliopecore.sentence.Action;
 import com.rokuan.calliopecore.sentence.SentencePattern;
 import com.rokuan.calliopecore.sentence.Type;
 import com.rokuan.calliopecore.sentence.VerbConjugation;
 import com.rokuan.calliopecore.sentence.Word;
 import com.rokuan.calliopecore.sentence.Word.WordType;
+import com.rokuan.calliopecore.sentence.structure.AbstractTarget;
 import com.rokuan.calliopecore.sentence.structure.ComplementObject;
 import com.rokuan.calliopecore.sentence.structure.InterpretationObject;
 import com.rokuan.calliopecore.sentence.structure.OrderObject;
 import com.rokuan.calliopecore.sentence.structure.PronounTarget;
 import com.rokuan.calliopecore.sentence.structure.QuestionObject;
 import com.rokuan.calliopecore.sentence.structure.QuestionObject.QuestionType;
-import com.rokuan.calliopecore.sentence.structure.data.CriterionConverter;
 import com.rokuan.calliopecore.sentence.structure.data.DateConverter;
 import com.rokuan.calliopecore.sentence.structure.data.NominalGroupConverter;
 import com.rokuan.calliopecore.sentence.structure.data.NumberConverter;
@@ -92,25 +91,29 @@ public class Interpreter {
 
 			inter = oObject;
 		} else if(words.syntaxStartsWith(SentencePattern.orderPattern)){
-			//} else if(words.syntaxStartsWith(Word.WordType.VERB, Word.WordType.PERSONAL_PRONOUN)){
 			// Ordre
+			// TODO: verifier que le verbe est a l'imperatif present
 			// db.findConjugatedVerb(words.get(0)).form == IMPERATIVE
 			inter = new OrderObject();
-
-			//inter.action = db.getVerb(words.getCurrentElement().getValue()).getAction();
 
 			inter.action = getActionFromVerb(words.getCurrentElement().getVerbInfo());
 			words.consume();
 			
-			if(words.isIntoBounds() && words.getCurrentElement().isOfType(WordType.TARGET_PRONOUN)){
+			if(words.isIntoBounds() && words.getCurrentElement().isOfType(WordType.TARGET_PRONOUN) && !NominalGroupConverter.isADirectObject(words)){
 				//inter.target = new PronounTarget(Type.parseTargetPronoun(words.getCurrentElement().getValue()));
 				inter.target = new PronounTarget(Type.parsePossessivePronoun(words.getCurrentElement().getValue()));
 				words.consume();
+			} else if(words.isIntoBounds() && words.getCurrentElement().isOfType(WordType.DEFINITE_ARTICLE) && !NominalGroupConverter.isADirectObject(words)){
+				inter.what = new AbstractTarget(Type.parseDirectPronoun(words.getCurrentElement().getValue()));
+				words.consume();
+				
+				if(words.isIntoBounds() && words.getCurrentElement().isOfType(WordType.TARGET_PRONOUN)){
+					inter.target = new PronounTarget(Type.parseTargetPronoun(words.getCurrentElement().getValue()));
+					words.consume();
+				}
 			}
-
-			//inter.what = parseComplementObject(words);
+			
 			parseObject(words, inter);
-			//return inter;
 		} else if(words.syntaxStartsWith(SentencePattern.resultQuestionPattern)){
 			// Quel est/Quelle a ete
 			QuestionObject qObject = new QuestionObject();
@@ -124,11 +127,9 @@ public class Interpreter {
 				words.consume();
 			} 
 
-			qObject.action = getActionFromVerb(words.getCurrentElement().getVerbInfo());
-			//qObject.action = db.getVerb(words.getCurrentElement().getValue()).getAction();	
+			qObject.action = getActionFromVerb(words.getCurrentElement().getVerbInfo());	
 			words.consume();
 
-			//qObject.what = parseComplementObject(words);
 			parseObject(words, qObject);
 
 			inter = qObject;
@@ -251,7 +252,7 @@ public class Interpreter {
 		}*/
 
 		while(words.isIntoBounds()){
-			if(words.syntaxStartsWith(Word.WordType.PROPER_NAME)){
+			/*if(words.syntaxStartsWith(Word.WordType.PROPER_NAME)){
 				// TODO: gerer les monuments
 				ComplementObject what = new ComplementObject();
 
@@ -259,12 +260,12 @@ public class Interpreter {
 				words.consume();
 
 				obj.what = what;
-			} else if(DateConverter.isADateData(words)){
+			} else */
+			if(DateConverter.isADateData(words)){
 				obj.when = DateConverter.parseDateObject(words);
 			} else if(PhoneNumberConverter.isAPhoneNumber(words)){	
 				// TODO: creer une classe pour les numeros de telephone ?
 				boolean objectField = words.getCurrentElement().isOfType(WordType.DEFINITE_ARTICLE);
-
 				String phoneNumber = PhoneNumberConverter.parsePhoneNumber(words);
 
 				if(objectField){
@@ -273,7 +274,10 @@ public class Interpreter {
 					phoneObj.object = phoneNumber;
 					obj.what = phoneObj;
 				} else {
-					obj.to = phoneNumber;
+					//obj.to = phoneNumber;
+					ComplementObject to = new ComplementObject();					
+					to.object = phoneNumber;					
+					obj.target = to;
 				}
 			} else if(WayConverter.isAWayData(words)){ 
 				obj.how = WayConverter.parseWayData(words);
@@ -319,10 +323,12 @@ public class Interpreter {
 
 				obj.what = what;
 				 */
+			} else if(PlaceConverter.isAPlaceData(words)){
+					obj.where = PlaceConverter.parsePlaceObject(words);
 			} else if(NominalGroupConverter.isADirectObject(words)){
 				obj.what = NominalGroupConverter.parseDirectObject(words);
-			} else if(PlaceConverter.isAPlaceData(words)){
-				obj.where = PlaceConverter.parsePlaceObject(words);
+			} else if(NominalGroupConverter.isAnIndirectObject(words)){ 
+				obj.target = NominalGroupConverter.parseIndirectObject(words);
 			} else if(NumberConverter.isACountData(words)){
 				obj.count = NumberConverter.parseCountObject(words);
 			} else {

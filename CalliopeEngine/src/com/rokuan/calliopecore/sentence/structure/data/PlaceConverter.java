@@ -19,8 +19,8 @@ public class PlaceConverter {
 	// le musée du Louvre, la Grande Muraille de Chine 
 	public static final WordPattern placePattern = WordPattern.sequence(
 			WordPattern.or(
-					WordPattern.sequence(WordPattern.simple(WordType.PREPOSITION_AT, "à"), WordPattern.simple(WordType.DEFINITE_ARTICLE, "la")),
-					WordPattern.simple(WordType.PREPOSITION_AT, "au*")),
+					WordPattern.sequence(WordPattern.simple(WordType.PREPOSITION_AT, "à"), WordPattern.simple(WordType.DEFINITE_ARTICLE, "la|l")),
+					WordPattern.simple(WordType.PREPOSITION_AT, "au(x?)")),
 					//WordPattern.simple(WordType.DEFINITE_ARTICLE),
 					WordPattern.optional(WordPattern.simple(WordType.PLACE_TYPE)),
 					WordPattern.optional(WordPattern.nonEmptyList(WordPattern.simple(WordType.PROPER_NAME))),

@@ -56,7 +56,8 @@ public class Word {
         MEAN_OF_TRANSPORT, // pied/voiture/bus/avion
         PLACE_TYPE,	// restaurant/cinéma/...
         CITY,
-        COUNTRY
+        COUNTRY,
+        FIRSTNAME
     }
 
     //private List<WordType> types = new ArrayList<WordType>();
