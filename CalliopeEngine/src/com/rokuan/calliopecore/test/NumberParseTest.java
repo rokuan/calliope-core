@@ -17,6 +17,7 @@ public class NumberParseTest {
 	@Test
 	public void testSimplePosition() {
 		WordBuffer words = new WordBuffer();
+		words.add(new Word("le", WordType.DEFINITE_ARTICLE));
 		words.add(new Word("premier", WordType.NUMERICAL_POSITION));
 
 		CountObject count = NumberConverter.parseCountObject(words); 
@@ -32,6 +33,7 @@ public class NumberParseTest {
 	@Test
 	public void testRangeForFirst(){
 		WordBuffer words = new WordBuffer();
+		words.add(new Word("les", WordType.DEFINITE_ARTICLE));
 		words.add(new Word("5", WordType.NUMBER));
 		words.add(new Word("premiers", WordType.NUMERICAL_POSITION));
 
@@ -47,6 +49,7 @@ public class NumberParseTest {
 	@Test
 	public void testRangeForLast(){
 		WordBuffer words = new WordBuffer();
+		words.add(new Word("les", WordType.DEFINITE_ARTICLE));
 		words.add(new Word("7", WordType.NUMBER));
 		words.add(new Word("derniers", WordType.NUMERICAL_POSITION));
 

@@ -2,7 +2,6 @@ package com.rokuan.calliopecore.sentence.structure.data;
 
 import com.rokuan.calliopecore.parser.WordBuffer;
 import com.rokuan.calliopecore.pattern.WordPattern;
-import com.rokuan.calliopecore.sentence.SentencePattern;
 import com.rokuan.calliopecore.sentence.Type;
 import com.rokuan.calliopecore.sentence.Type.Pronoun;
 import com.rokuan.calliopecore.sentence.Word.WordType;
@@ -69,7 +68,8 @@ public class NominalGroupConverter {
 	}
 	
 	public static boolean isADirectObject(WordBuffer words){
-		return words.syntaxStartsWith(directObjectPattern);
+		return words.syntaxStartsWith(directObjectPattern) 
+				|| words.syntaxStartsWith(personPattern);
 	}
 	
 	public static NominalGroup parseDirectObject(WordBuffer words){
@@ -86,6 +86,8 @@ public class NominalGroupConverter {
 			if(CriterionConverter.isACriterionData(words)){
 				obj.criteria = CriterionConverter.parseCriterionData(words);
 			}
+		} else if(words.syntaxStartsWith(personPattern)){
+			obj.object = parsePerson(words);
 		}
 		
 		return obj;
@@ -99,7 +101,7 @@ public class NominalGroupConverter {
 		ComplementObject obj = new ComplementObject();
 		
 		if(words.syntaxStartsWith(indirectObjectPattern)){
-			StringBuilder name = new StringBuilder();
+			//StringBuilder name = new StringBuilder();
 			
 			words.consume();	// PREPOSITION_AT
 			
@@ -107,31 +109,42 @@ public class NominalGroupConverter {
 				words.consume();
 			}
 			
-			if(words.getCurrentElement().isOfType(WordType.FIRSTNAME)){
-				while(words.isIntoBounds() && words.getCurrentElement().isOfType(WordType.FIRSTNAME)){
-					name.append(words.getCurrentElement().getValue());
-					words.consume();
-				}
-				
-				while(words.isIntoBounds() && words.getCurrentElement().isOfType(WordType.PROPER_NAME)){
-					name.append(words.getCurrentElement().getValue());
-					words.consume();
-				}
-			} else if(words.getCurrentElement().isOfType(WordType.PROPER_NAME)){
-				while(words.isIntoBounds() && words.getCurrentElement().isOfType(WordType.PROPER_NAME)){
-					name.append(words.getCurrentElement().getValue());
-					words.consume();
-				}
-				
-				while(words.isIntoBounds() && words.getCurrentElement().isOfType(WordType.FIRSTNAME)){
-					name.append(words.getCurrentElement().getValue());
-					words.consume();
-				}
-			}
-			
-			obj.object = name.toString();
+			//obj.object = name.toString().trim();
+			obj.object = parsePerson(words);
 		}
 		
 		return obj;
+	}
+	
+	private static String parsePerson(WordBuffer words){
+		StringBuilder name = new StringBuilder();
+		
+		if(words.getCurrentElement().isOfType(WordType.FIRSTNAME)){
+			while(words.isIntoBounds() && words.getCurrentElement().isOfType(WordType.FIRSTNAME)){
+				name.append(words.getCurrentElement().getValue());
+				name.append(' ');
+				words.consume();
+			}
+			
+			while(words.isIntoBounds() && words.getCurrentElement().isOfType(WordType.PROPER_NAME)){
+				name.append(words.getCurrentElement().getValue());
+				name.append(' ');
+				words.consume();
+			}
+		} else if(words.getCurrentElement().isOfType(WordType.PROPER_NAME)){
+			while(words.isIntoBounds() && words.getCurrentElement().isOfType(WordType.PROPER_NAME)){
+				name.append(words.getCurrentElement().getValue());
+				name.append(' ');
+				words.consume();
+			}
+			
+			while(words.isIntoBounds() && words.getCurrentElement().isOfType(WordType.FIRSTNAME)){
+				name.append(words.getCurrentElement().getValue());
+				name.append(' ');
+				words.consume();
+			}
+		}
+		
+		return name.toString().trim();
 	}
 }

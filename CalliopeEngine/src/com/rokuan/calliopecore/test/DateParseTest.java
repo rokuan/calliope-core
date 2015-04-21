@@ -6,7 +6,7 @@ import java.text.SimpleDateFormat;
 
 import org.junit.Test;
 
-import com.rokuan.calliopecore.parser.Interpreter;
+import com.rokuan.calliopecore.parser.Parser;
 import com.rokuan.calliopecore.parser.WordBuffer;
 import com.rokuan.calliopecore.sentence.Action;
 import com.rokuan.calliopecore.sentence.Verb;
@@ -233,7 +233,7 @@ public class DateParseTest {
 		words.add(futureBe);
 		words.add(new Word("15h47", WordType.TIME));
 		
-		InterpretationObject object = new Interpreter().parseInterpretationObject(words);
+		InterpretationObject object = new Parser().parseInterpretationObject(words);
 		//TimeObject dateObj = DateConverter.parseDateObject(words);
 		TimeObject dateObj = object.when;
 		

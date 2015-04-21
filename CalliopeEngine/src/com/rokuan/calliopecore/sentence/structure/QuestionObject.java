@@ -35,6 +35,8 @@ public class QuestionObject extends InterpretationObject {
     		return QuestionType.HOW;
     	} else if(lowerValue.equals("pourquoi")){
     		return QuestionType.WHY;
+    	} else if(lowerValue.equals("qui")){
+    		return QuestionType.WHO;
     	}
     	
     	return QuestionType.UNDEFINED;

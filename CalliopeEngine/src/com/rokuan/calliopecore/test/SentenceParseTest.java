@@ -4,17 +4,20 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import com.rokuan.calliopecore.parser.Interpreter;
+import com.rokuan.calliopecore.parser.Parser;
 import com.rokuan.calliopecore.parser.WordBuffer;
 import com.rokuan.calliopecore.sentence.Action;
 import com.rokuan.calliopecore.sentence.Verb;
+import com.rokuan.calliopecore.sentence.Verb.Pronoun;
 import com.rokuan.calliopecore.sentence.VerbConjugation;
 import com.rokuan.calliopecore.sentence.Word;
 import com.rokuan.calliopecore.sentence.Verb.ConjugationTense;
 import com.rokuan.calliopecore.sentence.Verb.Form;
 import com.rokuan.calliopecore.sentence.Word.WordType;
+import com.rokuan.calliopecore.sentence.structure.ComplementObject;
 import com.rokuan.calliopecore.sentence.structure.InterpretationObject;
 import com.rokuan.calliopecore.sentence.structure.QuestionObject;
+import com.rokuan.calliopecore.sentence.structure.NominalGroup.GroupType;
 import com.rokuan.calliopecore.sentence.structure.QuestionObject.QuestionType;
 import com.rokuan.calliopecore.sentence.structure.data.place.MonumentObject;
 import com.rokuan.calliopecore.sentence.structure.data.place.PlaceObject;
@@ -40,7 +43,7 @@ public class SentenceParseTest {
 		words.add(new Word("en", WordType.PREPOSITION));
 		words.add(new Word("voiture", WordType.MEAN_OF_TRANSPORT));
 		
-		InterpretationObject obj = new Interpreter().parseInterpretationObject(words);
+		InterpretationObject obj = new Parser().parseInterpretationObject(words);
 		
 		assertEquals(obj.getType(), InterpretationObject.RequestType.QUESTION);
 		assertEquals(obj.action, Action.VerbAction.GO);
@@ -52,10 +55,8 @@ public class SentenceParseTest {
 		
 		assertEquals(place.getType(), PlaceObject.PlaceType.MONUMENT);
 		
-		MonumentObject monument = (MonumentObject)place; 
-
-		System.out.println(monument.name);
-		
+		MonumentObject monument = (MonumentObject)place;
+		assertEquals(monument.name, "Mairie");
 		assertEquals(obj.how, "voiture");
 	}
 	
@@ -77,7 +78,7 @@ public class SentenceParseTest {
 		words.add(new Word("en", WordType.PREPOSITION));
 		words.add(new Word("voiture", WordType.MEAN_OF_TRANSPORT));
 		
-		InterpretationObject obj = new Interpreter().parseInterpretationObject(words);
+		InterpretationObject obj = new Parser().parseInterpretationObject(words);
 		
 		assertEquals(obj.getType(), InterpretationObject.RequestType.QUESTION);
 		assertEquals(obj.action, Action.VerbAction.GO);
@@ -90,6 +91,34 @@ public class SentenceParseTest {
 		assertEquals(place.getType(), PlaceObject.PlaceType.MONUMENT);
 		
 		assertEquals(obj.how, "voiture");
+	}
+	
+	@Test
+	public void testWhoIs(){
+		WordBuffer words = new WordBuffer();
+		
+		Word be = new Word("est", Word.WordType.VERB);
+		Verb<Action.VerbAction> toBe = new Verb<Action.VerbAction>("être", Action.VerbAction.BE, true);
+		VerbConjugation toBeConjug = new VerbConjugation(ConjugationTense.PRESENT, Form.INDICATIVE, Pronoun.IL_ELLE_ON, "être", toBe);		
+		toBeConjug.setVerb(toBe);
+		be.setVerbInfo(toBeConjug);
+		
+		words.add(new Word("qui", WordType.INTERROGATIVE_PRONOUN));
+		words.add(be);
+		words.add(new Word("Arnold", WordType.FIRSTNAME));
+		words.add(new Word("Schwarzenegger", WordType.PROPER_NAME));
+		
+		InterpretationObject obj = new Parser().parseInterpretationObject(words);
+		
+		assertEquals(obj.getType(), InterpretationObject.RequestType.QUESTION);
+		assertEquals(obj.action, Action.VerbAction.BE);
+		
+		QuestionObject question = (QuestionObject)obj;
+		assertEquals(question.qType, QuestionType.WHO);
+		assertEquals(question.what.getType(), GroupType.NOMINAL_GROUP);
+		
+		ComplementObject compl = (ComplementObject)question.what;
+		assertEquals(compl.object, "Arnold Schwarzenegger");
 	}
 	
 }

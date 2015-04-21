@@ -24,10 +24,10 @@ import com.rokuan.calliopecore.sentence.structure.data.WayConverter;
 /**
  * Created by LEBEAU Christophe on 27/02/2015.
  */
-public class Interpreter {
+public class Parser {
 	//private WordDatabase db;
 
-	public Interpreter(){
+	public Parser(){
 
 	}
 
@@ -101,8 +101,19 @@ public class Interpreter {
 			
 			if(words.isIntoBounds() && words.getCurrentElement().isOfType(WordType.TARGET_PRONOUN) && !NominalGroupConverter.isADirectObject(words)){
 				//inter.target = new PronounTarget(Type.parseTargetPronoun(words.getCurrentElement().getValue()));
-				inter.target = new PronounTarget(Type.parsePossessivePronoun(words.getCurrentElement().getValue()));
-				words.consume();
+				/*inter.target = new PronounTarget(Type.parsePossessivePronoun(words.getCurrentElement().getValue()));
+				words.consume();*/
+				words.next();
+				
+				if(NominalGroupConverter.isADirectObject(words)){
+					words.previous();
+					inter.target = new PronounTarget(Type.parsePossessivePronoun(words.getCurrentElement().getValue()));
+					words.consume();
+				} else {
+					words.previous();
+					inter.what = new PronounTarget(Type.parsePossessivePronoun(words.getCurrentElement().getValue()));
+					words.consume();
+				}
 			} else if(words.isIntoBounds() && words.getCurrentElement().isOfType(WordType.DEFINITE_ARTICLE) && !NominalGroupConverter.isADirectObject(words)){
 				inter.what = new AbstractTarget(Type.parseDirectPronoun(words.getCurrentElement().getValue()));
 				words.consume();
@@ -114,7 +125,7 @@ public class Interpreter {
 			}
 			
 			parseObject(words, inter);
-		} else if(words.syntaxStartsWith(SentencePattern.resultQuestionPattern)){
+		} /*else if(words.syntaxStartsWith(SentencePattern.resultQuestionPattern)){
 			// Quel est/Quelle a ete
 			QuestionObject qObject = new QuestionObject();
 
@@ -133,7 +144,7 @@ public class Interpreter {
 			parseObject(words, qObject);
 
 			inter = qObject;
-		} else if(words.syntaxStartsWith(SentencePattern.interrogativePattern)){ 
+		}*/ else if(words.syntaxStartsWith(SentencePattern.interrogativePattern)){ 
 			QuestionObject qObject = new QuestionObject();
 			
 			qObject.qType = QuestionObject.parseInterrogativePronoun(words.getCurrentElement().getValue());
@@ -252,15 +263,6 @@ public class Interpreter {
 		}*/
 
 		while(words.isIntoBounds()){
-			/*if(words.syntaxStartsWith(Word.WordType.PROPER_NAME)){
-				// TODO: gerer les monuments
-				ComplementObject what = new ComplementObject();
-
-				what.object = words.getCurrentElement().getValue();
-				words.consume();
-
-				obj.what = what;
-			} else */
 			if(DateConverter.isADateData(words)){
 				obj.when = DateConverter.parseDateObject(words);
 			} else if(PhoneNumberConverter.isAPhoneNumber(words)){	
@@ -281,48 +283,6 @@ public class Interpreter {
 				}
 			} else if(WayConverter.isAWayData(words)){ 
 				obj.how = WayConverter.parseWayData(words);
-				/*} else if(words.syntaxStartsWith(
-					WordPattern.optional(WordPattern.or(WordPattern.simple(WordType.DEFINITE_ARTICLE), WordPattern.simple(WordType.INDEFINITE_ARTICLE))), 
-					WordPattern.simple(WordType.COMMON_NAME))){
-				ComplementObject what = new ComplementObject();
-
-				if(words.getCurrentElement().isOfType(WordType.DEFINITE_ARTICLE) || words.getCurrentElement().isOfType(WordType.INDEFINITE_ARTICLE)){
-					words.next();
-
-					if(words.isIntoBounds() && words.getCurrentElement().isOfType(WordType.COMMON_NAME)){
-						words.previous();
-						words.consume();
-					} else {
-						words.previous();
-					}
-				}
-
-				what.object = words.getCurrentElement().getValue();
-				words.consume();
-
-				if(words.isIntoBounds() && words.getCurrentElement().isOfType(WordType.PREPOSITION_OF)){
-					words.consume();
-
-					if(words.isIntoBounds() && words.getCurrentElement().isOfType(WordType.DEFINITE_ARTICLE)){
-						words.consume();
-					}
-
-					if(words.isIntoBounds() && words.getCurrentElement().isOfType(WordType.COMMON_NAME)){
-						ComplementObject ofObj = new ComplementObject();
-
-						ofObj.object = words.getCurrentElement().getValue();
-						words.consume();
-
-						what.of = ofObj;
-					}
-					//} else if(words.hasNext() && words.getCurrentElement().isOfType(WordType.DEFINITE_ARTICLE)){
-				} else if(CriterionConverter.isACriterionData(words)){
-					// TODO:
-					what.criteria = CriterionConverter.parseCriterionData(words); 
-				}
-
-				obj.what = what;
-				 */
 			} else if(PlaceConverter.isAPlaceData(words)){
 					obj.where = PlaceConverter.parsePlaceObject(words);
 			} else if(NominalGroupConverter.isADirectObject(words)){

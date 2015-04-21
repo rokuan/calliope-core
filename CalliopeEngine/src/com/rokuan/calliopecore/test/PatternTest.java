@@ -31,7 +31,7 @@ public class PatternTest {
 		WordBuffer words = new WordBuffer();
 		WordPattern optional = WordPattern.optional(WordPattern.simple(WordType.QUANTITY));
 
-		assertEquals(true, words.syntaxStartsWith(optional));
+		assertFalse(words.syntaxStartsWith(optional));
 
 		words.add(new Word("toutes", WordType.QUANTITY));
 		words.add(new Word("les", WordType.DEFINITE_ARTICLE));
@@ -39,7 +39,7 @@ public class PatternTest {
 		words.add(new Word("sont", WordType.VERB));
 		words.add(new Word("oranges", WordType.ADJECTIVE));
 
-		assertEquals(true, words.syntaxStartsWith(optional));
+		assertTrue(words.syntaxStartsWith(optional));
 	}
 
 	@Test

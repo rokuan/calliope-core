@@ -27,10 +27,7 @@ public abstract class InterpretationObject {
     public NominalGroup target;	
     public CountObject count = new CountObject();
 	public List<Adjective> acjectives = new ArrayList<Adjective>();
-    //public String what = "";
 	public NominalGroup what;
-    //public ComplementObject of;
-    //public String to;
     public TimeObject when;
     //public ComplementObject why;
     public PlaceObject where;
