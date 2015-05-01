@@ -53,7 +53,7 @@ public class SentencePattern {
 			);
 	
 	public static final WordPattern interrogativePattern = WordPattern.sequence(
-			WordPattern.simple(WordType.INTERROGATIVE_PRONOUN),
+			WordPattern.or(WordPattern.simple(WordType.INTERROGATIVE_PRONOUN), WordPattern.simple(WordType.INTERROGATIVE_ADJECTIVE)),
 			WordPattern.optional(WordPattern.simple(WordType.AUXILIARY)),
 			WordPattern.simple(WordType.VERB)
 			);

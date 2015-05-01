@@ -96,17 +96,37 @@ public class DateConverter {
 			);
 
 	public static final WordPattern timeDeclarationPattern = WordPattern.sequence(
-			WordPattern.or(WordPattern.simple(WordType.PREPOSITION_AT), WordPattern.sequence(WordPattern.simple(WordType.ANY, "quand"), WordPattern.simple(WordType.PERSONAL_PRONOUN, "il"), WordPattern.simple(WordType.VERB, "sera"))),
+			WordPattern.or(WordPattern.simple(WordType.PREPOSITION_AT), WordPattern.simple(WordType.ANY, "pour"), WordPattern.sequence(WordPattern.simple(WordType.ANY, "quand"), WordPattern.simple(WordType.PERSONAL_PRONOUN, "il"), WordPattern.simple(WordType.VERB, "sera"))),
 			timePattern
 			);
 
 
+	// Indirect object patterns
+	
+	public static final WordPattern directObjectDatePattern = WordPattern.sequence(
+			WordPattern.simple(WordType.PREPOSITION_OF, "du"),
+			WordPattern.or(WordPattern.simple(WordType.NUMBER), WordPattern.simple(WordType.NUMERICAL_POSITION)),
+			WordPattern.simple(WordType.DATE_MONTH),
+			WordPattern.optional(WordPattern.simple(WordType.NUMBER)),
+			WordPattern.optional(WordPattern.sequence(WordPattern.simple(WordType.PREPOSITION_AT), timePattern))
+			);
+	
+	public static final WordPattern directObjectTimePattern = WordPattern.sequence(
+			WordPattern.simple(WordType.PREPOSITION_OF, "de"),
+			timePattern
+			);
+	
 	public static boolean isADateData(WordBuffer words){
 		return WordPattern.syntaxStartsWith(words, fromToDatePattern)
 				|| WordPattern.syntaxStartsWith(words, betweenDatePattern)
 				|| WordPattern.syntaxStartsWith(words, fixedDatePattern)
 				|| WordPattern.syntaxStartsWith(words, timeDeclarationPattern);
 		//|| WordPattern.syntaxStartsWith(words, timePattern); 
+	}
+	
+	public static boolean isAnObjectDateData(WordBuffer words){
+		return WordPattern.syntaxStartsWith(words, directObjectDatePattern)
+				|| WordPattern.syntaxStartsWith(words, directObjectTimePattern);
 	}
 
 	public static TimeObject parseDateObject(WordBuffer words){
@@ -187,6 +207,32 @@ public class DateConverter {
 		return result;
 	}
 
+	public static TimeObject parseDirectObjectDateObject(WordBuffer words){
+		if(words.syntaxStartsWith(directObjectDatePattern)){
+			words.consume();	// PREPOSITION_OF
+			
+			SingleTimeObject single = new SingleTimeObject();
+			int[] dateFields = parseDate(words);
+
+			single.date = buildDateFromArray(dateFields);
+
+			return single;
+		} else if(words.syntaxStartsWith(directObjectTimePattern)){
+			words.consume();	// PREPOSITION_OF			
+			
+			SingleTimeObject single = new SingleTimeObject();
+			int[] fixedTimeFields = parseTime(words);
+
+			single.dateDefinition = DateDefinition.TIME_ONLY; 
+			single.date = buildDateFromArray(fixedTimeFields);
+
+			//fixUndefinedValues(fixedDateFields);
+			return single;
+		}
+		
+		return null;
+	}
+	
 	private static int[] parseDate(WordBuffer words){
 		// TODO: modifier si on prend en compte l'heure
 		int[] date = new int[TimeUnit.values().length + 1];

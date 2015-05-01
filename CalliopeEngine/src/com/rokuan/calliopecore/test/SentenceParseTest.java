@@ -1,6 +1,7 @@
 package com.rokuan.calliopecore.test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -120,5 +121,29 @@ public class SentenceParseTest {
 		ComplementObject compl = (ComplementObject)question.what;
 		assertEquals(compl.object, "Arnold Schwarzenegger");
 	}
-	
+
+	@Test
+	public void testDoubleDirectObject(){
+		WordBuffer words = new WordBuffer();
+		
+		Word find = new Word("trouve", WordType.VERB);
+		Verb<Action.VerbAction> toFind = new Verb<Action.VerbAction>("trouver", Action.VerbAction.FIND, false);
+		VerbConjugation toFindConjug = new VerbConjugation(ConjugationTense.PRESENT, Form.IMPERATIVE, Pronoun.TU, "trouver", toFind);
+		toFindConjug.setVerb(toFind);
+		find.setVerbInfo(toFindConjug);
+		
+		words.add(find);
+		words.add(new Word("moi", WordType.TARGET_PRONOUN));
+		words.add(new Word("des", WordType.INDEFINITE_ARTICLE, WordType.PREPOSITION_OF));
+		words.add(new Word("vidéos", WordType.COMMON_NAME));
+		words.add(new Word("de", WordType.PREPOSITION_OF));
+		words.add(new Word("chats", WordType.COMMON_NAME));
+		
+		InterpretationObject obj = new Parser().parseInterpretationObject(words);
+		
+		ComplementObject compl = (ComplementObject)obj.what;
+		assertEquals(compl.object, "vidéos");
+		assert (compl.of != null);
+		assertEquals(compl.of.object, "chats");
+	}
 }

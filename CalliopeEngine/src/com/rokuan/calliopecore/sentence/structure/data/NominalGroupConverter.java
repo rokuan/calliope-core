@@ -85,6 +85,21 @@ public class NominalGroupConverter {
 			
 			if(CriterionConverter.isACriterionData(words)){
 				obj.criteria = CriterionConverter.parseCriterionData(words);
+			} else if(words.isIntoBounds() && words.getCurrentElement().isOfType(WordType.PREPOSITION_OF)){
+				words.next();
+				
+				if(NominalGroupConverter.isADirectObject(words)){
+					words.previous();
+					words.consume();
+					
+					try{
+						obj.of = (ComplementObject)NominalGroupConverter.parseDirectObject(words);
+					}catch(Exception e){
+						System.out.println(e);
+					}
+				} else {
+					words.previous();
+				}
 			}
 		} else if(words.syntaxStartsWith(personPattern)){
 			obj.object = parsePerson(words);

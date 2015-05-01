@@ -72,7 +72,7 @@ public class NumberConverter {
     		WordPattern.simple(WordType.DEFINITE_ARTICLE),
     		WordPattern.simple(WordType.INDEFINITE_ARTICLE));
     
-    public static final WordPattern countPattern = WordPattern.or(fixedItemPattern, fixedRangePattern, quantityPattern);
+    public static final WordPattern countPattern = WordPattern.or(fixedItemPattern, fixedRangePattern, quantityPattern, simpleArticles);
     
     // TODO: les intervalles (du 3eme au 5eme)
 
