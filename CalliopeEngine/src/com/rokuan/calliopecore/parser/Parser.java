@@ -18,6 +18,7 @@ import com.rokuan.calliopecore.sentence.structure.data.NominalGroupConverter;
 import com.rokuan.calliopecore.sentence.structure.data.NumberConverter;
 import com.rokuan.calliopecore.sentence.structure.data.PhoneNumberConverter;
 import com.rokuan.calliopecore.sentence.structure.data.PlaceConverter;
+import com.rokuan.calliopecore.sentence.structure.data.VerbConverter;
 import com.rokuan.calliopecore.sentence.structure.data.WayConverter;
 
 
@@ -144,7 +145,32 @@ public class Parser {
 			parseObject(words, qObject);
 
 			inter = qObject;
-		}*/ else if(words.syntaxStartsWith(SentencePattern.interrogativePattern)){ 
+		}*/ 
+		else if(words.syntaxStartsWith(SentencePattern.resultQuestionPattern)){
+			QuestionObject qObject = new QuestionObject();
+			
+			qObject.qType = QuestionObject.parseInterrogativePronoun(words.getCurrentElement().getValue());			
+			words.consume();
+			
+			ComplementObject complement = new ComplementObject();
+			StringBuffer whatString = new StringBuffer();
+			
+			// TODO: modifier pour parser les adjectifs
+			while(!VerbConverter.isAQuestionVerbalForm(words)){
+				whatString.append(words.getCurrentElement().getValue());
+				whatString.append(' ');
+				words.consume();
+			}
+			
+			complement.object = whatString.toString().trim();
+			qObject.what = complement;	
+			
+			VerbConverter.parseQuestionVerbalGroup(words, qObject);
+			
+			parseObject(words, qObject);
+			
+			inter = qObject;
+		} else if(words.syntaxStartsWith(SentencePattern.interrogativePattern)){ 
 			QuestionObject qObject = new QuestionObject();
 			
 			qObject.qType = QuestionObject.parseInterrogativePronoun(words.getCurrentElement().getValue());
@@ -190,72 +216,6 @@ public class Parser {
 
 		return inter;
 	}
-
-	/*public ComplementObject parseComplementObject(WordBuffer words){
-		if(words.getCurrentIndex() > words.size()){
-			return null;
-		}
-
-		ComplementObject complement = new ComplementObject();
-
-		while(words.isIntoBounds()){
-			if(words.syntaxStartsWith(Word.WordType.PROPER_NAME)){
-				// TODO: gerer les monuments
-				complement.object = words.getCurrentElement().getValue();
-				words.consume();
-			} else if(DateConverter.isADateData(words)){
-				complement.when = DateConverter.parseDateObject(words);
-			} else if(NumberConverter.isACountData(words)){
-				complement.count = NumberConverter.parseCountObject(words);
-			} else if(PhoneNumberConverter.isAPhoneNumber(words)){	
-				// TODO: creer une classe pour les numeros de telephone ?
-				boolean objectField = words.getCurrentElement().isOfType(WordType.DEFINITE_ARTICLE);
-
-				String phoneNumber = PhoneNumberConverter.parsePhoneNumber(words);
-
-				if(objectField){
-					complement.object = phoneNumber;
-				} else {
-					complement.to = phoneNumber;
-				}
-			} else if(WayConverter.isAWayData(words)){ 
-				complement.how = WayConverter.parseWayData(words);
-			} else if(words.syntaxStartsWith(
-					WordPattern.optional(WordPattern.or(WordPattern.simple(WordType.DEFINITE_ARTICLE), WordPattern.simple(WordType.INDEFINITE_ARTICLE))), 
-					WordPattern.simple(WordType.COMMON_NAME))){
-				words.consume();
-				complement.object = words.getCurrentElement().getValue();
-				words.consume();
-
-				if(words.isIntoBounds() && words.getCurrentElement().isOfType(WordType.PREPOSITION_OF)){
-					words.consume();
-
-					if(words.isIntoBounds() && words.getCurrentElement().isOfType(WordType.DEFINITE_ARTICLE)){
-						words.consume();
-					}
-
-					if(words.isIntoBounds() && words.getCurrentElement().isOfType(WordType.COMMON_NAME)){
-						ComplementObject ofObj = new ComplementObject();
-
-						ofObj.object = words.getCurrentElement().getValue();
-						words.consume();
-
-						complement.of = ofObj;
-					}
-					//} else if(words.hasNext() && words.getCurrentElement().isOfType(WordType.DEFINITE_ARTICLE)){
-				} else if(CriterionConverter.isACriterionData(words)){
-					// TODO:
-					complement.criteria = CriterionConverter.parseCriterionData(words); 
-				}
-			} else if(PlaceConverter.isAPlaceData(words)){
-				complement.where = PlaceConverter.parsePlaceObject(words);
-			} else {
-				break;
-			}
-		}
-
-		return complement;
-	}*/
 
 	public void parseObject(WordBuffer words, InterpretationObject obj){
 		/*if(words.getCurrentIndex() > words.size()){

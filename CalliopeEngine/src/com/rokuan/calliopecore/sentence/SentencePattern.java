@@ -2,6 +2,7 @@ package com.rokuan.calliopecore.sentence;
 
 import com.rokuan.calliopecore.pattern.WordPattern;
 import com.rokuan.calliopecore.sentence.Word.WordType;
+import com.rokuan.calliopecore.sentence.structure.data.VerbConverter;
 
 public class SentencePattern {
 	public static final WordPattern yesNoQuestionPattern = WordPattern.sequence(
@@ -47,9 +48,16 @@ public class SentencePattern {
 					WordPattern.optional(WordPattern.simple(WordType.TARGET_PRONOUN))
 			)));
 	// Quel(s/le(s)) est/sont
-	public static final WordPattern resultQuestionPattern = WordPattern.sequence(
+	/*public static final WordPattern resultQuestionPattern = WordPattern.sequence(
 			WordPattern.or(WordPattern.simple(WordType.INTERROGATIVE_PRONOUN), WordPattern.simple(WordType.INTERROGATIVE_ADJECTIVE)),
 			WordPattern.simple(WordType.VERB, null, "être")
+			);*/
+	// Quelle temperature fait-il
+	public static final WordPattern resultQuestionPattern = WordPattern.sequence(
+			WordPattern.or(WordPattern.simple(WordType.INTERROGATIVE_ADJECTIVE, "quel.*"), WordPattern.simple(WordType.INTERROGATIVE_ADJECTIVE, "quel.*")),
+			// TODO: remplacer par un groupe nominal en prenant en compte les adjectifs (ex: quel petit chat)
+			WordPattern.nonEmptyList(WordPattern.simple(WordType.COMMON_NAME)),
+			VerbConverter.questionVerbPattern
 			);
 	
 	public static final WordPattern interrogativePattern = WordPattern.sequence(

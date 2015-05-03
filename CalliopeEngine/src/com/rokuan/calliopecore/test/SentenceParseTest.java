@@ -1,7 +1,6 @@
 package com.rokuan.calliopecore.test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -17,6 +16,7 @@ import com.rokuan.calliopecore.sentence.Verb.Form;
 import com.rokuan.calliopecore.sentence.Word.WordType;
 import com.rokuan.calliopecore.sentence.structure.ComplementObject;
 import com.rokuan.calliopecore.sentence.structure.InterpretationObject;
+import com.rokuan.calliopecore.sentence.structure.PronounTarget;
 import com.rokuan.calliopecore.sentence.structure.QuestionObject;
 import com.rokuan.calliopecore.sentence.structure.NominalGroup.GroupType;
 import com.rokuan.calliopecore.sentence.structure.QuestionObject.QuestionType;
@@ -145,5 +145,28 @@ public class SentenceParseTest {
 		assertEquals(compl.object, "vidéos");
 		assert (compl.of != null);
 		assertEquals(compl.of.object, "chats");
+	}
+	
+	@Test
+	public void testResultQuestion(){
+		WordBuffer words = new WordBuffer();
+		
+		Word make = new Word("fait", WordType.VERB);
+		Verb<Action.VerbAction> toMake = new Verb<Action.VerbAction>("faire", Action.VerbAction.DO__MAKE, false);
+		VerbConjugation toMakeConjug = new VerbConjugation(ConjugationTense.PRESENT, Form.INDICATIVE, Pronoun.IL_ELLE_ON, "faire", toMake);
+		toMakeConjug.setVerb(toMake);
+		make.setVerbInfo(toMakeConjug);
+		
+		words.add(new Word("quelle", WordType.INTERROGATIVE_ADJECTIVE));
+		words.add(new Word("température", WordType.COMMON_NAME));
+		words.add(make);
+		words.add(new Word("il", WordType.PERSONAL_PRONOUN));
+		
+		InterpretationObject obj = new Parser().parseInterpretationObject(words);
+		
+		ComplementObject compl = (ComplementObject)obj.what;
+		assertEquals(obj.action, Action.VerbAction.DO__MAKE);
+		assertEquals(((PronounTarget)obj.subject).pronoun, com.rokuan.calliopecore.sentence.Type.Pronoun.IL_ELLE_ON);
+		assertEquals(compl.object, "température");
 	}
 }
