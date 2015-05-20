@@ -57,13 +57,16 @@ public class Word {
         PLACE_TYPE,	// restaurant/cinéma/...
         CITY,
         COUNTRY,
-        FIRSTNAME
+        FIRSTNAME,
+        LANGUAGE
     }
 
-    //private List<WordType> types = new ArrayList<WordType>();
     private Set<WordType> types = new HashSet<WordType>();
     private String value;
     private VerbConjugation verbInfo;
+    private LanguageInfo langInfo;
+	private CountryInfo countryInfo;
+    private CityInfo cityInfo;
     
     public Word(String v, WordType t){
         types.add(t);
@@ -94,6 +97,10 @@ public class Word {
         return types.contains(type);
     }
 
+    public Set<WordType> getTypes(){
+		return types;
+	}
+    
     public String getValue() {
         return value;
     }
@@ -106,7 +113,27 @@ public class Word {
 		this.verbInfo = verbInfo;
 	}
 
-	public Set<WordType> getTypes(){
-		return types;
+    public LanguageInfo getLanguageInfo() {
+		return langInfo;
+	}
+
+	public void setLanguageInfo(LanguageInfo langInfo) {
+		this.langInfo = langInfo;
+	}
+
+	public CountryInfo getCountryInfo() {
+		return countryInfo;
+	}
+
+	public void setCountryInfo(CountryInfo countryInfo) {
+		this.countryInfo = countryInfo;
+	}
+
+	public CityInfo getCityInfo() {
+		return cityInfo;
+	}
+
+	public void setCityInfo(CityInfo cityInfo) {
+		this.cityInfo = cityInfo;
 	}
 }

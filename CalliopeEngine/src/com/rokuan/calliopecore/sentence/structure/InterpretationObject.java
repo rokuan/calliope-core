@@ -8,6 +8,8 @@ import com.rokuan.calliopecore.sentence.Type.Pronoun;
 import com.rokuan.calliopecore.sentence.structure.data.count.CountObject;
 import com.rokuan.calliopecore.sentence.structure.data.place.PlaceObject;
 import com.rokuan.calliopecore.sentence.structure.data.time.TimeObject;
+import com.rokuan.calliopecore.sentence.structure.nominal.NominalGroup;
+import com.rokuan.calliopecore.sentence.structure.nominal.PronounTarget;
 
 /**
  * Created by LEBEAU Christophe on 17/02/2015.
@@ -31,7 +33,7 @@ public abstract class InterpretationObject {
     public TimeObject when;
     //public ComplementObject why;
     public PlaceObject where;
-    public String how; 
+    public NominalGroup how; 
     
     protected InterpretationObject(RequestType t){
         type = t;

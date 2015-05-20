@@ -5,9 +5,9 @@ import com.rokuan.calliopecore.pattern.WordPattern;
 import com.rokuan.calliopecore.sentence.Type;
 import com.rokuan.calliopecore.sentence.Type.Pronoun;
 import com.rokuan.calliopecore.sentence.Word.WordType;
-import com.rokuan.calliopecore.sentence.structure.ComplementObject;
-import com.rokuan.calliopecore.sentence.structure.NominalGroup;
-import com.rokuan.calliopecore.sentence.structure.PronounTarget;
+import com.rokuan.calliopecore.sentence.structure.nominal.ComplementObject;
+import com.rokuan.calliopecore.sentence.structure.nominal.NominalGroup;
+import com.rokuan.calliopecore.sentence.structure.nominal.PronounTarget;
 
 public class NominalGroupConverter {
 	// NominalGroup

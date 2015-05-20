@@ -14,14 +14,14 @@ import com.rokuan.calliopecore.sentence.Word;
 import com.rokuan.calliopecore.sentence.Verb.ConjugationTense;
 import com.rokuan.calliopecore.sentence.Verb.Form;
 import com.rokuan.calliopecore.sentence.Word.WordType;
-import com.rokuan.calliopecore.sentence.structure.ComplementObject;
 import com.rokuan.calliopecore.sentence.structure.InterpretationObject;
-import com.rokuan.calliopecore.sentence.structure.PronounTarget;
 import com.rokuan.calliopecore.sentence.structure.QuestionObject;
-import com.rokuan.calliopecore.sentence.structure.NominalGroup.GroupType;
 import com.rokuan.calliopecore.sentence.structure.QuestionObject.QuestionType;
 import com.rokuan.calliopecore.sentence.structure.data.place.MonumentObject;
 import com.rokuan.calliopecore.sentence.structure.data.place.PlaceObject;
+import com.rokuan.calliopecore.sentence.structure.nominal.ComplementObject;
+import com.rokuan.calliopecore.sentence.structure.nominal.PronounTarget;
+import com.rokuan.calliopecore.sentence.structure.nominal.NominalGroup.GroupType;
 
 public class SentenceParseTest {
 	
@@ -116,7 +116,7 @@ public class SentenceParseTest {
 		
 		QuestionObject question = (QuestionObject)obj;
 		assertEquals(question.qType, QuestionType.WHO);
-		assertEquals(question.what.getType(), GroupType.NOMINAL_GROUP);
+		assertEquals(question.what.getType(), GroupType.COMPLEMENT);
 		
 		ComplementObject compl = (ComplementObject)question.what;
 		assertEquals(compl.object, "Arnold Schwarzenegger");

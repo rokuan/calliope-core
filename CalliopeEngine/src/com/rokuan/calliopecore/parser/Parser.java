@@ -6,11 +6,8 @@ import com.rokuan.calliopecore.sentence.Type;
 import com.rokuan.calliopecore.sentence.VerbConjugation;
 import com.rokuan.calliopecore.sentence.Word;
 import com.rokuan.calliopecore.sentence.Word.WordType;
-import com.rokuan.calliopecore.sentence.structure.AbstractTarget;
-import com.rokuan.calliopecore.sentence.structure.ComplementObject;
 import com.rokuan.calliopecore.sentence.structure.InterpretationObject;
 import com.rokuan.calliopecore.sentence.structure.OrderObject;
-import com.rokuan.calliopecore.sentence.structure.PronounTarget;
 import com.rokuan.calliopecore.sentence.structure.QuestionObject;
 import com.rokuan.calliopecore.sentence.structure.QuestionObject.QuestionType;
 import com.rokuan.calliopecore.sentence.structure.data.DateConverter;
@@ -20,6 +17,9 @@ import com.rokuan.calliopecore.sentence.structure.data.PhoneNumberConverter;
 import com.rokuan.calliopecore.sentence.structure.data.PlaceConverter;
 import com.rokuan.calliopecore.sentence.structure.data.VerbConverter;
 import com.rokuan.calliopecore.sentence.structure.data.WayConverter;
+import com.rokuan.calliopecore.sentence.structure.nominal.AbstractTarget;
+import com.rokuan.calliopecore.sentence.structure.nominal.ComplementObject;
+import com.rokuan.calliopecore.sentence.structure.nominal.PronounTarget;
 
 
 /**
