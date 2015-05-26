@@ -99,13 +99,13 @@ public class Parser {
 
 			inter.action = getActionFromVerb(words.getCurrentElement().getVerbInfo());
 			words.consume();
-			
+
 			if(words.isIntoBounds() && words.getCurrentElement().isOfType(WordType.TARGET_PRONOUN) && !NominalGroupConverter.isADirectObject(words)){
 				//inter.target = new PronounTarget(Type.parseTargetPronoun(words.getCurrentElement().getValue()));
 				/*inter.target = new PronounTarget(Type.parsePossessivePronoun(words.getCurrentElement().getValue()));
 				words.consume();*/
 				words.next();
-				
+
 				if(NominalGroupConverter.isADirectObject(words)){
 					words.previous();
 					inter.target = new PronounTarget(Type.parsePossessivePronoun(words.getCurrentElement().getValue()));
@@ -118,13 +118,13 @@ public class Parser {
 			} else if(words.isIntoBounds() && words.getCurrentElement().isOfType(WordType.DEFINITE_ARTICLE) && !NominalGroupConverter.isADirectObject(words)){
 				inter.what = new AbstractTarget(Type.parseDirectPronoun(words.getCurrentElement().getValue()));
 				words.consume();
-				
+
 				if(words.isIntoBounds() && words.getCurrentElement().isOfType(WordType.TARGET_PRONOUN)){
 					inter.target = new PronounTarget(Type.parseTargetPronoun(words.getCurrentElement().getValue()));
 					words.consume();
 				}
 			}
-			
+
 			parseObject(words, inter);
 		} /*else if(words.syntaxStartsWith(SentencePattern.resultQuestionPattern)){
 			// Quel est/Quelle a ete
@@ -145,42 +145,18 @@ public class Parser {
 			parseObject(words, qObject);
 
 			inter = qObject;
-		}*/ 
-		else if(words.syntaxStartsWith(SentencePattern.resultQuestionPattern)){
+		}*/
+		else if(words.syntaxStartsWith(SentencePattern.interrogativePattern)){ 
 			QuestionObject qObject = new QuestionObject();
-			
-			qObject.qType = QuestionObject.parseInterrogativePronoun(words.getCurrentElement().getValue());			
-			words.consume();
-			
-			ComplementObject complement = new ComplementObject();
-			StringBuffer whatString = new StringBuffer();
-			
-			// TODO: modifier pour parser les adjectifs
-			while(!VerbConverter.isAQuestionVerbalForm(words)){
-				whatString.append(words.getCurrentElement().getValue());
-				whatString.append(' ');
-				words.consume();
-			}
-			
-			complement.object = whatString.toString().trim();
-			qObject.what = complement;	
-			
-			VerbConverter.parseQuestionVerbalGroup(words, qObject);
-			
-			parseObject(words, qObject);
-			
-			inter = qObject;
-		} else if(words.syntaxStartsWith(SentencePattern.interrogativePattern)){ 
-			QuestionObject qObject = new QuestionObject();
-			
+
 			qObject.qType = QuestionObject.parseInterrogativePronoun(words.getCurrentElement().getValue());
 			words.consume();
-			
+
 			Word verb;
-			
+
 			if(words.getCurrentElement().isOfType(WordType.AUXILIARY)){
 				words.next();
-				
+
 				if(words.isIntoBounds()){
 					if(words.getCurrentElement().isOfType(WordType.VERB)){
 						// Auxiliaire + verbe
@@ -203,11 +179,35 @@ public class Parser {
 				verb = words.getCurrentElement();
 				words.consume();
 			}
-			
+
 			qObject.action = getActionFromVerb(verb.getVerbInfo());
-			
+
 			parseObject(words, qObject);
-			
+
+			inter = qObject;
+		} else if(words.syntaxStartsWith(SentencePattern.resultQuestionPattern)){
+			QuestionObject qObject = new QuestionObject();
+
+			qObject.qType = QuestionObject.parseInterrogativePronoun(words.getCurrentElement().getValue());			
+			words.consume();
+
+			ComplementObject complement = new ComplementObject();
+			StringBuffer whatString = new StringBuffer();
+
+			// TODO: modifier pour parser les adjectifs
+			while(!VerbConverter.isAQuestionVerbalForm(words)){
+				whatString.append(words.getCurrentElement().getValue());
+				whatString.append(' ');
+				words.consume();
+			}
+
+			complement.object = whatString.toString().trim();
+			qObject.what = complement;	
+
+			VerbConverter.parseQuestionVerbalGroup(words, qObject);
+
+			parseObject(words, qObject);
+
 			inter = qObject;
 		} else {
 			// TODO: Le sujet est un groupe nominal ?
@@ -244,7 +244,7 @@ public class Parser {
 			} else if(WayConverter.isAWayData(words)){ 
 				obj.how = WayConverter.parseWayData(words);
 			} else if(PlaceConverter.isAPlaceData(words)){
-					obj.where = PlaceConverter.parsePlaceObject(words);
+				obj.where = PlaceConverter.parsePlaceObject(words);
 			} else if(NominalGroupConverter.isADirectObject(words)){
 				obj.what = NominalGroupConverter.parseDirectObject(words);
 			} else if(NominalGroupConverter.isAnIndirectObject(words)){ 

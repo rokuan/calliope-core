@@ -14,6 +14,8 @@ import com.rokuan.calliopecore.sentence.Word.WordType;
 import com.rokuan.calliopecore.sentence.structure.data.time.SingleTimeObject;
 import com.rokuan.calliopecore.sentence.structure.data.time.TimeObject;
 import com.rokuan.calliopecore.sentence.structure.data.time.TimeObject.DateDefinition;
+import com.rokuan.calliopecore.sentence.structure.data.time.TimeObject.TimeInterval;
+import com.rokuan.calliopecore.sentence.structure.data.time.TimeObject.TimeTense;
 import com.rokuan.calliopecore.sentence.structure.data.time.TimeObject.TimeUnit;
 import com.rokuan.calliopecore.sentence.structure.data.time.TimePeriodObject;
 
@@ -102,7 +104,7 @@ public class DateConverter {
 
 
 	// Indirect object patterns
-	
+
 	public static final WordPattern directObjectDatePattern = WordPattern.sequence(
 			WordPattern.simple(WordType.PREPOSITION_OF, "du"),
 			WordPattern.or(WordPattern.simple(WordType.NUMBER), WordPattern.simple(WordType.NUMERICAL_POSITION)),
@@ -110,20 +112,23 @@ public class DateConverter {
 			WordPattern.optional(WordPattern.simple(WordType.NUMBER)),
 			WordPattern.optional(WordPattern.sequence(WordPattern.simple(WordType.PREPOSITION_AT), timePattern))
 			);
-	
+
 	public static final WordPattern directObjectTimePattern = WordPattern.sequence(
 			WordPattern.simple(WordType.PREPOSITION_OF, "de"),
 			timePattern
 			);
-	
+
+	public static final WordPattern relativeDatePattern = WordPattern.simple(WordType.DATE);
+
 	public static boolean isADateData(WordBuffer words){
 		return WordPattern.syntaxStartsWith(words, fromToDatePattern)
 				|| WordPattern.syntaxStartsWith(words, betweenDatePattern)
 				|| WordPattern.syntaxStartsWith(words, fixedDatePattern)
-				|| WordPattern.syntaxStartsWith(words, timeDeclarationPattern);
+				|| WordPattern.syntaxStartsWith(words, timeDeclarationPattern)
+				|| WordPattern.syntaxStartsWith(words, relativeDatePattern);
 		//|| WordPattern.syntaxStartsWith(words, timePattern); 
 	}
-	
+
 	public static boolean isAnObjectDateData(WordBuffer words){
 		return WordPattern.syntaxStartsWith(words, directObjectDatePattern)
 				|| WordPattern.syntaxStartsWith(words, directObjectTimePattern);
@@ -202,6 +207,10 @@ public class DateConverter {
 
 			//fixUndefinedValues(fixedDateFields);
 			result = single;
+		} else if(WordPattern.syntaxStartsWith(words, relativeDatePattern)){
+			//RelativeTimeObject
+			result = parseRelativeDay(words.getCurrentElement().getValue());
+			words.consume();
 		}
 
 		return result;
@@ -210,7 +219,7 @@ public class DateConverter {
 	public static TimeObject parseDirectObjectDateObject(WordBuffer words){
 		if(words.syntaxStartsWith(directObjectDatePattern)){
 			words.consume();	// PREPOSITION_OF
-			
+
 			SingleTimeObject single = new SingleTimeObject();
 			int[] dateFields = parseDate(words);
 
@@ -219,7 +228,7 @@ public class DateConverter {
 			return single;
 		} else if(words.syntaxStartsWith(directObjectTimePattern)){
 			words.consume();	// PREPOSITION_OF			
-			
+
 			SingleTimeObject single = new SingleTimeObject();
 			int[] fixedTimeFields = parseTime(words);
 
@@ -229,10 +238,10 @@ public class DateConverter {
 			//fixUndefinedValues(fixedDateFields);
 			return single;
 		}
-		
+
 		return null;
 	}
-	
+
 	private static int[] parseDate(WordBuffer words){
 		// TODO: modifier si on prend en compte l'heure
 		int[] date = new int[TimeUnit.values().length + 1];
@@ -310,7 +319,7 @@ public class DateConverter {
 		}
 
 		if(words.syntaxStartsWith(hourOnlyPattern)){
-		//if(words.getCurrentElement().getValue().matches(hourOnlyRegex)){
+			//if(words.getCurrentElement().getValue().matches(hourOnlyRegex)){
 			String value = words.getCurrentElement().getValue();
 			int hours = Integer.parseInt(value.substring(0, value.length() - 1));
 
@@ -456,5 +465,34 @@ public class DateConverter {
 		}
 
 		return 0;
+	}
+
+	private static SingleTimeObject parseRelativeDay(String dayStr){
+		Calendar calendar = Calendar.getInstance();
+
+		SingleTimeObject oneDay = new SingleTimeObject();
+
+		oneDay.dateDefinition = DateDefinition.DATE_ONLY; 
+		oneDay.interval = TimeInterval.SINGLE;
+
+		if(dayStr.equals("aujourd'hui")){
+			oneDay.tense = TimeTense.PRESENT;
+		} else {
+			String[] parts = dayStr.split("-");
+
+			for(int i=0; i<parts.length; i++){
+				if(parts[i].equals("avant") || parts[i].equals("hier")){
+					calendar.add(Calendar.DAY_OF_MONTH, -1);
+					oneDay.tense = TimeTense.PAST;
+				} else if(parts[i].equals("après") || parts[i].equals("demain")){
+					calendar.add(Calendar.DAY_OF_MONTH, 1);
+					oneDay.tense = TimeTense.FUTURE;
+				}
+			}
+		}
+
+		oneDay.date = calendar.getTime();
+
+		return oneDay;
 	}
 }
