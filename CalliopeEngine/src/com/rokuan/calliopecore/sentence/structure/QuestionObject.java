@@ -12,7 +12,9 @@ public class QuestionObject extends InterpretationObject {
 		WHEN,
 		WHERE,
 		HOW,
-		WHY
+		WHY,
+		HOW_MANY,
+		WHICH
 	}
 	
 	public QuestionType qType = QuestionType.YES_NO;
@@ -25,7 +27,7 @@ public class QuestionObject extends InterpretationObject {
     	// TODO: s'assurer qu'on ne tente pas de parser le mot "quelque(s)"
     	String lowerValue = value.toLowerCase();
     	
-    	if(lowerValue.startsWith("quel")){
+    	if(lowerValue.startsWith("quel") || lowerValue.equals("que") || lowerValue.equals("qu")){
     		return QuestionType.WHAT;
     	} else if(lowerValue.equals("quand")){
     		return QuestionType.WHEN;
@@ -37,6 +39,10 @@ public class QuestionObject extends InterpretationObject {
     		return QuestionType.WHY;
     	} else if(lowerValue.equals("qui")){
     		return QuestionType.WHO;
+    	} else if(lowerValue.equals("combien")){
+    		return QuestionType.HOW_MANY;
+    	} else if(lowerValue.startsWith("lequel") || lowerValue.startsWith("lesquel")){
+    		return QuestionType.WHICH;
     	}
     	
     	return QuestionType.UNDEFINED;

@@ -25,12 +25,20 @@ public class VerbConverter {
 			WordPattern.simple(WordType.PERSONAL_PRONOUN), 
 			WordPattern.simple(WordType.VERB));
 	
+	public static final WordPattern isTherePattern = WordPattern.sequence(
+			WordPattern.simple(WordType.ANY, "y"),
+			WordPattern.simple(WordType.AUXILIARY, null, "avoir"),
+			WordPattern.optional(WordPattern.simple(WordType.CONJUGATION_LINK, "t")),
+			WordPattern.simple(WordType.PERSONAL_PRONOUN, "il")
+			);
+	
 	// TODO: ajouter un moyen de verifier la forme du verbe
 	public static final WordPattern infinitivePattern = WordPattern.simple(WordType.VERB);
 	
 	public static final WordPattern questionVerbPattern = WordPattern.or(
 			pastQuestionPattern,
-			presentQuestionPattern
+			presentQuestionPattern,
+			isTherePattern
 			//infinitivePattern
 			);
 	
@@ -63,6 +71,18 @@ public class VerbConverter {
 			}		
 			
 			object.action = getActionFromVerb(words.getCurrentElement().getVerbInfo());
+			words.consume();
+			
+			if(words.getCurrentElement().isOfType(WordType.CONJUGATION_LINK)){
+				words.consume();
+			}
+			
+			object.subject = new PronounTarget(Type.parseSubjectPronoun(words.getCurrentElement().getValue()));
+			words.consume();
+		} else if(words.syntaxStartsWith(isTherePattern)){
+			words.consume();	// y
+			
+			object.action = Action.VerbAction.EXIST;
 			words.consume();
 			
 			if(words.getCurrentElement().isOfType(WordType.CONJUGATION_LINK)){
