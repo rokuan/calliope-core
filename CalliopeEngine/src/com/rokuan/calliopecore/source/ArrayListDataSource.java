@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import com.rokuan.calliopecore.sentence.structure.data.count.CountObject;
+import com.rokuan.calliopecore.sentence.structure.data.count.FixedItemObject;
+import com.rokuan.calliopecore.sentence.structure.data.count.LimitedItemsObject;
+import com.rokuan.calliopecore.sentence.structure.data.count.MultipleItemsObject;
 import com.rokuan.calliopecore.sentence.structure.data.criteria.CriterionObject;
 
 public class ArrayListDataSource<DataType> extends ArrayList<DataType> implements DataSource<DataType> {
@@ -39,29 +42,47 @@ public class ArrayListDataSource<DataType> extends ArrayList<DataType> implement
 		ArrayListDataSource<DataType> result = new ArrayListDataSource<DataType>();
 
 		if(count != null){
-			switch(count.countType){
+			switch(count.getType()){
 			case ALL:
 				result.addAll(this);
 				break;
 
 			case LIMIT:
-				switch(count.range){
+				LimitedItemsObject limited = (LimitedItemsObject)count;
+				
+				switch(limited.range){
 				case FIRST:
-					result.addAll(this.subList(0, (int)Math.min(this.size(), count.count)));
-					break;
-
-				case FIXED:
-					result.add(this.get((int)count.position - 1));
-					break;
+					result.addAll(this.subList(0, (int)Math.min(this.size(), limited.count)));
+					break;				
 
 				case LAST:
-					result.addAll(this.subList((int)Math.max(0, this.size() - count.count), this.size()));
+					result.addAll(this.subList((int)Math.max(0, this.size() - limited.count), this.size()));
 					break;
+				}
+				break;
+				
+			case FIXED:
+				try{
+				result.add(this.get((int)((FixedItemObject)count).position - 1));
+				}catch(Exception e){
+					
 				}
 				break;
 				
 			case INTERVAL:
 				// TODO:
+				break;
+				
+			case MULTIPLE:
+				MultipleItemsObject multiple = (MultipleItemsObject)count;
+				
+				for(Integer pos: multiple.items){
+					try{
+						result.add(this.get(pos - 1));
+					}catch(Exception e){
+						
+					}
+				}
 				break;
 			}
 		}
@@ -123,27 +144,25 @@ public class ArrayListDataSource<DataType> extends ArrayList<DataType> implement
 		int fromIndex = 0, toIndex = 0;
 
 		if(count != null){
-			switch(count.countType){
+			switch(count.getType()){
 			case ALL:
 				result.addAll(this);
 				this.clear();
 				break;
 
 			case LIMIT:
-				switch(count.range){
+				LimitedItemsObject limited = (LimitedItemsObject)count;
+				
+				switch(limited.range){
 				case FIRST:
 					fromIndex = 0;
-					toIndex = (int)Math.min(this.size(), count.count);
+					toIndex = (int)Math.min(this.size(), limited.count);
 					result.addAll(this.subList(fromIndex, toIndex));
 					this.removeRange(fromIndex, toIndex);
 					break;
-
-				case FIXED:
-					result.add(this.remove((int)count.position - 1));
-					break;
-
+					
 				case LAST:
-					fromIndex = (int)Math.max(0, this.size() - count.count);
+					fromIndex = (int)Math.max(0, this.size() - limited.count);
 					toIndex = this.size();
 					result.addAll(this.subList(fromIndex, toIndex));
 					this.removeRange(fromIndex, toIndex);
@@ -153,6 +172,15 @@ public class ArrayListDataSource<DataType> extends ArrayList<DataType> implement
 				
 			case INTERVAL:
 				// TODO:
+				break;
+				
+			case FIXED:
+				int index = (int)(((FixedItemObject)count).position - 1);
+				result.add(this.get(index));
+				this.remove(index);
+				break;
+				
+			case MULTIPLE:
 				break;
 			}
 		}

@@ -6,9 +6,11 @@ import com.rokuan.calliopecore.parser.WordBuffer;
 import com.rokuan.calliopecore.pattern.WordPattern;
 import com.rokuan.calliopecore.sentence.Word;
 import com.rokuan.calliopecore.sentence.Word.WordType;
+import com.rokuan.calliopecore.sentence.structure.data.count.AllItemsObject;
 import com.rokuan.calliopecore.sentence.structure.data.count.CountObject;
-import com.rokuan.calliopecore.sentence.structure.data.count.CountObject.CountType;
 import com.rokuan.calliopecore.sentence.structure.data.count.CountObject.Range;
+import com.rokuan.calliopecore.sentence.structure.data.count.FixedItemObject;
+import com.rokuan.calliopecore.sentence.structure.data.count.LimitedItemsObject;
 
 
 /**
@@ -166,55 +168,50 @@ public class NumberConverter {
     		return null;
     	}
     	
-        CountObject result = new CountObject();
+        CountObject result = null;
         
         if (words.syntaxStartsWith(fixedItemPattern)) {        	
         	words.consume();
-        	result.count = 1;
-            result.countType = CountObject.CountType.LIMIT;
-            //result.position = Long.parseLong(words.getCurrentElement().getValue());
-            result.position = parsePosition(words.getCurrentElement().getValue());
-            result.range = CountObject.Range.FIXED;
+        	result = new FixedItemObject(parsePosition(words.getCurrentElement().getValue()));
             words.consume();
         } else if(words.syntaxStartsWith(fixedRangePattern)) {
         	words.consume();
         	
         	try{
-                result.count = Long.parseLong(words.getCurrentElement().getValue());
-                result.countType = CountObject.CountType.LIMIT;
-                words.consume();
+        		Range r = Range.FIRST;
+        		long count = Long.parseLong(words.getCurrentElement().getValue());        		
+        		
+        		words.consume();
 
                 String posValue = words.getCurrentElement().getValue();
 
                 if(posValue.startsWith("premi")){
-                    result.position = 1;
-                    result.range = CountObject.Range.FIRST;
+                    r = CountObject.Range.FIRST;
                 } else if(posValue.startsWith("derni")){
-                    result.range = CountObject.Range.LAST;
+                    r = CountObject.Range.LAST;
                 } else {
                     // TODO: error
                 }
                 
                 words.consume();
+
+        		result = new LimitedItemsObject(r, count);                
             } catch(Exception e) {
 
             }
         } else if(words.syntaxStartsWith(quantityPattern)) {
-        	result.countType = CountType.ALL;
+        	result = new AllItemsObject();
         	words.consume();
         	words.consume();
-        } else if(words.syntaxStartsWith(simpleArticles)) {
+        } else if(words.syntaxStartsWith(simpleArticles)) {        	
         	boolean singular = isSingular(words.getCurrentElement().getValue());
         	
         	words.consume();
         	
         	if(singular){
-        		result.count = 1;
-        		result.countType = CountType.LIMIT;
-        		result.range = Range.FIXED;
-        		result.position = 1;
+        		result = new FixedItemObject(1);
         	} else {
-        		result.countType = CountType.ALL; 
+        		result = new AllItemsObject();
         	}
         }
 

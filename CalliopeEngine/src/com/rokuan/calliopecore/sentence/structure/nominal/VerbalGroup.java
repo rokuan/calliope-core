@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.rokuan.calliopecore.sentence.Adjective;
+import com.rokuan.calliopecore.sentence.structure.data.count.AllItemsObject;
 import com.rokuan.calliopecore.sentence.structure.data.count.CountObject;
 import com.rokuan.calliopecore.sentence.structure.data.place.PlaceObject;
 import com.rokuan.calliopecore.sentence.structure.data.time.TimeObject;
@@ -11,7 +12,7 @@ import com.rokuan.calliopecore.sentence.structure.data.time.TimeObject;
 public class VerbalGroup {
 	public Enum<?> action;
     public NominalGroup target;	
-    public CountObject count = new CountObject();
+    public CountObject count = new AllItemsObject();
 	public List<Adjective> acjectives = new ArrayList<Adjective>();
 	public NominalGroup what;
     public TimeObject when;

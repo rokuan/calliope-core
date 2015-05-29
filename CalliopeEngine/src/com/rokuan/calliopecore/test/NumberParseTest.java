@@ -11,6 +11,8 @@ import com.rokuan.calliopecore.sentence.structure.data.NumberConverter;
 import com.rokuan.calliopecore.sentence.structure.data.count.CountObject;
 import com.rokuan.calliopecore.sentence.structure.data.count.CountObject.CountType;
 import com.rokuan.calliopecore.sentence.structure.data.count.CountObject.Range;
+import com.rokuan.calliopecore.sentence.structure.data.count.FixedItemObject;
+import com.rokuan.calliopecore.sentence.structure.data.count.LimitedItemsObject;
 
 public class NumberParseTest {
 
@@ -24,10 +26,12 @@ public class NumberParseTest {
 
 		assert (count != null);
 
-		assertEquals(count.count, 1);
-		assertEquals(count.countType, CountType.LIMIT);
-		assertEquals(count.position, 1);
-		assertEquals(count.range, Range.FIXED);
+		//assertEquals(count.count, 1);
+		assertEquals(count.getType(), CountType.FIXED);
+
+		FixedItemObject fixed = (FixedItemObject)count;
+
+		assertEquals(fixed.position, 1);
 	}
 
 	@Test
@@ -41,9 +45,12 @@ public class NumberParseTest {
 
 		assert (count != null);
 
-		assertEquals(count.count, 5);
-		assertEquals(count.countType, CountType.LIMIT);
-		assertEquals(count.range, Range.FIRST);
+		assertEquals(count.getType(), CountType.LIMIT);
+
+		LimitedItemsObject limit = (LimitedItemsObject)count;
+
+		assertEquals(limit.range, Range.FIRST);
+		assertEquals(limit.count, 5);
 	}
 
 	@Test
@@ -57,8 +64,11 @@ public class NumberParseTest {
 
 		assert (count != null);
 
-		assertEquals(count.count, 7);
-		assertEquals(count.countType, CountType.LIMIT);
-		assertEquals(count.range, Range.LAST);
+		assertEquals(count.getType(), CountType.LIMIT);
+
+		LimitedItemsObject limit = (LimitedItemsObject)count;
+
+		assertEquals(limit.range, Range.LAST);
+		assertEquals(limit.count, 7);
 	}
 }

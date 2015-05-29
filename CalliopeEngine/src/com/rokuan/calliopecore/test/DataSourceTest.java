@@ -6,9 +6,11 @@ import junit.framework.TestCase;
 
 import org.junit.Test;
 
+import com.rokuan.calliopecore.sentence.structure.data.count.AllItemsObject;
 import com.rokuan.calliopecore.sentence.structure.data.count.CountObject;
-import com.rokuan.calliopecore.sentence.structure.data.count.CountObject.CountType;
 import com.rokuan.calliopecore.sentence.structure.data.count.CountObject.Range;
+import com.rokuan.calliopecore.sentence.structure.data.count.FixedItemObject;
+import com.rokuan.calliopecore.sentence.structure.data.count.LimitedItemsObject;
 import com.rokuan.calliopecore.source.ArrayListDataSource;
 
 public class DataSourceTest extends TestCase {
@@ -48,13 +50,13 @@ public class DataSourceTest extends TestCase {
 
 	@Test
 	public void testSingleElement(){
-		CountObject count = new CountObject();
-
 		// Le 5eme element
-		count.countType = CountType.LIMIT;
+		CountObject count = new FixedItemObject(5);
+
+		/*count.countType = CountType.LIMIT;
 		count.position = 5;
 		count.count = 1;
-		count.range = Range.FIXED;
+		count.range = Range.FIXED;*/
 
 		ArrayListDataSource<String> result = (ArrayListDataSource<String>)dataSource.getData(count);
 
@@ -64,12 +66,12 @@ public class DataSourceTest extends TestCase {
 
 	@Test
 	public void testFirst(){
-		CountObject count = new CountObject();
-
 		// Les 7 premiers elements
-		count.countType = CountType.LIMIT;
+		CountObject count = new LimitedItemsObject(Range.FIRST, 7);
+
+		/*count.countType = CountType.LIMIT;
 		count.count = 7;
-		count.range = Range.FIRST;
+		count.range = Range.FIRST;*/
 
 		ArrayListDataSource<String> result = (ArrayListDataSource<String>)dataSource.getData(count);
 
@@ -85,12 +87,12 @@ public class DataSourceTest extends TestCase {
 
 	@Test
 	public void testLast(){
-		CountObject count = new CountObject();
-
 		// Les 3 derniers elements
-		count.countType = CountType.LIMIT;
+		CountObject count = new LimitedItemsObject(Range.LAST, 3);
+
+		/*count.countType = CountType.LIMIT;
 		count.count = 3;
-		count.range = Range.LAST;
+		count.range = Range.LAST;*/
 
 		ArrayListDataSource<String> result = (ArrayListDataSource<String>)dataSource.getData(count);
 
@@ -106,9 +108,9 @@ public class DataSourceTest extends TestCase {
 
 	@Test
 	public void testAll(){
-		CountObject count = new CountObject();
+		CountObject count = new AllItemsObject();
 		
-		count.countType = CountType.ALL;
+		//count.countType = CountType.ALL;
 		
 		ArrayListDataSource<String> result = (ArrayListDataSource<String>)dataSource.getData(count);
 		
@@ -117,9 +119,9 @@ public class DataSourceTest extends TestCase {
 	
 	@Test
 	public void testRemoveAll(){
-		CountObject count = new CountObject();
+		CountObject count = new AllItemsObject();
 		
-		count.countType = CountType.ALL;
+		//count.countType = CountType.ALL;
 		
 		dataSource.removeData(count);		
 		assertTrue(dataSource.isEmpty());
@@ -127,11 +129,11 @@ public class DataSourceTest extends TestCase {
 	
 	@Test
 	public void testRemoveFirst(){
-		CountObject count = new CountObject();
+		CountObject count = new LimitedItemsObject(Range.FIRST, 3);
 		
-		count.countType = CountType.LIMIT;
+		/*count.countType = CountType.LIMIT;
 		count.count = 3;
-		count.range = Range.FIRST;
+		count.range = Range.FIRST;*/
 		
 		ArrayListDataSource<String> removed = (ArrayListDataSource<String>)dataSource.removeData(count);
 		
@@ -146,11 +148,11 @@ public class DataSourceTest extends TestCase {
 	
 	@Test
 	public void testRemoveLast(){
-		CountObject count = new CountObject();
+		CountObject count = new LimitedItemsObject(Range.LAST, 5);
 		
-		count.countType = CountType.LIMIT;
+		/*count.countType = CountType.LIMIT;
 		count.count = 5;
-		count.range = Range.LAST;
+		count.range = Range.LAST;*/
 		
 		ArrayListDataSource<String> removed = (ArrayListDataSource<String>)dataSource.removeData(count);
 		
@@ -165,12 +167,12 @@ public class DataSourceTest extends TestCase {
 	
 	@Test
 	public void testRemoveFixed(){
-		CountObject count = new CountObject();
+		CountObject count = new FixedItemObject(7);
 		
-		count.countType = CountType.LIMIT;
+		/*count.countType = CountType.LIMIT;
 		count.count = 1;
 		count.range = Range.FIXED;
-		count.position = 7;
+		count.position = 7;*/
 		
 		ArrayListDataSource<String> removed = (ArrayListDataSource<String>)dataSource.removeData(count);
 		
