@@ -22,8 +22,9 @@ public class NominalGroupConverter {
 	
 	// ComplementObject
 	public static final WordPattern directObjectPattern = WordPattern.sequence(
-			WordPattern.optional(NumberConverter.countPattern),
+			WordPattern.optional(NumberConverter.COUNT_PATTERN),
 			WordPattern.simple(WordType.COMMON_NAME),
+			WordPattern.optional(NumberConverter.MULTIPLE_ITEMS_PATTERN),
 			WordPattern.optional(CriterionConverter.criteriaPattern));
 	
 	/*public static final WordPattern personPattern = WordPattern.sequence(
@@ -80,8 +81,13 @@ public class NominalGroupConverter {
 				obj.count = NumberConverter.parseCountObject(words);
 			}
 			
+			// TODO: parser les adjectifs et autres
 			obj.object = words.getCurrentElement().getValue();
 			words.consume();
+			
+			if(NumberConverter.isASuffixCountData(words)){
+				obj.count = NumberConverter.parseSuffixCountObject(words);
+			}
 			
 			if(CriterionConverter.isACriterionData(words)){
 				obj.criteria = CriterionConverter.parseCriterionData(words);

@@ -2,6 +2,7 @@ package com.rokuan.calliopecore.test;
 
 import static org.junit.Assert.assertEquals;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -203,10 +204,12 @@ public class SentenceParseTest {
 		Calendar calendar = Calendar.getInstance();
 		calendar.add(Calendar.DAY_OF_MONTH, 1);
 		Date tomorrow = calendar.getTime();
-		Date sentenceDate = ((SingleTimeObject)obj.when).date; 
+		Date sentenceDate = ((SingleTimeObject)obj.when).date;
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		
-		assertEquals(sentenceDate.getDate(), tomorrow.getDate());
+		assertEquals(formatter.format(tomorrow), formatter.format(sentenceDate));
+		/*assertEquals(sentenceDate.getDate(), tomorrow.getDate());
 		assertEquals(sentenceDate.getMonth(), tomorrow.getMonth());
-		assertEquals(sentenceDate.getYear(), tomorrow.getYear());
+		assertEquals(sentenceDate.getYear(), tomorrow.getYear());*/
 	}
 }

@@ -82,14 +82,16 @@ public class VerbConverter {
 		} else if(words.syntaxStartsWith(isTherePattern)){
 			words.consume();	// y
 			
-			object.action = Action.VerbAction.EXIST;
+			object.action = Action.VerbAction.THERE_IS;
 			words.consume();
 			
 			if(words.getCurrentElement().isOfType(WordType.CONJUGATION_LINK)){
 				words.consume();
 			}
 			
-			object.subject = new PronounTarget(Type.parseSubjectPronoun(words.getCurrentElement().getValue()));
+			// TODO: trouver le sujet correct
+			//object.subject = new PronounTarget(Type.parseSubjectPronoun(words.getCurrentElement().getValue()));
+			object.subject = new PronounTarget(Type.Pronoun.UNDEFINED);
 			words.consume();
 		}
 	}
