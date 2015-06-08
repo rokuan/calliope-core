@@ -1,11 +1,13 @@
 package com.rokuan.calliopecore.sentence.structure.data.place;
 
-public class MonumentObject extends PlaceObject {
+import com.rokuan.calliopecore.sentence.structure.nominal.NominalGroup;
+
+public class MonumentObject extends NominalGroup {
 	public String name;
 	public String city;
 	public String country;
 	
 	public MonumentObject() {
-		super(PlaceType.MONUMENT);
+		super(GroupType.PLACE);
 	}
 }

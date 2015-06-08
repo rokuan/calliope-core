@@ -11,7 +11,9 @@ public abstract class NominalGroup {
     	VERB,
     	ABSTRACT,
     	LANGUAGE,
-    	STATE
+    	STATE,
+    	PLACE,
+    	PERSON
     }
     
     private GroupType type;

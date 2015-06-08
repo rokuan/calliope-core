@@ -4,8 +4,8 @@ import com.rokuan.calliopecore.parser.WordBuffer;
 import com.rokuan.calliopecore.pattern.WordPattern;
 import com.rokuan.calliopecore.sentence.Word.WordType;
 import com.rokuan.calliopecore.sentence.structure.data.place.MonumentObject;
-import com.rokuan.calliopecore.sentence.structure.data.place.PlaceObject;
 import com.rokuan.calliopecore.sentence.structure.data.place.StateObject;
+import com.rokuan.calliopecore.sentence.structure.nominal.NominalGroup;
 
 public class PlaceConverter {
 	/*public static final WordPattern placePattern = WordPattern.sequence(
@@ -37,15 +37,19 @@ public class PlaceConverter {
 
 	public static final WordPattern countryPattern = WordPattern.sequence(WordPattern.or(
 			WordPattern.sequence(WordPattern.simple(WordType.PREPOSITION_AT), WordPattern.optional(WordPattern.simple(WordType.DEFINITE_ARTICLE))),
-			WordPattern.sequence(WordPattern.simple(WordType.PREPOSITION_IN))
-			), WordPattern.simple(WordType.PROPER_NAME));
+			WordPattern.sequence(WordPattern.simple(WordType.ANY, "en"))
+			), WordPattern.simple(WordType.COUNTRY));
 
 	public static final WordPattern cityPattern = WordPattern.sequence(
 			WordPattern.simple(WordType.PREPOSITION_AT), 
 			//WordPattern.optional(WordPattern.simple(WordType.DEFINITE_ARTICLE)), 
-			WordPattern.simple(WordType.PROPER_NAME));
+			WordPattern.simple(WordType.CITY));
 
-	public static final WordPattern worldPlacePattern = WordPattern.sequence(WordPattern.optional(cityPattern), countryPattern);
+	public static final WordPattern worldPlacePattern = WordPattern.or(
+			WordPattern.sequence(cityPattern, countryPattern),
+			WordPattern.sequence(WordPattern.optional(cityPattern), countryPattern),
+			WordPattern.sequence(cityPattern, WordPattern.optional(countryPattern))
+			);
 
 	// A Paris en France
 	// A Mexico au Mexique
@@ -56,8 +60,8 @@ public class PlaceConverter {
 				|| words.syntaxStartsWith(worldPlacePattern);
 	}
 
-	public static PlaceObject parsePlaceObject(WordBuffer words){
-		PlaceObject result = null;
+	public static NominalGroup parsePlaceObject(WordBuffer words){
+		NominalGroup result = null;
 
 		// TODO: gerer les locations pleines (Le musee du Louvre a Paris en France)
 		if(words.syntaxStartsWith(placePattern)){
@@ -111,34 +115,24 @@ public class PlaceConverter {
 			result = monument;
 		} else if(words.syntaxStartsWith(worldPlacePattern)){
 			StateObject state = new StateObject();
-
-			if(words.syntaxStartsWith(cityPattern, countryPattern)){
-				words.consume();
-				// TODO: parser les noms de ville en plusieurs mots (while)
-				state.city = words.getCurrentElement().getValue();
-				words.consume();
-			}
-
-			words.next();
-
-			while(!words.getCurrentElement().isOfType(WordType.PROPER_NAME)){
-				words.consume();
-			}
-
-			StringBuilder countryName = null;
-
-			do{
-				if(countryName == null){
-					countryName = new StringBuilder();
-				} else {
-					countryName.append(' ');
+			
+			if(words.syntaxStartsWith(cityPattern)){
+				while(!words.getCurrentElement().isOfType(WordType.CITY)){
+					words.consume();					
 				}
-
-				countryName.append(words.getCurrentElement().getValue());
+				
+				state.city = words.getCurrentElement().getCityInfo();
 				words.consume();
-			}while(words.hasNext() && words.getCurrentElement().isOfType(WordType.PROPER_NAME));
-
-			state.country = countryName.toString();
+			}
+			
+			if(words.syntaxStartsWith(countryPattern)){
+				while(!words.getCurrentElement().isOfType(WordType.COUNTRY)){
+					words.consume();
+				}
+				
+				state.country = words.getCurrentElement().getCountryInfo();
+				words.consume();
+			}
 
 			result = state;
 		}

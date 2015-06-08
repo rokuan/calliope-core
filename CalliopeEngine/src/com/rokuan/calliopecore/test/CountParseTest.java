@@ -3,8 +3,6 @@ package com.rokuan.calliopecore.test;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
-import java.util.Arrays;
-
 import org.junit.Test;
 
 import com.rokuan.calliopecore.parser.WordBuffer;

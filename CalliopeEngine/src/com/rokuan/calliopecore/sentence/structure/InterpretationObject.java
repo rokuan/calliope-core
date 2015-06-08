@@ -7,7 +7,6 @@ import com.rokuan.calliopecore.sentence.Adjective;
 import com.rokuan.calliopecore.sentence.Type.Pronoun;
 import com.rokuan.calliopecore.sentence.structure.data.count.AllItemsObject;
 import com.rokuan.calliopecore.sentence.structure.data.count.CountObject;
-import com.rokuan.calliopecore.sentence.structure.data.place.PlaceObject;
 import com.rokuan.calliopecore.sentence.structure.data.time.TimeObject;
 import com.rokuan.calliopecore.sentence.structure.nominal.NominalGroup;
 import com.rokuan.calliopecore.sentence.structure.nominal.PronounTarget;
@@ -33,7 +32,7 @@ public abstract class InterpretationObject {
 	public NominalGroup what;
     public TimeObject when;
     //public ComplementObject why;
-    public PlaceObject where;
+    public NominalGroup where;
     public NominalGroup how; 
     
     protected InterpretationObject(RequestType t){

@@ -26,6 +26,7 @@ import com.rokuan.calliopecore.sentence.structure.data.place.PlaceObject;
 import com.rokuan.calliopecore.sentence.structure.data.time.SingleTimeObject;
 import com.rokuan.calliopecore.sentence.structure.data.time.TimeObject;
 import com.rokuan.calliopecore.sentence.structure.nominal.ComplementObject;
+import com.rokuan.calliopecore.sentence.structure.nominal.NominalGroup;
 import com.rokuan.calliopecore.sentence.structure.nominal.PronounTarget;
 import com.rokuan.calliopecore.sentence.structure.nominal.NominalGroup.GroupType;
 
@@ -58,9 +59,9 @@ public class SentenceParseTest {
 		QuestionObject question = (QuestionObject)obj;
 		assertEquals(question.qType, QuestionType.HOW);
 
-		PlaceObject place = obj.where;
+		NominalGroup place = obj.where;
 
-		assertEquals(place.getType(), PlaceObject.PlaceType.MONUMENT);
+		assertEquals(place.getType(), GroupType.PLACE);
 
 		MonumentObject monument = (MonumentObject)place;
 		assertEquals(monument.name, "Mairie");
@@ -93,9 +94,9 @@ public class SentenceParseTest {
 		QuestionObject question = (QuestionObject)obj;
 		assertEquals(question.qType, QuestionType.HOW);
 
-		PlaceObject place = obj.where;
+		NominalGroup place = obj.where;
 
-		assertEquals(place.getType(), PlaceObject.PlaceType.MONUMENT);
+		assertEquals(place.getType(), GroupType.PLACE);
 
 		assertEquals(((ComplementObject)obj.how).object, "voiture");
 	}
