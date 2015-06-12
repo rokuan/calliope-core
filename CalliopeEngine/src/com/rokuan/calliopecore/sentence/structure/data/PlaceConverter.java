@@ -17,7 +17,7 @@ public class PlaceConverter {
 			WordPattern.optional(WordPattern.sequence(WordPattern.simple(WordType.PREPOSITION_OF), WordPattern.optional(WordPattern.simple(WordType.DEFINITE_ARTICLE))))
 			);*/
 	// le musée du Louvre, la Grande Muraille de Chine 
-	public static final WordPattern placePattern = WordPattern.sequence(
+	public static final WordPattern PLACE_PATTERN = WordPattern.sequence(
 			WordPattern.or(
 					WordPattern.sequence(WordPattern.simple(WordType.PREPOSITION_AT, "à"), WordPattern.simple(WordType.DEFINITE_ARTICLE, "la|l")),
 					WordPattern.simple(WordType.PREPOSITION_AT, "au(x?)")),
@@ -35,20 +35,20 @@ public class PlaceConverter {
 
 	//private static final WordPattern locationPrepositionPattern = WordPattern.sequence(WordPattern.)
 
-	public static final WordPattern countryPattern = WordPattern.sequence(WordPattern.or(
+	public static final WordPattern COUNTRY_PATTERN = WordPattern.sequence(WordPattern.or(
 			WordPattern.sequence(WordPattern.simple(WordType.PREPOSITION_AT), WordPattern.optional(WordPattern.simple(WordType.DEFINITE_ARTICLE))),
 			WordPattern.sequence(WordPattern.simple(WordType.ANY, "en"))
 			), WordPattern.simple(WordType.COUNTRY));
 
-	public static final WordPattern cityPattern = WordPattern.sequence(
+	public static final WordPattern CITY_PATTERN = WordPattern.sequence(
 			WordPattern.simple(WordType.PREPOSITION_AT), 
 			//WordPattern.optional(WordPattern.simple(WordType.DEFINITE_ARTICLE)), 
 			WordPattern.simple(WordType.CITY));
 
-	public static final WordPattern worldPlacePattern = WordPattern.or(
-			WordPattern.sequence(cityPattern, countryPattern),
-			WordPattern.sequence(WordPattern.optional(cityPattern), countryPattern),
-			WordPattern.sequence(cityPattern, WordPattern.optional(countryPattern))
+	public static final WordPattern WORLD_PLACE_PATTERN = WordPattern.or(
+			WordPattern.sequence(CITY_PATTERN, COUNTRY_PATTERN),
+			WordPattern.sequence(WordPattern.optional(CITY_PATTERN), COUNTRY_PATTERN),
+			WordPattern.sequence(CITY_PATTERN, WordPattern.optional(COUNTRY_PATTERN))
 			);
 
 	// A Paris en France
@@ -56,15 +56,15 @@ public class PlaceConverter {
 	// A ... a la ...
 
 	public static boolean isAPlaceData(WordBuffer words){
-		return words.syntaxStartsWith(placePattern)
-				|| words.syntaxStartsWith(worldPlacePattern);
+		return words.syntaxStartsWith(PLACE_PATTERN)
+				|| words.syntaxStartsWith(WORLD_PLACE_PATTERN);
 	}
 
 	public static NominalGroup parsePlaceObject(WordBuffer words){
 		NominalGroup result = null;
 
 		// TODO: gerer les locations pleines (Le musee du Louvre a Paris en France)
-		if(words.syntaxStartsWith(placePattern)){
+		if(words.syntaxStartsWith(PLACE_PATTERN)){
 			MonumentObject monument = new MonumentObject();
 			StringBuilder buffer = new StringBuilder();
 
@@ -113,10 +113,10 @@ public class PlaceConverter {
 			monument.name = buffer.toString().trim();
 
 			result = monument;
-		} else if(words.syntaxStartsWith(worldPlacePattern)){
+		} else if(words.syntaxStartsWith(WORLD_PLACE_PATTERN)){
 			StateObject state = new StateObject();
 			
-			if(words.syntaxStartsWith(cityPattern)){
+			if(words.syntaxStartsWith(CITY_PATTERN)){
 				while(!words.getCurrentElement().isOfType(WordType.CITY)){
 					words.consume();					
 				}
@@ -125,7 +125,7 @@ public class PlaceConverter {
 				words.consume();
 			}
 			
-			if(words.syntaxStartsWith(countryPattern)){
+			if(words.syntaxStartsWith(COUNTRY_PATTERN)){
 				while(!words.getCurrentElement().isOfType(WordType.COUNTRY)){
 					words.consume();
 				}

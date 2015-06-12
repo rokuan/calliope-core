@@ -12,7 +12,7 @@ import com.rokuan.calliopecore.sentence.structure.data.criteria.SuperlativeCrite
 
 public class CriterionConverter {
 	// Le plus proche
-	public static final WordPattern criteriaPattern = WordPattern.sequence(
+	public static final WordPattern CRITERIA_PATTERN = WordPattern.sequence(
 			WordPattern.simple(WordType.DEFINITE_ARTICLE),
 			WordPattern.simple(WordType.SUPERLATIVE),
 			WordPattern.simple(WordType.ADJECTIVE)
@@ -20,46 +20,46 @@ public class CriterionConverter {
 
 	// Le plus petit homme
 	//public static final WordPattern superlativePattern = WordPattern.sequence(criteriaPattern, WordPattern.optional(WordPattern.simple(WordType.COMMON_NAME)));
-	public static final WordPattern superlativePattern = WordPattern.separatedNonEmptyList(criteriaPattern, WordPattern.optional(WordPattern.simple(WordType.PREPOSITION_AND)));
+	public static final WordPattern SUPERLATIVE_PATTERN = WordPattern.separatedNonEmptyList(CRITERIA_PATTERN, WordPattern.optional(WordPattern.simple(WordType.PREPOSITION_AND)));
 
-	public static final WordPattern superlativeAdjectiveFirstPattern = WordPattern.sequence(WordPattern.simple(WordType.SUPERLATIVE), WordPattern.simple(WordType.ADJECTIVE), WordPattern.simple(WordType.COMMON_NAME));
-	public static final WordPattern superlativeNameFirstPattern = WordPattern.sequence(WordPattern.simple(WordType.COMMON_NAME), WordPattern.simple(WordType.DEFINITE_ARTICLE), WordPattern.simple(WordType.SUPERLATIVE), WordPattern.simple(WordType.ADJECTIVE)); 
+	public static final WordPattern SUPERLATIVE_ADJECTIVE_FIRST_PATTERN = WordPattern.sequence(WordPattern.simple(WordType.SUPERLATIVE), WordPattern.simple(WordType.ADJECTIVE), WordPattern.simple(WordType.COMMON_NAME));
+	public static final WordPattern SUPERLATIVE_NAME_FIRST_PATTERN = WordPattern.sequence(WordPattern.simple(WordType.COMMON_NAME), WordPattern.simple(WordType.DEFINITE_ARTICLE), WordPattern.simple(WordType.SUPERLATIVE), WordPattern.simple(WordType.ADJECTIVE)); 
 
 	// L'homme le plus riche / le plus petit homme
-	public static final WordPattern fieldCriteriaPattern = WordPattern.sequence(
+	public static final WordPattern FIELD_CRITERIA_PATTERN = WordPattern.sequence(
 			WordPattern.simple(WordType.DEFINITE_ARTICLE),
 			WordPattern.or(
-					superlativeAdjectiveFirstPattern,
-					superlativeNameFirstPattern
+					SUPERLATIVE_ADJECTIVE_FIRST_PATTERN,
+					SUPERLATIVE_NAME_FIRST_PATTERN
 					)
 			);
 
 	// TODO: avoir la possibilite d'ajouter un filtre sur la valeur du mot
 	// qui a/ayant/avec la plus grande surface
-	public static final WordPattern specificationHavePattern = WordPattern.sequence(
+	public static final WordPattern SPECIFICATION_HAVE_PATTERN = WordPattern.sequence(
 			WordPattern.or(
 					WordPattern.simple(WordType.PREPOSITION_WITH),
 					WordPattern.sequence(WordPattern.optional(WordPattern.simple(WordType.RELATIVE_PRONOUN, "qui")), WordPattern.simple(WordType.VERB, null, "avoir"))
 					),
-					WordPattern.separatedNonEmptyList(fieldCriteriaPattern, WordPattern.optional(WordPattern.simple(WordType.PREPOSITION_AND)))
+					WordPattern.separatedNonEmptyList(FIELD_CRITERIA_PATTERN, WordPattern.optional(WordPattern.simple(WordType.PREPOSITION_AND)))
 			);
 	// qui est/etant le plus proche
-	public static final WordPattern specificationBePattern = WordPattern.sequence(
+	public static final WordPattern SPECIFICATION_BE_PATTERN = WordPattern.sequence(
 			WordPattern.optional(WordPattern.simple(WordType.RELATIVE_PRONOUN, "qui")),
 			WordPattern.simple(WordType.VERB, null, "être"),
-			WordPattern.separatedNonEmptyList(criteriaPattern, WordPattern.optional(WordPattern.simple(WordType.PREPOSITION_AND)))
+			WordPattern.separatedNonEmptyList(CRITERIA_PATTERN, WordPattern.optional(WordPattern.simple(WordType.PREPOSITION_AND)))
 			);
 
 	public static boolean isACriterionData(WordBuffer words){
-		return words.syntaxStartsWith(specificationHavePattern)
-				|| words.syntaxStartsWith(specificationBePattern)
-				|| words.syntaxStartsWith(superlativePattern);
+		return words.syntaxStartsWith(SPECIFICATION_HAVE_PATTERN)
+				|| words.syntaxStartsWith(SPECIFICATION_BE_PATTERN)
+				|| words.syntaxStartsWith(SUPERLATIVE_PATTERN);
 	}
 
 	public static List<CriterionObject> parseCriterionData(WordBuffer words){
 		List<CriterionObject> criteria = new ArrayList<CriterionObject>();
 
-		if(words.syntaxStartsWith(specificationHavePattern)){
+		if(words.syntaxStartsWith(SPECIFICATION_HAVE_PATTERN)){
 			if(words.getCurrentElement().isOfType(WordType.PREPOSITION_WITH)){
 				words.consume();	// avec
 			} else {
@@ -74,7 +74,7 @@ public class CriterionConverter {
 				FieldCriterionObject fCriterion = new FieldCriterionObject();
 				words.consume();	// DEFINITE_ARTICLE
 
-				if(words.syntaxStartsWith(superlativeNameFirstPattern)){
+				if(words.syntaxStartsWith(SUPERLATIVE_NAME_FIRST_PATTERN)){
 					fCriterion.field = words.getCurrentElement().getValue();
 					words.consume();
 					fCriterion.compare = CriterionObject.parseComparisonType(words.getCurrentElement().getValue());
@@ -96,8 +96,8 @@ public class CriterionConverter {
 				if(words.hasNext() && words.getCurrentElement().isOfType(WordType.PREPOSITION_AND)){
 					words.consume();
 				}
-			} while(words.syntaxStartsWith(fieldCriteriaPattern));
-		} else if(words.syntaxStartsWith(specificationBePattern)){
+			} while(words.syntaxStartsWith(FIELD_CRITERIA_PATTERN));
+		} else if(words.syntaxStartsWith(SPECIFICATION_BE_PATTERN)){
 			if(words.getCurrentElement().isOfType(WordType.RELATIVE_PRONOUN)){
 				words.consume();
 			}
@@ -118,8 +118,8 @@ public class CriterionConverter {
 				if(words.hasNext() && words.getCurrentElement().isOfType(WordType.PREPOSITION_AND)){
 					words.consume();
 				}
-			} while(words.syntaxStartsWith(criteriaPattern));
-		} else if(words.syntaxStartsWith(superlativePattern)){
+			} while(words.syntaxStartsWith(CRITERIA_PATTERN));
+		} else if(words.syntaxStartsWith(SUPERLATIVE_PATTERN)){
 			// TODO: fusionner avec le cas specificationBePattern ?
 			do {
 				SuperlativeCriterionObject sCriterion = new SuperlativeCriterionObject();
@@ -135,7 +135,7 @@ public class CriterionConverter {
 				if(words.hasNext() && words.getCurrentElement().isOfType(WordType.PREPOSITION_AND)){
 					words.consume();
 				}
-			} while(words.syntaxStartsWith(criteriaPattern));
+			} while(words.syntaxStartsWith(CRITERIA_PATTERN));
 		}
 
 		return criteria;

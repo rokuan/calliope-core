@@ -8,22 +8,22 @@ import com.rokuan.calliopecore.sentence.structure.nominal.LanguageObject;
 import com.rokuan.calliopecore.sentence.structure.nominal.NominalGroup;
 
 public class WayConverter {
-	public static final WordPattern meansOfTransportPattern = WordPattern.sequence(
+	public static final WordPattern MEANS_OF_TRANSPORT_PATTERN = WordPattern.sequence(
 			WordPattern.simple(WordType.ANY, "à|en|par"),
 			WordPattern.simple(WordType.MEAN_OF_TRANSPORT));
 	
-	public static final WordPattern languagePattern = WordPattern.sequence(
+	public static final WordPattern LANGUAGE_PATTERN = WordPattern.sequence(
 			WordPattern.simple(WordType.ANY, "en"),
 			WordPattern.simple(WordType.LANGUAGE)
 			);
 
 	public static boolean isAWayData(WordBuffer words){
-		return words.syntaxStartsWith(meansOfTransportPattern)
-				|| words.syntaxStartsWith(languagePattern);
+		return words.syntaxStartsWith(MEANS_OF_TRANSPORT_PATTERN)
+				|| words.syntaxStartsWith(LANGUAGE_PATTERN);
 	}
 
 	public static NominalGroup parseWayData(WordBuffer words){
-		if(words.syntaxStartsWith(meansOfTransportPattern)){
+		if(words.syntaxStartsWith(MEANS_OF_TRANSPORT_PATTERN)){
 			ComplementObject compl = new ComplementObject();
 			String result = null;
 
@@ -34,7 +34,7 @@ public class WayConverter {
 
 			compl.object = result;
 			return compl;
-		} else if(words.syntaxStartsWith(languagePattern)){
+		} else if(words.syntaxStartsWith(LANGUAGE_PATTERN)){
 			LanguageObject lang = new LanguageObject();
 			
 			words.consume();	// "en"

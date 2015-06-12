@@ -52,6 +52,10 @@ public abstract class WordPattern {
 				parts.add(p);
 			}
 		}
+		
+		public WordSequencePattern(List<WordPattern> ps) {
+			parts = new ArrayList<WordPattern>(ps);
+		}
 
 		@Override
 		protected int getLength() {
@@ -275,7 +279,9 @@ public abstract class WordPattern {
 				}
 			} else if(patterns[patternsIndex] instanceof WordSequencePattern){
 				WordSequencePattern sequence = (WordSequencePattern)patterns[patternsIndex];
-
+				
+				// TODO: pouvoir gerer les cas ou certains elements optionnels empietent sur le prochain pattern
+				// Exemple: est ~ [ OPT(AUXILIARY), VERB ] 
 				for(WordPattern pat: sequence.parts){
 					if(!realSyntaxStartsWith(words, pat)){
 						return false;
@@ -315,70 +321,4 @@ public abstract class WordPattern {
 			patternsIndex++;
 		}
 	}
-
-	/*public static boolean syntaxStartsWith(WordBuffer words, WordPattern... patterns){
-        int patternsIndex = 0;
-        int wordsIndex = words.getCurrentIndex();
-
-        while(true){
-        	if(patternsIndex >= patterns.length){
-                return true;
-            }
-
-            if(wordsIndex >= words.size()){
-            	for(int pi=patternsIndex; pi<patterns.length; pi++){
-            		if(!patterns[pi].mayBeOptional()){
-            			return false;
-            		}
-            	}
-
-            	return true;
-            }
-
-            if(patterns[patternsIndex] instanceof WordOrPattern){
-                WordOrPattern or = (WordOrPattern)patterns[patternsIndex];
-                boolean patternMatch = false;
-                WordBuffer subWords = new WordBuffer(words.subList(wordsIndex, words.size()));
-                int lengthToSkip = 0;
-
-                for(WordPattern pat: or.choices){
-                    if(syntaxStartsWith(subWords, pat)){
-                        patternMatch = true;
-                        lengthToSkip = pat.getLength();
-                        break;
-                    }
-                }
-
-                if(!patternMatch){
-                    return false;
-                }
-
-                wordsIndex += lengthToSkip;
-                patternsIndex++;
-            } else if (patterns[patternsIndex] instanceof WordSimplePattern){
-                WordSimplePattern simple = (WordSimplePattern)patterns[patternsIndex];
-
-                if(!words.get(wordsIndex).isOfType(simple.type)){
-                    return false;
-                }
-
-                wordsIndex++;
-                patternsIndex++;
-            } else if(patterns[patternsIndex] instanceof WordOptionalPattern){
-                WordOptionalPattern optional = (WordOptionalPattern)patterns[patternsIndex];
-                // TODO: limiter la taille de la sous-liste (words.size() - optional.getLength())
-                WordBuffer subWords = new WordBuffer(words.subList(wordsIndex, words.size()));
-
-                //if(words.get(wordsIndex).isOfType(optional.))
-                if(syntaxStartsWith(subWords, optional.pattern)){
-                    wordsIndex += optional.pattern.getLength();
-                }
-
-                patternsIndex++;
-            } else {
-                // TODO: should not happen
-                return false;
-            }
-        }
-    }*/
 }

@@ -4,7 +4,6 @@ import com.rokuan.calliopecore.sentence.Action;
 import com.rokuan.calliopecore.sentence.SentencePattern;
 import com.rokuan.calliopecore.sentence.Type;
 import com.rokuan.calliopecore.sentence.VerbConjugation;
-import com.rokuan.calliopecore.sentence.Word;
 import com.rokuan.calliopecore.sentence.Word.WordType;
 import com.rokuan.calliopecore.sentence.structure.InterpretationObject;
 import com.rokuan.calliopecore.sentence.structure.OrderObject;
@@ -40,7 +39,7 @@ public class Parser {
 		InterpretationObject inter = null;
 
 		//if(words.syntaxStartsWith(Word.WordType.AUXILIARY, Word.WordType.PERSONAL_PRONOUN, Word.WordType.VERB)){
-		if(words.syntaxStartsWith(SentencePattern.yesNoQuestionPattern)){
+		if(words.syntaxStartsWith(SentencePattern.YES_NO_QUESTION_PATTERN)){
 			// TODO: les Yes/No question au present (ex: Aimes-tu ...)
 			QuestionObject qObj = new QuestionObject();
 
@@ -67,10 +66,10 @@ public class Parser {
 
 			inter = qObj;			
 			//return inter;			
-		} else if(words.syntaxStartsWith(SentencePattern.indirectOrderPattern)){
+		} else if(words.syntaxStartsWith(SentencePattern.INDIRECT_ORDER_PATTERN)){
 			OrderObject oObject = new OrderObject();
 
-			if(words.syntaxStartsWith(SentencePattern.isArePattern)){
+			if(words.syntaxStartsWith(SentencePattern.IS_ARE_PATTERN)){
 				words.consume();	// est-ce
 				words.consume();	// que
 				words.consume();	// tu
@@ -91,7 +90,7 @@ public class Parser {
 			parseObject(words, oObject);
 
 			inter = oObject;
-		} else if(words.syntaxStartsWith(SentencePattern.orderPattern)){
+		} else if(words.syntaxStartsWith(SentencePattern.ORDER_PATTERN)){
 			// Ordre
 			// TODO: verifier que le verbe est a l'imperatif present
 			// db.findConjugatedVerb(words.get(0)).form == IMPERATIVE
@@ -126,66 +125,18 @@ public class Parser {
 			}
 
 			parseObject(words, inter);
-		} /*else if(words.syntaxStartsWith(SentencePattern.resultQuestionPattern)){
-			// Quel est/Quelle a ete
-			QuestionObject qObject = new QuestionObject();
-
-			qObject.qType = QuestionObject.parseInterrogativePronoun(words.getCurrentElement().getValue());			
-			words.consume();
-
-			// TODO: gerer les questions de la forme "Combien existe-t-il ..."
-			if(words.syntaxStartsWith(WordType.AUXILIARY, WordType.VERB)){
-				// TOCHECK: gerer le cas en allant chercher le verbe conjugue (AUXILIAIRE + VERB) ?
-				words.consume();
-			} 
-
-			qObject.action = getActionFromVerb(words.getCurrentElement().getVerbInfo());	
-			words.consume();
-
-			parseObject(words, qObject);
-
-			inter = qObject;
-		}*/
-		else if(words.syntaxStartsWith(SentencePattern.interrogativePattern)){ 
+		} else if(words.syntaxStartsWith(SentencePattern.INTERROGATIVE_PATTERN)){
 			QuestionObject qObject = new QuestionObject();
 
 			qObject.qType = QuestionObject.parseInterrogativePronoun(words.getCurrentElement().getValue());
 			words.consume();
-
-			Word verb;
-
-			if(words.getCurrentElement().isOfType(WordType.AUXILIARY)){
-				words.next();
-
-				if(words.isIntoBounds()){
-					if(words.getCurrentElement().isOfType(WordType.VERB)){
-						// Auxiliaire + verbe
-						words.previous();
-						words.consume();
-						verb = words.getCurrentElement();
-						words.consume();
-					} else {
-						// Auxiliaire jouant le robe du verbe
-						words.previous();
-						verb = words.getCurrentElement();
-						words.consume();
-					}
-				} else {
-					words.previous();
-					verb = words.getCurrentElement();
-					words.consume();
-				}
-			} else {
-				verb = words.getCurrentElement();
-				words.consume();
-			}
-
-			qObject.action = getActionFromVerb(verb.getVerbInfo());
+			
+			VerbConverter.parseConjugatedVerb(words, qObject);
 
 			parseObject(words, qObject);
 
 			inter = qObject;
-		} else if(words.syntaxStartsWith(SentencePattern.resultQuestionPattern)){
+		} else if(words.syntaxStartsWith(SentencePattern.RESULT_QUESTION_PATTERN)){
 			QuestionObject qObject = new QuestionObject();
 
 			qObject.qType = QuestionObject.parseInterrogativePronoun(words.getCurrentElement().getValue());			
@@ -194,7 +145,7 @@ public class Parser {
 			ComplementObject complement = new ComplementObject();
 			StringBuffer whatString = new StringBuffer();
 
-			// TODO: modifier pour parser les adjectifs
+			// TODO: modifier pour parser un groupe nominal entier
 			while(!VerbConverter.isAQuestionVerbalForm(words)){
 				whatString.append(words.getCurrentElement().getValue());
 				whatString.append(' ');

@@ -10,19 +10,19 @@ import com.rokuan.calliopecore.sentence.Word.WordType;
  */
 public class PhoneNumberConverter {
 	// TOCHECK: des numeros de telephone avec 1 nombre ? (911)
-	public static final WordPattern phoneNumberPattern = WordPattern.sequence(
+	public static final WordPattern PHONE_NUMBER_PATTERN = WordPattern.sequence(
 			WordPattern.or(WordPattern.simple(WordType.ANY, "au"), WordPattern.simple(WordType.DEFINITE_ARTICLE, "le")),
 			WordPattern.nonEmptyList(WordPattern.simple(WordType.NUMBER)));
 
 	public static boolean isAPhoneNumber(WordBuffer words){
 		//return words.syntaxStartsWith(Word.WordType.NUMBER, Word.WordType.NUMBER);
-		return words.syntaxStartsWith(phoneNumberPattern);
+		return words.syntaxStartsWith(PHONE_NUMBER_PATTERN);
 	}
 
 	public static String parsePhoneNumber(WordBuffer words){
 		StringBuilder phoneNumber = new StringBuilder();
 
-		if(words.syntaxStartsWith(phoneNumberPattern)){
+		if(words.syntaxStartsWith(PHONE_NUMBER_PATTERN)){
 			if(words.getCurrentElement().isOfType(WordType.DEFINITE_ARTICLE) || words.getCurrentElement().isOfType(WordType.PREPOSITION_AT)){
 				words.consume();
 			}

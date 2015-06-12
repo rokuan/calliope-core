@@ -20,7 +20,7 @@ import com.rokuan.calliopecore.sentence.structure.data.count.MultipleItemsObject
  * Created by LEBEAU Christophe on 28/02/2015.
  */
 public class NumberConverter {
-    private static final String[] numberMap = {
+    private static final String[] NUMBER_MAP = {
             "un",
             "deux",
             "trois",
@@ -39,7 +39,7 @@ public class NumberConverter {
             "seize"
     };
 
-    private static final String[] tenStepMap = {
+    private static final String[] TEN_STEP_MAP = {
             "dix",
             "vingt",
             "trente",
@@ -48,7 +48,7 @@ public class NumberConverter {
             "soixante"
     };
     
-    private static final String[] tenPowerMap = {
+    private static final String[] TEN_POWER_MAP = {
     	"dix",
     	"cent",
     	"mille",
@@ -137,20 +137,20 @@ public class NumberConverter {
     }
 
     private static long parseCount(String countStr){        
-        for(int i=0; i<tenPowerMap.length; i++){
-        	if(Math.abs(tenPowerMap[i].length() - countStr.length()) <=1 && tenPowerMap[i].startsWith(countStr)){
+        for(int i=0; i<TEN_POWER_MAP.length; i++){
+        	if(Math.abs(TEN_POWER_MAP[i].length() - countStr.length()) <=1 && TEN_POWER_MAP[i].startsWith(countStr)){
                 return (int)Math.pow(10, (i+1));
             }
         }
     	
-        for(int i=0; i<tenStepMap.length; i++){
-            if(Math.abs(tenStepMap[i].length() - countStr.length()) <=1 && tenStepMap[i].startsWith(countStr)){
+        for(int i=0; i<TEN_STEP_MAP.length; i++){
+            if(Math.abs(TEN_STEP_MAP[i].length() - countStr.length()) <=1 && TEN_STEP_MAP[i].startsWith(countStr)){
                 return (i+1) * 10;
             }
         }
 
-        for(int i=0; i<numberMap.length; i++){
-            if(Math.abs(numberMap[i].length() - countStr.length()) <=1 && numberMap[i].startsWith(countStr)){
+        for(int i=0; i<NUMBER_MAP.length; i++){
+            if(Math.abs(NUMBER_MAP[i].length() - countStr.length()) <=1 && NUMBER_MAP[i].startsWith(countStr)){
                 return (i+1);
             }
         }

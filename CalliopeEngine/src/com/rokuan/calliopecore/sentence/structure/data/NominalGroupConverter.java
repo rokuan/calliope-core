@@ -11,57 +11,56 @@ import com.rokuan.calliopecore.sentence.structure.nominal.PronounTarget;
 
 public class NominalGroupConverter {
 	// NominalGroup
-	public static final WordPattern pronounPattern = WordPattern.simple(WordType.PERSONAL_PRONOUN);
-	public static final WordPattern abstractTargetPattern = WordPattern.simple(WordType.POSSESSIVE_ADJECTIVE); 
-	public static final WordPattern objectPattern = WordPattern.sequence(
-			
+	public static final WordPattern PRONOUN_PATTERN = WordPattern.simple(WordType.PERSONAL_PRONOUN);
+	public static final WordPattern ABSTRACT_TARGET_PATTERN = WordPattern.simple(WordType.POSSESSIVE_ADJECTIVE); 
+	public static final WordPattern OBJECT_PATTERN = WordPattern.sequence(			
 			WordPattern.simple(WordType.POSSESSIVE_PRONOUN),
 			WordPattern.or(WordPattern.simple(WordType.NUMBER))
 			);
-	public static final WordPattern placePattern = PlaceConverter.placePattern;		
+	public static final WordPattern PLACE_PATTERN = PlaceConverter.PLACE_PATTERN;		
 	
 	// ComplementObject
-	public static final WordPattern directObjectPattern = WordPattern.sequence(
+	public static final WordPattern DIRECT_OBJECT_PATTERN = WordPattern.sequence(
 			WordPattern.optional(NumberConverter.COUNT_PATTERN),
 			WordPattern.simple(WordType.COMMON_NAME),
 			WordPattern.optional(NumberConverter.MULTIPLE_ITEMS_PATTERN),
-			WordPattern.optional(CriterionConverter.criteriaPattern));
+			WordPattern.optional(CriterionConverter.CRITERIA_PATTERN));
 	
 	/*public static final WordPattern personPattern = WordPattern.sequence(
 			WordPattern.nonEmptyList(WordPattern.simple(WordType.FIRSTNAME)),
 			WordPattern.optional(pattern)
 			);*/
 	
-	public static final WordPattern toPattern = WordPattern.or(
+	public static final WordPattern TO_PATTERN = WordPattern.or(
 			WordPattern.sequence(WordPattern.simple(WordType.PREPOSITION_AT, "à"), WordPattern.optional(WordPattern.simple(WordType.DEFINITE_ARTICLE, "la"))),
 			WordPattern.simple(WordType.PREPOSITION_AT, "au.*")
 			);
 	
-	public static final WordPattern firstNameSequencePattern = WordPattern.nonEmptyList(WordPattern.simple(WordType.FIRSTNAME));
-	public static final WordPattern lastNameSequencePattern = WordPattern.nonEmptyList(WordPattern.simple(WordType.PROPER_NAME));
+	public static final WordPattern FIRST_NAME_SEQUENCE_PATTERN = WordPattern.nonEmptyList(WordPattern.simple(WordType.FIRSTNAME));
+	public static final WordPattern LAST_NAME_SEQUENCE_PATTERN = WordPattern.nonEmptyList(WordPattern.simple(WordType.PROPER_NAME));
 	
-	public static final WordPattern personPattern = WordPattern.or(lastNameSequencePattern,
-			firstNameSequencePattern,
-			WordPattern.sequence(firstNameSequencePattern, lastNameSequencePattern),
-			WordPattern.sequence(lastNameSequencePattern, firstNameSequencePattern)
+	public static final WordPattern personPattern = WordPattern.or(LAST_NAME_SEQUENCE_PATTERN,
+			FIRST_NAME_SEQUENCE_PATTERN,
+			WordPattern.sequence(FIRST_NAME_SEQUENCE_PATTERN, LAST_NAME_SEQUENCE_PATTERN),
+			WordPattern.sequence(LAST_NAME_SEQUENCE_PATTERN, FIRST_NAME_SEQUENCE_PATTERN)
 			);
 	
-	public static final WordPattern indirectObjectPattern = WordPattern.sequence(toPattern,
+	public static final WordPattern INDIRECT_OBJECT_PATTERN = WordPattern.sequence(TO_PATTERN,
 			WordPattern.or(personPattern)	// TODO: ajouter le cas groupe nominal
 					);
 	
 	public static boolean isANominalGroup(WordBuffer words){
-		return words.syntaxStartsWith(pronounPattern);
+		return words.syntaxStartsWith(PRONOUN_PATTERN);
 				/*|| words.syntaxStartsWith(abstractTargetPattern)
 				|| words.syntaxStartsWith(objectPattern);*/
 	}
 	
 	public static NominalGroup parseNominalGroup(WordBuffer words){
-		if(words.syntaxStartsWith(pronounPattern)){
+		if(words.syntaxStartsWith(PRONOUN_PATTERN)){
 			Pronoun pronoun = Type.parseSubjectPronoun(words.getCurrentElement().getValue());
 			words.consume();
 			return new PronounTarget(pronoun);
-		} else if(words.syntaxStartsWith(objectPattern)){
+		} else if(words.syntaxStartsWith(OBJECT_PATTERN)){
 			
 		}
 		
@@ -69,14 +68,14 @@ public class NominalGroupConverter {
 	}
 	
 	public static boolean isADirectObject(WordBuffer words){
-		return words.syntaxStartsWith(directObjectPattern) 
+		return words.syntaxStartsWith(DIRECT_OBJECT_PATTERN) 
 				|| words.syntaxStartsWith(personPattern);
 	}
 	
 	public static NominalGroup parseDirectObject(WordBuffer words){
 		ComplementObject obj = new ComplementObject();
 		
-		if(words.syntaxStartsWith(directObjectPattern)){
+		if(words.syntaxStartsWith(DIRECT_OBJECT_PATTERN)){
 			if(NumberConverter.isACountData(words)){
 				obj.count = NumberConverter.parseCountObject(words);
 			}
@@ -115,13 +114,13 @@ public class NominalGroupConverter {
 	}
 	
 	public static boolean isAnIndirectObject(WordBuffer words){
-		return words.syntaxStartsWith(indirectObjectPattern);
+		return words.syntaxStartsWith(INDIRECT_OBJECT_PATTERN);
 	}
 	
 	public static NominalGroup parseIndirectObject(WordBuffer words){
 		ComplementObject obj = new ComplementObject();
 		
-		if(words.syntaxStartsWith(indirectObjectPattern)){
+		if(words.syntaxStartsWith(INDIRECT_OBJECT_PATTERN)){
 			//StringBuilder name = new StringBuilder();
 			
 			words.consume();	// PREPOSITION_AT

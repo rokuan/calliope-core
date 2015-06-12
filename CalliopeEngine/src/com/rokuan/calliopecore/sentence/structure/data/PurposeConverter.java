@@ -10,7 +10,7 @@ public class PurposeConverter {
 			WordPattern.optional(WordPattern.simple(WordType.TARGET_PRONOUN)),
 			WordPattern.simple(WordType.VERB)
 			);*/
-	public static final WordPattern infinitivePurposePattern = WordPattern.sequence(
+	public static final WordPattern INFINITIVE_PURPOSE_PATTERN = WordPattern.sequence(
 			WordPattern.or(WordPattern.simple(WordType.ANY, "pour"), 
 					WordPattern.sequence(WordPattern.simple(WordType.ANY, "afin"), WordPattern.simple(WordType.ANY, "de"))),
 					WordPattern.optional(WordPattern.simple(WordType.TARGET_PRONOUN)),

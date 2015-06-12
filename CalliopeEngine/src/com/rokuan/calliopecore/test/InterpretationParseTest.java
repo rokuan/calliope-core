@@ -23,8 +23,8 @@ public class InterpretationParseTest {
 		words.add(new Word("la", WordType.DEFINITE_ARTICLE));
 		words.add(new Word("température", WordType.COMMON_NAME));
 		words.add(new Word("à", WordType.PREPOSITION_AT));
-		words.add(new Word("Paris", WordType.PROPER_NAME));
+		words.add(new Word("Paris", WordType.CITY));
 		words.add(new Word("en", WordType.PREPOSITION_IN));
-		words.add(new Word("France", WordType.PROPER_NAME));
+		words.add(new Word("France", WordType.COUNTRY));
 	}
 }

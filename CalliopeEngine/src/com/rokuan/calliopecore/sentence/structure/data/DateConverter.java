@@ -26,36 +26,36 @@ public class DateConverter {
 	private static final int DEFAULT_DATE_FIELD_VALUE = -1;
 
 	// (NUMBER | NUMERICAL_POSITION) (DATE_MONTH NUMBER?)?
-	private static final WordPattern fromDatePattern = WordPattern.sequence(
+	private static final WordPattern FROM_DATE_PATTERN = WordPattern.sequence(
 			WordPattern.or(WordPattern.simple(WordType.NUMBER), WordPattern.simple(WordType.NUMERICAL_POSITION)),
 			WordPattern.optional(WordPattern.sequence(
 					WordPattern.simple(WordType.DATE_MONTH), 
 					WordPattern.optional(WordPattern.simple(WordType.NUMBER))))
 			);
 	// (NUMBER | NUMERICAL_POSITION) DATE_MONTH NUMBER?
-	private static final WordPattern toDatePattern = WordPattern.sequence(
+	private static final WordPattern TO_DATE_PATTERN = WordPattern.sequence(
 			WordPattern.or(WordPattern.simple(WordType.NUMBER), WordPattern.simple(WordType.NUMERICAL_POSITION)),
 			WordPattern.sequence(
 					WordPattern.simple(WordType.DATE_MONTH), 
 					WordPattern.optional(WordPattern.simple(WordType.NUMBER)))
 			);
 
-	public static final WordPattern fromToDatePattern = WordPattern.sequence(
+	public static final WordPattern FROM_TO_DATE_PATTERN = WordPattern.sequence(
 			WordPattern.simple(Word.WordType.PREPOSITION_FROM),
-			WordPattern.or(fromDatePattern, WordPattern.simple(WordType.DATE)),
+			WordPattern.or(FROM_DATE_PATTERN, WordPattern.simple(WordType.DATE)),
 			WordPattern.simple(Word.WordType.PREPOSITION_TO),
-			WordPattern.or(toDatePattern, WordPattern.simple(WordType.DATE))
+			WordPattern.or(TO_DATE_PATTERN, WordPattern.simple(WordType.DATE))
 			);
 
-	public static final WordPattern betweenDatePattern = WordPattern.sequence(
+	public static final WordPattern BETWEEN_DATE_PATTERN = WordPattern.sequence(
 			WordPattern.simple(WordType.PREPOSITION_BETWEEN),
 			WordPattern.or(
-					WordPattern.sequence(WordPattern.simple(WordType.DEFINITE_ARTICLE), fromDatePattern),
+					WordPattern.sequence(WordPattern.simple(WordType.DEFINITE_ARTICLE), FROM_DATE_PATTERN),
 					WordPattern.simple(WordType.DATE)
 					),
 					WordPattern.simple(WordType.PREPOSITION_AND),
 					WordPattern.or(
-							WordPattern.sequence(WordPattern.simple(WordType.DEFINITE_ARTICLE), toDatePattern),
+							WordPattern.sequence(WordPattern.simple(WordType.DEFINITE_ARTICLE), TO_DATE_PATTERN),
 							WordPattern.simple(WordType.DATE))
 			);
 
@@ -66,7 +66,7 @@ public class DateConverter {
 			WordPattern.optional(WordPattern.simple(WordType.NUMBER))
 			);*/
 
-	public static final WordPattern fixedDatePattern = WordPattern.sequence(
+	public static final WordPattern FIXED_DATE_PATTERN = WordPattern.sequence(
 			WordPattern.or(WordPattern.simple(WordType.INDEFINITE_ARTICLE, "du"), 
 					WordPattern.sequence(WordPattern.optional(WordPattern.simple(WordType.ANY, "pour")), WordPattern.simple(WordType.DEFINITE_ARTICLE))
 					),
@@ -75,69 +75,69 @@ public class DateConverter {
 					WordPattern.optional(WordPattern.simple(WordType.NUMBER))
 					//WordPattern.optional(timePattern)
 			);
-	public static final WordPattern minutesDefinitionPattern = WordPattern.or(
+	public static final WordPattern MINUTES_DEFINITION_PATTERN = WordPattern.or(
 			WordPattern.sequence(
 					WordPattern.or(WordPattern.simple(WordType.ANY, "moins"), WordPattern.simple(WordType.PREPOSITION_AND), WordPattern.simple(WordType.INDEFINITE_ARTICLE, "un(e?)"), WordPattern.simple(WordType.PREPOSITION_AND, "et")),
 					WordPattern.optional(WordPattern.simple(WordType.DEFINITE_ARTICLE)),
 					WordPattern.or(WordPattern.simple(WordType.NUMBER), WordPattern.simple(WordType.ANY, "quart|demi(e?)"))
 					));
 
-	public static final String fullTimeRegex = "(\\d)+h(\\d)+";
-	public static final String hourOnlyRegex = "(\\d)+h";
-	private static final WordPattern fullTimePattern = WordPattern.simple(WordType.ANY, fullTimeRegex);
-	private static final WordPattern hourOnlyPattern = WordPattern.simple(WordType.ANY, hourOnlyRegex);
-	public static final WordPattern timePattern = WordPattern.or(
-			fullTimePattern,
+	public static final String FULL_TIME_REGEX = "(\\d)+h(\\d)+";
+	public static final String HOUR_ONLY_REGEX = "(\\d)+h";
+	private static final WordPattern FULL_TIME_PATTERN = WordPattern.simple(WordType.ANY, FULL_TIME_REGEX);
+	private static final WordPattern HOUR_ONLY_PATTERN = WordPattern.simple(WordType.ANY, HOUR_ONLY_REGEX);
+	public static final WordPattern TIME_PATTERN = WordPattern.or(
+			FULL_TIME_PATTERN,
 			WordPattern.sequence(
 					WordPattern.or(
 							WordPattern.sequence(WordPattern.simple(WordType.NUMBER), WordPattern.simple(WordType.DATE_UNIT_HOUR, "heure(s?)")),
-							hourOnlyPattern,
+							HOUR_ONLY_PATTERN,
 							WordPattern.simple(WordType.DATE_UNIT_HOUR)
 							), 
-							WordPattern.optional(WordPattern.or(WordPattern.simple(WordType.NUMBER), minutesDefinitionPattern)))
+							WordPattern.optional(WordPattern.or(WordPattern.simple(WordType.NUMBER), MINUTES_DEFINITION_PATTERN)))
 			);
 
-	public static final WordPattern timeDeclarationPattern = WordPattern.sequence(
+	public static final WordPattern TIME_DECLARATION_PATTERN = WordPattern.sequence(
 			WordPattern.or(WordPattern.simple(WordType.PREPOSITION_AT), WordPattern.simple(WordType.ANY, "pour"), WordPattern.sequence(WordPattern.simple(WordType.ANY, "quand"), WordPattern.simple(WordType.PERSONAL_PRONOUN, "il"), WordPattern.simple(WordType.VERB, "sera"))),
-			timePattern
+			TIME_PATTERN
 			);
 
 
 	// Indirect object patterns
 
-	public static final WordPattern directObjectDatePattern = WordPattern.sequence(
+	public static final WordPattern DIRECT_OBJECT_DATE_PATTERN = WordPattern.sequence(
 			WordPattern.simple(WordType.PREPOSITION_OF, "du"),
 			WordPattern.or(WordPattern.simple(WordType.NUMBER), WordPattern.simple(WordType.NUMERICAL_POSITION)),
 			WordPattern.simple(WordType.DATE_MONTH),
 			WordPattern.optional(WordPattern.simple(WordType.NUMBER)),
-			WordPattern.optional(WordPattern.sequence(WordPattern.simple(WordType.PREPOSITION_AT), timePattern))
+			WordPattern.optional(WordPattern.sequence(WordPattern.simple(WordType.PREPOSITION_AT), TIME_PATTERN))
 			);
 
-	public static final WordPattern directObjectTimePattern = WordPattern.sequence(
+	public static final WordPattern DIRECT_OBJECT_TIME_PATTERN = WordPattern.sequence(
 			WordPattern.simple(WordType.PREPOSITION_OF, "de"),
-			timePattern
+			TIME_PATTERN
 			);
 
-	public static final WordPattern relativeDatePattern = WordPattern.simple(WordType.DATE);
+	public static final WordPattern RELATIVE_DATE_PATTERN = WordPattern.simple(WordType.DATE);
 
 	public static boolean isADateData(WordBuffer words){
-		return WordPattern.syntaxStartsWith(words, fromToDatePattern)
-				|| WordPattern.syntaxStartsWith(words, betweenDatePattern)
-				|| WordPattern.syntaxStartsWith(words, fixedDatePattern)
-				|| WordPattern.syntaxStartsWith(words, timeDeclarationPattern)
-				|| WordPattern.syntaxStartsWith(words, relativeDatePattern);
+		return WordPattern.syntaxStartsWith(words, FROM_TO_DATE_PATTERN)
+				|| WordPattern.syntaxStartsWith(words, BETWEEN_DATE_PATTERN)
+				|| WordPattern.syntaxStartsWith(words, FIXED_DATE_PATTERN)
+				|| WordPattern.syntaxStartsWith(words, TIME_DECLARATION_PATTERN)
+				|| WordPattern.syntaxStartsWith(words, RELATIVE_DATE_PATTERN);
 		//|| WordPattern.syntaxStartsWith(words, timePattern); 
 	}
 
 	public static boolean isAnObjectDateData(WordBuffer words){
-		return WordPattern.syntaxStartsWith(words, directObjectDatePattern)
-				|| WordPattern.syntaxStartsWith(words, directObjectTimePattern);
+		return WordPattern.syntaxStartsWith(words, DIRECT_OBJECT_DATE_PATTERN)
+				|| WordPattern.syntaxStartsWith(words, DIRECT_OBJECT_TIME_PATTERN);
 	}
 
 	public static TimeObject parseDateObject(WordBuffer words){
 		TimeObject result = null;
 
-		if(WordPattern.syntaxStartsWith(words, fromToDatePattern)){
+		if(WordPattern.syntaxStartsWith(words, FROM_TO_DATE_PATTERN)){
 			TimePeriodObject period = new TimePeriodObject();
 
 			words.consume();	// PREPOSITION_FROM
@@ -158,7 +158,7 @@ public class DateConverter {
 			period.to = buildDateFromArray(toDateFields);
 
 			result = period;
-		} else if(WordPattern.syntaxStartsWith(words, betweenDatePattern)){
+		} else if(WordPattern.syntaxStartsWith(words, BETWEEN_DATE_PATTERN)){
 			TimePeriodObject period = new TimePeriodObject();
 
 			words.consume();	// PREPOSITION_BETWEEN
@@ -181,7 +181,7 @@ public class DateConverter {
 			period.to = buildDateFromArray(toDateFields);
 
 			result = period;
-		} else if(WordPattern.syntaxStartsWith(words, fixedDatePattern)){ 
+		} else if(WordPattern.syntaxStartsWith(words, FIXED_DATE_PATTERN)){ 
 			words.consume();
 
 			SingleTimeObject single = new SingleTimeObject();
@@ -190,7 +190,7 @@ public class DateConverter {
 			single.date = buildDateFromArray(dateFields);
 
 			result = single;
-		} else if(WordPattern.syntaxStartsWith(words, timeDeclarationPattern)){
+		} else if(WordPattern.syntaxStartsWith(words, TIME_DECLARATION_PATTERN)){
 			if(words.getCurrentElement().isOfType(WordType.PREPOSITION_AT)){
 				words.consume();
 			} else {
@@ -207,7 +207,7 @@ public class DateConverter {
 
 			//fixUndefinedValues(fixedDateFields);
 			result = single;
-		} else if(WordPattern.syntaxStartsWith(words, relativeDatePattern)){
+		} else if(WordPattern.syntaxStartsWith(words, RELATIVE_DATE_PATTERN)){
 			//RelativeTimeObject
 			result = parseRelativeDay(words.getCurrentElement().getValue());
 			words.consume();
@@ -217,7 +217,7 @@ public class DateConverter {
 	}
 
 	public static TimeObject parseDirectObjectDateObject(WordBuffer words){
-		if(words.syntaxStartsWith(directObjectDatePattern)){
+		if(words.syntaxStartsWith(DIRECT_OBJECT_DATE_PATTERN)){
 			words.consume();	// PREPOSITION_OF
 
 			SingleTimeObject single = new SingleTimeObject();
@@ -226,7 +226,7 @@ public class DateConverter {
 			single.date = buildDateFromArray(dateFields);
 
 			return single;
-		} else if(words.syntaxStartsWith(directObjectTimePattern)){
+		} else if(words.syntaxStartsWith(DIRECT_OBJECT_TIME_PATTERN)){
 			words.consume();	// PREPOSITION_OF			
 
 			SingleTimeObject single = new SingleTimeObject();
@@ -278,7 +278,7 @@ public class DateConverter {
 			words.consume();
 		}
 
-		if(words.syntaxStartsWith(timeDeclarationPattern)){
+		if(words.syntaxStartsWith(TIME_DECLARATION_PATTERN)){
 			if(words.getCurrentElement().isOfType(WordType.PREPOSITION_AT)){
 				words.consume();
 			} else {
@@ -305,7 +305,7 @@ public class DateConverter {
 		Arrays.fill(date, DEFAULT_DATE_FIELD_VALUE);
 
 		//if(words.getCurrentElement().getValue().matches(fullTimeRegex)){
-		if(words.syntaxStartsWith(fullTimePattern)){
+		if(words.syntaxStartsWith(FULL_TIME_PATTERN)){
 			String[] fields = words.getCurrentElement().getValue().split("h");
 			int hours = Integer.parseInt(fields[0]);
 			int minutes = Integer.parseInt(fields[1]);
@@ -318,7 +318,7 @@ public class DateConverter {
 			return date;
 		}
 
-		if(words.syntaxStartsWith(hourOnlyPattern)){
+		if(words.syntaxStartsWith(HOUR_ONLY_PATTERN)){
 			//if(words.getCurrentElement().getValue().matches(hourOnlyRegex)){
 			String value = words.getCurrentElement().getValue();
 			int hours = Integer.parseInt(value.substring(0, value.length() - 1));
@@ -342,7 +342,7 @@ public class DateConverter {
 			if(words.getCurrentElement().isOfType(WordType.NUMBER)){
 				date[TimeUnit.MINUTES.ordinal()] = Integer.parseInt(words.getCurrentElement().getValue());
 				words.consume();
-			} else if(words.syntaxStartsWith(minutesDefinitionPattern)){
+			} else if(words.syntaxStartsWith(MINUTES_DEFINITION_PATTERN)){
 				int factor = 1;
 
 				if(words.getCurrentElement().getValue().equals("moins")){
