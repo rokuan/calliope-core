@@ -43,7 +43,7 @@ public class PlaceParseTest {
 		Word paris = new Word("Paris", WordType.CITY);
 		Word france = new Word("France", WordType.COUNTRY);
 
-		paris.setCityInfo(new CityInfo("Paris", "PAR"));
+		paris.setCityInfo(new CityInfo("Paris", 48.8564528, 2.3524282));
 		france.setCountryInfo(new CountryInfo("France", "FR"));
 		
 		words.add(new Word("à", WordType.PREPOSITION_AT));

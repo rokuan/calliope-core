@@ -2,18 +2,24 @@ package com.rokuan.calliopecore.sentence;
 
 public final class CityInfo {
 	private String name;
-	private String code;
+	private double latitude;
+	private double longitude;
 	
-	public CityInfo(String n, String c){
+	public CityInfo(String n, double lat, double lng){
 		name = n;
-		code = c;
+		latitude = lat;
+		longitude = lng;
 	}
 	
 	public String getName() {
 		return name;
 	}
 	
-	public String getCode() {
-		return code;
+	public double getLatitude(){
+		return latitude;
+	}
+	
+	public double getLongitude(){
+		return longitude;
 	}
 }

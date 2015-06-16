@@ -74,7 +74,7 @@ public class QuestionParseTest {
 	}
 	
 	@Test
-	public void whatWillBe(){
+	public void whatWillBeTest(){
 		WordBuffer words = new WordBuffer();
 		Word willBe = new Word("fera", WordType.VERB);
 		Verb<Action.VerbAction> toBe = new Verb<Action.VerbAction>("faire", Action.VerbAction.DO__MAKE, false);
@@ -109,5 +109,28 @@ public class QuestionParseTest {
 		
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		assertEquals(format.format(tomorrow), format.format(((SingleTimeObject)obj.when).date));
+	}
+	
+	@Test
+	public void whatTimeIsItTest(){
+		WordBuffer words = new WordBuffer();
+		Word is = new Word("est", WordType.AUXILIARY, WordType.VERB, WordType.COMMON_NAME);
+		Verb<Action.VerbAction> toBe = new Verb<Action.VerbAction>("être", Action.VerbAction.BE, true);
+		VerbConjugation toBeConjug = new VerbConjugation(ConjugationTense.PRESENT, Form.INDICATIVE, Pronoun.IL_ELLE_ON, "être", toBe);
+		toBeConjug.setVerb(toBe);
+		is.setVerbInfo(toBeConjug);
+		
+		words.add(new Word("quelle", WordType.INTERROGATIVE_ADJECTIVE));
+		words.add(new Word("heure", WordType.DEFINITE_ARTICLE));
+		words.add(is);
+		words.add(new Word("il", WordType.PERSONAL_PRONOUN));
+		
+		InterpretationObject obj = new Parser().parseInterpretationObject(words);
+		
+		assertEquals(obj.getType(), InterpretationObject.RequestType.QUESTION);
+		
+		QuestionObject question = (QuestionObject)obj;
+		
+		assertEquals(question.qType, QuestionType.WHAT);
 	}
 }
