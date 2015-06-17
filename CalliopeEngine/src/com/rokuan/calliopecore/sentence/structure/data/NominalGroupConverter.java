@@ -39,14 +39,14 @@ public class NominalGroupConverter {
 	public static final WordPattern FIRST_NAME_SEQUENCE_PATTERN = WordPattern.nonEmptyList(WordPattern.simple(WordType.FIRSTNAME));
 	public static final WordPattern LAST_NAME_SEQUENCE_PATTERN = WordPattern.nonEmptyList(WordPattern.simple(WordType.PROPER_NAME));
 	
-	public static final WordPattern personPattern = WordPattern.or(LAST_NAME_SEQUENCE_PATTERN,
+	public static final WordPattern PERSON_PATTERN = WordPattern.or(LAST_NAME_SEQUENCE_PATTERN,
 			FIRST_NAME_SEQUENCE_PATTERN,
 			WordPattern.sequence(FIRST_NAME_SEQUENCE_PATTERN, LAST_NAME_SEQUENCE_PATTERN),
 			WordPattern.sequence(LAST_NAME_SEQUENCE_PATTERN, FIRST_NAME_SEQUENCE_PATTERN)
 			);
 	
 	public static final WordPattern INDIRECT_OBJECT_PATTERN = WordPattern.sequence(TO_PATTERN,
-			WordPattern.or(personPattern)	// TODO: ajouter le cas groupe nominal
+			WordPattern.or(PERSON_PATTERN)	// TODO: ajouter le cas groupe nominal
 					);
 	
 	public static boolean isANominalGroup(WordBuffer words){
@@ -69,7 +69,7 @@ public class NominalGroupConverter {
 	
 	public static boolean isADirectObject(WordBuffer words){
 		return words.syntaxStartsWith(DIRECT_OBJECT_PATTERN) 
-				|| words.syntaxStartsWith(personPattern);
+				|| words.syntaxStartsWith(PERSON_PATTERN);
 	}
 	
 	public static NominalGroup parseDirectObject(WordBuffer words){
@@ -106,7 +106,7 @@ public class NominalGroupConverter {
 					words.previous();
 				}
 			}
-		} else if(words.syntaxStartsWith(personPattern)){
+		} else if(words.syntaxStartsWith(PERSON_PATTERN)){
 			obj.object = parsePerson(words);
 		}
 		

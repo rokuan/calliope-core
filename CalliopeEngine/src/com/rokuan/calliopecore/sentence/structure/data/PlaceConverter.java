@@ -47,8 +47,10 @@ public class PlaceConverter {
 
 	public static final WordPattern WORLD_PLACE_PATTERN = WordPattern.or(
 			WordPattern.sequence(CITY_PATTERN, COUNTRY_PATTERN),
-			WordPattern.sequence(WordPattern.optional(CITY_PATTERN), COUNTRY_PATTERN),
-			WordPattern.sequence(CITY_PATTERN, WordPattern.optional(COUNTRY_PATTERN))
+			/*WordPattern.sequence(WordPattern.optional(CITY_PATTERN), COUNTRY_PATTERN),
+			WordPattern.sequence(CITY_PATTERN, WordPattern.optional(COUNTRY_PATTERN))*/
+			CITY_PATTERN,
+			COUNTRY_PATTERN
 			);
 
 	// A Paris en France
@@ -64,7 +66,29 @@ public class PlaceConverter {
 		NominalGroup result = null;
 
 		// TODO: gerer les locations pleines (Le musee du Louvre a Paris en France)
-		if(words.syntaxStartsWith(PLACE_PATTERN)){
+		if(words.syntaxStartsWith(WORLD_PLACE_PATTERN)){
+			StateObject state = new StateObject();
+			
+			if(words.syntaxStartsWith(CITY_PATTERN)){
+				while(!words.getCurrentElement().isOfType(WordType.CITY)){
+					words.consume();					
+				}
+				
+				state.city = words.getCurrentElement().getCityInfo();
+				words.consume();
+			}
+			
+			if(words.syntaxStartsWith(COUNTRY_PATTERN)){
+				while(!words.getCurrentElement().isOfType(WordType.COUNTRY)){
+					words.consume();
+				}
+				
+				state.country = words.getCurrentElement().getCountryInfo();
+				words.consume();
+			}
+
+			result = state;
+		} else if(words.syntaxStartsWith(PLACE_PATTERN)){
 			MonumentObject monument = new MonumentObject();
 			StringBuilder buffer = new StringBuilder();
 
@@ -113,28 +137,6 @@ public class PlaceConverter {
 			monument.name = buffer.toString().trim();
 
 			result = monument;
-		} else if(words.syntaxStartsWith(WORLD_PLACE_PATTERN)){
-			StateObject state = new StateObject();
-			
-			if(words.syntaxStartsWith(CITY_PATTERN)){
-				while(!words.getCurrentElement().isOfType(WordType.CITY)){
-					words.consume();					
-				}
-				
-				state.city = words.getCurrentElement().getCityInfo();
-				words.consume();
-			}
-			
-			if(words.syntaxStartsWith(COUNTRY_PATTERN)){
-				while(!words.getCurrentElement().isOfType(WordType.COUNTRY)){
-					words.consume();
-				}
-				
-				state.country = words.getCurrentElement().getCountryInfo();
-				words.consume();
-			}
-
-			result = state;
 		}
 
 		return result;
