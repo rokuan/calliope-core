@@ -4,14 +4,14 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import com.rokuan.calliopecore.sentence.structure.data.NumberConverter;
+import com.rokuan.calliopecore.sentence.structure.data.CountConverter;
 
 public class NumberParseTest {
 	@Test
 	public void testNth(){
-		assertEquals(2, NumberConverter.parsePosition("deuxième"));
-		assertEquals(5, NumberConverter.parsePosition("cinquième"));
-		assertEquals(10, NumberConverter.parsePosition("dixième"));
+		assertEquals(2, CountConverter.parsePosition("deuxième"));
+		assertEquals(5, CountConverter.parsePosition("cinquième"));
+		assertEquals(10, CountConverter.parsePosition("dixième"));
 		//assertEquals(32, NumberConverter.parsePosition("trente-deuxième"));
 		//assertEquals(41, NumberConverter.parsePosition("quarante-et-unième"));
 	}

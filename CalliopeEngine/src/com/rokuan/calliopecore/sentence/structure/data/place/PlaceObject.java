@@ -1,7 +1,25 @@
 package com.rokuan.calliopecore.sentence.structure.data.place;
 
-public abstract class PlaceObject {
-	public enum PlaceType {
+import com.rokuan.calliopecore.sentence.structure.nominal.NominalGroup;
+
+public abstract class PlaceObject extends NominalGroup {
+	public enum PlaceContext {
+		BEHIND,
+		ON,
+		UNDER,
+		BEFORE,
+		AFTER,
+		LEFT,
+		RIGHT,
+		TOP,
+		BOTTOM,
+		AT,
+		TO,
+		AGAINST,
+		WHERE
+	}
+	
+	/*public enum PlaceType {
 		STATE,
 		MONUMENT
 	}
@@ -14,5 +32,12 @@ public abstract class PlaceObject {
 	
 	public PlaceType getType(){
 		return type;
+	}*/
+	
+	public PlaceContext location;
+	public NominalGroup content;
+	
+	protected PlaceObject(GroupType ty) {
+		super(ty);
 	}
 }

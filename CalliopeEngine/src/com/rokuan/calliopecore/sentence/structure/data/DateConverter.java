@@ -66,10 +66,23 @@ public class DateConverter {
 			WordPattern.optional(WordPattern.simple(WordType.NUMBER))
 			);*/
 
-	public static final WordPattern FIXED_DATE_PATTERN = WordPattern.sequence(
+	/*public static final WordPattern FIXED_DATE_PATTERN = WordPattern.sequence(
 			WordPattern.or(WordPattern.simple(WordType.INDEFINITE_ARTICLE, "du"), 
 					WordPattern.sequence(WordPattern.optional(WordPattern.simple(WordType.ANY, "pour")), WordPattern.simple(WordType.DEFINITE_ARTICLE))
 					),
+					WordPattern.or(WordPattern.simple(WordType.NUMBER), WordPattern.simple(WordType.NUMERICAL_POSITION)),
+					WordPattern.simple(WordType.DATE_MONTH),
+					WordPattern.optional(WordPattern.simple(WordType.NUMBER))
+					//WordPattern.optional(timePattern)
+			);*/
+	public static final WordPattern DATE_PREPOSITION_PATTERN = WordPattern.or(
+			WordPattern.simple(new WordType[]{ WordType.TIME_PREPOSITION, WordType.CONTRACTED }),
+			WordPattern.sequence(WordPattern.optional(WordPattern.simple(WordType.TIME_PREPOSITION)), WordPattern.simple(WordType.DEFINITE_ARTICLE))
+			);
+	
+	public static final WordPattern FIXED_DATE_PATTERN = WordPattern.sequence(
+					//WordPattern.sequence(WordPattern.optional(WordPattern.simple(WordType.ANY, "pour")), WordPattern.simple(WordType.DEFINITE_ARTICLE)),
+					DATE_PREPOSITION_PATTERN,
 					WordPattern.or(WordPattern.simple(WordType.NUMBER), WordPattern.simple(WordType.NUMERICAL_POSITION)),
 					WordPattern.simple(WordType.DATE_MONTH),
 					WordPattern.optional(WordPattern.simple(WordType.NUMBER))
@@ -98,7 +111,11 @@ public class DateConverter {
 			);
 
 	public static final WordPattern TIME_DECLARATION_PATTERN = WordPattern.sequence(
-			WordPattern.or(WordPattern.simple(WordType.PREPOSITION_AT), WordPattern.simple(WordType.ANY, "pour"), WordPattern.sequence(WordPattern.simple(WordType.ANY, "quand"), WordPattern.simple(WordType.PERSONAL_PRONOUN, "il"), WordPattern.simple(WordType.VERB, "sera"))),
+			WordPattern.or(
+					WordPattern.simple(WordType.PREPOSITION_AT),
+					WordPattern.simple(WordType.TIME_PREPOSITION),
+					//WordPattern.simple(WordType.ANY, "pour"), 
+					WordPattern.sequence(WordPattern.simple(WordType.ANY, "quand"), WordPattern.simple(WordType.PERSONAL_PRONOUN, "il"), WordPattern.simple(WordType.VERB, "sera"))),
 			TIME_PATTERN
 			);
 
@@ -149,8 +166,6 @@ public class DateConverter {
 			int[] toDateFields = parseDate(words);
 
 			adjustInterval(fromDateFields, toDateFields);
-			/*fixUndefinedValues(fromDateFields);
-			fixUndefinedValues(toDateFields);*/
 
 			period.fromDateDefinition = DateDefinition.values()[fromDateFields[fromDateFields.length - 1]];
 			period.toDateDefinition = DateDefinition.values()[toDateFields[toDateFields.length - 1]];
@@ -172,8 +187,6 @@ public class DateConverter {
 			int[] toDateFields = parseDate(words);
 
 			adjustInterval(fromDateFields, toDateFields);
-			/*fixUndefinedValues(fromDateFields);
-			fixUndefinedValues(toDateFields);*/
 
 			period.fromDateDefinition = DateDefinition.values()[fromDateFields[fromDateFields.length - 1]];
 			period.toDateDefinition = DateDefinition.values()[toDateFields[toDateFields.length - 1]];
@@ -181,17 +194,34 @@ public class DateConverter {
 			period.to = buildDateFromArray(toDateFields);
 
 			result = period;
-		} else if(WordPattern.syntaxStartsWith(words, FIXED_DATE_PATTERN)){ 
-			words.consume();
-
+		} else if(WordPattern.syntaxStartsWith(words, FIXED_DATE_PATTERN)){
+			/*WordPattern.simple(new WordType[]{ WordType.TIME_PREPOSITION, WordType.CONTRACTED }),
+			WordPattern.sequence(WordPattern.optional(WordPattern.simple(WordType.TIME_PREPOSITION)), WordPattern.simple(WordType.DEFINITE_ARTICLE))*/
 			SingleTimeObject single = new SingleTimeObject();
+			
+			if(words.getCurrentElement().isOfType(WordType.TIME_PREPOSITION)){
+				// TODO: parser la preposition
+				single.preposition = words.getCurrentElement().getDatePreposition();
+				words.consume();
+			}
+
+			if(words.getCurrentElement().isOfType(WordType.DEFINITE_ARTICLE)){
+				words.consume();
+			}
+			//words.consume();
+
 			int[] dateFields = parseDate(words);
 
 			single.date = buildDateFromArray(dateFields);
 
 			result = single;
 		} else if(WordPattern.syntaxStartsWith(words, TIME_DECLARATION_PATTERN)){
+			SingleTimeObject single = new SingleTimeObject();
+			
 			if(words.getCurrentElement().isOfType(WordType.PREPOSITION_AT)){
+				words.consume();
+			} else if(words.getCurrentElement().isOfType(WordType.TIME_PREPOSITION)){
+				single.preposition = words.getCurrentElement().getDatePreposition();
 				words.consume();
 			} else {
 				words.consume();
@@ -199,13 +229,11 @@ public class DateConverter {
 				words.consume();
 			}
 
-			SingleTimeObject single = new SingleTimeObject();
 			int[] fixedTimeFields = parseTime(words);
 
 			single.dateDefinition = DateDefinition.TIME_ONLY; 
 			single.date = buildDateFromArray(fixedTimeFields);
 
-			//fixUndefinedValues(fixedDateFields);
 			result = single;
 		} else if(WordPattern.syntaxStartsWith(words, RELATIVE_DATE_PATTERN)){
 			//RelativeTimeObject
@@ -235,7 +263,6 @@ public class DateConverter {
 			single.dateDefinition = DateDefinition.TIME_ONLY; 
 			single.date = buildDateFromArray(fixedTimeFields);
 
-			//fixUndefinedValues(fixedDateFields);
 			return single;
 		}
 
@@ -254,7 +281,7 @@ public class DateConverter {
 			date[TimeUnit.DAY.ordinal()] = Integer.parseInt(words.getCurrentElement().getValue());
 			words.consume();
 		} else if(words.getCurrentElement().isOfType(WordType.NUMERICAL_POSITION)){
-			date[TimeUnit.DAY.ordinal()] = (int)NumberConverter.parsePosition(words.getCurrentElement().getValue());
+			date[TimeUnit.DAY.ordinal()] = (int)CountConverter.parsePosition(words.getCurrentElement().getValue());
 			words.consume();
 		}
 

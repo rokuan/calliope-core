@@ -13,7 +13,10 @@ public abstract class NominalGroup {
     	LANGUAGE,
     	STATE,
     	PLACE,
-    	PERSON
+    	PERSON,
+    	COLOR,
+    	NUMBER,
+    	DATE
     }
     
     private GroupType type;

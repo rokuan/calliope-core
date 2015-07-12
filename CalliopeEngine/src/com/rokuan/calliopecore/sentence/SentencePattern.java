@@ -57,7 +57,7 @@ public class SentencePattern {
 			WordPattern.or(WordPattern.simple(WordType.INTERROGATIVE_ADJECTIVE, "quel.*"), WordPattern.simple(WordType.INTERROGATIVE_ADJECTIVE, "quel.*")),
 			// TODO: remplacer par un groupe nominal en prenant en compte les adjectifs (ex: quel petit chat)
 			WordPattern.nonEmptyList(WordPattern.simple(WordType.COMMON_NAME)),
-			VerbConverter.questionVerbPattern
+			VerbConverter.QUESTION_VERB_PATTERN
 			);
 	
 	public static final WordPattern INTERROGATIVE_PATTERN = WordPattern.sequence(

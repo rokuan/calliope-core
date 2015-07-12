@@ -8,7 +8,7 @@ import org.junit.Test;
 import com.rokuan.calliopecore.parser.WordBuffer;
 import com.rokuan.calliopecore.sentence.Word;
 import com.rokuan.calliopecore.sentence.Word.WordType;
-import com.rokuan.calliopecore.sentence.structure.data.NumberConverter;
+import com.rokuan.calliopecore.sentence.structure.data.CountConverter;
 import com.rokuan.calliopecore.sentence.structure.data.count.CountObject;
 import com.rokuan.calliopecore.sentence.structure.data.count.FixedItemObject;
 import com.rokuan.calliopecore.sentence.structure.data.count.LimitedItemsObject;
@@ -23,7 +23,7 @@ public class CountParseTest {
 		words.add(new Word("le", WordType.DEFINITE_ARTICLE));
 		words.add(new Word("premier", WordType.NUMERICAL_POSITION));
 
-		CountObject count = NumberConverter.parseCountObject(words); 
+		CountObject count = CountConverter.parseCountObject(words); 
 
 		assert (count != null);
 
@@ -42,7 +42,7 @@ public class CountParseTest {
 		words.add(new Word("5", WordType.NUMBER));
 		words.add(new Word("premiers", WordType.NUMERICAL_POSITION));
 
-		CountObject count = NumberConverter.parseCountObject(words);
+		CountObject count = CountConverter.parseCountObject(words);
 
 		assert (count != null);
 
@@ -61,7 +61,7 @@ public class CountParseTest {
 		words.add(new Word("7", WordType.NUMBER));
 		words.add(new Word("derniers", WordType.NUMERICAL_POSITION));
 
-		CountObject count = NumberConverter.parseCountObject(words);
+		CountObject count = CountConverter.parseCountObject(words);
 
 		assert (count != null);
 
@@ -82,7 +82,7 @@ public class CountParseTest {
 		words.add(new Word("et", WordType.PREPOSITION_AND));
 		words.add(new Word("15", WordType.NUMBER));
 		
-		CountObject count = NumberConverter.parseSuffixCountObject(words);
+		CountObject count = CountConverter.parseSuffixCountObject(words);
 		
 		assert(count != null);
 		
@@ -106,7 +106,7 @@ public class CountParseTest {
 		words.add(new Word("et", WordType.PREPOSITION_AND));
 		words.add(new Word("19ème", WordType.NUMERICAL_POSITION));
 		
-		CountObject count = NumberConverter.parseCountObject(words);
+		CountObject count = CountConverter.parseCountObject(words);
 		
 		assert(count != null);
 		

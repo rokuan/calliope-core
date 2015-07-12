@@ -9,13 +9,15 @@ public class VerbConjugation {
     protected Verb.Form form;
     protected Verb.Pronoun pronoun;
     protected String name;
-    protected Verb<?> verb;
+    //protected Verb<?> verb;
+    protected Verb verb;
     
     public VerbConjugation(){
     	
     }
     
-    public VerbConjugation(Verb.ConjugationTense conjugTense, Verb.Form conjugForm, Verb.Pronoun conjugPerson, String conjugValue, Verb<?> conjugVerb){
+    //public VerbConjugation(Verb.ConjugationTense conjugTense, Verb.Form conjugForm, Verb.Pronoun conjugPerson, String conjugValue, Verb<?> conjugVerb){
+    public VerbConjugation(Verb.ConjugationTense conjugTense, Verb.Form conjugForm, Verb.Pronoun conjugPerson, String conjugValue, Verb conjugVerb){
     	tense = conjugTense;
     	form = conjugForm;
     	pronoun = conjugPerson;
@@ -23,11 +25,13 @@ public class VerbConjugation {
     	verb = conjugVerb;
     }
     
-    public Verb<?> getVerb() {
+    //public Verb<?> getVerb() {
+    public Verb getVerb() {
         return verb;
     }
 
-    public void setVerb(Verb<?> verb) {
+    //public void setVerb(Verb<?> verb) {
+    public void setVerb(Verb verb) {
         this.verb = verb;
     }
 }

@@ -3,7 +3,8 @@ package com.rokuan.calliopecore.sentence;
 /**
  * Created by LEBEAU Christophe on 19/02/2015.
  */
-public class Verb<ActionType extends Enum<ActionType>> {
+//public class Verb<ActionType extends Enum<ActionType>> {
+public class Verb {
     public enum Tense {
         PAST,
         PRESENT,
@@ -42,14 +43,16 @@ public class Verb<ActionType extends Enum<ActionType>> {
     }
     
     protected String verb = "";
-    protected Enum<ActionType> action;
+    //protected Enum<ActionType> action;
+    protected Action.VerbAction action;
     protected boolean auxiliary = false;
     
     public Verb(){
     	
     }
     
-    public Verb(String infinitiveForm, Enum<ActionType> verbAction, boolean aux){
+    //public Verb(String infinitiveForm, Enum<ActionType> verbAction, boolean aux){
+    public Verb(String infinitiveForm, Action.VerbAction verbAction, boolean aux){
     	verb = infinitiveForm;
     	action = verbAction;
     	auxiliary = aux;
@@ -59,7 +62,8 @@ public class Verb<ActionType extends Enum<ActionType>> {
         return verb;
     }
 
-    public Enum<ActionType> getAction() {
+    //public Enum<ActionType> getAction() {
+    public Action.VerbAction getAction() {
         return action;
     }
 

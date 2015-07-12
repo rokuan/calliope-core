@@ -4,6 +4,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.rokuan.calliopecore.sentence.structure.data.place.PlaceObject.PlaceContext;
+import com.rokuan.calliopecore.sentence.structure.data.time.TimeObject.DateContext;
+
 /**
  * Created by LEBEAU Christophe on 22/02/2015.
  */
@@ -55,10 +58,20 @@ public class Word {
         DATE_UNIT_HOUR,	// midi/minuit
         MEAN_OF_TRANSPORT, // pied/voiture/bus/avion
         PLACE_TYPE,	// restaurant/cinéma/...
+        
         CITY,
         COUNTRY,
         FIRSTNAME,
-        LANGUAGE
+        LANGUAGE,
+        PERSON,
+        PLACE,
+        COLOR,
+        OBJECT,
+        
+        CONTRACTED,
+        
+        TIME_PREPOSITION,
+        PLACE_PREPOSITION
     }
 
     private Set<WordType> types = new HashSet<WordType>();
@@ -67,8 +80,10 @@ public class Word {
     private LanguageInfo langInfo;
 	private CountryInfo countryInfo;
     private CityInfo cityInfo;
+    private DateContext datePreposition;
+    private PlaceContext placePreposition;
     
-    public Word(String v, WordType t){
+    	public Word(String v, WordType t){
         types.add(t);
         value = v;
     }
@@ -135,5 +150,21 @@ public class Word {
 
 	public void setCityInfo(CityInfo cityInfo) {
 		this.cityInfo = cityInfo;
+	}
+	
+	public DateContext getDatePreposition() {
+		return datePreposition;
+	}
+
+	public void setDatePreposition(DateContext datePreposition) {
+		this.datePreposition = datePreposition;
+	}
+	
+	public PlaceContext getPlacePreposition() {
+		return placePreposition;
+	}
+
+	public void setPlacePreposition(PlaceContext placePreposition) {
+		this.placePreposition = placePreposition;
 	}
 }

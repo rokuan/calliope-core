@@ -21,10 +21,10 @@ public class NominalGroupConverter {
 	
 	// ComplementObject
 	public static final WordPattern DIRECT_OBJECT_PATTERN = WordPattern.sequence(
-			WordPattern.optional(NumberConverter.COUNT_PATTERN),
+			WordPattern.optional(CountConverter.COUNT_PATTERN),
 			WordPattern.simple(WordType.COMMON_NAME),
-			WordPattern.optional(NumberConverter.MULTIPLE_ITEMS_PATTERN),
-			WordPattern.optional(CriterionConverter.CRITERIA_PATTERN));
+			WordPattern.optional(CountConverter.MULTIPLE_ITEMS_PATTERN),
+			WordPattern.optional(CriterionConverter.CRITERIA_PATTERN));	
 	
 	/*public static final WordPattern personPattern = WordPattern.sequence(
 			WordPattern.nonEmptyList(WordPattern.simple(WordType.FIRSTNAME)),
@@ -39,7 +39,9 @@ public class NominalGroupConverter {
 	public static final WordPattern FIRST_NAME_SEQUENCE_PATTERN = WordPattern.nonEmptyList(WordPattern.simple(WordType.FIRSTNAME));
 	public static final WordPattern LAST_NAME_SEQUENCE_PATTERN = WordPattern.nonEmptyList(WordPattern.simple(WordType.PROPER_NAME));
 	
-	public static final WordPattern PERSON_PATTERN = WordPattern.or(LAST_NAME_SEQUENCE_PATTERN,
+	public static final WordPattern PERSON_PATTERN = WordPattern.or(
+			WordPattern.simple(WordType.PERSON),
+			LAST_NAME_SEQUENCE_PATTERN,
 			FIRST_NAME_SEQUENCE_PATTERN,
 			WordPattern.sequence(FIRST_NAME_SEQUENCE_PATTERN, LAST_NAME_SEQUENCE_PATTERN),
 			WordPattern.sequence(LAST_NAME_SEQUENCE_PATTERN, FIRST_NAME_SEQUENCE_PATTERN)
@@ -76,16 +78,16 @@ public class NominalGroupConverter {
 		ComplementObject obj = new ComplementObject();
 		
 		if(words.syntaxStartsWith(DIRECT_OBJECT_PATTERN)){
-			if(NumberConverter.isACountData(words)){
-				obj.count = NumberConverter.parseCountObject(words);
+			if(CountConverter.isACountData(words)){
+				obj.count = CountConverter.parseCountObject(words);
 			}
 			
 			// TODO: parser les adjectifs et autres
 			obj.object = words.getCurrentElement().getValue();
 			words.consume();
 			
-			if(NumberConverter.isASuffixCountData(words)){
-				obj.count = NumberConverter.parseSuffixCountObject(words);
+			if(CountConverter.isASuffixCountData(words)){
+				obj.count = CountConverter.parseSuffixCountObject(words);
 			}
 			
 			if(CriterionConverter.isACriterionData(words)){

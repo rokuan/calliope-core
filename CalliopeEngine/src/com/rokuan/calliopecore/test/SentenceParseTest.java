@@ -35,7 +35,7 @@ public class SentenceParseTest {
 	public void testGoTo(){
 		WordBuffer words = new WordBuffer();
 		Word go = new Word("aller", Word.WordType.VERB);
-		Verb<Action.VerbAction> toGo = new Verb<Action.VerbAction>("aller", Action.VerbAction.GO, false);
+		Verb toGo = new Verb("aller", Action.VerbAction.GO, false);
 		VerbConjugation toGoConjug = new VerbConjugation(ConjugationTense.PRESENT, Form.INFINITIVE, null, "aller", toGo);		
 		toGoConjug.setVerb(toGo);
 		go.setVerbInfo(toGoConjug);
@@ -71,7 +71,7 @@ public class SentenceParseTest {
 	public void testGoTo2(){
 		WordBuffer words = new WordBuffer();
 		Word go = new Word("aller", Word.WordType.VERB);
-		Verb<Action.VerbAction> toGo = new Verb<Action.VerbAction>("aller", Action.VerbAction.GO, false);
+		Verb toGo = new Verb("aller", Action.VerbAction.GO, false);
 		VerbConjugation toGoConjug = new VerbConjugation(ConjugationTense.PRESENT, Form.INFINITIVE, null, "aller", toGo);		
 		toGoConjug.setVerb(toGo);
 		go.setVerbInfo(toGoConjug);
@@ -105,7 +105,7 @@ public class SentenceParseTest {
 		WordBuffer words = new WordBuffer();
 
 		Word be = new Word("est", Word.WordType.VERB);
-		Verb<Action.VerbAction> toBe = new Verb<Action.VerbAction>("être", Action.VerbAction.BE, true);
+		Verb toBe = new Verb("être", Action.VerbAction.BE, true);
 		VerbConjugation toBeConjug = new VerbConjugation(ConjugationTense.PRESENT, Form.INDICATIVE, Pronoun.IL_ELLE_ON, "être", toBe);		
 		toBeConjug.setVerb(toBe);
 		be.setVerbInfo(toBeConjug);
@@ -133,7 +133,7 @@ public class SentenceParseTest {
 		WordBuffer words = new WordBuffer();
 
 		Word find = new Word("trouve", WordType.VERB);
-		Verb<Action.VerbAction> toFind = new Verb<Action.VerbAction>("trouver", Action.VerbAction.FIND, false);
+		Verb toFind = new Verb("trouver", Action.VerbAction.FIND, false);
 		VerbConjugation toFindConjug = new VerbConjugation(ConjugationTense.PRESENT, Form.IMPERATIVE, Pronoun.TU, "trouver", toFind);
 		toFindConjug.setVerb(toFind);
 		find.setVerbInfo(toFindConjug);
@@ -158,7 +158,7 @@ public class SentenceParseTest {
 		WordBuffer words = new WordBuffer();
 
 		Word make = new Word("fait", WordType.VERB);
-		Verb<Action.VerbAction> toMake = new Verb<Action.VerbAction>("faire", Action.VerbAction.DO__MAKE, false);
+		Verb toMake = new Verb("faire", Action.VerbAction.DO__MAKE, false);
 		VerbConjugation toMakeConjug = new VerbConjugation(ConjugationTense.PRESENT, Form.INDICATIVE, Pronoun.IL_ELLE_ON, "faire", toMake);
 		toMakeConjug.setVerb(toMake);
 		make.setVerbInfo(toMakeConjug);
@@ -181,7 +181,7 @@ public class SentenceParseTest {
 		WordBuffer words = new WordBuffer();
 
 		Word make = new Word("fera", WordType.VERB);
-		Verb<Action.VerbAction> toMake = new Verb<Action.VerbAction>("faire", Action.VerbAction.DO__MAKE, false);
+		Verb toMake = new Verb("faire", Action.VerbAction.DO__MAKE, false);
 		VerbConjugation toMakeConjug = new VerbConjugation(ConjugationTense.PRESENT, Form.INDICATIVE, Pronoun.IL_ELLE_ON, "faire", toMake);
 		toMakeConjug.setVerb(toMake);
 		make.setVerbInfo(toMakeConjug);
@@ -199,7 +199,8 @@ public class SentenceParseTest {
 		assertEquals(obj.action, Action.VerbAction.DO__MAKE);
 		assertEquals(((PronounTarget)obj.subject).pronoun, com.rokuan.calliopecore.sentence.Type.Pronoun.IL_ELLE_ON);
 		assertEquals(compl.object, "temps");
-		assertEquals(obj.when.getType(), TimeObject.TimeType.SINGLE);
+		assertEquals(obj.when.getType(), GroupType.DATE);
+		assertEquals(((TimeObject)obj.when).getTimeType(), TimeObject.TimeType.SINGLE);
 		
 		Calendar calendar = Calendar.getInstance();
 		calendar.add(Calendar.DAY_OF_MONTH, 1);

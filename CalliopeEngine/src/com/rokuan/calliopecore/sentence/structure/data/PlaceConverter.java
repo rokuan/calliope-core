@@ -8,14 +8,6 @@ import com.rokuan.calliopecore.sentence.structure.data.place.StateObject;
 import com.rokuan.calliopecore.sentence.structure.nominal.NominalGroup;
 
 public class PlaceConverter {
-	/*public static final WordPattern placePattern = WordPattern.sequence(
-			//WordPattern.optional(WordPattern.simple(WordType.DEFINITE_ARTICLE)),
-			WordPattern.simple(WordType.DEFINITE_ARTICLE),
-			WordPattern.optional(WordPattern.simple(WordType.COMMON_NAME)),
-			WordPattern.simple(WordType.PROPER_NAME),
-			WordPattern.optional(WordPattern.simple(WordType.PROPER_NAME)),
-			WordPattern.optional(WordPattern.sequence(WordPattern.simple(WordType.PREPOSITION_OF), WordPattern.optional(WordPattern.simple(WordType.DEFINITE_ARTICLE))))
-			);*/
 	// le musée du Louvre, la Grande Muraille de Chine 
 	public static final WordPattern PLACE_PATTERN = WordPattern.sequence(
 			WordPattern.or(

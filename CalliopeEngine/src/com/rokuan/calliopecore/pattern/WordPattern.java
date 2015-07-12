@@ -99,20 +99,20 @@ public abstract class WordPattern {
 	}
 
 	static class WordSimplePattern extends WordPattern {
-		private Word.WordType type;
+		private Word.WordType[] types;
 		private String valuePattern = null;
 		private String verbPattern = null;
 
-		public WordSimplePattern(Word.WordType ty){
-			type = ty;
+		public WordSimplePattern(Word.WordType[] ty){
+			types = ty ;
 		}
 
-		public WordSimplePattern(WordType ty, String valPattern) {
+		public WordSimplePattern(WordType[] ty, String valPattern) {
 			this(ty);
 			valuePattern = valPattern;
 		}
 
-		public WordSimplePattern(WordType ty, String valPattern, String infinitivePattern) {
+		public WordSimplePattern(WordType[] ty, String valPattern, String infinitivePattern) {
 			this(ty, valPattern);
 			verbPattern = infinitivePattern;
 		}
@@ -177,14 +177,26 @@ public abstract class WordPattern {
 	}
 
 	public static WordPattern simple(Word.WordType ty){
+		return new WordSimplePattern(new WordType[]{ ty });
+	}
+	
+	public static WordPattern simple(Word.WordType[] ty){
 		return new WordSimplePattern(ty);
 	}
 
 	public static WordPattern simple(Word.WordType ty, String regex){
+		return new WordSimplePattern(new WordType[]{ ty }, regex);
+	}
+	
+	public static WordPattern simple(Word.WordType[] ty, String regex){
 		return new WordSimplePattern(ty, regex);
 	}
 	
 	public static WordPattern simple(Word.WordType ty, String valueRegex, String verbRegex){
+		return new WordSimplePattern(new WordType[]{ ty }, valueRegex, verbRegex);
+	}
+	
+	public static WordPattern simple(Word.WordType[] ty, String valueRegex, String verbRegex){
 		return new WordSimplePattern(ty, valueRegex, verbRegex);
 	}
 
@@ -249,9 +261,14 @@ public abstract class WordPattern {
 			} else if (patterns[patternsIndex] instanceof WordSimplePattern){
 				WordSimplePattern simple = (WordSimplePattern)patterns[patternsIndex];
 
-				if(!words.getCurrentElement().isOfType(simple.type)){
-					return false;
+				for(int i=0; i<simple.types.length; i++){
+					if(!words.getCurrentElement().isOfType(simple.types[i])){
+						return false;
+					}
 				}
+				/*if(!words.getCurrentElement().isOfType(simple.type)){
+					return false;
+				}*/
 
 				try{
 					if(simple.valuePattern != null && !words.getCurrentElement().getValue().matches(simple.valuePattern)){

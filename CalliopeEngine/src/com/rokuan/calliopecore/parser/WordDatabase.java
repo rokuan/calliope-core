@@ -6,6 +6,7 @@ import com.rokuan.calliopecore.sentence.Word;
 
 public interface WordDatabase {
 	Word findWord(String word);
-	Verb<?> getVerb(String verbName);
+	//Verb<?> getVerb(String verbName);
+	Verb getVerb(String verbName);
 	VerbConjugation findConjugatedVerb(String conjugatedVerb);
 }

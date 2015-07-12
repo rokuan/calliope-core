@@ -1,9 +1,11 @@
 package com.rokuan.calliopecore.sentence.structure.data.time;
 
+import com.rokuan.calliopecore.sentence.structure.nominal.NominalGroup;
+
 /**
  * Created by LEBEAU Christophe on 20/02/2015.
  */
-public abstract class TimeObject {
+public abstract class TimeObject extends NominalGroup {
     public enum TimeUnit {
         SECONDS,
         MINUTES,
@@ -35,7 +37,8 @@ public abstract class TimeObject {
     public enum TimeType {
     	SINGLE,
     	RELATIVE,
-    	PERIOD
+    	PERIOD,
+    	VERBAL
     }
     
     public enum DateDefinition {
@@ -43,16 +46,25 @@ public abstract class TimeObject {
     	DATE_ONLY,
     	TIME_ONLY
     }
+    
+    public enum DateContext {
+    	BEFORE,
+    	AFTER,
+    	DURING,
+    	UNTIL,
+    	WHEN
+    }
 
     public TimeTense tense = TimeTense.PRESENT;
     private TimeType type;
     public TimeInterval interval = TimeInterval.SINGLE;
 
     public TimeObject(TimeType ty){
+    	super(GroupType.DATE);
     	type = ty;
     }
     
-    public TimeType getType(){
+    public TimeType getTimeType(){
     	return type;
     }
 }
