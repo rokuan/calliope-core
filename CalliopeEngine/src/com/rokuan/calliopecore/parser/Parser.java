@@ -99,7 +99,9 @@ public class Parser {
 			inter.action = getActionFromVerb(words.getCurrentElement().getVerbInfo());
 			words.consume();
 
-			if(words.isIntoBounds() && words.getCurrentElement().isOfType(WordType.TARGET_PRONOUN) && !NominalGroupConverter.isADirectObject(words)){
+			if(NominalGroupConverter.isADirectObject(words)){
+				
+			} else if(words.isIntoBounds() && words.getCurrentElement().isOfType(WordType.TARGET_PRONOUN) && !NominalGroupConverter.isADirectObject(words)){
 				//inter.target = new PronounTarget(Type.parseTargetPronoun(words.getCurrentElement().getValue()));
 				/*inter.target = new PronounTarget(Type.parsePossessivePronoun(words.getCurrentElement().getValue()));
 				words.consume();*/

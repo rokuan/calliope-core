@@ -5,6 +5,7 @@ import com.rokuan.calliopecore.pattern.WordPattern;
 import com.rokuan.calliopecore.sentence.Type;
 import com.rokuan.calliopecore.sentence.Type.Pronoun;
 import com.rokuan.calliopecore.sentence.Word.WordType;
+import com.rokuan.calliopecore.sentence.structure.nominal.AdditionalObject;
 import com.rokuan.calliopecore.sentence.structure.nominal.ComplementObject;
 import com.rokuan.calliopecore.sentence.structure.nominal.NominalGroup;
 import com.rokuan.calliopecore.sentence.structure.nominal.PronounTarget;
@@ -25,6 +26,10 @@ public class NominalGroupConverter {
 			WordPattern.simple(WordType.COMMON_NAME),
 			WordPattern.optional(CountConverter.MULTIPLE_ITEMS_PATTERN),
 			WordPattern.optional(CriterionConverter.CRITERIA_PATTERN));	
+	
+	public static final WordPattern CUSTOM_OBJECT_PATTERN = WordPattern.sequence(
+			WordPattern.optional(CountConverter.COUNT_PATTERN),
+			WordPattern.simple(WordType.OBJECT));
 	
 	/*public static final WordPattern personPattern = WordPattern.sequence(
 			WordPattern.nonEmptyList(WordPattern.simple(WordType.FIRSTNAME)),
@@ -70,14 +75,28 @@ public class NominalGroupConverter {
 	}
 	
 	public static boolean isADirectObject(WordBuffer words){
-		return words.syntaxStartsWith(DIRECT_OBJECT_PATTERN) 
+		return words.syntaxStartsWith(CUSTOM_OBJECT_PATTERN)
+				|| words.syntaxStartsWith(DIRECT_OBJECT_PATTERN) 
 				|| words.syntaxStartsWith(PERSON_PATTERN);
 	}
 	
 	public static NominalGroup parseDirectObject(WordBuffer words){
-		ComplementObject obj = new ComplementObject();
+		NominalGroup result = null;
 		
-		if(words.syntaxStartsWith(DIRECT_OBJECT_PATTERN)){
+		if(words.syntaxStartsWith(CUSTOM_OBJECT_PATTERN)){
+			AdditionalObject custom = new AdditionalObject();
+			
+			if(CountConverter.isACountData(words)){
+				custom.count = CountConverter.parseCountObject(words);
+			}
+			
+			custom.object = words.getCurrentElement().getCustomObject();
+			words.consume();
+			
+			result = custom;
+		} else if(words.syntaxStartsWith(DIRECT_OBJECT_PATTERN)){
+			ComplementObject obj = new ComplementObject();
+			
 			if(CountConverter.isACountData(words)){
 				obj.count = CountConverter.parseCountObject(words);
 			}
@@ -108,11 +127,15 @@ public class NominalGroupConverter {
 					words.previous();
 				}
 			}
+			
+			result = obj;
 		} else if(words.syntaxStartsWith(PERSON_PATTERN)){
+			ComplementObject obj = new ComplementObject();			
 			obj.object = parsePerson(words);
+			result = obj;
 		}
 		
-		return obj;
+		return result;
 	}
 	
 	public static boolean isAnIndirectObject(WordBuffer words){

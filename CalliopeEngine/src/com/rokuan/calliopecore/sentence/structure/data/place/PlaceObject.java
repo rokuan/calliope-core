@@ -16,28 +16,34 @@ public abstract class PlaceObject extends NominalGroup {
 		AT,
 		TO,
 		AGAINST,
-		WHERE
+		WHERE,
+		NEAR
 	}
 	
-	/*public enum PlaceType {
+	public enum TimeType {
+    	SINGLE,
+    	RELATIVE,
+    	PERIOD,
+    	VERBAL
+    }
+	
+	public enum PlaceType {
 		STATE,
-		MONUMENT
+		MONUMENT,
+		NOMINAL,
+		CUSTOM
 	}
 	
-	private PlaceType type;
+	private PlaceType type; 
+	public PlaceContext location;
+	//public NominalGroup content;
 	
-	public PlaceObject(PlaceType ty){
+	protected PlaceObject(PlaceType ty) {
+		super(GroupType.PLACE);
 		type = ty;
 	}
 	
-	public PlaceType getType(){
+	public PlaceType getPlaceType(){
 		return type;
-	}*/
-	
-	public PlaceContext location;
-	public NominalGroup content;
-	
-	protected PlaceObject(GroupType ty) {
-		super(ty);
 	}
 }

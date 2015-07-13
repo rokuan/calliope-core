@@ -7,16 +7,20 @@ import org.junit.Test;
 import com.rokuan.calliopecore.parser.WordBuffer;
 import com.rokuan.calliopecore.sentence.CityInfo;
 import com.rokuan.calliopecore.sentence.CountryInfo;
+import com.rokuan.calliopecore.sentence.CustomPlace;
 import com.rokuan.calliopecore.sentence.Word;
 import com.rokuan.calliopecore.sentence.Word.WordType;
 import com.rokuan.calliopecore.sentence.structure.data.PlaceConverter;
+import com.rokuan.calliopecore.sentence.structure.data.place.AdditionalPlaceObject;
 import com.rokuan.calliopecore.sentence.structure.data.place.MonumentObject;
+import com.rokuan.calliopecore.sentence.structure.data.place.PlaceObject;
 import com.rokuan.calliopecore.sentence.structure.data.place.StateObject;
+import com.rokuan.calliopecore.sentence.structure.data.place.PlaceObject.PlaceContext;
+import com.rokuan.calliopecore.sentence.structure.data.place.PlaceObject.PlaceType;
 import com.rokuan.calliopecore.sentence.structure.nominal.NominalGroup;
 import com.rokuan.calliopecore.sentence.structure.nominal.NominalGroup.GroupType;
 
 public class PlaceParseTest {
-
 	@Test
 	public void testCountryParse(){
 		WordBuffer words = new WordBuffer();
@@ -29,7 +33,8 @@ public class PlaceParseTest {
 
 		NominalGroup place = PlaceConverter.parsePlaceObject(words);
 
-		assertEquals(place.getType(), GroupType.STATE);
+		assertEquals(place.getType(), GroupType.PLACE);
+		assertEquals(((PlaceObject)place).getPlaceType(), PlaceType.STATE);
 
 		StateObject state = (StateObject)place;
 
@@ -53,7 +58,8 @@ public class PlaceParseTest {
 
 		NominalGroup place = PlaceConverter.parsePlaceObject(words);
 
-		assertEquals(place.getType(), GroupType.STATE);
+		assertEquals(place.getType(), GroupType.PLACE);
+		assertEquals(((PlaceObject)place).getPlaceType(), PlaceType.STATE);
 
 		StateObject state = (StateObject)place;
 
@@ -99,4 +105,27 @@ public class PlaceParseTest {
 		assertEquals(monument.city, "Paris");
 	}
 
+	@Test
+	public void testPlaceWithPreposition(){
+		WordBuffer words = new WordBuffer();
+		String placeName = "Mont Compote Energie";
+		Word near = new Word("à proximité de", WordType.PLACE_PREPOSITION);
+		near.setPlacePreposition(PlaceContext.NEAR);
+		Word mountCompoteEnergie = new Word(placeName, WordType.ADDITIONAL_PLACE);
+		mountCompoteEnergie.setCustomPlace(new CustomPlace(placeName, "MOUNT_COMP"));
+		
+		words.add(near);
+		words.add(new Word("le", WordType.DEFINITE_ARTICLE));
+		words.add(mountCompoteEnergie);
+		
+		NominalGroup place = PlaceConverter.parsePlaceObject(words);
+		
+		assertEquals(place.getType(), GroupType.PLACE);
+		assertEquals(((PlaceObject)place).getPlaceType(), PlaceType.CUSTOM);
+		
+		AdditionalPlaceObject customPlace = (AdditionalPlaceObject)place;
+		
+		assertEquals(customPlace.location, PlaceContext.NEAR);
+		assertEquals(customPlace.place.getName(), placeName);
+	}	
 }

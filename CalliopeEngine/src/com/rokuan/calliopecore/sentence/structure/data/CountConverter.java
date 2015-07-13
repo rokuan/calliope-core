@@ -14,6 +14,7 @@ import com.rokuan.calliopecore.sentence.structure.data.count.CountObject.Range;
 import com.rokuan.calliopecore.sentence.structure.data.count.FixedItemObject;
 import com.rokuan.calliopecore.sentence.structure.data.count.LimitedItemsObject;
 import com.rokuan.calliopecore.sentence.structure.data.count.MultipleItemsObject;
+import com.rokuan.calliopecore.sentence.structure.data.count.QuantityObject;
 
 
 /**
@@ -69,9 +70,13 @@ public class CountConverter {
 			WordPattern.simple(Word.WordType.NUMBER), 
 			WordPattern.simple(Word.WordType.NUMERICAL_POSITION));
 
-	public static final WordPattern QUANTITY_PATTERN = WordPattern.sequence(
+	public static final WordPattern ALL_PATTERN = WordPattern.sequence(
 			WordPattern.simple(Word.WordType.QUANTITY), 
 			WordPattern.simple(Word.WordType.DEFINITE_ARTICLE));
+	
+	public static final WordPattern QUANTITY_PATTERN = WordPattern.sequence(
+			WordPattern.simple(WordType.DEFINITE_ARTICLE),
+			WordPattern.simple(WordType.NUMBER));
 
 	public static final WordPattern SIMPLE_ARTICLE_PATTERN = WordPattern.or(
 			WordPattern.simple(WordType.DEFINITE_ARTICLE),
@@ -94,7 +99,7 @@ public class CountConverter {
 			WordPattern.simple(WordType.NUMERICAL_POSITION),
 			WordPattern.nonEmptyList(SINGLE_POSITION_PATTERN));
 
-	public static final WordPattern COUNT_PATTERN = WordPattern.or(FIXED_ITEM_PATTERN, FIXED_RANGE_PATTERN, QUANTITY_PATTERN, SIMPLE_ARTICLE_PATTERN);
+	public static final WordPattern COUNT_PATTERN = WordPattern.or(FIXED_ITEM_PATTERN, FIXED_RANGE_PATTERN, ALL_PATTERN, QUANTITY_PATTERN, SIMPLE_ARTICLE_PATTERN);
 
 
 	// TODO: les intervalles (du 3eme au 5eme)
@@ -160,14 +165,6 @@ public class CountConverter {
 
 	public static boolean isACountData(WordBuffer words){
 		// TODO:
-		/*return words.syntaxStartsWith(WordType.DEFINITE_ARTICLE, Word.WordType.NUMERICAL_POSITION) // le premier
-                || words.syntaxStartsWith(WordType.DEFINITE_ARTICLE, Word.WordType.NUMBER, Word.WordType.NUMERICAL_POSITION)  // les 5 premiers
-                || words.syntaxStartsWith(Word.WordType.QUANTITY, Word.WordType.DEFINITE_ARTICLE);	// tou(te)s les*/
-		/*return words.syntaxStartsWith(FIXED_ITEM_PATTERN)
-				|| words.syntaxStartsWith(FIXED_RANGE_PATTERN)
-				|| words.syntaxStartsWith(QUANTITY_PATTERN)
-				|| words.syntaxStartsWith(SIMPLE_ARTICLE_PATTERN)
-				|| words.syntaxStartsWith(MULTIPLE_POSITIONS_PATTERN);*/
 		return words.syntaxStartsWith(COUNT_PATTERN);
 	}
 
@@ -241,9 +238,13 @@ public class CountConverter {
 			} catch(Exception e) {
 
 			}
-		} else if(words.syntaxStartsWith(QUANTITY_PATTERN)) {
+		} else if(words.syntaxStartsWith(ALL_PATTERN)) {
 			result = new AllItemsObject();
 			words.consume();
+			words.consume();
+		} else if(words.syntaxStartsWith(QUANTITY_PATTERN)){
+			words.consume();			
+			result = new QuantityObject((int)parseCount(words.getCurrentElement().getValue()));
 			words.consume();
 		} else if(words.syntaxStartsWith(SIMPLE_ARTICLE_PATTERN)) {        	
 			boolean singular = isSingular(words.getCurrentElement().getValue());

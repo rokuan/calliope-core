@@ -8,6 +8,6 @@ public class StateObject extends PlaceObject {
 	public CountryInfo country;
 	
 	public StateObject(){
-		super(GroupType.STATE);
+		super(PlaceType.STATE);
 	}
 }

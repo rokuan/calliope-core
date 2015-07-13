@@ -16,7 +16,8 @@ public abstract class NominalGroup {
     	PERSON,
     	COLOR,
     	NUMBER,
-    	DATE
+    	DATE,
+    	OBJECT
     }
     
     private GroupType type;

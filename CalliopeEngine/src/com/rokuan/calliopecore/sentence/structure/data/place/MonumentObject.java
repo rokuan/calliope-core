@@ -7,6 +7,6 @@ public class MonumentObject extends PlaceObject {
 	public String country;
 	
 	public MonumentObject() {
-		super(GroupType.PLACE);
+		super(PlaceType.MONUMENT);
 	}
 }

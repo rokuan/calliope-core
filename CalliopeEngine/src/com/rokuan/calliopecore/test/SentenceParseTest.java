@@ -11,6 +11,7 @@ import org.junit.Test;
 import com.rokuan.calliopecore.parser.Parser;
 import com.rokuan.calliopecore.parser.WordBuffer;
 import com.rokuan.calliopecore.sentence.Action;
+import com.rokuan.calliopecore.sentence.CustomObject;
 import com.rokuan.calliopecore.sentence.Verb;
 import com.rokuan.calliopecore.sentence.Verb.Pronoun;
 import com.rokuan.calliopecore.sentence.VerbConjugation;
@@ -19,18 +20,19 @@ import com.rokuan.calliopecore.sentence.Verb.ConjugationTense;
 import com.rokuan.calliopecore.sentence.Verb.Form;
 import com.rokuan.calliopecore.sentence.Word.WordType;
 import com.rokuan.calliopecore.sentence.structure.InterpretationObject;
+import com.rokuan.calliopecore.sentence.structure.InterpretationObject.RequestType;
 import com.rokuan.calliopecore.sentence.structure.QuestionObject;
 import com.rokuan.calliopecore.sentence.structure.QuestionObject.QuestionType;
 import com.rokuan.calliopecore.sentence.structure.data.place.MonumentObject;
 import com.rokuan.calliopecore.sentence.structure.data.time.SingleTimeObject;
 import com.rokuan.calliopecore.sentence.structure.data.time.TimeObject;
+import com.rokuan.calliopecore.sentence.structure.nominal.AdditionalObject;
 import com.rokuan.calliopecore.sentence.structure.nominal.ComplementObject;
 import com.rokuan.calliopecore.sentence.structure.nominal.NominalGroup;
 import com.rokuan.calliopecore.sentence.structure.nominal.PronounTarget;
 import com.rokuan.calliopecore.sentence.structure.nominal.NominalGroup.GroupType;
 
 public class SentenceParseTest {
-
 	@Test
 	public void testGoTo(){
 		WordBuffer words = new WordBuffer();
@@ -212,5 +214,34 @@ public class SentenceParseTest {
 		/*assertEquals(sentenceDate.getDate(), tomorrow.getDate());
 		assertEquals(sentenceDate.getMonth(), tomorrow.getMonth());
 		assertEquals(sentenceDate.getYear(), tomorrow.getYear());*/
+	}
+	
+	@Test
+	public void testObjectSentence(){
+		WordBuffer words = new WordBuffer();
+		String objectName = "lumières de la cuisine";
+		Word light = new Word(objectName, WordType.OBJECT);
+		Word switchOff = new Word("éteinds", WordType.VERB);
+		Verb toSwitchOff = new Verb("éteindre", Action.VerbAction.TURN_OFF, false);
+		VerbConjugation switchConjugation = new VerbConjugation(ConjugationTense.PRESENT, Form.IMPERATIVE, Pronoun.TU, "éteinds", toSwitchOff);
+		
+		switchOff.setVerbInfo(switchConjugation);		
+		light.setCustomObject(new CustomObject(objectName, "LIGHT_KITCHEN"));
+		
+		words.add(switchOff);
+		words.add(new Word("les", WordType.DEFINITE_ARTICLE));
+		words.add(new Word("4", WordType.NUMBER));
+		words.add(light);
+		
+		InterpretationObject obj = new Parser().parseInterpretationObject(words);
+		
+		assertEquals(obj.getType(), RequestType.ORDER);
+		assertEquals(obj.action, Action.VerbAction.TURN_OFF);
+		
+		assertEquals(obj.what.getType(), GroupType.OBJECT);
+		
+		AdditionalObject customObject = (AdditionalObject)obj.what;
+		
+		assertEquals(customObject.object.getContent(), objectName);
 	}
 }

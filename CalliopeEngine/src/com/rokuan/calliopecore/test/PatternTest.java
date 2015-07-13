@@ -10,7 +10,6 @@ import com.rokuan.calliopecore.sentence.Word;
 import com.rokuan.calliopecore.sentence.Word.WordType;
 
 public class PatternTest {
-
 	@Test
 	public void testSequence(){
 		WordBuffer words = new WordBuffer();

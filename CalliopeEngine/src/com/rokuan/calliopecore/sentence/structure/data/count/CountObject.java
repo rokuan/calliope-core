@@ -17,7 +17,8 @@ public abstract class CountObject {
         LIMIT,
         INTERVAL,
         MULTIPLE,
-        FIXED
+        FIXED,
+        QUANTITY
     }
     
     public enum ArticleType {

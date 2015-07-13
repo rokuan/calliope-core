@@ -120,4 +120,16 @@ public class CountParseTest {
 		
 		assertArrayEquals(trueElements, multiple.items);
 	}
+	
+	@Test
+	public void testQuantity(){
+		WordBuffer words = new WordBuffer();
+		
+		words.add(new Word("les", WordType.DEFINITE_ARTICLE));
+		words.add(new Word("4", WordType.NUMBER));
+		
+		CountObject count = CountConverter.parseCountObject(words);
+		
+		assertEquals(count.getType(), CountType.QUANTITY);
+	}
 }

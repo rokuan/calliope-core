@@ -3,6 +3,7 @@ package com.rokuan.calliopecore.sentence.structure.data;
 import com.rokuan.calliopecore.parser.WordBuffer;
 import com.rokuan.calliopecore.pattern.WordPattern;
 import com.rokuan.calliopecore.sentence.Word.WordType;
+import com.rokuan.calliopecore.sentence.structure.data.place.AdditionalPlaceObject;
 import com.rokuan.calliopecore.sentence.structure.data.place.MonumentObject;
 import com.rokuan.calliopecore.sentence.structure.data.place.StateObject;
 import com.rokuan.calliopecore.sentence.structure.nominal.NominalGroup;
@@ -44,13 +45,24 @@ public class PlaceConverter {
 			CITY_PATTERN,
 			COUNTRY_PATTERN
 			);
+	
+	// devant l'Opera de Wasawakini
+	// jusqu'aux Chutes Fanis
+	public static final WordPattern ADDITIONAL_PLACE_PATTERN = WordPattern.sequence(
+			WordPattern.or(
+					WordPattern.sequence(WordPattern.simple(WordType.PLACE_PREPOSITION), WordPattern.optional(WordPattern.simple(WordType.DEFINITE_ARTICLE))),
+					WordPattern.simple(new WordType[]{ WordType.PLACE_PREPOSITION, WordType.CONTRACTED })
+					),
+					WordPattern.simple(WordType.ADDITIONAL_PLACE)
+			);
 
 	// A Paris en France
 	// A Mexico au Mexique
 	// A ... a la ...
 
 	public static boolean isAPlaceData(WordBuffer words){
-		return words.syntaxStartsWith(PLACE_PATTERN)
+		return words.syntaxStartsWith(ADDITIONAL_PLACE_PATTERN)
+				|| words.syntaxStartsWith(PLACE_PATTERN)
 				|| words.syntaxStartsWith(WORLD_PLACE_PATTERN);
 	}
 
@@ -58,7 +70,22 @@ public class PlaceConverter {
 		NominalGroup result = null;
 
 		// TODO: gerer les locations pleines (Le musee du Louvre a Paris en France)
-		if(words.syntaxStartsWith(WORLD_PLACE_PATTERN)){
+		if(words.syntaxStartsWith(ADDITIONAL_PLACE_PATTERN)){
+			AdditionalPlaceObject custom = new AdditionalPlaceObject();
+			
+			if(words.getCurrentElement().isOfType(WordType.PLACE_PREPOSITION)){
+				custom.location = words.getCurrentElement().getPlacePreposition();
+				words.consume();
+			}
+			
+			if(words.getCurrentElement().isOfType(WordType.DEFINITE_ARTICLE)){
+				words.consume();
+			}
+			
+			custom.place = words.getCurrentElement().getCustomPlace();
+			words.consume();
+			result = custom;
+		} else if(words.syntaxStartsWith(WORLD_PLACE_PATTERN)){
 			StateObject state = new StateObject();
 			
 			if(words.syntaxStartsWith(CITY_PATTERN)){
@@ -127,7 +154,6 @@ public class PlaceConverter {
 			}
 
 			monument.name = buffer.toString().trim();
-
 			result = monument;
 		}
 
