@@ -1,8 +1,14 @@
 package com.rokuan.calliopecore.sentence;
 
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
+
+@DatabaseTable(tableName = "languages")
 public final class LanguageInfo {
-	private String name;
+	@DatabaseField(id = true)
 	private String code;
+	@DatabaseField(unique = true)
+	private String name;
 	
 	public LanguageInfo(String n, String c){
 		name = n;

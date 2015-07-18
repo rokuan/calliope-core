@@ -75,7 +75,7 @@ public class Word {
 		PLACE_PREPOSITION
 	}
 
-	private Set<WordType> types = new HashSet<WordType>();
+	private Set<WordType> types = new HashSet<WordType>();	
 	private String value;
 	private VerbConjugation verbInfo;
 	private LanguageInfo langInfo;

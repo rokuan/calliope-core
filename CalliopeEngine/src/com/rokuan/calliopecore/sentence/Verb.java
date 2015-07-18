@@ -1,9 +1,12 @@
 package com.rokuan.calliopecore.sentence;
 
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
+
 /**
  * Created by LEBEAU Christophe on 19/02/2015.
  */
-//public class Verb<ActionType extends Enum<ActionType>> {
+@DatabaseTable(tableName = "verbs")
 public class Verb {
     public enum Tense {
         PAST,
@@ -42,16 +45,17 @@ public class Verb {
         UNDEFINED
     }
     
+    @DatabaseField(id = true)
     protected String verb = "";
-    //protected Enum<ActionType> action;
+    @DatabaseField
     protected Action.VerbAction action;
+    @DatabaseField
     protected boolean auxiliary = false;
     
     public Verb(){
     	
     }
     
-    //public Verb(String infinitiveForm, Enum<ActionType> verbAction, boolean aux){
     public Verb(String infinitiveForm, Action.VerbAction verbAction, boolean aux){
     	verb = infinitiveForm;
     	action = verbAction;
@@ -62,7 +66,6 @@ public class Verb {
         return verb;
     }
 
-    //public Enum<ActionType> getAction() {
     public Action.VerbAction getAction() {
         return action;
     }
