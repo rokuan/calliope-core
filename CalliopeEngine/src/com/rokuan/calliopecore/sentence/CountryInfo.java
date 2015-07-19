@@ -9,6 +9,10 @@ public final class CountryInfo {
 	private String name;
 	@DatabaseField(unique = true)
 	private String code;
+
+	public CountryInfo(){
+		
+	}
 	
 	public CountryInfo(String n, String c){
 		name = n;

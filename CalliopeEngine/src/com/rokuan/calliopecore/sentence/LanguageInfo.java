@@ -10,6 +10,10 @@ public final class LanguageInfo {
 	@DatabaseField(unique = true)
 	private String name;
 	
+	public LanguageInfo(){
+		
+	}
+	
 	public LanguageInfo(String n, String c){
 		name = n;
 		code = c;

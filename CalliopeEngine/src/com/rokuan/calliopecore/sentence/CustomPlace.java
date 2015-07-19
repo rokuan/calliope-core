@@ -12,6 +12,10 @@ public class CustomPlace {
 	@DatabaseField(unique = true)
 	private String code;
 	
+	public CustomPlace(){
+		
+	}
+	
 	public CustomPlace(String n, String c){
 		name = n;
 		code = c;

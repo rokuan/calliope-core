@@ -12,6 +12,10 @@ public class CustomObject {
 	@DatabaseField(unique = true)
 	private String code;
 	
+	public CustomObject(){
+		
+	}
+	
 	public CustomObject(String con, String cod){
 		content = con;
 		code = cod;
