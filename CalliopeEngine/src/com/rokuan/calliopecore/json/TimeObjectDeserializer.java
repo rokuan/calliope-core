@@ -26,7 +26,7 @@ public class TimeObjectDeserializer implements JsonDeserializer<TimeObject> {
 		Gson gson = builder.create();
 		Class<? extends TimeObject> clazz = null;
 		
-		switch(TimeObject.TimeType.valueOf(arg0.getAsJsonObject().get("requestType").getAsString())){
+		switch(TimeObject.TimeType.valueOf(arg0.getAsJsonObject().get("timeType").getAsString())){
 		case PERIOD:
 			clazz = TimePeriodObject.class;
 			break;
