@@ -54,11 +54,11 @@ public class SentenceParseTest {
 
 		InterpretationObject obj = new Parser().parseInterpretationObject(words);
 
-		assertEquals(obj.getType(), InterpretationObject.RequestType.QUESTION);
+		assertEquals(obj.getRequestType(), InterpretationObject.RequestType.QUESTION);
 		assertEquals(obj.action, Action.VerbAction.GO);
 
 		QuestionObject question = (QuestionObject)obj;
-		assertEquals(question.qType, QuestionType.HOW);
+		assertEquals(question.questionType, QuestionType.HOW);
 
 		NominalGroup place = obj.where;
 
@@ -89,11 +89,11 @@ public class SentenceParseTest {
 
 		InterpretationObject obj = new Parser().parseInterpretationObject(words);
 
-		assertEquals(obj.getType(), InterpretationObject.RequestType.QUESTION);
+		assertEquals(obj.getRequestType(), InterpretationObject.RequestType.QUESTION);
 		assertEquals(obj.action, Action.VerbAction.GO);
 
 		QuestionObject question = (QuestionObject)obj;
-		assertEquals(question.qType, QuestionType.HOW);
+		assertEquals(question.questionType, QuestionType.HOW);
 
 		NominalGroup place = obj.where;
 
@@ -119,11 +119,11 @@ public class SentenceParseTest {
 
 		InterpretationObject obj = new Parser().parseInterpretationObject(words);
 
-		assertEquals(obj.getType(), InterpretationObject.RequestType.QUESTION);
+		assertEquals(obj.getRequestType(), InterpretationObject.RequestType.QUESTION);
 		assertEquals(obj.action, Action.VerbAction.BE);
 
 		QuestionObject question = (QuestionObject)obj;
-		assertEquals(question.qType, QuestionType.WHO);
+		assertEquals(question.questionType, QuestionType.WHO);
 		assertEquals(question.what.getType(), GroupType.COMPLEMENT);
 
 		ComplementObject compl = (ComplementObject)question.what;
@@ -235,7 +235,7 @@ public class SentenceParseTest {
 		
 		InterpretationObject obj = new Parser().parseInterpretationObject(words);
 		
-		assertEquals(obj.getType(), RequestType.ORDER);
+		assertEquals(obj.getRequestType(), RequestType.ORDER);
 		assertEquals(obj.action, Action.VerbAction.TURN_OFF);
 		
 		assertEquals(obj.what.getType(), GroupType.OBJECT);

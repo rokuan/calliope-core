@@ -43,7 +43,7 @@ public class Parser {
 			// TODO: les Yes/No question au present (ex: Aimes-tu ...)
 			QuestionObject qObj = new QuestionObject();
 
-			qObj.qType = QuestionType.YES_NO;
+			qObj.questionType = QuestionType.YES_NO;
 
 			if(words.getCurrentElement().isOfType(WordType.PERSONAL_PRONOUN)){
 				qObj.target = new PronounTarget(Type.parseTargetPronoun(words.getCurrentElement().getValue()));
@@ -130,7 +130,7 @@ public class Parser {
 		} else if(words.syntaxStartsWith(SentencePattern.INTERROGATIVE_PATTERN)){
 			QuestionObject qObject = new QuestionObject();
 
-			qObject.qType = QuestionObject.parseInterrogativePronoun(words.getCurrentElement().getValue());
+			qObject.questionType = QuestionObject.parseInterrogativePronoun(words.getCurrentElement().getValue());
 			words.consume();
 			
 			VerbConverter.parseConjugatedVerb(words, qObject);
@@ -141,7 +141,7 @@ public class Parser {
 		} else if(words.syntaxStartsWith(SentencePattern.RESULT_QUESTION_PATTERN)){
 			QuestionObject qObject = new QuestionObject();
 			
-			qObject.qType = QuestionObject.parseInterrogativePronoun(words.getCurrentElement().getValue());			
+			qObject.questionType = QuestionObject.parseInterrogativePronoun(words.getCurrentElement().getValue());			
 			words.consume();
 
 			ComplementObject complement = new ComplementObject();

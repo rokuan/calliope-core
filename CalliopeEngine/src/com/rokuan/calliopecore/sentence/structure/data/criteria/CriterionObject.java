@@ -11,14 +11,14 @@ public abstract class CriterionObject {
 		MORE
 	}
 	
-	private CriterionType type;
+	private CriterionType criterionType;
 	
 	public CriterionObject(CriterionType ty){
-		type = ty;
+		criterionType = ty;
 	}
 	
 	public CriterionType getType(){
-		return type;
+		return criterionType;
 	}
 	
 	public static ComparisonType parseComparisonType(String v){

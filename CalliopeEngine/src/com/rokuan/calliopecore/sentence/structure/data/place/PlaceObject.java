@@ -34,16 +34,15 @@ public abstract class PlaceObject extends NominalGroup {
 		CUSTOM
 	}
 	
-	private PlaceType type; 
+	private PlaceType placeType; 
 	public PlaceContext location;
-	//public NominalGroup content;
 	
 	protected PlaceObject(PlaceType ty) {
 		super(GroupType.PLACE);
-		type = ty;
+		placeType = ty;
 	}
 	
 	public PlaceType getPlaceType(){
-		return type;
+		return placeType;
 	}
 }

@@ -56,15 +56,15 @@ public abstract class TimeObject extends NominalGroup {
     }
 
     public TimeTense tense = TimeTense.PRESENT;
-    private TimeType type;
+    private TimeType timeType;
     public TimeInterval interval = TimeInterval.SINGLE;
 
     public TimeObject(TimeType ty){
     	super(GroupType.DATE);
-    	type = ty;
+    	timeType = ty;
     }
     
     public TimeType getTimeType(){
-    	return type;
+    	return timeType;
     }
 }

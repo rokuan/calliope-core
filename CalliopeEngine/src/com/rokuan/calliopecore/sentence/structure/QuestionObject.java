@@ -17,7 +17,7 @@ public class QuestionObject extends InterpretationObject {
 		WHICH
 	}
 	
-	public QuestionType qType = QuestionType.YES_NO;
+	public QuestionType questionType = QuestionType.YES_NO;
 	
     public QuestionObject(){
         super(RequestType.QUESTION);

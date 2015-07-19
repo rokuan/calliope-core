@@ -66,11 +66,11 @@ public class QuestionParseTest {
 		
 		InterpretationObject obj = new Parser().parseInterpretationObject(words);
 		
-		assertEquals(obj.getType(), InterpretationObject.RequestType.QUESTION);
+		assertEquals(obj.getRequestType(), InterpretationObject.RequestType.QUESTION);
 		
 		QuestionObject question = (QuestionObject)obj;
 		
-		assertEquals(question.qType, QuestionType.WHAT);
+		assertEquals(question.questionType, QuestionType.WHAT);
 	}
 	
 	@Test
@@ -91,11 +91,11 @@ public class QuestionParseTest {
 		
 		InterpretationObject obj = new Parser().parseInterpretationObject(words);
 		
-		assertEquals(obj.getType(), InterpretationObject.RequestType.QUESTION);
+		assertEquals(obj.getRequestType(), InterpretationObject.RequestType.QUESTION);
 		
 		QuestionObject question = (QuestionObject)obj;
 		
-		assertEquals(question.qType, QuestionType.WHAT);
+		assertEquals(question.questionType, QuestionType.WHAT);
 		
 		ComplementObject complement = (ComplementObject)question.what;
 
@@ -127,10 +127,10 @@ public class QuestionParseTest {
 		
 		InterpretationObject obj = new Parser().parseInterpretationObject(words);
 		
-		assertEquals(obj.getType(), InterpretationObject.RequestType.QUESTION);
+		assertEquals(obj.getRequestType(), InterpretationObject.RequestType.QUESTION);
 		
 		QuestionObject question = (QuestionObject)obj;
 		
-		assertEquals(question.qType, QuestionType.WHAT);
+		assertEquals(question.questionType, QuestionType.WHAT);
 	}
 }

@@ -12,12 +12,12 @@ public class Adjective {
 		NEXT,		
 	}
 	
-	private AdjectiveValue type = AdjectiveValue.UNDEFINED;
+	private AdjectiveValue valueType = AdjectiveValue.UNDEFINED;
 	private String value;
 	
 	public Adjective(String val){
 		value = val;
-		type = parseAdjectiveValue(val);
+		valueType = parseAdjectiveValue(val);
 	}
 	
 	private static AdjectiveValue parseAdjectiveValue(String adjective){
@@ -51,6 +51,6 @@ public class Adjective {
 	}
 	
 	public AdjectiveValue getType(){
-		return type;
+		return valueType;
 	}	
 }

@@ -20,13 +20,13 @@ public abstract class NominalGroup {
     	OBJECT
     }
     
-    private GroupType type;
+    private GroupType groupType;
     
     protected NominalGroup(GroupType ty){
-    	type = ty;
+    	groupType = ty;
     }
     
     public GroupType getType(){
-    	return type;
+    	return groupType;
     }
 }
