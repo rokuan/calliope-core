@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.j256.ormlite.field.DataType;
+import com.j256.ormlite.field.DatabaseField;
 import com.rokuan.calliopecore.sentence.structure.data.place.PlaceObject.PlaceContext;
 import com.rokuan.calliopecore.sentence.structure.data.time.TimeObject.DateContext;
 
@@ -72,11 +74,18 @@ public class Word {
 		CONTRACTED,
 
 		TIME_PREPOSITION,
-		PLACE_PREPOSITION
+		PLACE_PREPOSITION,
+		
+		OTHER
 	}
+	
+	public static final String WORD_FIELD_NAME = "value";
+	public static final String TYPES_FIELD_NAME = "types";
 
-	private Set<WordType> types = new HashSet<WordType>();	
+	@DatabaseField(columnName = WORD_FIELD_NAME)
 	private String value;
+	@DatabaseField(columnName = TYPES_FIELD_NAME, dataType = DataType.SERIALIZABLE)
+	private Set<WordType> types = new HashSet<WordType>();
 	private VerbConjugation verbInfo;
 	private LanguageInfo langInfo;
 	private CountryInfo countryInfo;
@@ -85,26 +94,38 @@ public class Word {
 	private PlaceContext placePreposition;
 	private CustomObject customObject;
 	private CustomPlace customPlace;
+	
+	private Word(String v){
+		value = v;
+	}
 
 	public Word(String v, WordType t){
+		this(v);
 		types.add(t);
-		value = v;
 	}
 
 	public Word(String v, List<WordType> ts){
+		this(v);
+		
 		if(ts != null){
 			types.addAll(ts);
 		}
-
-		value = v;
+	}
+	
+	public Word(String v, Set<WordType> ts){
+		this(v);
+		
+		if(ts != null){
+			types.addAll(ts);
+		}
 	}
 
 	public Word(String v, WordType... ts){
+		this(v);
+		
 		for(WordType t: ts){
 			types.add(t);
 		}
-
-		value = v;
 	}
 
 	public boolean isOfType(WordType type){
@@ -113,6 +134,10 @@ public class Word {
 		}
 
 		return types.contains(type);
+	}
+	
+	public void addType(WordType t){
+		types.add(t);
 	}
 
 	public Set<WordType> getTypes(){
