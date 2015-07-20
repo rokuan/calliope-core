@@ -2,6 +2,7 @@ package com.rokuan.calliopecore.sentence;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
+import com.rokuan.calliopecore.sentence.Action.VerbAction;
 
 /**
  * Created by LEBEAU Christophe on 19/02/2015.
@@ -45,11 +46,15 @@ public class Verb {
         UNDEFINED
     }
     
-    @DatabaseField(id = true)
+    public static final String ID_FIELD_NAME = "verb";
+    public static final String ACTION_FIELD_NAME = "action";
+    public static final String AUXILIARY_FIELD_NAME = "auxiliary";
+    
+    @DatabaseField(columnName = ID_FIELD_NAME, id = true)
     protected String verb = "";
-    @DatabaseField
-    protected Action.VerbAction action;
-    @DatabaseField
+    @DatabaseField(columnName = ACTION_FIELD_NAME)
+    protected Action.VerbAction action = VerbAction.UNDEFINED;
+    @DatabaseField(columnName = AUXILIARY_FIELD_NAME)
     protected boolean auxiliary = false;
     
     public Verb(){

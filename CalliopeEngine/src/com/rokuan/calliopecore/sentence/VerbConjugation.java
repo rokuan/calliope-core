@@ -8,17 +8,23 @@ import com.j256.ormlite.table.DatabaseTable;
  */
 @DatabaseTable(tableName = "conjugations")
 public class VerbConjugation {
+	public static final String VALUE_FIELD_NAME = "value";
+	public static final String VERB_FIELD_NAME = "verb";
+	public static final String TENSE_FIELD_NAME = "tense";
+	public static final String FORM_FIELD_NAME = "form";
+	public static final String PERSON_FIELD_NAME = "pronoun"; 
+	
 	@DatabaseField(id = true)
 	private int id;
-	@DatabaseField
+	@DatabaseField(columnName = VALUE_FIELD_NAME)
     protected String name;
-	@DatabaseField(uniqueCombo = true, foreign = true)
+	@DatabaseField(columnName = VERB_FIELD_NAME, uniqueCombo = true, foreign = true)
     protected Verb verb;
-	@DatabaseField(uniqueCombo = true)
+	@DatabaseField(columnName = TENSE_FIELD_NAME, uniqueCombo = true)
     protected Verb.ConjugationTense tense;
-	@DatabaseField(uniqueCombo = true)
+	@DatabaseField(columnName = FORM_FIELD_NAME, uniqueCombo = true)
     protected Verb.Form form;
-	@DatabaseField(uniqueCombo = true)
+	@DatabaseField(columnName = PERSON_FIELD_NAME, uniqueCombo = true)
     protected Verb.Pronoun pronoun;
     
     public VerbConjugation(){

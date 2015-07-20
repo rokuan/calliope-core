@@ -5,11 +5,14 @@ import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable(tableName = "objects")
 public class CustomObject {
+	public static final String OBJECT_FIELD_NAME = "content";
+	public static final String CODE_FIELD_NAME = "code";
+	
 	@DatabaseField(id = true)
 	private int id;
-	@DatabaseField
+	@DatabaseField(columnName = OBJECT_FIELD_NAME)
 	private String content;
-	@DatabaseField(unique = true)
+	@DatabaseField(columnName = CODE_FIELD_NAME, unique = true)
 	private String code;
 	
 	public CustomObject(){

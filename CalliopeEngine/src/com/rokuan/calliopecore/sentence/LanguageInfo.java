@@ -5,9 +5,12 @@ import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable(tableName = "languages")
 public final class LanguageInfo {
-	@DatabaseField(id = true)
+	public static final String CODE_FIELD_NAME = "code";
+	public static final String LANGUAGE_FIELD_NAME = "name";
+	
+	@DatabaseField(columnName = CODE_FIELD_NAME, id = true)
 	private String code;
-	@DatabaseField(unique = true)
+	@DatabaseField(columnName = LANGUAGE_FIELD_NAME, unique = true)
 	private String name;
 	
 	public LanguageInfo(){

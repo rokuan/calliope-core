@@ -5,11 +5,14 @@ import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable(tableName = "places")
 public class CustomPlace {
+	public static final String PLACE_FIELD_NAME = "name";
+	public static final String CODE_FIELD_NAME = "code";
+	
 	@DatabaseField(id = true)
 	private int id;
-	@DatabaseField(unique = true)
+	@DatabaseField(columnName = PLACE_FIELD_NAME, unique = true)
 	private String name;
-	@DatabaseField(unique = true)
+	@DatabaseField(columnName = CODE_FIELD_NAME, unique = true)
 	private String code;
 	
 	public CustomPlace(){
