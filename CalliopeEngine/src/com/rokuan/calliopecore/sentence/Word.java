@@ -6,12 +6,14 @@ import java.util.Set;
 
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
 import com.rokuan.calliopecore.sentence.structure.data.place.PlaceObject.PlaceContext;
 import com.rokuan.calliopecore.sentence.structure.data.time.TimeObject.DateContext;
 
 /**
  * Created by LEBEAU Christophe on 22/02/2015.
  */
+@DatabaseTable(tableName = "words")
 public class Word {
 	public enum WordType {
 		ANY,
@@ -82,10 +84,10 @@ public class Word {
 	public static final String WORD_FIELD_NAME = "value";
 	public static final String TYPES_FIELD_NAME = "types";
 
-	@DatabaseField(columnName = WORD_FIELD_NAME)
+	@DatabaseField(columnName = WORD_FIELD_NAME, id = true)
 	private String value;
 	@DatabaseField(columnName = TYPES_FIELD_NAME, dataType = DataType.SERIALIZABLE)
-	private Set<WordType> types = new HashSet<WordType>();
+	private HashSet<WordType> types = new HashSet<WordType>();
 	private VerbConjugation verbInfo;
 	private LanguageInfo langInfo;
 	private CountryInfo countryInfo;
@@ -94,6 +96,10 @@ public class Word {
 	private PlaceContext placePreposition;
 	private CustomObject customObject;
 	private CustomPlace customPlace;
+	
+	public Word(){
+		
+	}
 	
 	private Word(String v){
 		value = v;

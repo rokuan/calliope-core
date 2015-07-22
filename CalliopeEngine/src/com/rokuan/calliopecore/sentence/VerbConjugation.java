@@ -18,7 +18,7 @@ public class VerbConjugation {
 	private int id;
 	@DatabaseField(columnName = VALUE_FIELD_NAME)
     protected String name;
-	@DatabaseField(columnName = VERB_FIELD_NAME, uniqueCombo = true, foreign = true)
+	@DatabaseField(columnName = VERB_FIELD_NAME, uniqueCombo = true, foreign = true, foreignAutoRefresh = true)
     protected Verb verb;
 	@DatabaseField(columnName = TENSE_FIELD_NAME, uniqueCombo = true)
     protected Verb.ConjugationTense tense;

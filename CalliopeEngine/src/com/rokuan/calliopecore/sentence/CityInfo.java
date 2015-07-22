@@ -9,9 +9,10 @@ public final class CityInfo {
 	public static final String LATITUDE_FIELD_NAME = "lat";
 	public static final String LONGITUDE_FIELD_NAME = "lng";
 	
-	@DatabaseField(id = true)
+	//@DatabaseField(id = true)
+	@DatabaseField(generatedId = true)
 	private int id;	
-	@DatabaseField(columnName = CITY_FIELD_NAME)
+	@DatabaseField(columnName = CITY_FIELD_NAME, uniqueCombo = true)
 	private String name;
 	@DatabaseField(columnName = LATITUDE_FIELD_NAME, uniqueCombo = true)
 	private double latitude;
