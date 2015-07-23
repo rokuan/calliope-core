@@ -138,7 +138,7 @@ public class CountConverter {
 		}
 
 		// TODO: trouver les autres cas
-		return 0;
+		return -1;
 	}
 
 	private static long parseCount(String countStr){        
@@ -184,6 +184,40 @@ public class CountConverter {
 		}
 
 		return true;
+	}
+	
+	public static boolean isAPosition(String posStr){
+		if(posStr.equals("premier") || posStr.equals("premiers") || posStr.equals("première") || posStr.equals("premières")
+				|| posStr.equals("1er") || posStr.equals("1ère") || posStr.equals("1ere")
+				|| posStr.equals("dernier") || posStr.equals("derniers") || posStr.equals("dernière") || posStr.equals("dernières")){
+			return true;
+		}
+
+		if(posStr.endsWith("ième")){
+			String base = posStr.substring(0, posStr.length() - 4);
+
+			if(base.length() == 0){
+				// TODO: erreur
+				return false;
+			}
+
+			char lastChar = base.charAt(base.length() - 1);
+
+			// Voyelle supplementaire pour conserver la sonorite
+			if(lastChar == 'u'){
+				base = base.substring(0, base.length() - 1);
+			}
+
+			return parseCount(base) >= 0;
+		}
+
+		if(Pattern.compile("\\d+(è|e)me$").matcher(posStr).find()){
+			return true;
+		} else if(Pattern.compile("\\d+e$").matcher(posStr).find()){
+			return true;
+		}
+		
+		return false;
 	}
 
 	public static CountObject parseCountObject(WordBuffer words){

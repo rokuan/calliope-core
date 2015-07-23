@@ -52,7 +52,8 @@ public abstract class TimeObject extends NominalGroup {
     	AFTER,
     	DURING,
     	UNTIL,
-    	WHEN
+    	WHEN,
+    	SINCE
     }
 
     public TimeTense tense = TimeTense.PRESENT;

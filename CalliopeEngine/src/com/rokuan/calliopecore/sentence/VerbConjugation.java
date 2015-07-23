@@ -14,7 +14,7 @@ public class VerbConjugation {
 	public static final String FORM_FIELD_NAME = "form";
 	public static final String PERSON_FIELD_NAME = "pronoun"; 
 	
-	@DatabaseField(id = true)
+	@DatabaseField(generatedId = true)
 	private int id;
 	@DatabaseField(columnName = VALUE_FIELD_NAME)
     protected String name;

@@ -12,12 +12,21 @@ public abstract class PlaceObject extends NominalGroup {
 		LEFT,
 		RIGHT,
 		TOP,
+		UP,
 		BOTTOM,
+		DOWN,
 		AT,
 		TO,
 		AGAINST,
 		WHERE,
-		NEAR
+		NEAR,
+		IN,
+		BETWEEN,
+		ALONG,
+		FRONT,
+		AMONG,
+		ABOVE,
+		AROUND
 	}
 	
 	public enum TimeType {

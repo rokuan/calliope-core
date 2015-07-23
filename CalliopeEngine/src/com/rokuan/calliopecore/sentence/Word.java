@@ -217,4 +217,20 @@ public class Word {
 	public void setCustomPlace(CustomPlace customPlace) {
 		this.customPlace = customPlace;
 	}
+	
+	public String toString(){
+		StringBuilder builder = new StringBuilder(value);
+		
+		builder.append('(');
+		
+		for(WordType ty: types){
+			builder.append(ty);
+			builder.append(',');
+		}
+		
+		builder.deleteCharAt(builder.length() - 1);
+		builder.append(')');
+		
+		return builder.toString();
+	}
 }
