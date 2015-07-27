@@ -52,12 +52,6 @@ public class DataSourceTest extends TestCase {
 	public void testSingleElement(){
 		// Le 5eme element
 		CountObject count = new FixedItemObject(5);
-
-		/*count.countType = CountType.LIMIT;
-		count.position = 5;
-		count.count = 1;
-		count.range = Range.FIXED;*/
-
 		ArrayListDataSource<String> result = (ArrayListDataSource<String>)dataSource.getData(count);
 
 		assertEquals(1, result.size());
@@ -68,11 +62,6 @@ public class DataSourceTest extends TestCase {
 	public void testFirst(){
 		// Les 7 premiers elements
 		CountObject count = new LimitedItemsObject(Range.FIRST, 7);
-
-		/*count.countType = CountType.LIMIT;
-		count.count = 7;
-		count.range = Range.FIRST;*/
-
 		ArrayListDataSource<String> result = (ArrayListDataSource<String>)dataSource.getData(count);
 
 		if(!result.isEmpty()){
@@ -89,11 +78,6 @@ public class DataSourceTest extends TestCase {
 	public void testLast(){
 		// Les 3 derniers elements
 		CountObject count = new LimitedItemsObject(Range.LAST, 3);
-
-		/*count.countType = CountType.LIMIT;
-		count.count = 3;
-		count.range = Range.LAST;*/
-
 		ArrayListDataSource<String> result = (ArrayListDataSource<String>)dataSource.getData(count);
 
 		if(!result.isEmpty()){
@@ -109,9 +93,6 @@ public class DataSourceTest extends TestCase {
 	@Test
 	public void testAll(){
 		CountObject count = new AllItemsObject();
-		
-		//count.countType = CountType.ALL;
-		
 		ArrayListDataSource<String> result = (ArrayListDataSource<String>)dataSource.getData(count);
 		
 		assertEquals(dataSource.size(), result.size());
@@ -121,8 +102,6 @@ public class DataSourceTest extends TestCase {
 	public void testRemoveAll(){
 		CountObject count = new AllItemsObject();
 		
-		//count.countType = CountType.ALL;
-		
 		dataSource.removeData(count);		
 		assertTrue(dataSource.isEmpty());
 	}
@@ -130,11 +109,6 @@ public class DataSourceTest extends TestCase {
 	@Test
 	public void testRemoveFirst(){
 		CountObject count = new LimitedItemsObject(Range.FIRST, 3);
-		
-		/*count.countType = CountType.LIMIT;
-		count.count = 3;
-		count.range = Range.FIRST;*/
-		
 		ArrayListDataSource<String> removed = (ArrayListDataSource<String>)dataSource.removeData(count);
 		
 		assertEquals(23, dataSource.size());
@@ -149,11 +123,6 @@ public class DataSourceTest extends TestCase {
 	@Test
 	public void testRemoveLast(){
 		CountObject count = new LimitedItemsObject(Range.LAST, 5);
-		
-		/*count.countType = CountType.LIMIT;
-		count.count = 5;
-		count.range = Range.LAST;*/
-		
 		ArrayListDataSource<String> removed = (ArrayListDataSource<String>)dataSource.removeData(count);
 		
 		assertEquals(21, dataSource.size());
@@ -168,12 +137,6 @@ public class DataSourceTest extends TestCase {
 	@Test
 	public void testRemoveFixed(){
 		CountObject count = new FixedItemObject(7);
-		
-		/*count.countType = CountType.LIMIT;
-		count.count = 1;
-		count.range = Range.FIXED;
-		count.position = 7;*/
-		
 		ArrayListDataSource<String> removed = (ArrayListDataSource<String>)dataSource.removeData(count);
 		
 		assertEquals(25, dataSource.size());

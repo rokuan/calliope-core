@@ -82,28 +82,7 @@ public class DateParseTest {
 		System.out.println(dateFormat.format(period.to));
 		System.out.println();
 	}
-
-	/*@Test
-	public void testParseFixedDate(){
-		WordBuffer words = new WordBuffer();
-		words.add(new Word("du", Word.WordType.INDEFINITE_ARTICLE));
-		words.add(new Word("5", Word.WordType.NUMBER));
-		words.add(new Word("octobre", Word.WordType.DATE_MONTH));
-		words.add(new Word("2012", WordType.NUMBER));
-
-		TimeObject dateObj = DateConverter.parseDateObject(words);
-
-		assert (dateObj != null);
-
-		assertEquals(dateObj.getTimeType(), TimeObject.TimeType.SINGLE);
-
-		SingleTimeObject fixed = (SingleTimeObject)dateObj;
-
-		System.out.println("--- testParseFixedDate");
-		System.out.println(dateFormat.format(fixed.date));
-		System.out.println();
-	}*/
-
+	
 	@Test
 	public void testParseTimeFull(){
 		WordBuffer words = new WordBuffer();

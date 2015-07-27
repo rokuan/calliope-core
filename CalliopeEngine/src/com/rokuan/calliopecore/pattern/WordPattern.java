@@ -266,9 +266,6 @@ public abstract class WordPattern {
 						return false;
 					}
 				}
-				/*if(!words.getCurrentElement().isOfType(simple.type)){
-					return false;
-				}*/
 
 				try{
 					if(simple.valuePattern != null && !words.getCurrentElement().getValue().matches(simple.valuePattern)){

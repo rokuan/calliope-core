@@ -12,7 +12,7 @@ public final class CityInfo {
 	//@DatabaseField(id = true)
 	@DatabaseField(generatedId = true)
 	private int id;	
-	@DatabaseField(columnName = CITY_FIELD_NAME, uniqueCombo = true)
+	@DatabaseField(columnName = CITY_FIELD_NAME, uniqueCombo = true, index = true)
 	private String name;
 	@DatabaseField(columnName = LATITUDE_FIELD_NAME, uniqueCombo = true)
 	private double latitude;

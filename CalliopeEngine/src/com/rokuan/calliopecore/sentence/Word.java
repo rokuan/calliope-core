@@ -84,7 +84,7 @@ public class Word {
 	public static final String WORD_FIELD_NAME = "value";
 	public static final String TYPES_FIELD_NAME = "types";
 
-	@DatabaseField(columnName = WORD_FIELD_NAME, id = true)
+	@DatabaseField(columnName = WORD_FIELD_NAME, id = true, uniqueIndex = true)
 	private String value;
 	@DatabaseField(columnName = TYPES_FIELD_NAME, dataType = DataType.SERIALIZABLE)
 	private HashSet<WordType> types = new HashSet<WordType>();

@@ -211,9 +211,6 @@ public class SentenceParseTest {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		
 		assertEquals(formatter.format(tomorrow), formatter.format(sentenceDate));
-		/*assertEquals(sentenceDate.getDate(), tomorrow.getDate());
-		assertEquals(sentenceDate.getMonth(), tomorrow.getMonth());
-		assertEquals(sentenceDate.getYear(), tomorrow.getYear());*/
 	}
 	
 	@Test

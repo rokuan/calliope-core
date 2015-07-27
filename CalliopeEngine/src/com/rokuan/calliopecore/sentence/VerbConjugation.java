@@ -16,7 +16,7 @@ public class VerbConjugation {
 	
 	@DatabaseField(generatedId = true)
 	private int id;
-	@DatabaseField(columnName = VALUE_FIELD_NAME)
+	@DatabaseField(columnName = VALUE_FIELD_NAME, index = true)
     protected String name;
 	@DatabaseField(columnName = VERB_FIELD_NAME, uniqueCombo = true, foreign = true, foreignAutoRefresh = true)
     protected Verb verb;

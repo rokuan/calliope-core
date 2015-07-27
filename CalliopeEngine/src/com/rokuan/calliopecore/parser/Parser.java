@@ -25,15 +25,9 @@ import com.rokuan.calliopecore.sentence.structure.nominal.PronounTarget;
  * Created by LEBEAU Christophe on 27/02/2015.
  */
 public class Parser {
-	//private WordDatabase db;
-
 	public Parser(){
 
 	}
-
-	/*public Interpreter(WordDatabase wd){
-		db = wd;
-	}*/
 
 	public InterpretationObject parseInterpretationObject(WordBuffer words){
 		InterpretationObject inter = null;
@@ -102,9 +96,6 @@ public class Parser {
 			if(NominalGroupConverter.isADirectObject(words)){
 				
 			} else if(words.isIntoBounds() && words.getCurrentElement().isOfType(WordType.TARGET_PRONOUN) && !NominalGroupConverter.isADirectObject(words)){
-				//inter.target = new PronounTarget(Type.parseTargetPronoun(words.getCurrentElement().getValue()));
-				/*inter.target = new PronounTarget(Type.parsePossessivePronoun(words.getCurrentElement().getValue()));
-				words.consume();*/
 				words.next();
 
 				if(NominalGroupConverter.isADirectObject(words)){

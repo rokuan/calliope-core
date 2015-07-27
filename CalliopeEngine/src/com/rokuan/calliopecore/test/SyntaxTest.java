@@ -95,20 +95,7 @@ public class SyntaxTest {
 	}
 	
 	@Test
-	public void testIsADateDataFixed(){
-		/*WordBuffer words = new WordBuffer();
-		words.add(new Word("le", Word.WordType.DEFINITE_ARTICLE));
-		words.add(new Word("1", Word.WordType.NUMBER));
-		words.add(new Word("janvier", Word.WordType.DATE_MONTH));
-		words.add(new Word("2012", WordType.NUMBER));
-		words.add(new Word("et", Word.WordType.PREPOSITION_AND));
-		words.add(new Word("le", Word.WordType.DEFINITE_ARTICLE));
-		words.add(new Word("7", Word.WordType.NUMBER));
-		words.add(new Word("mars", Word.WordType.DATE_MONTH));
-		words.add(new Word("2015", Word.WordType.NUMBER));
-		
-		assertEquals(false, DateConverter.isADateData(words));*/
-		
+	public void testIsADateDataFixed(){		
 		WordBuffer words = new WordBuffer();
 		words.add(new Word("le", Word.WordType.DEFINITE_ARTICLE));
 		words.add(new Word("17", Word.WordType.NUMBER));

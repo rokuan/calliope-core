@@ -10,9 +10,9 @@ public class CustomObject {
 	
 	@DatabaseField(id = true)
 	private int id;
-	@DatabaseField(columnName = OBJECT_FIELD_NAME)
+	@DatabaseField(columnName = OBJECT_FIELD_NAME, unique = true, uniqueIndex = true)
 	private String content;
-	@DatabaseField(columnName = CODE_FIELD_NAME, unique = true)
+	@DatabaseField(columnName = CODE_FIELD_NAME)
 	private String code;
 	
 	public CustomObject(){

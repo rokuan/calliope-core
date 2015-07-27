@@ -21,19 +21,9 @@ public abstract class InterpretationObject extends FullContent {
 		AFFIRMATION
 	}
 
-	//public EngineAction action;
-	//public Verb verb;
 	private RequestType requestType;
-	//public Action.VerbAction action;
-	//public NominalGroup subject = new PronounTarget(Pronoun.TU);	// Calliope
-	//public NominalGroup target;	
 	public CountObject count = new AllItemsObject();
-	public List<Adjective> adjectives = new ArrayList<Adjective>();
-	//public NominalGroup what;
-	//public TimeObject when;
-	//public ComplementObject why;
-	//public NominalGroup where;
-	//public NominalGroup how; 
+	public List<Adjective> adjectives = new ArrayList<Adjective>(); 
 
 	protected InterpretationObject(RequestType t){
 		requestType = t;
@@ -62,11 +52,6 @@ public abstract class InterpretationObject extends FullContent {
 
 		return result.toString();
 	}
-
-	/*public String toJSON(){
-		Gson gson = new GsonBuilder().create();
-		return gson.toJson(this);
-	}*/
 	
 	public static String toJSON(InterpretationObject object){		
 		Gson gson = new GsonBuilder().create();

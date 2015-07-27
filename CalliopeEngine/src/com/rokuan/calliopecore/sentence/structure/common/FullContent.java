@@ -4,8 +4,8 @@ import com.rokuan.calliopecore.sentence.Action;
 import com.rokuan.calliopecore.sentence.structure.nominal.NominalGroup;
 
 public abstract class FullContent implements ISubjectContent, IVerbalContent, IComplementContent {
-	public Action.VerbAction action;
 	public NominalGroup subject;
+	public Action.VerbAction action;
 	public NominalGroup what;
 	public NominalGroup target;
 	public NominalGroup where;

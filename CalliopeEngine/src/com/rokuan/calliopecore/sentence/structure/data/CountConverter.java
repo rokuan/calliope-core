@@ -119,15 +119,11 @@ public class CountConverter {
 
 			char lastChar = base.charAt(base.length() - 1);
 
-			//if(lastChar == 'a' || lastChar == 'e' || lastChar == 'i' || lastChar == 'o' || lastChar == 'u'){
 			// Voyelle supplementaire pour conserver la sonorite
 			if(lastChar == 'u'){
 				base = base.substring(0, base.length() - 1);
 			}
-
-			/*String[] parts = base.split("-");
-
-            return parseNumber(parts);*/
+			
 			return parseCount(base);
 		}
 

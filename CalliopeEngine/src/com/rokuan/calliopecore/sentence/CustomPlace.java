@@ -10,9 +10,9 @@ public class CustomPlace {
 	
 	@DatabaseField(id = true)
 	private int id;
-	@DatabaseField(columnName = PLACE_FIELD_NAME, unique = true)
+	@DatabaseField(columnName = PLACE_FIELD_NAME, unique = true, uniqueIndex = true)
 	private String name;
-	@DatabaseField(columnName = CODE_FIELD_NAME, unique = true)
+	@DatabaseField(columnName = CODE_FIELD_NAME)
 	private String code;
 	
 	public CustomPlace(){
