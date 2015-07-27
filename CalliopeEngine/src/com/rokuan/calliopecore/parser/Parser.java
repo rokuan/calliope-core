@@ -11,7 +11,7 @@ import com.rokuan.calliopecore.sentence.structure.QuestionObject;
 import com.rokuan.calliopecore.sentence.structure.QuestionObject.QuestionType;
 import com.rokuan.calliopecore.sentence.structure.data.DateConverter;
 import com.rokuan.calliopecore.sentence.structure.data.NominalGroupConverter;
-import com.rokuan.calliopecore.sentence.structure.data.CountConverter;
+//import com.rokuan.calliopecore.sentence.structure.data.CountConverter;
 import com.rokuan.calliopecore.sentence.structure.data.PhoneNumberConverter;
 import com.rokuan.calliopecore.sentence.structure.data.PlaceConverter;
 import com.rokuan.calliopecore.sentence.structure.data.VerbConverter;
@@ -193,9 +193,9 @@ public class Parser {
 				obj.what = NominalGroupConverter.parseDirectObject(words);
 			} else if(NominalGroupConverter.isAnIndirectObject(words)){ 
 				obj.target = NominalGroupConverter.parseIndirectObject(words);
-			} else if(CountConverter.isACountData(words)){
+			}/* else if(CountConverter.isACountData(words)){
 				obj.count = CountConverter.parseCountObject(words);
-			} else {
+			}*/ else {
 				break;
 			}
 		}

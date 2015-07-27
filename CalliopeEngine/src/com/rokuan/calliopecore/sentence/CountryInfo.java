@@ -1,5 +1,6 @@
 package com.rokuan.calliopecore.sentence;
 
+import com.google.gson.annotations.Expose;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -7,9 +8,12 @@ import com.j256.ormlite.table.DatabaseTable;
 public final class CountryInfo {
 	public static final String COUNTRY_FIELD_NAME = "name";
 	public static final String CODE_FIELD_NAME = "code";
-	
+
+	@Expose
 	@DatabaseField(columnName = COUNTRY_FIELD_NAME, id = true)
 	private String name;
+
+	@Expose
 	@DatabaseField(columnName = CODE_FIELD_NAME, unique = true)
 	private String code;
 
@@ -25,6 +29,7 @@ public final class CountryInfo {
 	public String getName() {
 		return name;
 	}
+	
 	public String getCode() {
 		return code;
 	}

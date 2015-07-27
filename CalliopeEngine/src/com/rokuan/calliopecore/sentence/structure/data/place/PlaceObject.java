@@ -1,5 +1,6 @@
 package com.rokuan.calliopecore.sentence.structure.data.place;
 
+import com.google.gson.annotations.Expose;
 import com.rokuan.calliopecore.sentence.structure.nominal.NominalGroup;
 
 public abstract class PlaceObject extends NominalGroup {
@@ -42,8 +43,11 @@ public abstract class PlaceObject extends NominalGroup {
 		NOMINAL,
 		CUSTOM
 	}
-	
-	private PlaceType placeType; 
+
+	@Expose
+	private PlaceType placeType;
+
+	@Expose
 	public PlaceContext location;
 	
 	protected PlaceObject(PlaceType ty) {

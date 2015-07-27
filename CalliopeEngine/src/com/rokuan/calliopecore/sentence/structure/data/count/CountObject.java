@@ -8,6 +8,7 @@ import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
+import com.google.gson.annotations.Expose;
 import com.rokuan.calliopecore.sentence.Type.Pronoun;
 
 /**
@@ -37,8 +38,13 @@ public abstract class CountObject {
 		POSSESSIVE
 	}
 
+	@Expose
 	private CountType countType = CountType.ALL;
+
+	@Expose
 	public ArticleType definition = ArticleType.NONE;
+
+	@Expose
 	public Pronoun possessiveTarget = Pronoun.UNDEFINED;
 
 	// TODO: ajouter les intervalles du type "du 5eme au dernier"

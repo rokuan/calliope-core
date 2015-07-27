@@ -1,5 +1,6 @@
 package com.rokuan.calliopecore.sentence;
 
+import com.google.gson.annotations.Expose;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -9,13 +10,19 @@ public final class CityInfo {
 	public static final String LATITUDE_FIELD_NAME = "lat";
 	public static final String LONGITUDE_FIELD_NAME = "lng";
 	
-	//@DatabaseField(id = true)
+	
 	@DatabaseField(generatedId = true)
-	private int id;	
+	private int id;
+	
+	@Expose
 	@DatabaseField(columnName = CITY_FIELD_NAME, uniqueCombo = true, index = true)
 	private String name;
+	
+	@Expose
 	@DatabaseField(columnName = LATITUDE_FIELD_NAME, uniqueCombo = true)
 	private double latitude;
+	
+	@Expose
 	@DatabaseField(columnName = LONGITUDE_FIELD_NAME, uniqueCombo = true)
 	private double longitude;
 	

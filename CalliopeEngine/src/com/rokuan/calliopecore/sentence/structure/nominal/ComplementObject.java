@@ -3,6 +3,7 @@ package com.rokuan.calliopecore.sentence.structure.nominal;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gson.annotations.Expose;
 import com.rokuan.calliopecore.sentence.Adjective;
 import com.rokuan.calliopecore.sentence.structure.data.count.AllItemsObject;
 import com.rokuan.calliopecore.sentence.structure.data.count.CountObject;
@@ -15,14 +16,31 @@ import com.rokuan.calliopecore.sentence.structure.data.time.TimeObject;
  * Created by LEBEAU Christophe on 20/02/2015.
  */
 public class ComplementObject extends NominalGroup {
+	@Expose
 	public CountObject count = new AllItemsObject();
+
+	@Expose
 	public List<Adjective> adjectives = new ArrayList<Adjective>();
+
+	@Expose
     public String object = "";
+
+	@Expose
     public ComplementObject of;
+
+	@Expose
     public TimeObject when;
+
+	@Expose
     public ComplementObject why;
+
+	@Expose
     public PlaceObject where;
+
+	@Expose
     public ComplementObject how;
+
+	@Expose
     public List<CriterionObject> criteria = new ArrayList<CriterionObject>();
 
     public ComplementObject(){

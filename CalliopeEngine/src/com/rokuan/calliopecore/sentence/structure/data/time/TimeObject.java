@@ -1,5 +1,6 @@
 package com.rokuan.calliopecore.sentence.structure.data.time;
 
+import com.google.gson.annotations.Expose;
 import com.rokuan.calliopecore.sentence.structure.nominal.NominalGroup;
 
 /**
@@ -56,8 +57,13 @@ public abstract class TimeObject extends NominalGroup {
     	SINCE
     }
 
+	@Expose
     public TimeTense tense = TimeTense.PRESENT;
+
+	@Expose
     private TimeType timeType;
+
+	@Expose
     public TimeInterval interval = TimeInterval.SINGLE;
 
     public TimeObject(TimeType ty){

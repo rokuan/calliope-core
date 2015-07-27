@@ -1,5 +1,6 @@
 package com.rokuan.calliopecore.sentence;
 
+import com.google.gson.annotations.Expose;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -16,14 +17,24 @@ public class VerbConjugation {
 	
 	@DatabaseField(generatedId = true)
 	private int id;
+
+	@Expose
 	@DatabaseField(columnName = VALUE_FIELD_NAME, index = true)
     protected String name;
+
+	@Expose
 	@DatabaseField(columnName = VERB_FIELD_NAME, uniqueCombo = true, foreign = true, foreignAutoRefresh = true)
     protected Verb verb;
+
+	@Expose
 	@DatabaseField(columnName = TENSE_FIELD_NAME, uniqueCombo = true)
     protected Verb.ConjugationTense tense;
+
+	@Expose
 	@DatabaseField(columnName = FORM_FIELD_NAME, uniqueCombo = true)
     protected Verb.Form form;
+
+	@Expose
 	@DatabaseField(columnName = PERSON_FIELD_NAME, uniqueCombo = true)
     protected Verb.Pronoun pronoun;
     

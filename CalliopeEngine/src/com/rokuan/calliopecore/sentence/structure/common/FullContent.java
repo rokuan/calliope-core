@@ -1,16 +1,32 @@
 package com.rokuan.calliopecore.sentence.structure.common;
 
+import com.google.gson.annotations.Expose;
 import com.rokuan.calliopecore.sentence.Action;
 import com.rokuan.calliopecore.sentence.structure.nominal.NominalGroup;
 
 public abstract class FullContent implements ISubjectContent, IVerbalContent, IComplementContent {
+	@Expose
 	public NominalGroup subject;
+
+	@Expose
 	public Action.VerbAction action;
+
+	@Expose
 	public NominalGroup what;
+
+	@Expose
 	public NominalGroup target;
+
+	@Expose
 	public NominalGroup where;
+
+	@Expose
 	public NominalGroup when;
+
+	@Expose
 	public NominalGroup how;
+
+	@Expose
 	public NominalGroup why;
 
 	@Override

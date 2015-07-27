@@ -1,5 +1,7 @@
 package com.rokuan.calliopecore.sentence.structure.data.criteria;
 
+import com.google.gson.annotations.Expose;
+
 public abstract class CriterionObject {
 	public enum CriterionType {
 		SUPERLATIVE,
@@ -10,7 +12,8 @@ public abstract class CriterionObject {
 		LESS,
 		MORE
 	}
-	
+
+	@Expose
 	private CriterionType criterionType;
 	
 	public CriterionObject(CriterionType ty){
