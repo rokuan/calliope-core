@@ -3,7 +3,7 @@ package com.rokuan.calliopecore.sentence;
 import com.google.gson.annotations.Expose;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
-import com.rokuan.calliopecore.sentence.structure.data.place.PlaceObject.PlaceContext;
+import com.rokuan.calliopecore.sentence.structure.data.place.PlaceAdverbial.PlaceContext;
 
 @DatabaseTable(tableName = "place_prepositions")
 public class PlacePreposition {

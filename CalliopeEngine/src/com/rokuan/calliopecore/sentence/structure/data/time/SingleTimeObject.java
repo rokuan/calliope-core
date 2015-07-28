@@ -8,7 +8,7 @@ import com.google.gson.annotations.Expose;
 /**
  * Created by LEBEAU Christophe on 20/02/2015.
  */
-public class SingleTimeObject extends TimeObject {
+public class SingleTimeObject extends TimeAdverbial {
 	@Expose
 	public DateContext preposition;
 

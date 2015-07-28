@@ -5,8 +5,8 @@ import com.rokuan.calliopecore.pattern.WordPattern;
 import com.rokuan.calliopecore.sentence.Word.WordType;
 import com.rokuan.calliopecore.sentence.structure.data.place.AdditionalPlaceObject;
 import com.rokuan.calliopecore.sentence.structure.data.place.MonumentObject;
+import com.rokuan.calliopecore.sentence.structure.data.place.PlaceAdverbial;
 import com.rokuan.calliopecore.sentence.structure.data.place.StateObject;
-import com.rokuan.calliopecore.sentence.structure.nominal.NominalGroup;
 
 public class PlaceConverter {
 	// le musée du Louvre, la Grande Muraille de Chine 
@@ -60,14 +60,14 @@ public class PlaceConverter {
 	// A Mexico au Mexique
 	// A ... a la ...
 
-	public static boolean isAPlaceData(WordBuffer words){
+	public static boolean isAPlaceAdverbial(WordBuffer words){
 		return words.syntaxStartsWith(ADDITIONAL_PLACE_PATTERN)
 				|| words.syntaxStartsWith(PLACE_PATTERN)
 				|| words.syntaxStartsWith(WORLD_PLACE_PATTERN);
 	}
 
-	public static NominalGroup parsePlaceObject(WordBuffer words){
-		NominalGroup result = null;
+	public static PlaceAdverbial parsePlaceAdverbial(WordBuffer words){
+		PlaceAdverbial result = null;
 
 		// TODO: gerer les locations pleines (Le musee du Louvre a Paris en France)
 		if(words.syntaxStartsWith(ADDITIONAL_PLACE_PATTERN)){

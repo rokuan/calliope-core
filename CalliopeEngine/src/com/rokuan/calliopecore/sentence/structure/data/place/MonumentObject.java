@@ -3,7 +3,7 @@ package com.rokuan.calliopecore.sentence.structure.data.place;
 import com.google.gson.annotations.Expose;
 
 
-public class MonumentObject extends PlaceObject {
+public class MonumentObject extends PlaceAdverbial {
 	@Expose
 	public String name;
 	

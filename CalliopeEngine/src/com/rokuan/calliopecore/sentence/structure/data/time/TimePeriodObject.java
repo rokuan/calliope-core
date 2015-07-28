@@ -8,7 +8,7 @@ import com.google.gson.annotations.Expose;
 /**
  * Created by LEBEAU Christophe on 20/02/2015.
  */
-public class TimePeriodObject extends TimeObject {
+public class TimePeriodObject extends TimeAdverbial {
 	@Expose
 	public DateDefinition fromDateDefinition = DateDefinition.DATE_AND_TIME;
 

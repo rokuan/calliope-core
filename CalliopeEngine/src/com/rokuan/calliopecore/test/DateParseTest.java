@@ -19,11 +19,11 @@ import com.rokuan.calliopecore.sentence.Word.WordType;
 import com.rokuan.calliopecore.sentence.structure.InterpretationObject;
 import com.rokuan.calliopecore.sentence.structure.data.DateConverter;
 import com.rokuan.calliopecore.sentence.structure.data.time.SingleTimeObject;
-import com.rokuan.calliopecore.sentence.structure.data.time.TimeObject;
-import com.rokuan.calliopecore.sentence.structure.data.time.TimeObject.TimeType;
+import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial;
+import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial.DateContext;
+import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial.DateDefinition;
+import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial.TimeType;
 import com.rokuan.calliopecore.sentence.structure.data.time.TimePeriodObject;
-import com.rokuan.calliopecore.sentence.structure.data.time.TimeObject.DateContext;
-import com.rokuan.calliopecore.sentence.structure.data.time.TimeObject.DateDefinition;
 
 public class DateParseTest {
 	private static final SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy, HH:mm");
@@ -41,11 +41,11 @@ public class DateParseTest {
 		words.add(new Word("mars", Word.WordType.DATE_MONTH));
 		words.add(new Word("2015", Word.WordType.NUMBER));
 
-		TimeObject dateObj = DateConverter.parseDateObject(words);
+		TimeAdverbial dateObj = DateConverter.parseTimeAdverbial(words);
 
 		assert (dateObj != null);
 
-		assertEquals(dateObj.getTimeType(), TimeObject.TimeType.PERIOD);
+		assertEquals(dateObj.getTimeType(), TimeAdverbial.TimeType.PERIOD);
 
 		TimePeriodObject period = (TimePeriodObject)dateObj;
 
@@ -69,11 +69,11 @@ public class DateParseTest {
 		words.add(new Word("septembre", Word.WordType.DATE_MONTH));
 		words.add(new Word("2013", Word.WordType.NUMBER));
 
-		TimeObject dateObj = DateConverter.parseDateObject(words);
+		TimeAdverbial dateObj = DateConverter.parseTimeAdverbial(words);
 
 		assert (dateObj != null);
 
-		assertEquals(dateObj.getTimeType(), TimeObject.TimeType.PERIOD);
+		assertEquals(dateObj.getTimeType(), TimeAdverbial.TimeType.PERIOD);
 
 		TimePeriodObject period = (TimePeriodObject)dateObj;
 
@@ -89,9 +89,9 @@ public class DateParseTest {
 		words.add(new Word("à", Word.WordType.PREPOSITION_AT));
 		words.add(new Word("5h30", Word.WordType.TIME));
 
-		TimeObject dateObj = DateConverter.parseDateObject(words);
+		TimeAdverbial dateObj = DateConverter.parseTimeAdverbial(words);
 
-		assertEquals(dateObj.getTimeType(), TimeObject.TimeType.SINGLE);
+		assertEquals(dateObj.getTimeType(), TimeAdverbial.TimeType.SINGLE);
 
 		SingleTimeObject fixedTime = (SingleTimeObject)dateObj;
 
@@ -108,9 +108,9 @@ public class DateParseTest {
 		words.add(new Word("à", Word.WordType.PREPOSITION_AT));
 		words.add(new Word("5h", Word.WordType.TIME));
 
-		TimeObject dateObj = DateConverter.parseDateObject(words);
+		TimeAdverbial dateObj = DateConverter.parseTimeAdverbial(words);
 
-		assertEquals(dateObj.getTimeType(), TimeObject.TimeType.SINGLE);
+		assertEquals(dateObj.getTimeType(), TimeAdverbial.TimeType.SINGLE);
 
 		SingleTimeObject fixedTime = (SingleTimeObject)dateObj;
 
@@ -131,9 +131,9 @@ public class DateParseTest {
 		words.add(new Word("le", WordType.DEFINITE_ARTICLE));
 		words.add(new Word("quart", WordType.TIME));
 
-		TimeObject dateObj = DateConverter.parseDateObject(words);
+		TimeAdverbial dateObj = DateConverter.parseTimeAdverbial(words);
 
-		assertEquals(dateObj.getTimeType(), TimeObject.TimeType.SINGLE);
+		assertEquals(dateObj.getTimeType(), TimeAdverbial.TimeType.SINGLE);
 
 		SingleTimeObject fixedTime = (SingleTimeObject)dateObj;
 
@@ -152,9 +152,9 @@ public class DateParseTest {
 		words.add(new Word("et", Word.WordType.PREPOSITION_AND));
 		words.add(new Word("demi", Word.WordType.TIME));
 
-		TimeObject dateObj = DateConverter.parseDateObject(words);
+		TimeAdverbial dateObj = DateConverter.parseTimeAdverbial(words);
 
-		assertEquals(dateObj.getTimeType(), TimeObject.TimeType.SINGLE);
+		assertEquals(dateObj.getTimeType(), TimeAdverbial.TimeType.SINGLE);
 
 		SingleTimeObject fixedTime = (SingleTimeObject)dateObj;
 
@@ -178,9 +178,9 @@ public class DateParseTest {
 		words.add(new Word("moins", Word.WordType.PREPOSITION_AND));
 		words.add(new Word("10", Word.WordType.NUMBER));
 
-		TimeObject dateObj = DateConverter.parseDateObject(words);
+		TimeAdverbial dateObj = DateConverter.parseTimeAdverbial(words);
 
-		assertEquals(dateObj.getTimeType(), TimeObject.TimeType.SINGLE);
+		assertEquals(dateObj.getTimeType(), TimeAdverbial.TimeType.SINGLE);
 
 		SingleTimeObject fixedTime = (SingleTimeObject)dateObj;
 
@@ -216,9 +216,9 @@ public class DateParseTest {
 		
 		InterpretationObject object = new Parser().parseInterpretationObject(words);
 		//TimeObject dateObj = DateConverter.parseDateObject(words);
-		TimeObject dateObj = (TimeObject)object.when;
+		TimeAdverbial dateObj = object.when;
 		
-		assertEquals(dateObj.getTimeType(), TimeObject.TimeType.SINGLE);
+		assertEquals(dateObj.getTimeType(), TimeAdverbial.TimeType.SINGLE);
 		
 		SingleTimeObject fixedHour = (SingleTimeObject)dateObj;
 		
@@ -241,7 +241,7 @@ public class DateParseTest {
 		words.add(new Word("mai", Word.WordType.DATE_MONTH));
 		words.add(new Word("2012", WordType.NUMBER));
 
-		TimeObject time = DateConverter.parseDateObject(words);
+		TimeAdverbial time = DateConverter.parseTimeAdverbial(words);
 		
 		assertEquals(time.getTimeType(), TimeType.SINGLE);
 		
@@ -262,7 +262,7 @@ public class DateParseTest {
 		words.add(new Word("mai", Word.WordType.DATE_MONTH));
 		words.add(new Word("2012", WordType.NUMBER));
 
-		TimeObject time = DateConverter.parseDateObject(words);
+		TimeAdverbial time = DateConverter.parseTimeAdverbial(words);
 		
 		assertEquals(time.getTimeType(), TimeType.SINGLE);
 		

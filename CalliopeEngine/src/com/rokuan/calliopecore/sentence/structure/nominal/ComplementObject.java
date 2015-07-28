@@ -8,8 +8,8 @@ import com.rokuan.calliopecore.sentence.Adjective;
 import com.rokuan.calliopecore.sentence.structure.data.count.AllItemsObject;
 import com.rokuan.calliopecore.sentence.structure.data.count.CountObject;
 import com.rokuan.calliopecore.sentence.structure.data.criteria.CriterionObject;
-import com.rokuan.calliopecore.sentence.structure.data.place.PlaceObject;
-import com.rokuan.calliopecore.sentence.structure.data.time.TimeObject;
+import com.rokuan.calliopecore.sentence.structure.data.place.PlaceAdverbial;
+import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial;
 
 
 /**
@@ -29,13 +29,13 @@ public class ComplementObject extends NominalGroup {
     public ComplementObject of;
 
 	@Expose
-    public TimeObject when;
+    public TimeAdverbial when;
 
 	@Expose
     public ComplementObject why;
 
 	@Expose
-    public PlaceObject where;
+    public PlaceAdverbial where;
 
 	@Expose
     public ComplementObject how;

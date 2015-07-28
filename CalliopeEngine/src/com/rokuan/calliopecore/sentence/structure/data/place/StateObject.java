@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.rokuan.calliopecore.sentence.CityInfo;
 import com.rokuan.calliopecore.sentence.CountryInfo;
 
-public class StateObject extends PlaceObject {
+public class StateObject extends PlaceAdverbial {
 	@Expose
 	public CityInfo city;
 	@Expose

@@ -13,12 +13,11 @@ import com.rokuan.calliopecore.sentence.Word.WordType;
 import com.rokuan.calliopecore.sentence.structure.data.PlaceConverter;
 import com.rokuan.calliopecore.sentence.structure.data.place.AdditionalPlaceObject;
 import com.rokuan.calliopecore.sentence.structure.data.place.MonumentObject;
-import com.rokuan.calliopecore.sentence.structure.data.place.PlaceObject;
+import com.rokuan.calliopecore.sentence.structure.data.place.PlaceAdverbial;
+import com.rokuan.calliopecore.sentence.structure.data.place.PlaceAdverbial.PlaceContext;
+import com.rokuan.calliopecore.sentence.structure.data.place.PlaceAdverbial.PlaceType;
 import com.rokuan.calliopecore.sentence.structure.data.place.StateObject;
-import com.rokuan.calliopecore.sentence.structure.data.place.PlaceObject.PlaceContext;
-import com.rokuan.calliopecore.sentence.structure.data.place.PlaceObject.PlaceType;
-import com.rokuan.calliopecore.sentence.structure.nominal.NominalGroup;
-import com.rokuan.calliopecore.sentence.structure.nominal.NominalGroup.GroupType;
+
 
 public class PlaceParseTest {
 	@Test
@@ -31,10 +30,9 @@ public class PlaceParseTest {
 		words.add(new Word("en", WordType.PREPOSITION_IN));
 		words.add(france);
 
-		NominalGroup place = PlaceConverter.parsePlaceObject(words);
+		PlaceAdverbial place = PlaceConverter.parsePlaceAdverbial(words);
 
-		assertEquals(place.getType(), GroupType.PLACE);
-		assertEquals(((PlaceObject)place).getPlaceType(), PlaceType.STATE);
+		assertEquals(place.getPlaceType(), PlaceType.STATE);
 
 		StateObject state = (StateObject)place;
 
@@ -56,10 +54,9 @@ public class PlaceParseTest {
 		words.add(new Word("en", WordType.PREPOSITION_IN));
 		words.add(france);
 
-		NominalGroup place = PlaceConverter.parsePlaceObject(words);
+		PlaceAdverbial place = PlaceConverter.parsePlaceAdverbial(words);
 
-		assertEquals(place.getType(), GroupType.PLACE);
-		assertEquals(((PlaceObject)place).getPlaceType(), PlaceType.STATE);
+		assertEquals(place.getPlaceType(), PlaceType.STATE);
 
 		StateObject state = (StateObject)place;
 
@@ -76,10 +73,7 @@ public class PlaceParseTest {
 		words.add(new Word("Tour", WordType.PROPER_NAME));
 		words.add(new Word("Eiffel", WordType.PROPER_NAME));
 		
-		NominalGroup place = PlaceConverter.parsePlaceObject(words);
-		
-		assertEquals(place.getType(), GroupType.PLACE);
-		
+		PlaceAdverbial place = PlaceConverter.parsePlaceAdverbial(words);		
 		MonumentObject monument = (MonumentObject)place;
 		
 		assertEquals(monument.name, "Tour Eiffel");
@@ -95,10 +89,7 @@ public class PlaceParseTest {
 		words.add(new Word("de", WordType.PREPOSITION_OF));
 		words.add(new Word("Paris", WordType.PROPER_NAME, WordType.CITY));
 		
-		NominalGroup place = PlaceConverter.parsePlaceObject(words);
-		
-		assertEquals(place.getType(), GroupType.PLACE);
-		
+		PlaceAdverbial place = PlaceConverter.parsePlaceAdverbial(words);		
 		MonumentObject monument = (MonumentObject)place;
 		
 		assertEquals(monument.name, "Mairie");
@@ -118,10 +109,9 @@ public class PlaceParseTest {
 		words.add(new Word("le", WordType.DEFINITE_ARTICLE));
 		words.add(mountCompoteEnergie);
 		
-		NominalGroup place = PlaceConverter.parsePlaceObject(words);
+		PlaceAdverbial place = PlaceConverter.parsePlaceAdverbial(words);
 		
-		assertEquals(place.getType(), GroupType.PLACE);
-		assertEquals(((PlaceObject)place).getPlaceType(), PlaceType.CUSTOM);
+		assertEquals(place.getPlaceType(), PlaceType.CUSTOM);
 		
 		AdditionalPlaceObject customPlace = (AdditionalPlaceObject)place;
 		

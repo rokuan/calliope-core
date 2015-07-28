@@ -1,19 +1,23 @@
 package com.rokuan.calliopecore.sentence.structure.common;
 
+import com.rokuan.calliopecore.sentence.structure.data.place.PlaceAdverbial;
+import com.rokuan.calliopecore.sentence.structure.data.purpose.PurposeAdverbial;
+import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial;
 import com.rokuan.calliopecore.sentence.structure.nominal.NominalGroup;
+import com.rokuan.calliopecore.sentence.structure.way.WayAdverbial;
 
 public interface IComplementContent {
 	void setDirectObject(NominalGroup direct);
 	void setIndirectObject(NominalGroup indirect);
-	void setPlaceAdverbial(NominalGroup place);
-	void setTimeAdverbial(NominalGroup time);
-	void setWayAdverbial(NominalGroup way);
-	void setPurposeAdverbial(NominalGroup purpose);
+	void setPlaceAdverbial(PlaceAdverbial place);
+	void setTimeAdverbial(TimeAdverbial time);
+	void setWayAdverbial(WayAdverbial way);
+	void setPurposeAdverbial(PurposeAdverbial purpose);
 	
 	NominalGroup getDirectObject();
 	NominalGroup getIndirectObject();
-	NominalGroup getPlaceAdverbial();
-	NominalGroup getTimeAdverbial();
-	NominalGroup getWayAdverbial();
-	NominalGroup getPurposeAdverbial();
+	PlaceAdverbial getPlaceAdverbial();
+	TimeAdverbial getTimeAdverbial();
+	WayAdverbial getWayAdverbial();
+	PurposeAdverbial getPurposeAdverbial();
 }

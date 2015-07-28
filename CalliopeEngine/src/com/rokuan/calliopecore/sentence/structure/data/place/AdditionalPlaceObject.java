@@ -3,7 +3,7 @@ package com.rokuan.calliopecore.sentence.structure.data.place;
 import com.google.gson.annotations.Expose;
 import com.rokuan.calliopecore.sentence.CustomPlace;
 
-public class AdditionalPlaceObject extends PlaceObject {
+public class AdditionalPlaceObject extends PlaceAdverbial {
 	@Expose
 	public CustomPlace place;
 	

@@ -11,20 +11,20 @@ import com.google.gson.JsonParseException;
 import com.rokuan.calliopecore.sentence.structure.data.place.AdditionalPlaceObject;
 import com.rokuan.calliopecore.sentence.structure.data.place.MonumentObject;
 import com.rokuan.calliopecore.sentence.structure.data.place.NominalPlaceObject;
-import com.rokuan.calliopecore.sentence.structure.data.place.PlaceObject;
+import com.rokuan.calliopecore.sentence.structure.data.place.PlaceAdverbial;
 import com.rokuan.calliopecore.sentence.structure.data.place.StateObject;
 
 
-public class PlaceObjectDeserializer implements JsonDeserializer<PlaceObject> {
+public class PlaceObjectDeserializer implements JsonDeserializer<PlaceAdverbial> {
 	@Override
-	public PlaceObject deserialize(JsonElement arg0, Type arg1,
+	public PlaceAdverbial deserialize(JsonElement arg0, Type arg1,
 			JsonDeserializationContext arg2) throws JsonParseException {
 		GsonBuilder builder = new GsonBuilder();
 		
 		Gson gson = builder.create();
-		Class<? extends PlaceObject> clazz = null;
+		Class<? extends PlaceAdverbial> clazz = null;
 		
-		switch(PlaceObject.PlaceType.valueOf(arg0.getAsJsonObject().get("placeType").getAsString())){
+		switch(PlaceAdverbial.PlaceType.valueOf(arg0.getAsJsonObject().get("placeType").getAsString())){
 		case CUSTOM:
 			clazz = AdditionalPlaceObject.class;
 			break;

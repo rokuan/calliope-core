@@ -2,7 +2,11 @@ package com.rokuan.calliopecore.sentence.structure.common;
 
 import com.google.gson.annotations.Expose;
 import com.rokuan.calliopecore.sentence.Action;
+import com.rokuan.calliopecore.sentence.structure.data.place.PlaceAdverbial;
+import com.rokuan.calliopecore.sentence.structure.data.purpose.PurposeAdverbial;
+import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial;
 import com.rokuan.calliopecore.sentence.structure.nominal.NominalGroup;
+import com.rokuan.calliopecore.sentence.structure.way.WayAdverbial;
 
 public abstract class FullContent implements ISubjectContent, IVerbalContent, IComplementContent {
 	@Expose
@@ -18,16 +22,16 @@ public abstract class FullContent implements ISubjectContent, IVerbalContent, IC
 	public NominalGroup target;
 
 	@Expose
-	public NominalGroup where;
+	public PlaceAdverbial where;
 
 	@Expose
-	public NominalGroup when;
+	public TimeAdverbial when;
 
 	@Expose
-	public NominalGroup how;
+	public WayAdverbial how;
 
 	@Expose
-	public NominalGroup why;
+	public PurposeAdverbial why;
 
 	@Override
 	public void setSubject(NominalGroup source){
@@ -50,22 +54,22 @@ public abstract class FullContent implements ISubjectContent, IVerbalContent, IC
 	}
 
 	@Override
-	public void setPlaceAdverbial(NominalGroup place){
+	public void setPlaceAdverbial(PlaceAdverbial place){
 		where = place;
 	}
 
 	@Override
-	public void setTimeAdverbial(NominalGroup time){
+	public void setTimeAdverbial(TimeAdverbial time){
 		when = time;
 	}
 
 	@Override
-	public void setWayAdverbial(NominalGroup way){
+	public void setWayAdverbial(WayAdverbial way){
 		how = way;
 	}
 
 	@Override
-	public void setPurposeAdverbial(NominalGroup purpose){
+	public void setPurposeAdverbial(PurposeAdverbial purpose){
 		why = purpose;
 	}
 
@@ -91,22 +95,22 @@ public abstract class FullContent implements ISubjectContent, IVerbalContent, IC
 	}
 
 	@Override
-	public NominalGroup getPlaceAdverbial(){
+	public PlaceAdverbial getPlaceAdverbial(){
 		return where;
 	}
 
 	@Override
-	public 	NominalGroup getTimeAdverbial(){
+	public TimeAdverbial getTimeAdverbial(){
 		return when;
 	}
 
 	@Override
-	public NominalGroup getWayAdverbial(){
+	public WayAdverbial getWayAdverbial(){
 		return how;
 	}
 
 	@Override
-	public NominalGroup getPurposeAdverbial(){
+	public PurposeAdverbial getPurposeAdverbial(){
 		return why;
 	}
 }

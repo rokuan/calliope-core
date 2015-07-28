@@ -10,23 +10,23 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import com.rokuan.calliopecore.sentence.structure.data.time.RelativeTimeObject;
 import com.rokuan.calliopecore.sentence.structure.data.time.SingleTimeObject;
-import com.rokuan.calliopecore.sentence.structure.data.time.TimeObject;
+import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial;
 import com.rokuan.calliopecore.sentence.structure.data.time.TimePeriodObject;
 import com.rokuan.calliopecore.sentence.structure.data.time.VerbalTimeObject;
 import com.rokuan.calliopecore.sentence.structure.nominal.NominalGroup;
 
 
-public class TimeObjectDeserializer implements JsonDeserializer<TimeObject> {
+public class TimeObjectDeserializer implements JsonDeserializer<TimeAdverbial> {
 	@Override
-	public TimeObject deserialize(JsonElement arg0, Type arg1,
+	public TimeAdverbial deserialize(JsonElement arg0, Type arg1,
 			JsonDeserializationContext arg2) throws JsonParseException {
 		GsonBuilder builder = new GsonBuilder();
 		builder.registerTypeAdapter(NominalGroup.class, new NominalGroupDeserializer());
 		
 		Gson gson = builder.create();
-		Class<? extends TimeObject> clazz = null;
+		Class<? extends TimeAdverbial> clazz = null;
 		
-		switch(TimeObject.TimeType.valueOf(arg0.getAsJsonObject().get("timeType").getAsString())){
+		switch(TimeAdverbial.TimeType.valueOf(arg0.getAsJsonObject().get("timeType").getAsString())){
 		case PERIOD:
 			clazz = TimePeriodObject.class;
 			break;

@@ -74,7 +74,7 @@ public class SyntaxTest {
 		words.add(new Word("mars", Word.WordType.DATE_MONTH));
 		words.add(new Word("2015", Word.WordType.NUMBER));
 		
-		assertEquals(true, DateConverter.isADateData(words));
+		assertEquals(true, DateConverter.isATimeAdverbial(words));
 	}
 	
 	@Test
@@ -91,7 +91,7 @@ public class SyntaxTest {
 		words.add(new Word("mars", Word.WordType.DATE_MONTH));
 		words.add(new Word("2015", Word.WordType.NUMBER));
 		
-		assertEquals(true, DateConverter.isADateData(words));
+		assertEquals(true, DateConverter.isATimeAdverbial(words));
 	}
 	
 	@Test
@@ -107,6 +107,6 @@ public class SyntaxTest {
 		words.add(new Word("heure", Word.WordType.DATE_UNIT));
 		words.add(new Word("15", Word.WordType.NUMBER));
 		
-		assertEquals(true, DateConverter.isADateData(words));
+		assertEquals(true, DateConverter.isATimeAdverbial(words));
 	}
 }

@@ -3,7 +3,7 @@ package com.rokuan.calliopecore.sentence.structure.data.time;
 import com.google.gson.annotations.Expose;
 import com.rokuan.calliopecore.sentence.structure.nominal.VerbalGroup;
 
-public class VerbalTimeObject extends TimeObject {
+public class VerbalTimeObject extends TimeAdverbial {
 	@Expose
 	public DateContext preposition;
 

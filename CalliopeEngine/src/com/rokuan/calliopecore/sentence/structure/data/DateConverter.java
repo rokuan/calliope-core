@@ -12,11 +12,11 @@ import com.rokuan.calliopecore.pattern.WordPattern;
 import com.rokuan.calliopecore.sentence.Word;
 import com.rokuan.calliopecore.sentence.Word.WordType;
 import com.rokuan.calliopecore.sentence.structure.data.time.SingleTimeObject;
-import com.rokuan.calliopecore.sentence.structure.data.time.TimeObject;
-import com.rokuan.calliopecore.sentence.structure.data.time.TimeObject.DateDefinition;
-import com.rokuan.calliopecore.sentence.structure.data.time.TimeObject.TimeInterval;
-import com.rokuan.calliopecore.sentence.structure.data.time.TimeObject.TimeTense;
-import com.rokuan.calliopecore.sentence.structure.data.time.TimeObject.TimeUnit;
+import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial;
+import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial.DateDefinition;
+import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial.TimeInterval;
+import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial.TimeTense;
+import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial.TimeUnit;
 import com.rokuan.calliopecore.sentence.structure.data.time.TimePeriodObject;
 
 /**
@@ -137,7 +137,7 @@ public class DateConverter {
 
 	public static final WordPattern RELATIVE_DATE_PATTERN = WordPattern.simple(WordType.DATE);
 
-	public static boolean isADateData(WordBuffer words){
+	public static boolean isATimeAdverbial(WordBuffer words){
 		return WordPattern.syntaxStartsWith(words, FROM_TO_DATE_PATTERN)
 				|| WordPattern.syntaxStartsWith(words, BETWEEN_DATE_PATTERN)
 				|| WordPattern.syntaxStartsWith(words, FIXED_DATE_PATTERN)
@@ -151,8 +151,8 @@ public class DateConverter {
 				|| WordPattern.syntaxStartsWith(words, DIRECT_OBJECT_TIME_PATTERN);
 	}
 
-	public static TimeObject parseDateObject(WordBuffer words){
-		TimeObject result = null;
+	public static TimeAdverbial parseTimeAdverbial(WordBuffer words){
+		TimeAdverbial result = null;
 
 		if(WordPattern.syntaxStartsWith(words, FROM_TO_DATE_PATTERN)){
 			TimePeriodObject period = new TimePeriodObject();
@@ -244,7 +244,7 @@ public class DateConverter {
 		return result;
 	}
 
-	public static TimeObject parseDirectObjectDateObject(WordBuffer words){
+	public static TimeAdverbial parseDirectObjectTimeAdverbial(WordBuffer words){
 		if(words.syntaxStartsWith(DIRECT_OBJECT_DATE_PATTERN)){
 			words.consume();	// PREPOSITION_OF
 

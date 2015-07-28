@@ -24,13 +24,15 @@ import com.rokuan.calliopecore.sentence.structure.InterpretationObject.RequestTy
 import com.rokuan.calliopecore.sentence.structure.QuestionObject;
 import com.rokuan.calliopecore.sentence.structure.QuestionObject.QuestionType;
 import com.rokuan.calliopecore.sentence.structure.data.place.MonumentObject;
+import com.rokuan.calliopecore.sentence.structure.data.place.PlaceAdverbial;
+import com.rokuan.calliopecore.sentence.structure.data.place.PlaceAdverbial.PlaceType;
 import com.rokuan.calliopecore.sentence.structure.data.time.SingleTimeObject;
-import com.rokuan.calliopecore.sentence.structure.data.time.TimeObject;
+import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial;
 import com.rokuan.calliopecore.sentence.structure.nominal.AdditionalObject;
 import com.rokuan.calliopecore.sentence.structure.nominal.ComplementObject;
-import com.rokuan.calliopecore.sentence.structure.nominal.NominalGroup;
 import com.rokuan.calliopecore.sentence.structure.nominal.PronounTarget;
 import com.rokuan.calliopecore.sentence.structure.nominal.NominalGroup.GroupType;
+import com.rokuan.calliopecore.sentence.structure.way.NominalWayObject;
 
 public class SentenceParseTest {
 	@Test
@@ -60,13 +62,11 @@ public class SentenceParseTest {
 		QuestionObject question = (QuestionObject)obj;
 		assertEquals(question.questionType, QuestionType.HOW);
 
-		NominalGroup place = obj.where;
-
-		assertEquals(place.getType(), GroupType.PLACE);
-
+		PlaceAdverbial place = obj.where;
 		MonumentObject monument = (MonumentObject)place;
+		
 		assertEquals(monument.name, "Mairie");
-		assertEquals(((ComplementObject)obj.how).object, "voiture");
+		assertEquals(((NominalWayObject)obj.how).object, "voiture");
 	}
 
 	@Test
@@ -95,11 +95,11 @@ public class SentenceParseTest {
 		QuestionObject question = (QuestionObject)obj;
 		assertEquals(question.questionType, QuestionType.HOW);
 
-		NominalGroup place = obj.where;
+		PlaceAdverbial place = obj.where;
+		
+		assertEquals(place.getPlaceType(), PlaceType.MONUMENT);
 
-		assertEquals(place.getType(), GroupType.PLACE);
-
-		assertEquals(((ComplementObject)obj.how).object, "voiture");
+		assertEquals(((NominalWayObject)obj.how).object, "voiture");
 	}
 
 	@Test
@@ -201,8 +201,7 @@ public class SentenceParseTest {
 		assertEquals(obj.action, Action.VerbAction.DO__MAKE);
 		assertEquals(((PronounTarget)obj.subject).pronoun, com.rokuan.calliopecore.sentence.Type.Pronoun.IL_ELLE_ON);
 		assertEquals(compl.object, "temps");
-		assertEquals(obj.when.getType(), GroupType.DATE);
-		assertEquals(((TimeObject)obj.when).getTimeType(), TimeObject.TimeType.SINGLE);
+		assertEquals(obj.when.getTimeType(), TimeAdverbial.TimeType.SINGLE);
 		
 		Calendar calendar = Calendar.getInstance();
 		calendar.add(Calendar.DAY_OF_MONTH, 1);

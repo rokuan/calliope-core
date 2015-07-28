@@ -1,9 +1,8 @@
 package com.rokuan.calliopecore.sentence.structure.data.place;
 
 import com.google.gson.annotations.Expose;
-import com.rokuan.calliopecore.sentence.structure.nominal.NominalGroup;
 
-public abstract class PlaceObject extends NominalGroup {
+public abstract class PlaceAdverbial {
 	public enum PlaceContext {
 		BEHIND,
 		ON,
@@ -30,13 +29,6 @@ public abstract class PlaceObject extends NominalGroup {
 		AROUND
 	}
 	
-	public enum TimeType {
-    	SINGLE,
-    	RELATIVE,
-    	PERIOD,
-    	VERBAL
-    }
-	
 	public enum PlaceType {
 		STATE,
 		MONUMENT,
@@ -50,8 +42,7 @@ public abstract class PlaceObject extends NominalGroup {
 	@Expose
 	public PlaceContext location;
 	
-	protected PlaceObject(PlaceType ty) {
-		super(GroupType.PLACE);
+	protected PlaceAdverbial(PlaceType ty) {
 		placeType = ty;
 	}
 	

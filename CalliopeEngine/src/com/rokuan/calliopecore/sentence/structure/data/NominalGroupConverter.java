@@ -6,6 +6,7 @@ import com.rokuan.calliopecore.sentence.Type;
 import com.rokuan.calliopecore.sentence.Type.Pronoun;
 import com.rokuan.calliopecore.sentence.Word.WordType;
 import com.rokuan.calliopecore.sentence.structure.nominal.AdditionalObject;
+import com.rokuan.calliopecore.sentence.structure.nominal.AdditionalPerson;
 import com.rokuan.calliopecore.sentence.structure.nominal.ComplementObject;
 import com.rokuan.calliopecore.sentence.structure.nominal.NominalGroup;
 import com.rokuan.calliopecore.sentence.structure.nominal.PronounTarget;
@@ -30,6 +31,7 @@ public class NominalGroupConverter {
 	public static final WordPattern CUSTOM_OBJECT_PATTERN = WordPattern.sequence(
 			WordPattern.optional(CountConverter.COUNT_PATTERN),
 			WordPattern.simple(WordType.OBJECT));
+	public static final WordPattern CUSTOM_PERSON_PATTERN = WordPattern.simple(WordType.PERSON);
 	
 	/*public static final WordPattern personPattern = WordPattern.sequence(
 			WordPattern.nonEmptyList(WordPattern.simple(WordType.FIRSTNAME)),
@@ -93,6 +95,10 @@ public class NominalGroupConverter {
 			custom.object = words.getCurrentElement().getCustomObject();
 			words.consume();
 			
+			result = custom;
+		} else if(words.syntaxStartsWith(CUSTOM_PERSON_PATTERN)){
+			AdditionalPerson custom = new AdditionalPerson();			
+			custom.person = words.getCurrentElement().getCustomPerson();
 			result = custom;
 		} else if(words.syntaxStartsWith(DIRECT_OBJECT_PATTERN)){
 			ComplementObject obj = new ComplementObject();

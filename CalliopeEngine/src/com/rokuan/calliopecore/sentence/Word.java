@@ -7,8 +7,8 @@ import java.util.Set;
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
-import com.rokuan.calliopecore.sentence.structure.data.place.PlaceObject.PlaceContext;
-import com.rokuan.calliopecore.sentence.structure.data.time.TimeObject.DateContext;
+import com.rokuan.calliopecore.sentence.structure.data.place.PlaceAdverbial.PlaceContext;
+import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial.DateContext;
 
 /**
  * Created by LEBEAU Christophe on 22/02/2015.
@@ -69,6 +69,7 @@ public class Word {
 		LANGUAGE,
 		PERSON,
 		PLACE,
+		MODE,
 		COLOR,
 		OBJECT,
 		ADDITIONAL_PLACE,
@@ -77,6 +78,7 @@ public class Word {
 
 		TIME_PREPOSITION,
 		PLACE_PREPOSITION,
+		WAY_PREPOSITION,
 		
 		OTHER
 	}
@@ -96,6 +98,8 @@ public class Word {
 	private PlaceContext placePreposition;
 	private CustomObject customObject;
 	private CustomPlace customPlace;
+	private CustomPerson customPerson;
+	private CustomMode customMode;
 	
 	public Word(){
 		
@@ -218,6 +222,23 @@ public class Word {
 		this.customPlace = customPlace;
 	}
 	
+	public CustomPerson getCustomPerson() {
+		return customPerson;
+	}
+
+	public void setCustomPerson(CustomPerson customPerson) {
+		this.customPerson = customPerson;
+	}
+
+	public CustomMode getCustomMode() {
+		return customMode;
+	}
+
+	public void setCustomMode(CustomMode customMode) {
+		this.customMode = customMode;
+	}
+
+	@Override
 	public String toString(){
 		StringBuilder builder = new StringBuilder(value);
 		

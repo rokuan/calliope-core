@@ -1,12 +1,11 @@
 package com.rokuan.calliopecore.sentence.structure.data.time;
 
 import com.google.gson.annotations.Expose;
-import com.rokuan.calliopecore.sentence.structure.nominal.NominalGroup;
 
 /**
  * Created by LEBEAU Christophe on 20/02/2015.
  */
-public abstract class TimeObject extends NominalGroup {
+public abstract class TimeAdverbial {
     public enum TimeUnit {
         SECONDS,
         MINUTES,
@@ -66,8 +65,7 @@ public abstract class TimeObject extends NominalGroup {
 	@Expose
     public TimeInterval interval = TimeInterval.SINGLE;
 
-    public TimeObject(TimeType ty){
-    	super(GroupType.DATE);
+    protected TimeAdverbial(TimeType ty){
     	timeType = ty;
     }
     

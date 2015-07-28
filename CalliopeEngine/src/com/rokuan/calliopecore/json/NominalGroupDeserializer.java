@@ -9,8 +9,6 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import com.rokuan.calliopecore.sentence.structure.data.count.CountObject;
-import com.rokuan.calliopecore.sentence.structure.data.place.PlaceObject;
-import com.rokuan.calliopecore.sentence.structure.data.time.TimeObject;
 import com.rokuan.calliopecore.sentence.structure.nominal.AbstractTarget;
 import com.rokuan.calliopecore.sentence.structure.nominal.AdditionalObject;
 import com.rokuan.calliopecore.sentence.structure.nominal.ComplementObject;
@@ -24,8 +22,8 @@ public class NominalGroupDeserializer implements JsonDeserializer<NominalGroup> 
 	public NominalGroup deserialize(JsonElement arg0, Type arg1,
 			JsonDeserializationContext arg2) throws JsonParseException {
 		GsonBuilder builder = new GsonBuilder();
-		builder.registerTypeAdapter(PlaceObject.class, new PlaceObjectDeserializer());
-		builder.registerTypeAdapter(TimeObject.class, new TimeObjectDeserializer());
+		/*builder.registerTypeAdapter(PlaceObject.class, new PlaceObjectDeserializer());
+		builder.registerTypeAdapter(TimeObject.class, new TimeObjectDeserializer());*/
 		builder.registerTypeAdapter(NominalGroup.class, new NominalGroupDeserializer());
 		builder.registerTypeAdapter(CountObject.class, new CountObject.CountObjectDeserializer());
 		
@@ -42,9 +40,9 @@ public class NominalGroupDeserializer implements JsonDeserializer<NominalGroup> 
 		case COLOR:
 			// TODO
 			break;
-		case DATE:
+		/*case DATE:
 			clazz = TimeObject.class;
-			break;
+			break;*/
 		case LANGUAGE:
 			clazz = LanguageObject.class;
 			break;
@@ -57,9 +55,9 @@ public class NominalGroupDeserializer implements JsonDeserializer<NominalGroup> 
 		case PERSON:
 			// TODO
 			break;
-		case PLACE:
+		/*case PLACE:
 			clazz = PlaceObject.class;
-			break;				
+			break;*/				
 		case PRONOUN:
 			clazz = PronounTarget.class;
 			break;
@@ -69,6 +67,8 @@ public class NominalGroupDeserializer implements JsonDeserializer<NominalGroup> 
 		case VERB:
 			clazz = VerbalGroup.class;
 			break;
+			default:
+				break;
 		}
 		
 		return gson.fromJson(arg0, clazz);

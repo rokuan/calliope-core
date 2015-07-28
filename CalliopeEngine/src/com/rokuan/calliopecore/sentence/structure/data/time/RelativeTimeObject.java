@@ -8,7 +8,7 @@ import com.google.gson.annotations.Expose;
 /**
  * Created by LEBEAU Christophe on 20/02/2015.
  */
-public class RelativeTimeObject extends TimeObject {
+public class RelativeTimeObject extends TimeAdverbial {
 	@Expose
     public int[] periods = new int[TimeUnit.values().length];
 
