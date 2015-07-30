@@ -3,14 +3,14 @@ package com.rokuan.calliopecore.sentence.structure.way;
 import com.google.gson.annotations.Expose;
 
 public abstract class WayAdverbial {
-	enum WayType {
+	public enum WayType {
 		CUSTOM,
 		VERBAL,
 		NOMINAL,
 		LANGUAGE
 	}
 	
-	enum WayContext {
+	public enum WayContext {
 		BY
 	}
 	

@@ -38,6 +38,11 @@ public class NominalGroupConverter {
 			WordPattern.optional(pattern)
 			);*/
 	
+	public static final WordPattern NAME_PATTERN = WordPattern.or(
+			WordPattern.simple(WordType.OBJECT),
+			WordPattern.simple(WordType.COMMON_NAME)
+			);
+	
 	public static final WordPattern TO_PATTERN = WordPattern.or(
 			WordPattern.sequence(WordPattern.simple(WordType.PREPOSITION_AT, "à"), WordPattern.optional(WordPattern.simple(WordType.DEFINITE_ARTICLE, "la"))),
 			WordPattern.simple(WordType.PREPOSITION_AT, "au.*")

@@ -16,7 +16,7 @@ import com.rokuan.calliopecore.sentence.structure.data.time.VerbalTimeObject;
 import com.rokuan.calliopecore.sentence.structure.nominal.NominalGroup;
 
 
-public class TimeObjectDeserializer implements JsonDeserializer<TimeAdverbial> {
+public class TimeAdverbialDeserializer implements JsonDeserializer<TimeAdverbial> {
 	@Override
 	public TimeAdverbial deserialize(JsonElement arg0, Type arg1,
 			JsonDeserializationContext arg2) throws JsonParseException {

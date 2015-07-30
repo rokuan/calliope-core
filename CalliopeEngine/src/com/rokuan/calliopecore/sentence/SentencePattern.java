@@ -2,6 +2,7 @@ package com.rokuan.calliopecore.sentence;
 
 import com.rokuan.calliopecore.pattern.WordPattern;
 import com.rokuan.calliopecore.sentence.Word.WordType;
+import com.rokuan.calliopecore.sentence.structure.data.NominalGroupConverter;
 import com.rokuan.calliopecore.sentence.structure.data.VerbConverter;
 
 public class SentencePattern {
@@ -47,32 +48,19 @@ public class SentencePattern {
 					WordPattern.optional(WordPattern.simple(WordType.DEFINITE_ARTICLE)),
 					WordPattern.optional(WordPattern.simple(WordType.TARGET_PRONOUN))
 			)));
-	// Quel(s/le(s)) est/sont
-	/*public static final WordPattern resultQuestionPattern = WordPattern.sequence(
-			WordPattern.or(WordPattern.simple(WordType.INTERROGATIVE_PRONOUN), WordPattern.simple(WordType.INTERROGATIVE_ADJECTIVE)),
-			WordPattern.simple(WordType.VERB, null, "être")
-			);*/
+
 	// Quelle temperature fait-il
 	public static final WordPattern RESULT_QUESTION_PATTERN = WordPattern.sequence(
 			WordPattern.or(WordPattern.simple(WordType.INTERROGATIVE_ADJECTIVE, "quel.*"), WordPattern.simple(WordType.INTERROGATIVE_ADJECTIVE, "quel.*")),
 			// TODO: remplacer par un groupe nominal en prenant en compte les adjectifs (ex: quel petit chat)
-			WordPattern.nonEmptyList(WordPattern.simple(WordType.COMMON_NAME)),
+			//WordPattern.nonEmptyList(WordPattern.simple(WordType.COMMON_NAME)),
+			NominalGroupConverter.NAME_PATTERN,
 			VerbConverter.QUESTION_VERB_PATTERN
 			);
-	
+
+	// Quel(s/le(s)) est/sont
 	public static final WordPattern INTERROGATIVE_PATTERN = WordPattern.sequence(
 			WordPattern.or(WordPattern.simple(WordType.INTERROGATIVE_PRONOUN), WordPattern.simple(WordType.INTERROGATIVE_ADJECTIVE)),
 			VerbConverter.CONJUGATED_VERB_PATTERN
 			);
-	
-	
-
-	/*public static final WordPattern nominalGroupPattern = WordPattern.sequence(
-			WordPattern.simple(WordType.DEFINITE_ARTICLE)
-			WordPattern.
-			);
-
-	public static final WordPattern personPattern = WordPattern.
-
-	public static final WordPattern subjectPattern = WordPattern.or(personPattern)*/
 }

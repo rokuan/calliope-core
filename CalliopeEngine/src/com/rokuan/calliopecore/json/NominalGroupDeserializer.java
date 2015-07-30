@@ -11,6 +11,7 @@ import com.google.gson.JsonParseException;
 import com.rokuan.calliopecore.sentence.structure.data.count.CountObject;
 import com.rokuan.calliopecore.sentence.structure.nominal.AbstractTarget;
 import com.rokuan.calliopecore.sentence.structure.nominal.AdditionalObject;
+import com.rokuan.calliopecore.sentence.structure.nominal.AdditionalPerson;
 import com.rokuan.calliopecore.sentence.structure.nominal.ComplementObject;
 import com.rokuan.calliopecore.sentence.structure.nominal.LanguageObject;
 import com.rokuan.calliopecore.sentence.structure.nominal.NominalGroup;
@@ -22,10 +23,9 @@ public class NominalGroupDeserializer implements JsonDeserializer<NominalGroup> 
 	public NominalGroup deserialize(JsonElement arg0, Type arg1,
 			JsonDeserializationContext arg2) throws JsonParseException {
 		GsonBuilder builder = new GsonBuilder();
-		/*builder.registerTypeAdapter(PlaceObject.class, new PlaceObjectDeserializer());
-		builder.registerTypeAdapter(TimeObject.class, new TimeObjectDeserializer());*/
+		
 		builder.registerTypeAdapter(NominalGroup.class, new NominalGroupDeserializer());
-		builder.registerTypeAdapter(CountObject.class, new CountObject.CountObjectDeserializer());
+		builder.registerTypeAdapter(CountObject.class, new CountObjectDeserializer());
 		
 		Gson gson = builder.create();
 		Class<? extends NominalGroup> clazz = null;
@@ -40,9 +40,6 @@ public class NominalGroupDeserializer implements JsonDeserializer<NominalGroup> 
 		case COLOR:
 			// TODO
 			break;
-		/*case DATE:
-			clazz = TimeObject.class;
-			break;*/
 		case LANGUAGE:
 			clazz = LanguageObject.class;
 			break;
@@ -53,11 +50,8 @@ public class NominalGroupDeserializer implements JsonDeserializer<NominalGroup> 
 			clazz = AdditionalObject.class;
 			break;
 		case PERSON:
-			// TODO
-			break;
-		/*case PLACE:
-			clazz = PlaceObject.class;
-			break;*/				
+			clazz = AdditionalPerson.class;
+			break;				
 		case PRONOUN:
 			clazz = PronounTarget.class;
 			break;
@@ -67,8 +61,10 @@ public class NominalGroupDeserializer implements JsonDeserializer<NominalGroup> 
 		case VERB:
 			clazz = VerbalGroup.class;
 			break;
-			default:
-				break;
+		case PLACE:
+		case DATE:
+			// TODO: ?
+			break;			
 		}
 		
 		return gson.fromJson(arg0, clazz);

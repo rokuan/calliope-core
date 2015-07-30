@@ -6,7 +6,7 @@ import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable(tableName = "modes")
 public class CustomMode {
-	public static final String MODE_FIELD_NAME = "name";
+	public static final String MODE_FIELD_NAME = "content";
 	public static final String CODE_FIELD_NAME = "code";
 	
 	@Expose

@@ -15,7 +15,7 @@ import com.rokuan.calliopecore.sentence.structure.data.place.PlaceAdverbial;
 import com.rokuan.calliopecore.sentence.structure.data.place.StateObject;
 
 
-public class PlaceObjectDeserializer implements JsonDeserializer<PlaceAdverbial> {
+public class PlaceAdverbialDeserializer implements JsonDeserializer<PlaceAdverbial> {
 	@Override
 	public PlaceAdverbial deserialize(JsonElement arg0, Type arg1,
 			JsonDeserializationContext arg2) throws JsonParseException {

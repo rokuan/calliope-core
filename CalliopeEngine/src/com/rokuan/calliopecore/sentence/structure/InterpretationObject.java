@@ -1,16 +1,10 @@
 package com.rokuan.calliopecore.sentence.structure;
 
-/*import java.util.ArrayList;
-import java.util.List;*/
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;
 import com.rokuan.calliopecore.json.InterpretationObjectDeserializer;
-//import com.rokuan.calliopecore.sentence.Adjective;
 import com.rokuan.calliopecore.sentence.structure.common.FullContent;
-/*import com.rokuan.calliopecore.sentence.structure.data.count.AllItemsObject;
-import com.rokuan.calliopecore.sentence.structure.data.count.CountObject;*/
 
 /**
  * Created by LEBEAU Christophe on 17/02/2015.

@@ -79,7 +79,6 @@ public abstract class FullContent implements ISubjectContent, IVerbalContent, IC
 	}
 	
 	@Override
-	//public Enum<?> getAction(){
 	public Action.VerbAction getAction(){
 		return action;
 	}

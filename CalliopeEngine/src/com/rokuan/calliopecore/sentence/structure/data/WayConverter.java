@@ -5,7 +5,7 @@ import com.rokuan.calliopecore.pattern.WordPattern;
 import com.rokuan.calliopecore.sentence.Word.WordType;
 import com.rokuan.calliopecore.sentence.structure.nominal.ComplementObject;
 import com.rokuan.calliopecore.sentence.structure.way.AdditionalMode;
-import com.rokuan.calliopecore.sentence.structure.way.LanguageObject;
+import com.rokuan.calliopecore.sentence.structure.way.LanguageWayObject;
 import com.rokuan.calliopecore.sentence.structure.way.NominalWayObject;
 import com.rokuan.calliopecore.sentence.structure.way.WayAdverbial;
 
@@ -55,7 +55,7 @@ public class WayConverter {
 			
 			result = nominal;
 		} else if(words.syntaxStartsWith(LANGUAGE_PATTERN)){
-			LanguageObject lang = new LanguageObject();
+			LanguageWayObject lang = new LanguageWayObject();
 			
 			words.consume();	// "en"
 			lang.language = words.getCurrentElement().getLanguageInfo();

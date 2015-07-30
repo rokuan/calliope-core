@@ -2,11 +2,16 @@ package com.rokuan.calliopecore.test;
 
 import static org.junit.Assert.assertEquals;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 import org.junit.Test;
 
 import com.rokuan.calliopecore.parser.Parser;
 import com.rokuan.calliopecore.parser.WordBuffer;
 import com.rokuan.calliopecore.sentence.Action;
+import com.rokuan.calliopecore.sentence.Action.VerbAction;
+import com.rokuan.calliopecore.sentence.CustomObject;
 import com.rokuan.calliopecore.sentence.Verb;
 import com.rokuan.calliopecore.sentence.VerbConjugation;
 import com.rokuan.calliopecore.sentence.Word;
@@ -14,9 +19,15 @@ import com.rokuan.calliopecore.sentence.Verb.ConjugationTense;
 import com.rokuan.calliopecore.sentence.Verb.Form;
 import com.rokuan.calliopecore.sentence.Word.WordType;
 import com.rokuan.calliopecore.sentence.structure.InterpretationObject;
+import com.rokuan.calliopecore.sentence.structure.OrderObject;
 import com.rokuan.calliopecore.sentence.structure.QuestionObject;
 import com.rokuan.calliopecore.sentence.structure.InterpretationObject.RequestType;
 import com.rokuan.calliopecore.sentence.structure.QuestionObject.QuestionType;
+import com.rokuan.calliopecore.sentence.structure.data.count.AllItemsObject;
+import com.rokuan.calliopecore.sentence.structure.data.time.SingleTimeObject;
+import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial.DateContext;
+import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial.DateDefinition;
+import com.rokuan.calliopecore.sentence.structure.nominal.AdditionalObject;
 
 public class JsonTest {
 	@Test
@@ -44,5 +55,26 @@ public class JsonTest {
 		
 		assertEquals(object.getRequestType(), RequestType.QUESTION);
 		assertEquals(((QuestionObject)object).questionType, QuestionType.HOW);		
+	}
+	
+	@Test
+	public void testInterpretationObjectDeserialization2() throws ParseException{
+		// Allume toutes les lumieres a 17h40
+		OrderObject obj = new OrderObject();
+		AdditionalObject customObject = new AdditionalObject();
+		customObject.count = new AllItemsObject();
+		customObject.object = new CustomObject("lumière de la cuisine", "KITCHEN_LIGHT");
+		SingleTimeObject time = new SingleTimeObject();
+		time.dateDefinition = DateDefinition.TIME_ONLY;
+		time.preposition = DateContext.WHEN;
+		time.date = new SimpleDateFormat("HH:mm").parse("17:40");
+		
+		obj.action = VerbAction.TURN_ON;
+		obj.what = customObject;
+		
+		String json = InterpretationObject.toJSON(obj);
+		InterpretationObject object = InterpretationObject.fromJSON(json);
+		
+		assertEquals(object.getRequestType(), RequestType.ORDER);
 	}
 }

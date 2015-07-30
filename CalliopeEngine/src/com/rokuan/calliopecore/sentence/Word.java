@@ -8,7 +8,9 @@ import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import com.rokuan.calliopecore.sentence.structure.data.place.PlaceAdverbial.PlaceContext;
+import com.rokuan.calliopecore.sentence.structure.data.purpose.PurposeAdverbial.PurposeContext;
 import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial.DateContext;
+import com.rokuan.calliopecore.sentence.structure.way.WayAdverbial.WayContext;
 
 /**
  * Created by LEBEAU Christophe on 22/02/2015.
@@ -79,6 +81,7 @@ public class Word {
 		TIME_PREPOSITION,
 		PLACE_PREPOSITION,
 		WAY_PREPOSITION,
+		PURPOSE_PREPOSITION,
 		
 		OTHER
 	}
@@ -96,6 +99,8 @@ public class Word {
 	private CityInfo cityInfo;
 	private DateContext datePreposition;
 	private PlaceContext placePreposition;
+	private WayContext wayPreposition;
+	private PurposeContext purposePreposition;
 	private CustomObject customObject;
 	private CustomPlace customPlace;
 	private CustomPerson customPerson;
@@ -236,6 +241,22 @@ public class Word {
 
 	public void setCustomMode(CustomMode customMode) {
 		this.customMode = customMode;
+	}
+
+	public WayContext getWayPreposition() {
+		return wayPreposition;
+	}
+
+	public void setWayPreposition(WayContext wayPreposition) {
+		this.wayPreposition = wayPreposition;
+	}
+
+	public PurposeContext getPurposePreposition() {
+		return purposePreposition;
+	}
+
+	public void setPurposePreposition(PurposeContext purposePreposition) {
+		this.purposePreposition = purposePreposition;
 	}
 
 	@Override

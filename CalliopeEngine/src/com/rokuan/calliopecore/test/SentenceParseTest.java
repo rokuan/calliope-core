@@ -66,7 +66,7 @@ public class SentenceParseTest {
 		MonumentObject monument = (MonumentObject)place;
 		
 		assertEquals(monument.name, "Mairie");
-		assertEquals(((NominalWayObject)obj.how).object, "voiture");
+		assertEquals(((NominalWayObject)obj.how).object.object, "voiture");
 	}
 
 	@Test
@@ -99,7 +99,7 @@ public class SentenceParseTest {
 		
 		assertEquals(place.getPlaceType(), PlaceType.MONUMENT);
 
-		assertEquals(((NominalWayObject)obj.how).object, "voiture");
+		assertEquals(((NominalWayObject)obj.how).object.object, "voiture");
 	}
 
 	@Test
