@@ -5,6 +5,7 @@ import com.rokuan.calliopecore.pattern.WordPattern;
 import com.rokuan.calliopecore.sentence.Word.WordType;
 import com.rokuan.calliopecore.sentence.structure.nominal.ComplementObject;
 import com.rokuan.calliopecore.sentence.structure.way.AdditionalMode;
+import com.rokuan.calliopecore.sentence.structure.way.ColorWayObject;
 import com.rokuan.calliopecore.sentence.structure.way.LanguageWayObject;
 import com.rokuan.calliopecore.sentence.structure.way.NominalWayObject;
 import com.rokuan.calliopecore.sentence.structure.way.WayAdverbial;
@@ -15,18 +16,23 @@ public class WayConverter {
 			WordPattern.simple(WordType.MEAN_OF_TRANSPORT));
 	
 	public static final WordPattern LANGUAGE_PATTERN = WordPattern.sequence(
-			WordPattern.simple(WordType.ANY, "en"),
+			WordPattern.simple(WordType.WAY_PREPOSITION, "en"),
 			WordPattern.simple(WordType.LANGUAGE)
 			);
 	
 	public static final WordPattern MODE_PATTERN = WordPattern.sequence(
 			WordPattern.simple(WordType.WAY_PREPOSITION),
 			WordPattern.simple(WordType.MODE));
+	
+	public static final WordPattern COLOR_PATTERN = WordPattern.sequence(
+			WordPattern.simple(WordType.WAY_PREPOSITION, "en"),
+			WordPattern.simple(WordType.COLOR)); 
 
 	public static boolean isAWayAdverbial(WordBuffer words){
 		return words.syntaxStartsWith(MEANS_OF_TRANSPORT_PATTERN)
 				|| words.syntaxStartsWith(LANGUAGE_PATTERN)
-				|| words.syntaxStartsWith(MODE_PATTERN);
+				|| words.syntaxStartsWith(MODE_PATTERN)
+				|| words.syntaxStartsWith(COLOR_PATTERN);
 	}
 
 	public static WayAdverbial parseWayAdverbial(WordBuffer words){
@@ -62,6 +68,14 @@ public class WayConverter {
 			words.consume();
 			
 			result = lang;
+		} else if(words.syntaxStartsWith(COLOR_PATTERN)){
+			ColorWayObject col = new ColorWayObject();
+			
+			words.consume(); // "en"
+			col.color = words.getCurrentElement().getColorInfo();
+			words.consume();
+			
+			result = col;
 		}
 		
 		return result;

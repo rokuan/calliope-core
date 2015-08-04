@@ -15,6 +15,7 @@ public abstract class PlaceAdverbial {
 		UP,
 		BOTTOM,
 		DOWN,
+		CENTER,
 		AT,
 		TO,
 		AGAINST,

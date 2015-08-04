@@ -95,6 +95,7 @@ public class Word {
 	private HashSet<WordType> types = new HashSet<WordType>();
 	private VerbConjugation verbInfo;
 	private LanguageInfo langInfo;
+	private ColorInfo colorInfo;
 	private CountryInfo countryInfo;
 	private CityInfo cityInfo;
 	private DateContext datePreposition;
@@ -177,6 +178,14 @@ public class Word {
 
 	public void setLanguageInfo(LanguageInfo langInfo) {
 		this.langInfo = langInfo;
+	}
+
+	public ColorInfo getColorInfo() {
+		return colorInfo;
+	}
+
+	public void setColorInfo(ColorInfo colorInfo) {
+		this.colorInfo = colorInfo;
 	}
 
 	public CountryInfo getCountryInfo() {

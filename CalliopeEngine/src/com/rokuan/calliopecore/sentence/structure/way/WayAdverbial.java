@@ -7,7 +7,8 @@ public abstract class WayAdverbial {
 		CUSTOM,
 		VERBAL,
 		NOMINAL,
-		LANGUAGE
+		LANGUAGE,
+		COLOR
 	}
 	
 	public enum WayContext {
