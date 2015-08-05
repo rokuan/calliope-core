@@ -11,6 +11,7 @@ import org.junit.Test;
 import com.rokuan.calliopecore.parser.Parser;
 import com.rokuan.calliopecore.parser.WordBuffer;
 import com.rokuan.calliopecore.sentence.Action;
+import com.rokuan.calliopecore.sentence.CityInfo;
 import com.rokuan.calliopecore.sentence.CustomObject;
 import com.rokuan.calliopecore.sentence.Verb;
 import com.rokuan.calliopecore.sentence.Verb.Pronoun;
@@ -25,6 +26,7 @@ import com.rokuan.calliopecore.sentence.structure.QuestionObject;
 import com.rokuan.calliopecore.sentence.structure.QuestionObject.QuestionType;
 import com.rokuan.calliopecore.sentence.structure.data.place.MonumentObject;
 import com.rokuan.calliopecore.sentence.structure.data.place.PlaceAdverbial;
+import com.rokuan.calliopecore.sentence.structure.data.place.StateObject;
 import com.rokuan.calliopecore.sentence.structure.data.place.PlaceAdverbial.PlaceType;
 import com.rokuan.calliopecore.sentence.structure.data.time.SingleTimeObject;
 import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial;
@@ -38,7 +40,7 @@ public class SentenceParseTest {
 	@Test
 	public void testGoTo(){
 		WordBuffer words = new WordBuffer();
-		Word go = new Word("aller", Word.WordType.VERB);
+		Word go = new Word("aller", Word.WordType.VERB, WordType.COMMON_NAME);
 		Verb toGo = new Verb("aller", Action.VerbAction.GO, false);
 		VerbConjugation toGoConjug = new VerbConjugation(ConjugationTense.PRESENT, Form.INFINITIVE, null, "aller", toGo);		
 		toGoConjug.setVerb(toGo);
@@ -99,6 +101,42 @@ public class SentenceParseTest {
 		
 		assertEquals(place.getPlaceType(), PlaceType.MONUMENT);
 
+		assertEquals(((NominalWayObject)obj.how).object.object, "voiture");
+	}
+	
+	@Test
+	public void testGoTo3(){
+		WordBuffer words = new WordBuffer();
+		Word go = new Word("aller", Word.WordType.VERB, WordType.COMMON_NAME);
+		Verb toGo = new Verb("aller", Action.VerbAction.GO, false);
+		VerbConjugation toGoConjug = new VerbConjugation(ConjugationTense.PRESENT, Form.INFINITIVE, null, "aller", toGo);
+		Word paris = new Word("Paris", WordType.CITY);
+		
+		toGoConjug.setVerb(toGo);
+		go.setVerbInfo(toGoConjug);
+
+		paris.setCityInfo(new CityInfo("Paris", 48.8564528, 2.3524282));
+
+		words.add(new Word("comment", WordType.INTERROGATIVE_PRONOUN));
+		words.add(go);
+		words.add(new Word("à", WordType.PREPOSITION_AT));
+		words.add(paris);
+		words.add(new Word("en", WordType.PREPOSITION));
+		words.add(new Word("voiture", WordType.MEAN_OF_TRANSPORT));
+
+		InterpretationObject obj = new Parser().parseInterpretationObject(words);
+
+		assertEquals(obj.getRequestType(), InterpretationObject.RequestType.QUESTION);
+		assertEquals(obj.action, Action.VerbAction.GO);
+
+		QuestionObject question = (QuestionObject)obj;
+		assertEquals(question.questionType, QuestionType.HOW);
+
+		PlaceAdverbial place = obj.where;
+		
+		StateObject state = (StateObject)place;
+		
+		assertEquals(state.city.getName(), "Paris");
 		assertEquals(((NominalWayObject)obj.how).object.object, "voiture");
 	}
 

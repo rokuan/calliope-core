@@ -13,6 +13,7 @@ import com.rokuan.calliopecore.sentence.Word;
 import com.rokuan.calliopecore.sentence.Word.WordType;
 import com.rokuan.calliopecore.sentence.structure.data.time.SingleTimeObject;
 import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial;
+import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial.DateContext;
 import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial.DateDefinition;
 import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial.TimeInterval;
 import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial.TimeTense;
@@ -79,14 +80,14 @@ public class DateConverter {
 			WordPattern.simple(new WordType[]{ WordType.TIME_PREPOSITION, WordType.CONTRACTED }),
 			WordPattern.sequence(WordPattern.optional(WordPattern.simple(WordType.TIME_PREPOSITION)), WordPattern.simple(WordType.DEFINITE_ARTICLE))
 			);
-	
+
 	public static final WordPattern FIXED_DATE_PATTERN = WordPattern.sequence(
-					//WordPattern.sequence(WordPattern.optional(WordPattern.simple(WordType.ANY, "pour")), WordPattern.simple(WordType.DEFINITE_ARTICLE)),
-					DATE_PREPOSITION_PATTERN,
-					WordPattern.or(WordPattern.simple(WordType.NUMBER), WordPattern.simple(WordType.NUMERICAL_POSITION)),
-					WordPattern.simple(WordType.DATE_MONTH),
-					WordPattern.optional(WordPattern.simple(WordType.NUMBER))
-					//WordPattern.optional(timePattern)
+			//WordPattern.sequence(WordPattern.optional(WordPattern.simple(WordType.ANY, "pour")), WordPattern.simple(WordType.DEFINITE_ARTICLE)),
+			DATE_PREPOSITION_PATTERN,
+			WordPattern.or(WordPattern.simple(WordType.NUMBER), WordPattern.simple(WordType.NUMERICAL_POSITION)),
+			WordPattern.simple(WordType.DATE_MONTH),
+			WordPattern.optional(WordPattern.simple(WordType.NUMBER))
+			//WordPattern.optional(timePattern)
 			);
 	public static final WordPattern MINUTES_DEFINITION_PATTERN = WordPattern.or(
 			WordPattern.sequence(
@@ -116,7 +117,7 @@ public class DateConverter {
 					WordPattern.simple(WordType.TIME_PREPOSITION),
 					//WordPattern.simple(WordType.ANY, "pour"), 
 					WordPattern.sequence(WordPattern.simple(WordType.ANY, "quand"), WordPattern.simple(WordType.PERSONAL_PRONOUN, "il"), WordPattern.simple(WordType.VERB, "sera"))),
-			TIME_PATTERN
+					TIME_PATTERN
 			);
 
 
@@ -198,7 +199,7 @@ public class DateConverter {
 			/*WordPattern.simple(new WordType[]{ WordType.TIME_PREPOSITION, WordType.CONTRACTED }),
 			WordPattern.sequence(WordPattern.optional(WordPattern.simple(WordType.TIME_PREPOSITION)), WordPattern.simple(WordType.DEFINITE_ARTICLE))*/
 			SingleTimeObject single = new SingleTimeObject();
-			
+
 			if(words.getCurrentElement().isOfType(WordType.TIME_PREPOSITION)){
 				// TODO: parser la preposition
 				single.preposition = words.getCurrentElement().getDatePreposition();
@@ -217,13 +218,15 @@ public class DateConverter {
 			result = single;
 		} else if(WordPattern.syntaxStartsWith(words, TIME_DECLARATION_PATTERN)){
 			SingleTimeObject single = new SingleTimeObject();
-			
+
 			if(words.getCurrentElement().isOfType(WordType.PREPOSITION_AT)){
+				single.preposition = DateContext.WHEN;
 				words.consume();
 			} else if(words.getCurrentElement().isOfType(WordType.TIME_PREPOSITION)){
 				single.preposition = words.getCurrentElement().getDatePreposition();
 				words.consume();
 			} else {
+				single.preposition = DateContext.WHEN;
 				words.consume();
 				words.consume();
 				words.consume();

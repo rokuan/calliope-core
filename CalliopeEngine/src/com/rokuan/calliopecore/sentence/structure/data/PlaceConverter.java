@@ -62,8 +62,8 @@ public class PlaceConverter {
 
 	public static boolean isAPlaceAdverbial(WordBuffer words){
 		return words.syntaxStartsWith(ADDITIONAL_PLACE_PATTERN)
-				|| words.syntaxStartsWith(PLACE_PATTERN)
-				|| words.syntaxStartsWith(WORLD_PLACE_PATTERN);
+				|| words.syntaxStartsWith(WORLD_PLACE_PATTERN)
+				|| words.syntaxStartsWith(PLACE_PATTERN);
 	}
 
 	public static PlaceAdverbial parsePlaceAdverbial(WordBuffer words){

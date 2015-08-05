@@ -15,14 +15,14 @@ public class PatternTest {
 		WordBuffer words = new WordBuffer();
 		WordPattern sequence = WordPattern.sequence(WordPattern.simple(WordType.DEFINITE_ARTICLE), WordPattern.simple(WordType.COMMON_NAME));
 
-		assertEquals(false, words.syntaxStartsWith(sequence));
+		assertFalse(words.syntaxStartsWith(sequence));
 
 		words.add(new Word("le", WordType.DEFINITE_ARTICLE));
 		words.add(new Word("chocolat", WordType.COMMON_NAME));
 		words.add(new Word("est", WordType.VERB));
 		words.add(new Word("bon", WordType.ADJECTIVE));
 
-		assertEquals(true, words.syntaxStartsWith(sequence));
+		assertTrue(words.syntaxStartsWith(sequence));
 	}
 
 	@Test
@@ -46,14 +46,24 @@ public class PatternTest {
 		WordBuffer words = new WordBuffer();
 		WordPattern simple = WordPattern.simple(WordType.PROPER_NAME);
 
-		assertEquals(false, words.syntaxStartsWith(simple));
+		assertFalse(words.syntaxStartsWith(simple));
 
 		words.add(new Word("Calliope", WordType.PROPER_NAME));
 		words.add(new Word("est", WordType.VERB));
 		words.add(new Word("un", WordType.INDEFINITE_ARTICLE));
 		words.add(new Word("programme", WordType.COMMON_NAME));
 
-		assertEquals(true, words.syntaxStartsWith(simple));
+		assertTrue(words.syntaxStartsWith(simple));
+	}
+	
+	@Test
+	public void testOr(){
+		WordBuffer words = new WordBuffer();
+		WordPattern or = WordPattern.or(WordPattern.simple(WordType.PROPER_NAME), WordPattern.simple(WordType.COMMON_NAME));
+		
+		words.add(new Word("programme", WordType.COMMON_NAME));
+		
+		assertTrue(words.syntaxStartsWith(or));
 	}
 
 	@Test
@@ -62,7 +72,7 @@ public class PatternTest {
 		WordPattern list = WordPattern.nonEmptyList(
 				WordPattern.sequence(WordPattern.simple(WordType.INDEFINITE_ARTICLE), WordPattern.simple(WordType.COMMON_NAME)));
 
-		assertEquals(false, words.syntaxStartsWith(list));
+		assertFalse(words.syntaxStartsWith(list));
 
 		words.add(new Word("un", WordType.INDEFINITE_ARTICLE));
 		words.add(new Word("oiseau", WordType.COMMON_NAME));
@@ -71,7 +81,7 @@ public class PatternTest {
 		words.add(new Word("une", WordType.INDEFINITE_ARTICLE));
 		words.add(new Word("chèvre", WordType.COMMON_NAME));
 
-		assertEquals(true, words.syntaxStartsWith(list));
+		assertTrue(words.syntaxStartsWith(list));
 	}
 
 	@Test
@@ -82,7 +92,7 @@ public class PatternTest {
 				WordPattern.optional(WordPattern.simple(WordType.PREPOSITION_AND))
 				);
 
-		assertEquals(false, words.syntaxStartsWith(separatedList));
+		assertFalse(words.syntaxStartsWith(separatedList));
 
 		words.add(new Word("la", WordType.DEFINITE_ARTICLE));
 		words.add(new Word("farine", WordType.COMMON_NAME));
@@ -92,6 +102,6 @@ public class PatternTest {
 		words.add(new Word("le", WordType.DEFINITE_ARTICLE));
 		words.add(new Word("sucre", WordType.COMMON_NAME));
 
-		assertEquals(true, words.syntaxStartsWith(separatedList));
+		assertTrue(words.syntaxStartsWith(separatedList));
 	}
 }

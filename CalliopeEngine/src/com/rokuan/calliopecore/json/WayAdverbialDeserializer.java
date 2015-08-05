@@ -10,6 +10,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import com.rokuan.calliopecore.sentence.structure.nominal.NominalGroup;
 import com.rokuan.calliopecore.sentence.structure.way.AdditionalMode;
+import com.rokuan.calliopecore.sentence.structure.way.ColorWayObject;
 import com.rokuan.calliopecore.sentence.structure.way.LanguageWayObject;
 import com.rokuan.calliopecore.sentence.structure.way.NominalWayObject;
 import com.rokuan.calliopecore.sentence.structure.way.VerbalWayObject;
@@ -38,6 +39,9 @@ public class WayAdverbialDeserializer implements JsonDeserializer<WayAdverbial> 
 			break;
 		case VERBAL:
 			clazz = VerbalWayObject.class;
+			break;
+		case COLOR:
+			clazz = ColorWayObject.class;
 			break;
 		}
 		

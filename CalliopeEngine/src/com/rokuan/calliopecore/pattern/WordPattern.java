@@ -52,7 +52,7 @@ public abstract class WordPattern {
 				parts.add(p);
 			}
 		}
-		
+
 		public WordSequencePattern(List<WordPattern> ps) {
 			parts = new ArrayList<WordPattern>(ps);
 		}
@@ -179,7 +179,7 @@ public abstract class WordPattern {
 	public static WordPattern simple(Word.WordType ty){
 		return new WordSimplePattern(new WordType[]{ ty });
 	}
-	
+
 	public static WordPattern simple(Word.WordType[] ty){
 		return new WordSimplePattern(ty);
 	}
@@ -187,15 +187,15 @@ public abstract class WordPattern {
 	public static WordPattern simple(Word.WordType ty, String regex){
 		return new WordSimplePattern(new WordType[]{ ty }, regex);
 	}
-	
+
 	public static WordPattern simple(Word.WordType[] ty, String regex){
 		return new WordSimplePattern(ty, regex);
 	}
-	
+
 	public static WordPattern simple(Word.WordType ty, String valueRegex, String verbRegex){
 		return new WordSimplePattern(new WordType[]{ ty }, valueRegex, verbRegex);
 	}
-	
+
 	public static WordPattern simple(Word.WordType[] ty, String valueRegex, String verbRegex){
 		return new WordSimplePattern(ty, valueRegex, verbRegex);
 	}
@@ -216,12 +216,14 @@ public abstract class WordPattern {
 		if(!words.isIntoBounds()){
 			return false;
 		}
-		
-		WordBuffer copy = new WordBuffer(words);
-		return realSyntaxStartsWith(copy, patterns);
+
+		/*WordBuffer copy = new WordBuffer(words);
+		//return realSyntaxStartsWith(copy, patterns);
+		return realSyntaxStartsWith(copy, 0, patterns);*/
+		return realSyntaxStartsWith(new WordBuffer(words), new WordSequencePattern(patterns));
 	}
 
-	private static boolean realSyntaxStartsWith(WordBuffer words, WordPattern... patterns){
+	/*private static boolean realSyntaxStartsWith(WordBuffer words, WordPattern... patterns){
 		int patternsIndex = 0;
 
 		while(true){
@@ -244,18 +246,20 @@ public abstract class WordPattern {
 				WordOrPattern or = (WordOrPattern)patterns[patternsIndex];
 				boolean patternMatch = false;
 
-				for(WordPattern pat: or.choices){
-					words.start();
+				words.start();
 
+				for(WordPattern pat: or.choices){
 					if(realSyntaxStartsWith(words, pat)){
 						patternMatch = true;
 						break;
-					} 
-
-					words.cancel();
+					} else { 
+						words.cancel();
+						words.start();
+					}
 				}
 
 				if(!patternMatch){
+					words.cancel();
 					return false;
 				}                
 			} else if (patterns[patternsIndex] instanceof WordSimplePattern){
@@ -293,9 +297,10 @@ public abstract class WordPattern {
 				}
 			} else if(patterns[patternsIndex] instanceof WordSequencePattern){
 				WordSequencePattern sequence = (WordSequencePattern)patterns[patternsIndex];
-				
+
 				// TODO: pouvoir gerer les cas ou certains elements optionnels empietent sur le prochain pattern
-				// Exemple: est ~ [ OPT(AUXILIARY), VERB ] 
+				// Exemple: est ~ [ OPT(AUXILIARY), VERB ]
+
 				for(WordPattern pat: sequence.parts){
 					if(!realSyntaxStartsWith(words, pat)){
 						return false;
@@ -333,6 +338,145 @@ public abstract class WordPattern {
 			}
 
 			patternsIndex++;
+		}*/
+
+	/*private static boolean realSyntaxStartsWith(WordBuffer words, WordPattern... patterns){
+		List<WordPattern> patternsList = Arrays.asList(patterns);
+		return realSyntaxStartsWith(words, 0, patternsList);
+	}*/
+
+	private static boolean realSyntaxStartsWith(WordBuffer words, WordPattern pattern){		
+		if(pattern instanceof WordOrPattern){
+			WordOrPattern or = (WordOrPattern)pattern;
+			boolean patternMatch = false;
+
+			for(WordPattern pat: or.choices){
+				words.start();
+				
+				if(realSyntaxStartsWith(words, pat)){
+					patternMatch = true;
+					words.end();
+					break;
+				}
+				
+				words.cancel();
+			}
+
+			if(!patternMatch){
+				return false;
+			}                
+		} else if (pattern instanceof WordSimplePattern){
+			WordSimplePattern simple = (WordSimplePattern)pattern;
+			
+			if(words.getCurrentIndex() >= words.size()){
+				return false;
+			}
+
+			for(int i=0; i<simple.types.length; i++){
+				if(!words.getCurrentElement().isOfType(simple.types[i])){
+					return false;
+				}
+			}
+
+			try{
+				if(simple.valuePattern != null && !words.getCurrentElement().getValue().matches(simple.valuePattern)){
+					return false;
+				}
+
+				if(simple.verbPattern != null && !words.getCurrentElement().getVerbInfo().getVerb().getVerb().matches(simple.verbPattern)){
+					return false;
+				}
+			}catch(Exception e){
+				// TODO: lancer l'exception quoi qu'il arrive ?
+				//System.out.println(e);
+				e.printStackTrace();
+				return false;
+			}
+
+			words.next();
+		} else if(pattern instanceof WordOptionalPattern){
+			WordOptionalPattern optional = (WordOptionalPattern)pattern;
+
+			words.start();
+
+			if(!realSyntaxStartsWith(words, optional.pattern)){
+				words.cancel();
+				return true;
+			}
+			
+			words.end();
+		} else if(pattern instanceof WordSequencePattern){
+			WordSequencePattern sequence = (WordSequencePattern)pattern;
+
+			words.start();
+
+			for(WordPattern pat: sequence.parts){
+				if(!realSyntaxStartsWith(words, pat)){
+					words.cancel();
+					return false;
+				}
+			}
+			
+			words.end();
+		} else if(pattern instanceof WordListPattern){
+			WordListPattern list = (WordListPattern)pattern;
+
+			words.start();
+
+			if(!realSyntaxStartsWith(words, list.element)){
+				words.cancel();
+				return false;
+			}
+			
+			words.end();
+
+			while(true){
+				if(words.getCurrentIndex() >= words.size()){
+					break;
+				}
+				
+				words.start();
+
+				if(!realSyntaxStartsWith(words, list.element)){
+					words.cancel();
+					break;
+				}
+				
+				words.end();
+			}
+		} else if(pattern instanceof WordSeparatedListPattern){
+			WordSeparatedListPattern list = (WordSeparatedListPattern)pattern;
+			WordPattern separatorSequence = WordPattern.sequence(list.separator, list.element);
+
+			words.start();
+
+			if(!realSyntaxStartsWith(words, list.element)){
+				words.cancel();
+				return false;
+			}			
+			
+			words.end();
+
+			while(true){
+				if(words.getCurrentIndex() >= words.size()){
+					break;
+				}
+				
+				words.start();
+
+				if(!realSyntaxStartsWith(words, separatorSequence)){
+					words.cancel();
+					break;
+				}
+				
+				words.end();
+			}
+		} else {
+			// TODO: should not happen
+			return false;
 		}
+
+		return true;
 	}
+
 }

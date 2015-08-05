@@ -19,12 +19,17 @@ public class WordBuffer extends TokenBuffer<Word> {
 	}
 	
 	public WordBuffer(List<Word> ws){
-		this();
-		this.addAll(ws);
+		/*this();
+		this.addAll(ws);*/
+		super(ws);
 	}
 	
 	public WordBuffer(WordBuffer wb){
 		super(wb);
+	}
+	
+	public WordBuffer cut(){
+		return new WordBuffer(this.subList(getCurrentIndex(), this.size()));
 	}
 	
     public boolean matchesSyntax(Word.WordType... types){

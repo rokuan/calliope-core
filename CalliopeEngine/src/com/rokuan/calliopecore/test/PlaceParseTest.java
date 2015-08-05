@@ -21,6 +21,26 @@ import com.rokuan.calliopecore.sentence.structure.data.place.StateObject;
 
 public class PlaceParseTest {
 	@Test
+	public void testCityParse(){
+		WordBuffer words = new WordBuffer();
+		Word paris = new Word("Paris", WordType.CITY, WordType.PROPER_NAME);
+
+		paris.setCityInfo(new CityInfo("Paris", 48.8564528, 2.3524282));
+		
+		words.add(new Word("à", WordType.PREPOSITION_AT));
+		words.add(paris);
+
+		PlaceAdverbial place = PlaceConverter.parsePlaceAdverbial(words);
+
+		assertEquals(place.getPlaceType(), PlaceType.STATE);
+
+		StateObject state = (StateObject)place;
+
+		assertEquals(state.city.getName(), "Paris");
+		assertNull(state.country);
+	}
+	
+	@Test
 	public void testCountryParse(){
 		WordBuffer words = new WordBuffer();
 		Word france = new Word("France", WordType.COUNTRY);

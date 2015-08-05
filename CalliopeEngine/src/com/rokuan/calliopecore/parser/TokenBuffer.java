@@ -1,6 +1,7 @@
 package com.rokuan.calliopecore.parser;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 
 /**
@@ -22,6 +23,11 @@ public class TokenBuffer<T> extends ArrayList<T> {
     public TokenBuffer(TokenBuffer<T> other){
     	super(other);
     	this.currentIndex = other.currentIndex;
+    }
+    
+    public TokenBuffer(List<T> buffer){
+    	super(buffer);
+    	this.currentIndex = 0;
     }
     
     public boolean isIntoBounds(){
@@ -78,6 +84,10 @@ public class TokenBuffer<T> extends ArrayList<T> {
     	if(!tmpIndexes.empty()){
     		currentIndex = tmpIndexes.pop();
     	}
+    }
+    
+    public void end(){
+    	tmpIndexes.pop();
     }
     
     public void truncate(){
