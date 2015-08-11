@@ -1,11 +1,12 @@
 package com.rokuan.calliopecore.sentence.structure.data.time;
 
 import com.google.gson.annotations.Expose;
+import com.rokuan.calliopecore.content.ITimeObject;
 
 /**
  * Created by LEBEAU Christophe on 20/02/2015.
  */
-public abstract class TimeAdverbial {
+public abstract class TimeAdverbial implements ITimeObject {
     public enum TimeUnit {
         SECONDS,
         MINUTES,
@@ -60,16 +61,5 @@ public abstract class TimeAdverbial {
     public TimeTense tense = TimeTense.PRESENT;
 
 	@Expose
-    private TimeType timeType;
-
-	@Expose
     public TimeInterval interval = TimeInterval.SINGLE;
-
-    protected TimeAdverbial(TimeType ty){
-    	timeType = ty;
-    }
-    
-    public TimeType getTimeType(){
-    	return timeType;
-    }
 }

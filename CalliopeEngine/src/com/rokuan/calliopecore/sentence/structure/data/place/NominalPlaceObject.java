@@ -10,7 +10,8 @@ public class NominalPlaceObject extends PlaceAdverbial {
 	@Expose
 	public ComplementObject content;
 	
-	public NominalPlaceObject() {
-		super(PlaceType.NOMINAL);
+	@Override
+	public PlaceType getPlaceType() {
+		return PlaceType.NOMINAL;
 	}
 }

@@ -1,12 +1,12 @@
 package com.rokuan.calliopecore.sentence.structure.data;
 
+import com.rokuan.calliopecore.content.IPlaceObject;
 import com.rokuan.calliopecore.parser.WordBuffer;
 import com.rokuan.calliopecore.pattern.WordPattern;
 import com.rokuan.calliopecore.sentence.Word.WordType;
 import com.rokuan.calliopecore.sentence.structure.data.place.AdditionalPlaceObject;
-import com.rokuan.calliopecore.sentence.structure.data.place.MonumentObject;
-import com.rokuan.calliopecore.sentence.structure.data.place.PlaceAdverbial;
-import com.rokuan.calliopecore.sentence.structure.data.place.StateObject;
+import com.rokuan.calliopecore.sentence.structure.data.place.LocationObject;
+import com.rokuan.calliopecore.sentence.structure.data.place.NamedPlaceObject;
 
 public class PlaceConverter {
 	// le musée du Louvre, la Grande Muraille de Chine 
@@ -66,8 +66,8 @@ public class PlaceConverter {
 				|| words.syntaxStartsWith(PLACE_PATTERN);
 	}
 
-	public static PlaceAdverbial parsePlaceAdverbial(WordBuffer words){
-		PlaceAdverbial result = null;
+	public static IPlaceObject parsePlaceAdverbial(WordBuffer words){
+		IPlaceObject result = null;
 
 		// TODO: gerer les locations pleines (Le musee du Louvre a Paris en France)
 		if(words.syntaxStartsWith(ADDITIONAL_PLACE_PATTERN)){
@@ -86,7 +86,7 @@ public class PlaceConverter {
 			words.consume();
 			result = custom;
 		} else if(words.syntaxStartsWith(WORLD_PLACE_PATTERN)){
-			StateObject state = new StateObject();
+			LocationObject state = new LocationObject();
 			
 			if(words.syntaxStartsWith(CITY_PATTERN)){
 				while(!words.getCurrentElement().isOfType(WordType.CITY)){
@@ -108,7 +108,7 @@ public class PlaceConverter {
 
 			result = state;
 		} else if(words.syntaxStartsWith(PLACE_PATTERN)){
-			MonumentObject monument = new MonumentObject();
+			NamedPlaceObject monument = new NamedPlaceObject();
 			StringBuilder buffer = new StringBuilder();
 
 			if(words.getCurrentElement().isOfType(WordType.PREPOSITION_AT)){

@@ -10,7 +10,8 @@ public class VerbalTimeObject extends TimeAdverbial {
 	@Expose
 	public VerbalGroup condition;
 
-	public VerbalTimeObject() {
-		super(TimeType.VERBAL);
+	@Override
+	public TimeType getTimeType() {
+		return TimeType.VERBAL;
 	}
 }

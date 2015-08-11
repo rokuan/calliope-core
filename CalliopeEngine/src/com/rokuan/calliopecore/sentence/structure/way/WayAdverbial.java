@@ -1,8 +1,8 @@
 package com.rokuan.calliopecore.sentence.structure.way;
 
-import com.google.gson.annotations.Expose;
+import com.rokuan.calliopecore.content.IWayObject;
 
-public abstract class WayAdverbial {
+public abstract class WayAdverbial implements IWayObject {
 	public enum WayType {
 		CUSTOM,
 		VERBAL,
@@ -13,16 +13,5 @@ public abstract class WayAdverbial {
 	
 	public enum WayContext {
 		BY
-	}
-	
-	@Expose
-	private WayType wayType;
-
-	protected WayAdverbial(WayType ty){
-		wayType = ty;
-	}
-
-	public WayType getWayType() {
-		return wayType;
 	}
 }

@@ -1,8 +1,9 @@
 package com.rokuan.calliopecore.sentence.structure.data.place;
 
 import com.google.gson.annotations.Expose;
+import com.rokuan.calliopecore.content.IPlaceObject;
 
-public abstract class PlaceAdverbial {
+public abstract class PlaceAdverbial implements IPlaceObject {
 	public enum PlaceContext {
 		BEHIND,
 		ON,
@@ -31,23 +32,24 @@ public abstract class PlaceAdverbial {
 	}
 	
 	public enum PlaceType {
-		STATE,
-		MONUMENT,
+		LOCATION,
+		CITY,
+		COUNTRY,
+		NAMED_PLACE,
 		NOMINAL,
 		CUSTOM
 	}
 
 	@Expose
-	private PlaceType placeType;
-
-	@Expose
 	public PlaceContext location;
 	
-	protected PlaceAdverbial(PlaceType ty) {
-		placeType = ty;
+	@Override
+	public PlaceContext getPlacePreposition(){
+		return location;
 	}
 	
-	public PlaceType getPlaceType(){
-		return placeType;
+	@Override
+	public void setPlacePreposition(PlaceContext prep){
+		location = prep;
 	}
 }

@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import com.rokuan.calliopecore.content.INominalObject;
 import com.rokuan.calliopecore.parser.WordBuffer;
 import com.rokuan.calliopecore.sentence.CustomObject;
 import com.rokuan.calliopecore.sentence.Word;
@@ -11,7 +12,6 @@ import com.rokuan.calliopecore.sentence.Word.WordType;
 import com.rokuan.calliopecore.sentence.structure.data.NominalGroupConverter;
 import com.rokuan.calliopecore.sentence.structure.nominal.AdditionalObject;
 import com.rokuan.calliopecore.sentence.structure.nominal.ComplementObject;
-import com.rokuan.calliopecore.sentence.structure.nominal.NominalGroup;
 import com.rokuan.calliopecore.sentence.structure.nominal.NominalGroup.GroupType;
 
 public class NominalGroupParseTest {
@@ -22,9 +22,9 @@ public class NominalGroupParseTest {
 		words.add(new Word("le", WordType.DEFINITE_ARTICLE));
 		words.add(new Word("chat", WordType.COMMON_NAME));
 		
-		NominalGroup nominal = NominalGroupConverter.parseDirectObject(words);
+		INominalObject nominal = NominalGroupConverter.parseDirectObject(words);
 		
-		assertEquals(nominal.getType(), GroupType.COMPLEMENT);
+		assertEquals(nominal.getGroupType(), GroupType.COMPLEMENT);
 		
 		ComplementObject compl = (ComplementObject)nominal;
 		
@@ -42,9 +42,9 @@ public class NominalGroupParseTest {
 		words.add(new Word("le", WordType.DEFINITE_ARTICLE));
 		words.add(qr);
 		
-		NominalGroup nominal = NominalGroupConverter.parseDirectObject(words);
+		INominalObject nominal = NominalGroupConverter.parseDirectObject(words);
 		
-		assertEquals(nominal.getType(), GroupType.OBJECT);
+		assertEquals(nominal.getGroupType(), GroupType.OBJECT);
 		
 		AdditionalObject obj = (AdditionalObject)nominal;
 		

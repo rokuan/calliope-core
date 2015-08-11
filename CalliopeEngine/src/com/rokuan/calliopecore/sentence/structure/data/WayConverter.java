@@ -1,14 +1,14 @@
 package com.rokuan.calliopecore.sentence.structure.data;
 
+import com.rokuan.calliopecore.content.IWayObject;
 import com.rokuan.calliopecore.parser.WordBuffer;
 import com.rokuan.calliopecore.pattern.WordPattern;
 import com.rokuan.calliopecore.sentence.Word.WordType;
+import com.rokuan.calliopecore.sentence.structure.nominal.ColorObject;
 import com.rokuan.calliopecore.sentence.structure.nominal.ComplementObject;
+import com.rokuan.calliopecore.sentence.structure.nominal.LanguageObject;
 import com.rokuan.calliopecore.sentence.structure.way.AdditionalMode;
-import com.rokuan.calliopecore.sentence.structure.way.ColorWayObject;
-import com.rokuan.calliopecore.sentence.structure.way.LanguageWayObject;
 import com.rokuan.calliopecore.sentence.structure.way.NominalWayObject;
-import com.rokuan.calliopecore.sentence.structure.way.WayAdverbial;
 
 public class WayConverter {
 	public static final WordPattern MEANS_OF_TRANSPORT_PATTERN = WordPattern.sequence(
@@ -35,8 +35,8 @@ public class WayConverter {
 				|| words.syntaxStartsWith(COLOR_PATTERN);
 	}
 
-	public static WayAdverbial parseWayAdverbial(WordBuffer words){
-		WayAdverbial result = null;
+	public static IWayObject parseWayAdverbial(WordBuffer words){
+		IWayObject result = null;
 		
 		if(words.syntaxStartsWith(MODE_PATTERN)){
 			AdditionalMode custom = new AdditionalMode();
@@ -61,7 +61,7 @@ public class WayConverter {
 			
 			result = nominal;
 		} else if(words.syntaxStartsWith(LANGUAGE_PATTERN)){
-			LanguageWayObject lang = new LanguageWayObject();
+			LanguageObject lang = new LanguageObject();
 			
 			words.consume();	// "en"
 			lang.language = words.getCurrentElement().getLanguageInfo();
@@ -69,7 +69,7 @@ public class WayConverter {
 			
 			result = lang;
 		} else if(words.syntaxStartsWith(COLOR_PATTERN)){
-			ColorWayObject col = new ColorWayObject();
+			ColorObject col = new ColorObject();
 			
 			words.consume(); // "en"
 			col.color = words.getCurrentElement().getColorInfo();

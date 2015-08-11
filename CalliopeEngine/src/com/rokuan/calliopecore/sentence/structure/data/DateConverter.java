@@ -7,6 +7,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import com.rokuan.calliopecore.content.ITimeObject;
 import com.rokuan.calliopecore.parser.WordBuffer;
 import com.rokuan.calliopecore.pattern.WordPattern;
 import com.rokuan.calliopecore.sentence.Word;
@@ -152,7 +153,7 @@ public class DateConverter {
 				|| WordPattern.syntaxStartsWith(words, DIRECT_OBJECT_TIME_PATTERN);
 	}
 
-	public static TimeAdverbial parseTimeAdverbial(WordBuffer words){
+	public static ITimeObject parseTimeAdverbial(WordBuffer words){
 		TimeAdverbial result = null;
 
 		if(WordPattern.syntaxStartsWith(words, FROM_TO_DATE_PATTERN)){
@@ -247,7 +248,7 @@ public class DateConverter {
 		return result;
 	}
 
-	public static TimeAdverbial parseDirectObjectTimeAdverbial(WordBuffer words){
+	public static ITimeObject parseDirectObjectTimeAdverbial(WordBuffer words){
 		if(words.syntaxStartsWith(DIRECT_OBJECT_DATE_PATTERN)){
 			words.consume();	// PREPOSITION_OF
 

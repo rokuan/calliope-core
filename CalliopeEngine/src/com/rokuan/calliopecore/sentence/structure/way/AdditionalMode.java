@@ -7,8 +7,9 @@ import com.rokuan.calliopecore.sentence.CustomMode;
 public class AdditionalMode extends WayAdverbial {
 	@Expose
 	public CustomMode mode;
-	
-	public AdditionalMode() {
-		super(WayType.CUSTOM);
+
+	@Override
+	public WayType getWayType() {
+		return WayType.CUSTOM;
 	}	
 }

@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import com.rokuan.calliopecore.content.IPlaceObject;
 import com.rokuan.calliopecore.parser.WordBuffer;
 import com.rokuan.calliopecore.sentence.CityInfo;
 import com.rokuan.calliopecore.sentence.CountryInfo;
@@ -12,11 +13,10 @@ import com.rokuan.calliopecore.sentence.Word;
 import com.rokuan.calliopecore.sentence.Word.WordType;
 import com.rokuan.calliopecore.sentence.structure.data.PlaceConverter;
 import com.rokuan.calliopecore.sentence.structure.data.place.AdditionalPlaceObject;
-import com.rokuan.calliopecore.sentence.structure.data.place.MonumentObject;
-import com.rokuan.calliopecore.sentence.structure.data.place.PlaceAdverbial;
+import com.rokuan.calliopecore.sentence.structure.data.place.LocationObject;
+import com.rokuan.calliopecore.sentence.structure.data.place.NamedPlaceObject;
 import com.rokuan.calliopecore.sentence.structure.data.place.PlaceAdverbial.PlaceContext;
 import com.rokuan.calliopecore.sentence.structure.data.place.PlaceAdverbial.PlaceType;
-import com.rokuan.calliopecore.sentence.structure.data.place.StateObject;
 
 
 public class PlaceParseTest {
@@ -30,11 +30,11 @@ public class PlaceParseTest {
 		words.add(new Word("à", WordType.PREPOSITION_AT));
 		words.add(paris);
 
-		PlaceAdverbial place = PlaceConverter.parsePlaceAdverbial(words);
+		IPlaceObject place = PlaceConverter.parsePlaceAdverbial(words);
 
-		assertEquals(place.getPlaceType(), PlaceType.STATE);
+		assertEquals(place.getPlaceType(), PlaceType.LOCATION);
 
-		StateObject state = (StateObject)place;
+		LocationObject state = (LocationObject)place;
 
 		assertEquals(state.city.getName(), "Paris");
 		assertNull(state.country);
@@ -50,11 +50,11 @@ public class PlaceParseTest {
 		words.add(new Word("en", WordType.PREPOSITION_IN));
 		words.add(france);
 
-		PlaceAdverbial place = PlaceConverter.parsePlaceAdverbial(words);
+		IPlaceObject place = PlaceConverter.parsePlaceAdverbial(words);
 
-		assertEquals(place.getPlaceType(), PlaceType.STATE);
+		assertEquals(place.getPlaceType(), PlaceType.LOCATION);
 
-		StateObject state = (StateObject)place;
+		LocationObject state = (LocationObject)place;
 
 		assertEquals(state.city, null);
 		assertEquals(state.country.getName(), "France");
@@ -74,11 +74,11 @@ public class PlaceParseTest {
 		words.add(new Word("en", WordType.PREPOSITION_IN));
 		words.add(france);
 
-		PlaceAdverbial place = PlaceConverter.parsePlaceAdverbial(words);
+		IPlaceObject place = PlaceConverter.parsePlaceAdverbial(words);
 
-		assertEquals(place.getPlaceType(), PlaceType.STATE);
+		assertEquals(place.getPlaceType(), PlaceType.LOCATION);
 
-		StateObject state = (StateObject)place;
+		LocationObject state = (LocationObject)place;
 
 		assertEquals(state.city.getName(), "Paris");
 		assertEquals(state.country.getName(), "France");
@@ -93,8 +93,8 @@ public class PlaceParseTest {
 		words.add(new Word("Tour", WordType.PROPER_NAME));
 		words.add(new Word("Eiffel", WordType.PROPER_NAME));
 		
-		PlaceAdverbial place = PlaceConverter.parsePlaceAdverbial(words);		
-		MonumentObject monument = (MonumentObject)place;
+		IPlaceObject place = PlaceConverter.parsePlaceAdverbial(words);		
+		NamedPlaceObject monument = (NamedPlaceObject)place;
 		
 		assertEquals(monument.name, "Tour Eiffel");
 	}
@@ -109,8 +109,8 @@ public class PlaceParseTest {
 		words.add(new Word("de", WordType.PREPOSITION_OF));
 		words.add(new Word("Paris", WordType.PROPER_NAME, WordType.CITY));
 		
-		PlaceAdverbial place = PlaceConverter.parsePlaceAdverbial(words);		
-		MonumentObject monument = (MonumentObject)place;
+		IPlaceObject place = PlaceConverter.parsePlaceAdverbial(words);		
+		NamedPlaceObject monument = (NamedPlaceObject)place;
 		
 		assertEquals(monument.name, "Mairie");
 		assertEquals(monument.city, "Paris");
@@ -129,7 +129,7 @@ public class PlaceParseTest {
 		words.add(new Word("le", WordType.DEFINITE_ARTICLE));
 		words.add(mountCompoteEnergie);
 		
-		PlaceAdverbial place = PlaceConverter.parsePlaceAdverbial(words);
+		IPlaceObject place = PlaceConverter.parsePlaceAdverbial(words);
 		
 		assertEquals(place.getPlaceType(), PlaceType.CUSTOM);
 		

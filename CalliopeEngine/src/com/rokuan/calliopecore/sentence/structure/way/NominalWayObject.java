@@ -8,8 +8,9 @@ public class NominalWayObject extends WayAdverbial {
 	public WayContext preposition;
 	@Expose
 	public ComplementObject object;
-	
-	public NominalWayObject() {
-		super(WayType.NOMINAL);
+
+	@Override
+	public WayType getWayType() {
+		return WayType.NOMINAL;
 	}
 }

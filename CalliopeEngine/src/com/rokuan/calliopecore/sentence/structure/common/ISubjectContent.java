@@ -1,9 +1,9 @@
 package com.rokuan.calliopecore.sentence.structure.common;
 
-import com.rokuan.calliopecore.sentence.structure.nominal.NominalGroup;
+import com.rokuan.calliopecore.content.INominalObject;
 
 public interface ISubjectContent {
-	void setSubject(NominalGroup subj);
+	void setSubject(INominalObject subj);
 	
-	NominalGroup getSubject();
+	INominalObject getSubject();
 }

@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gson.annotations.Expose;
+import com.rokuan.calliopecore.content.IPlaceObject;
+import com.rokuan.calliopecore.content.IPurposeObject;
+import com.rokuan.calliopecore.content.ITimeObject;
+import com.rokuan.calliopecore.content.IWayObject;
 import com.rokuan.calliopecore.sentence.Adjective;
 import com.rokuan.calliopecore.sentence.structure.data.count.AllItemsObject;
 import com.rokuan.calliopecore.sentence.structure.data.count.CountObject;
 import com.rokuan.calliopecore.sentence.structure.data.criteria.CriterionObject;
-import com.rokuan.calliopecore.sentence.structure.data.place.PlaceAdverbial;
-import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial;
 
 
 /**
@@ -29,27 +31,28 @@ public class ComplementObject extends NominalGroup {
     public ComplementObject of;
 
 	@Expose
-    public TimeAdverbial when;
+    public ITimeObject when;
 
 	@Expose
-    public ComplementObject why;
+    public IPurposeObject why;
 
 	@Expose
-    public PlaceAdverbial where;
+    public IPlaceObject where;
 
 	@Expose
-    public ComplementObject how;
+    public IWayObject how;
 
 	@Expose
     public List<CriterionObject> criteria = new ArrayList<CriterionObject>();
-
-    public ComplementObject(){
-    	super(GroupType.COMPLEMENT);
-    }
-    
+	
     @Override
     public String toString(){
     	// TODO: ajouter les autres attributs si besoin
     	return object;
     }
+
+	@Override
+	public GroupType getGroupType() {
+		return GroupType.COMPLEMENT;
+	}
 }

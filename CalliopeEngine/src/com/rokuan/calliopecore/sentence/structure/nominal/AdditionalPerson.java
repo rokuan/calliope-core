@@ -6,8 +6,9 @@ import com.rokuan.calliopecore.sentence.CustomPerson;
 public class AdditionalPerson extends NominalGroup {
 	@Expose
 	public CustomPerson person;
-	
-	public AdditionalPerson() {
-		super(GroupType.PERSON);
+
+	@Override
+	public GroupType getGroupType() {
+		return GroupType.PERSON;
 	}
 }

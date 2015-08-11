@@ -8,7 +8,11 @@ public class AbstractTarget extends NominalGroup {
 	public SourcePronoun source;
 
 	public AbstractTarget(SourcePronoun src) {
-		super(GroupType.ABSTRACT);
 		source = src;
+	}
+
+	@Override
+	public GroupType getGroupType() {
+		return GroupType.ABSTRACT;
 	}
 }

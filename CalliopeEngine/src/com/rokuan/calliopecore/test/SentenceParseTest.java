@@ -8,6 +8,7 @@ import java.util.Date;
 
 import org.junit.Test;
 
+import com.rokuan.calliopecore.content.IPlaceObject;
 import com.rokuan.calliopecore.parser.Parser;
 import com.rokuan.calliopecore.parser.WordBuffer;
 import com.rokuan.calliopecore.sentence.Action;
@@ -24,9 +25,8 @@ import com.rokuan.calliopecore.sentence.structure.InterpretationObject;
 import com.rokuan.calliopecore.sentence.structure.InterpretationObject.RequestType;
 import com.rokuan.calliopecore.sentence.structure.QuestionObject;
 import com.rokuan.calliopecore.sentence.structure.QuestionObject.QuestionType;
-import com.rokuan.calliopecore.sentence.structure.data.place.MonumentObject;
-import com.rokuan.calliopecore.sentence.structure.data.place.PlaceAdverbial;
-import com.rokuan.calliopecore.sentence.structure.data.place.StateObject;
+import com.rokuan.calliopecore.sentence.structure.data.place.LocationObject;
+import com.rokuan.calliopecore.sentence.structure.data.place.NamedPlaceObject;
 import com.rokuan.calliopecore.sentence.structure.data.place.PlaceAdverbial.PlaceType;
 import com.rokuan.calliopecore.sentence.structure.data.time.SingleTimeObject;
 import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial;
@@ -64,8 +64,8 @@ public class SentenceParseTest {
 		QuestionObject question = (QuestionObject)obj;
 		assertEquals(question.questionType, QuestionType.HOW);
 
-		PlaceAdverbial place = obj.where;
-		MonumentObject monument = (MonumentObject)place;
+		IPlaceObject place = obj.where;
+		NamedPlaceObject monument = (NamedPlaceObject)place;
 		
 		assertEquals(monument.name, "Mairie");
 		assertEquals(((NominalWayObject)obj.how).object.object, "voiture");
@@ -97,9 +97,9 @@ public class SentenceParseTest {
 		QuestionObject question = (QuestionObject)obj;
 		assertEquals(question.questionType, QuestionType.HOW);
 
-		PlaceAdverbial place = obj.where;
+		IPlaceObject place = obj.where;
 		
-		assertEquals(place.getPlaceType(), PlaceType.MONUMENT);
+		assertEquals(place.getPlaceType(), PlaceType.NAMED_PLACE);
 
 		assertEquals(((NominalWayObject)obj.how).object.object, "voiture");
 	}
@@ -132,9 +132,9 @@ public class SentenceParseTest {
 		QuestionObject question = (QuestionObject)obj;
 		assertEquals(question.questionType, QuestionType.HOW);
 
-		PlaceAdverbial place = obj.where;
+		IPlaceObject place = obj.where;
 		
-		StateObject state = (StateObject)place;
+		LocationObject state = (LocationObject)place;
 		
 		assertEquals(state.city.getName(), "Paris");
 		assertEquals(((NominalWayObject)obj.how).object.object, "voiture");
@@ -162,7 +162,7 @@ public class SentenceParseTest {
 
 		QuestionObject question = (QuestionObject)obj;
 		assertEquals(question.questionType, QuestionType.WHO);
-		assertEquals(question.what.getType(), GroupType.COMPLEMENT);
+		assertEquals(question.what.getGroupType(), GroupType.COMPLEMENT);
 
 		ComplementObject compl = (ComplementObject)question.what;
 		assertEquals(compl.object, "Arnold Schwarzenegger");
@@ -272,7 +272,7 @@ public class SentenceParseTest {
 		assertEquals(obj.getRequestType(), RequestType.ORDER);
 		assertEquals(obj.action, Action.VerbAction.TURN_OFF);
 		
-		assertEquals(obj.what.getType(), GroupType.OBJECT);
+		assertEquals(obj.what.getGroupType(), GroupType.OBJECT);
 		
 		AdditionalObject customObject = (AdditionalObject)obj.what;
 		

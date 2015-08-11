@@ -20,10 +20,6 @@ public class TimePeriodObject extends TimeAdverbial {
 
 	@Expose
     public Date to;
-    
-    public TimePeriodObject(){
-    	super(TimeType.PERIOD);
-    }
 
     public Date getFrom(){
         return from;
@@ -32,4 +28,9 @@ public class TimePeriodObject extends TimeAdverbial {
     public Date getTo(){
         return to;
     }
+
+	@Override
+	public TimeType getTimeType() {
+		return TimeType.PERIOD;
+	}
 }

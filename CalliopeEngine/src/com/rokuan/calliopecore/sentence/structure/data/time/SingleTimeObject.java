@@ -17,8 +17,9 @@ public class SingleTimeObject extends TimeAdverbial {
 
 	@Expose
 	public Date date;
-	
-	public SingleTimeObject(){
-		super(TimeType.SINGLE);
+
+	@Override
+	public TimeType getTimeType() {
+		return TimeType.SINGLE;
 	}
 }

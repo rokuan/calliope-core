@@ -9,7 +9,11 @@ public class PronounTarget extends NominalGroup {
 	public Pronoun pronoun;
 
 	public PronounTarget(Type.Pronoun pro){
-		super(GroupType.PRONOUN);
 		pronoun = pro;
     }
+
+	@Override
+	public GroupType getGroupType() {
+		return GroupType.PRONOUN;
+	}
 }

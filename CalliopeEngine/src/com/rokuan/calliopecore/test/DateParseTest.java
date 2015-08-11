@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 
 import org.junit.Test;
 
+import com.rokuan.calliopecore.content.ITimeObject;
 import com.rokuan.calliopecore.parser.Parser;
 import com.rokuan.calliopecore.parser.WordBuffer;
 import com.rokuan.calliopecore.sentence.Action;
@@ -41,7 +42,7 @@ public class DateParseTest {
 		words.add(new Word("mars", Word.WordType.DATE_MONTH));
 		words.add(new Word("2015", Word.WordType.NUMBER));
 
-		TimeAdverbial dateObj = DateConverter.parseTimeAdverbial(words);
+		ITimeObject dateObj = DateConverter.parseTimeAdverbial(words);
 
 		assert (dateObj != null);
 
@@ -69,7 +70,7 @@ public class DateParseTest {
 		words.add(new Word("septembre", Word.WordType.DATE_MONTH));
 		words.add(new Word("2013", Word.WordType.NUMBER));
 
-		TimeAdverbial dateObj = DateConverter.parseTimeAdverbial(words);
+		ITimeObject dateObj = DateConverter.parseTimeAdverbial(words);
 
 		assert (dateObj != null);
 
@@ -89,7 +90,7 @@ public class DateParseTest {
 		words.add(new Word("à", Word.WordType.PREPOSITION_AT));
 		words.add(new Word("5h30", Word.WordType.TIME));
 
-		TimeAdverbial dateObj = DateConverter.parseTimeAdverbial(words);
+		ITimeObject dateObj = DateConverter.parseTimeAdverbial(words);
 
 		assertEquals(dateObj.getTimeType(), TimeAdverbial.TimeType.SINGLE);
 
@@ -108,7 +109,7 @@ public class DateParseTest {
 		words.add(new Word("à", Word.WordType.PREPOSITION_AT));
 		words.add(new Word("5h", Word.WordType.TIME));
 
-		TimeAdverbial dateObj = DateConverter.parseTimeAdverbial(words);
+		ITimeObject dateObj = DateConverter.parseTimeAdverbial(words);
 
 		assertEquals(dateObj.getTimeType(), TimeAdverbial.TimeType.SINGLE);
 
@@ -131,7 +132,7 @@ public class DateParseTest {
 		words.add(new Word("le", WordType.DEFINITE_ARTICLE));
 		words.add(new Word("quart", WordType.TIME));
 
-		TimeAdverbial dateObj = DateConverter.parseTimeAdverbial(words);
+		ITimeObject dateObj = DateConverter.parseTimeAdverbial(words);
 
 		assertEquals(dateObj.getTimeType(), TimeAdverbial.TimeType.SINGLE);
 
@@ -152,7 +153,7 @@ public class DateParseTest {
 		words.add(new Word("et", Word.WordType.PREPOSITION_AND));
 		words.add(new Word("demi", Word.WordType.TIME));
 
-		TimeAdverbial dateObj = DateConverter.parseTimeAdverbial(words);
+		ITimeObject dateObj = DateConverter.parseTimeAdverbial(words);
 
 		assertEquals(dateObj.getTimeType(), TimeAdverbial.TimeType.SINGLE);
 
@@ -178,7 +179,7 @@ public class DateParseTest {
 		words.add(new Word("moins", Word.WordType.PREPOSITION_AND));
 		words.add(new Word("10", Word.WordType.NUMBER));
 
-		TimeAdverbial dateObj = DateConverter.parseTimeAdverbial(words);
+		ITimeObject dateObj = DateConverter.parseTimeAdverbial(words);
 
 		assertEquals(dateObj.getTimeType(), TimeAdverbial.TimeType.SINGLE);
 
@@ -216,7 +217,7 @@ public class DateParseTest {
 		
 		InterpretationObject object = new Parser().parseInterpretationObject(words);
 		//TimeObject dateObj = DateConverter.parseDateObject(words);
-		TimeAdverbial dateObj = object.when;
+		ITimeObject dateObj = object.when;
 		
 		assertEquals(dateObj.getTimeType(), TimeAdverbial.TimeType.SINGLE);
 		
@@ -241,7 +242,7 @@ public class DateParseTest {
 		words.add(new Word("mai", Word.WordType.DATE_MONTH));
 		words.add(new Word("2012", WordType.NUMBER));
 
-		TimeAdverbial time = DateConverter.parseTimeAdverbial(words);
+		ITimeObject time = DateConverter.parseTimeAdverbial(words);
 		
 		assertEquals(time.getTimeType(), TimeType.SINGLE);
 		
@@ -262,7 +263,7 @@ public class DateParseTest {
 		words.add(new Word("mai", Word.WordType.DATE_MONTH));
 		words.add(new Word("2012", WordType.NUMBER));
 
-		TimeAdverbial time = DateConverter.parseTimeAdverbial(words);
+		ITimeObject time = DateConverter.parseTimeAdverbial(words);
 		
 		assertEquals(time.getTimeType(), TimeType.SINGLE);
 		

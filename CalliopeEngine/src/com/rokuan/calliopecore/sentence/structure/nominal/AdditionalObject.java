@@ -11,8 +11,9 @@ public class AdditionalObject extends NominalGroup {
 	@Expose
 	public CustomObject object;
 
-	public AdditionalObject() {
-		super(GroupType.OBJECT);
+	@Override
+	public GroupType getGroupType() {
+		return GroupType.OBJECT;
 	}
 
 }

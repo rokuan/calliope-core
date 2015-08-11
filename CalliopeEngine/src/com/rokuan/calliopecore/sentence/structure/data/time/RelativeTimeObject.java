@@ -15,9 +15,7 @@ public class RelativeTimeObject extends TimeAdverbial {
 	@Expose
     public DateDefinition dateDefinition = DateDefinition.DATE_AND_TIME;
 
-    public RelativeTimeObject(){
-    	super(TimeType.RELATIVE);
-    	
+    public RelativeTimeObject(){    	
         for(int i=0; i<periods.length; i++){
             periods[i] = 0;
         }
@@ -46,4 +44,9 @@ public class RelativeTimeObject extends TimeAdverbial {
 
         return calendar.getTime();
     }
+
+	@Override
+	public TimeType getTimeType() {
+		return TimeType.RELATIVE;
+	}
 }

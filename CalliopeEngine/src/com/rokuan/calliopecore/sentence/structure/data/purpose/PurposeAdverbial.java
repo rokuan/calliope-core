@@ -1,21 +1,13 @@
 package com.rokuan.calliopecore.sentence.structure.data.purpose;
 
-public abstract class PurposeAdverbial {
+import com.rokuan.calliopecore.content.IPurposeObject;
+
+public abstract class PurposeAdverbial implements IPurposeObject {
 	public enum PurposeContext {
 		TO
 	}
 	
 	public enum PurposeType {
 		VERBAL
-	}
-	
-	private PurposeType purposeType;
-	
-	protected PurposeAdverbial(PurposeType ty){
-		purposeType = ty;
-	}
-
-	public PurposeType getPurposeType() {
-		return purposeType;
 	}
 }

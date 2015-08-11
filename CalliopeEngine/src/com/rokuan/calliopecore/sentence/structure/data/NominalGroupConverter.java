@@ -1,5 +1,6 @@
 package com.rokuan.calliopecore.sentence.structure.data;
 
+import com.rokuan.calliopecore.content.INominalObject;
 import com.rokuan.calliopecore.parser.WordBuffer;
 import com.rokuan.calliopecore.pattern.WordPattern;
 import com.rokuan.calliopecore.sentence.Type;
@@ -69,7 +70,7 @@ public class NominalGroupConverter {
 				|| words.syntaxStartsWith(objectPattern);*/
 	}
 	
-	public static NominalGroup parseNominalGroup(WordBuffer words){
+	public static INominalObject parseNominalGroup(WordBuffer words){
 		if(words.syntaxStartsWith(PRONOUN_PATTERN)){
 			Pronoun pronoun = Type.parseSubjectPronoun(words.getCurrentElement().getValue());
 			words.consume();
@@ -87,8 +88,8 @@ public class NominalGroupConverter {
 				|| words.syntaxStartsWith(PERSON_PATTERN);
 	}
 	
-	public static NominalGroup parseDirectObject(WordBuffer words){
-		NominalGroup result = null;
+	public static INominalObject parseDirectObject(WordBuffer words){
+		INominalObject result = null;
 		
 		if(words.syntaxStartsWith(CUSTOM_OBJECT_PATTERN)){
 			AdditionalObject custom = new AdditionalObject();

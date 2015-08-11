@@ -1,40 +1,40 @@
 package com.rokuan.calliopecore.sentence.structure.common;
 
 import com.google.gson.annotations.Expose;
+import com.rokuan.calliopecore.content.INominalObject;
+import com.rokuan.calliopecore.content.IPlaceObject;
+import com.rokuan.calliopecore.content.IPurposeObject;
+import com.rokuan.calliopecore.content.ITimeObject;
+import com.rokuan.calliopecore.content.IWayObject;
 import com.rokuan.calliopecore.sentence.Action;
-import com.rokuan.calliopecore.sentence.structure.data.place.PlaceAdverbial;
-import com.rokuan.calliopecore.sentence.structure.data.purpose.PurposeAdverbial;
-import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial;
-import com.rokuan.calliopecore.sentence.structure.nominal.NominalGroup;
-import com.rokuan.calliopecore.sentence.structure.way.WayAdverbial;
 
 public abstract class FullContent implements ISubjectContent, IVerbalContent, IComplementContent {
 	@Expose
-	public NominalGroup subject;
+	public INominalObject subject;
 
 	@Expose
 	public Action.VerbAction action;
 
 	@Expose
-	public NominalGroup what;
+	public INominalObject what;
 
 	@Expose
-	public NominalGroup target;
+	public INominalObject target;
 
 	@Expose
-	public PlaceAdverbial where;
+	public IPlaceObject where;
 
 	@Expose
-	public TimeAdverbial when;
+	public ITimeObject when;
 
 	@Expose
-	public WayAdverbial how;
+	public IWayObject how;
 
 	@Expose
-	public PurposeAdverbial why;
+	public IPurposeObject why;
 
 	@Override
-	public void setSubject(NominalGroup source){
+	public void setSubject(INominalObject source){
 		subject = source;
 	}
 	
@@ -44,37 +44,37 @@ public abstract class FullContent implements ISubjectContent, IVerbalContent, IC
 	}
 	
 	@Override
-	public void setDirectObject(NominalGroup direct){
+	public void setDirectObject(INominalObject direct){
 		what = direct;
 	}
 
 	@Override
-	public void setIndirectObject(NominalGroup indirect){
+	public void setIndirectObject(INominalObject indirect){
 		target = indirect;
 	}
 
 	@Override
-	public void setPlaceAdverbial(PlaceAdverbial place){
+	public void setPlaceAdverbial(IPlaceObject place){
 		where = place;
 	}
 
 	@Override
-	public void setTimeAdverbial(TimeAdverbial time){
+	public void setTimeAdverbial(ITimeObject time){
 		when = time;
 	}
 
 	@Override
-	public void setWayAdverbial(WayAdverbial way){
+	public void setWayAdverbial(IWayObject way){
 		how = way;
 	}
 
 	@Override
-	public void setPurposeAdverbial(PurposeAdverbial purpose){
+	public void setPurposeAdverbial(IPurposeObject purpose){
 		why = purpose;
 	}
 
 	@Override
-	public NominalGroup getSubject(){
+	public INominalObject getSubject(){
 		return subject;
 	}
 	
@@ -84,32 +84,32 @@ public abstract class FullContent implements ISubjectContent, IVerbalContent, IC
 	}
 	
 	@Override
-	public NominalGroup getDirectObject(){
+	public INominalObject getDirectObject(){
 		return what;
 	}
 
 	@Override
-	public NominalGroup getIndirectObject(){
+	public INominalObject getIndirectObject(){
 		return target;
 	}
 
 	@Override
-	public PlaceAdverbial getPlaceAdverbial(){
+	public IPlaceObject getPlaceAdverbial(){
 		return where;
 	}
 
 	@Override
-	public TimeAdverbial getTimeAdverbial(){
+	public ITimeObject getTimeAdverbial(){
 		return when;
 	}
 
 	@Override
-	public WayAdverbial getWayAdverbial(){
+	public IWayObject getWayAdverbial(){
 		return how;
 	}
 
 	@Override
-	public PurposeAdverbial getPurposeAdverbial(){
+	public IPurposeObject getPurposeAdverbial(){
 		return why;
 	}
 }
