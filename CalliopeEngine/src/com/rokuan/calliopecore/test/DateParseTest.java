@@ -6,7 +6,6 @@ import java.text.SimpleDateFormat;
 
 import org.junit.Test;
 
-import com.rokuan.calliopecore.content.ITimeObject;
 import com.rokuan.calliopecore.parser.Parser;
 import com.rokuan.calliopecore.parser.WordBuffer;
 import com.rokuan.calliopecore.sentence.Action;
@@ -18,6 +17,7 @@ import com.rokuan.calliopecore.sentence.VerbConjugation;
 import com.rokuan.calliopecore.sentence.Word;
 import com.rokuan.calliopecore.sentence.Word.WordType;
 import com.rokuan.calliopecore.sentence.structure.InterpretationObject;
+import com.rokuan.calliopecore.sentence.structure.content.ITimeObject;
 import com.rokuan.calliopecore.sentence.structure.data.DateConverter;
 import com.rokuan.calliopecore.sentence.structure.data.time.SingleTimeObject;
 import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial;
@@ -248,7 +248,7 @@ public class DateParseTest {
 		
 		SingleTimeObject single = (SingleTimeObject)time;
 		
-		assertEquals(single.preposition, DateContext.BEFORE);		
+		assertEquals(single.getTimePreposition(), DateContext.BEFORE);		
 	}
 	
 	@Test
@@ -269,7 +269,7 @@ public class DateParseTest {
 		
 		SingleTimeObject single = (SingleTimeObject)time;
 		
-		assertEquals(single.preposition, DateContext.UNTIL);
+		assertEquals(single.getTimePreposition(), DateContext.UNTIL);
 	}
 	
 	@Test

@@ -8,39 +8,19 @@ import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
-import com.rokuan.calliopecore.sentence.structure.data.time.RelativeTimeObject;
-import com.rokuan.calliopecore.sentence.structure.data.time.SingleTimeObject;
+import com.rokuan.calliopecore.sentence.structure.content.ITimeObject;
 import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial;
-import com.rokuan.calliopecore.sentence.structure.data.time.TimePeriodObject;
-import com.rokuan.calliopecore.sentence.structure.data.time.VerbalTimeObject;
-import com.rokuan.calliopecore.sentence.structure.nominal.NominalGroup;
 
 
-public class TimeAdverbialDeserializer implements JsonDeserializer<TimeAdverbial> {
+public class TimeAdverbialDeserializer implements JsonDeserializer<ITimeObject> {
 	@Override
-	public TimeAdverbial deserialize(JsonElement arg0, Type arg1,
+	public ITimeObject deserialize(JsonElement arg0, Type arg1,
 			JsonDeserializationContext arg2) throws JsonParseException {
-		GsonBuilder builder = new GsonBuilder();
-		builder.registerTypeAdapter(NominalGroup.class, new NominalGroupDeserializer());
-		
+		/*GsonBuilder builder = new GsonBuilder();
+		builder.registerTypeAdapter(INominalObject.class, new NominalGroupDeserializer());*/
+		GsonBuilder builder = FullGsonBuilder.getDeserializationGsonBuilder();
 		Gson gson = builder.create();
-		Class<? extends TimeAdverbial> clazz = null;
-		
-		switch(TimeAdverbial.TimeType.valueOf(arg0.getAsJsonObject().get("timeType").getAsString())){
-		case PERIOD:
-			clazz = TimePeriodObject.class;
-			break;
-		case RELATIVE:
-			clazz = RelativeTimeObject.class;
-			break;
-		case SINGLE:
-			clazz = SingleTimeObject.class;
-			break;
-		case VERBAL:
-			clazz = VerbalTimeObject.class;
-			break;
-		}
-		
+		Class<? extends ITimeObject> clazz = TimeAdverbial.getClassFromTimeType(TimeAdverbial.TimeType.valueOf(arg0.getAsJsonObject().get("timeType").getAsString()));
 		return gson.fromJson(arg0, clazz);
 	}    	
 }

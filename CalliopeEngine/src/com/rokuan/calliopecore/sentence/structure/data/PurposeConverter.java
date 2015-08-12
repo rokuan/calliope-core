@@ -3,8 +3,8 @@ package com.rokuan.calliopecore.sentence.structure.data;
 import com.rokuan.calliopecore.parser.WordBuffer;
 import com.rokuan.calliopecore.pattern.WordPattern;
 import com.rokuan.calliopecore.sentence.Word.WordType;
-import com.rokuan.calliopecore.sentence.structure.data.purpose.PurposeAdverbial;
-import com.rokuan.calliopecore.sentence.structure.data.purpose.VerbalPurposeObject;
+import com.rokuan.calliopecore.sentence.structure.content.IPurposeObject;
+import com.rokuan.calliopecore.sentence.structure.data.nominal.VerbalGroup;
 
 public class PurposeConverter {	
 	/*public static final WordPattern conjugatedPurposePattern = WordPattern.sequence(
@@ -23,15 +23,14 @@ public class PurposeConverter {
 		return words.syntaxStartsWith(VERBAL_PURPOSE_PATTERN);
 	}
 	
-	public static PurposeAdverbial parsePurposeAdverbial(WordBuffer words){
-		PurposeAdverbial result = null;
+	public static IPurposeObject parsePurposeAdverbial(WordBuffer words){
+		IPurposeObject result = null;
 		
 		if(words.syntaxStartsWith(VERBAL_PURPOSE_PATTERN)){
-			VerbalPurposeObject verbal = new VerbalPurposeObject();
+			VerbalGroup verbal = new VerbalGroup();
 			
-			verbal.purposePreposition = words.getCurrentElement().getPurposePreposition();
+			verbal.setPurposePreposition(words.getCurrentElement().getPurposePreposition());
 			words.consume();
-			
 			
 			result = verbal;
 		}

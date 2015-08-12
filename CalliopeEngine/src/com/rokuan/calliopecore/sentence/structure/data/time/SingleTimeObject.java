@@ -3,14 +3,16 @@ package com.rokuan.calliopecore.sentence.structure.data.time;
 import java.util.Date;
 
 import com.google.gson.annotations.Expose;
+import com.rokuan.calliopecore.sentence.structure.content.INominalObject;
+import com.rokuan.calliopecore.sentence.structure.data.nominal.NominalGroup.GroupType;
 
 
 /**
  * Created by LEBEAU Christophe on 20/02/2015.
  */
-public class SingleTimeObject extends TimeAdverbial {
+public class SingleTimeObject extends TimeAdverbial implements INominalObject {
 	@Expose
-	public DateContext preposition;
+	private DateContext timePreposition;
 
 	@Expose
 	public DateDefinition dateDefinition = DateDefinition.DATE_AND_TIME;
@@ -21,5 +23,20 @@ public class SingleTimeObject extends TimeAdverbial {
 	@Override
 	public TimeType getTimeType() {
 		return TimeType.SINGLE;
+	}
+
+	@Override
+	public DateContext getTimePreposition() {
+		return timePreposition;
+	}
+
+	@Override
+	public void setTimePreposition(DateContext prep) {
+		timePreposition = prep;		
+	}
+
+	@Override
+	public GroupType getGroupType() {
+		return GroupType.DATE;
 	}
 }

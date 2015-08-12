@@ -1,16 +1,16 @@
 package com.rokuan.calliopecore.sentence.structure.data;
 
-import com.rokuan.calliopecore.content.INominalObject;
 import com.rokuan.calliopecore.parser.WordBuffer;
 import com.rokuan.calliopecore.pattern.WordPattern;
 import com.rokuan.calliopecore.sentence.Type;
 import com.rokuan.calliopecore.sentence.Type.Pronoun;
 import com.rokuan.calliopecore.sentence.Word.WordType;
-import com.rokuan.calliopecore.sentence.structure.nominal.AdditionalObject;
-import com.rokuan.calliopecore.sentence.structure.nominal.AdditionalPerson;
-import com.rokuan.calliopecore.sentence.structure.nominal.ComplementObject;
-import com.rokuan.calliopecore.sentence.structure.nominal.NominalGroup;
-import com.rokuan.calliopecore.sentence.structure.nominal.PronounTarget;
+import com.rokuan.calliopecore.sentence.structure.content.INominalObject;
+import com.rokuan.calliopecore.sentence.structure.data.nominal.AdditionalObject;
+import com.rokuan.calliopecore.sentence.structure.data.nominal.AdditionalPerson;
+import com.rokuan.calliopecore.sentence.structure.data.nominal.ComplementObject;
+import com.rokuan.calliopecore.sentence.structure.data.nominal.NominalGroup;
+import com.rokuan.calliopecore.sentence.structure.data.nominal.PronounTarget;
 
 public class NominalGroupConverter {
 	// NominalGroup

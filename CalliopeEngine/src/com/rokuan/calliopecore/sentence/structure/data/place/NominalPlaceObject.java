@@ -1,7 +1,7 @@
 package com.rokuan.calliopecore.sentence.structure.data.place;
 
 import com.google.gson.annotations.Expose;
-import com.rokuan.calliopecore.sentence.structure.nominal.ComplementObject;
+import com.rokuan.calliopecore.sentence.structure.data.nominal.ComplementObject;
 
 public class NominalPlaceObject extends PlaceAdverbial {
 	@Expose

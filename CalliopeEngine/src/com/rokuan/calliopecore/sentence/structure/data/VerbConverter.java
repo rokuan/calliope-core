@@ -7,7 +7,7 @@ import com.rokuan.calliopecore.sentence.Type;
 import com.rokuan.calliopecore.sentence.VerbConjugation;
 import com.rokuan.calliopecore.sentence.Word.WordType;
 import com.rokuan.calliopecore.sentence.structure.common.FullContent;
-import com.rokuan.calliopecore.sentence.structure.nominal.PronounTarget;
+import com.rokuan.calliopecore.sentence.structure.data.nominal.PronounTarget;
 
 public class VerbConverter {
 	// existe-t-il / suis-je / m'envoie-t-il

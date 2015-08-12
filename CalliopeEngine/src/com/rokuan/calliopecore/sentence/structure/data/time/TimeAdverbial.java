@@ -1,7 +1,8 @@
 package com.rokuan.calliopecore.sentence.structure.data.time;
 
 import com.google.gson.annotations.Expose;
-import com.rokuan.calliopecore.content.ITimeObject;
+import com.rokuan.calliopecore.sentence.structure.content.ITimeObject;
+import com.rokuan.calliopecore.sentence.structure.data.nominal.VerbalGroup;
 
 /**
  * Created by LEBEAU Christophe on 20/02/2015.
@@ -62,4 +63,25 @@ public abstract class TimeAdverbial implements ITimeObject {
 
 	@Expose
     public TimeInterval interval = TimeInterval.SINGLE;
+	
+	public static Class<? extends ITimeObject> getClassFromTimeType(TimeType ty){
+		Class<? extends ITimeObject> clazz = null;
+		
+		switch(ty){
+		case PERIOD:
+			clazz = TimePeriodObject.class;
+			break;
+		case RELATIVE:
+			clazz = RelativeTimeObject.class;
+			break;
+		case SINGLE:
+			clazz = SingleTimeObject.class;
+			break;
+		case VERBAL:
+			clazz = VerbalGroup.class;
+			break;
+		}
+		
+		return clazz;
+	}
 }

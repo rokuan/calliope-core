@@ -33,4 +33,16 @@ public class TimePeriodObject extends TimeAdverbial {
 	public TimeType getTimeType() {
 		return TimeType.PERIOD;
 	}
+
+	@Override
+	public DateContext getTimePreposition() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setTimePreposition(DateContext prep) {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -24,10 +24,10 @@ import com.rokuan.calliopecore.sentence.structure.QuestionObject;
 import com.rokuan.calliopecore.sentence.structure.InterpretationObject.RequestType;
 import com.rokuan.calliopecore.sentence.structure.QuestionObject.QuestionType;
 import com.rokuan.calliopecore.sentence.structure.data.count.AllItemsObject;
+import com.rokuan.calliopecore.sentence.structure.data.nominal.AdditionalObject;
 import com.rokuan.calliopecore.sentence.structure.data.time.SingleTimeObject;
 import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial.DateContext;
 import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial.DateDefinition;
-import com.rokuan.calliopecore.sentence.structure.nominal.AdditionalObject;
 
 public class JsonTest {
 	@Test
@@ -51,6 +51,7 @@ public class JsonTest {
 
 		InterpretationObject obj = new Parser().parseInterpretationObject(words);
 		String json = InterpretationObject.toJSON(obj);
+		System.out.println(json);
 		InterpretationObject object = InterpretationObject.fromJSON(json);
 		
 		assertEquals(object.getRequestType(), RequestType.QUESTION);
@@ -66,13 +67,14 @@ public class JsonTest {
 		customObject.object = new CustomObject("lumière de la cuisine", "KITCHEN_LIGHT");
 		SingleTimeObject time = new SingleTimeObject();
 		time.dateDefinition = DateDefinition.TIME_ONLY;
-		time.preposition = DateContext.WHEN;
+		time.setTimePreposition(DateContext.WHEN);
 		time.date = new SimpleDateFormat("HH:mm").parse("17:40");
 		
 		obj.action = VerbAction.TURN_ON;
 		obj.what = customObject;
 		
 		String json = InterpretationObject.toJSON(obj);
+		System.out.println(json);
 		InterpretationObject object = InterpretationObject.fromJSON(json);
 		
 		assertEquals(object.getRequestType(), RequestType.ORDER);

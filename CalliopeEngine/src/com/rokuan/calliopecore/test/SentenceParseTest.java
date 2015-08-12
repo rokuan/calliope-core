@@ -8,7 +8,6 @@ import java.util.Date;
 
 import org.junit.Test;
 
-import com.rokuan.calliopecore.content.IPlaceObject;
 import com.rokuan.calliopecore.parser.Parser;
 import com.rokuan.calliopecore.parser.WordBuffer;
 import com.rokuan.calliopecore.sentence.Action;
@@ -25,16 +24,16 @@ import com.rokuan.calliopecore.sentence.structure.InterpretationObject;
 import com.rokuan.calliopecore.sentence.structure.InterpretationObject.RequestType;
 import com.rokuan.calliopecore.sentence.structure.QuestionObject;
 import com.rokuan.calliopecore.sentence.structure.QuestionObject.QuestionType;
+import com.rokuan.calliopecore.sentence.structure.content.IPlaceObject;
+import com.rokuan.calliopecore.sentence.structure.data.nominal.AdditionalObject;
+import com.rokuan.calliopecore.sentence.structure.data.nominal.ComplementObject;
+import com.rokuan.calliopecore.sentence.structure.data.nominal.PronounTarget;
+import com.rokuan.calliopecore.sentence.structure.data.nominal.NominalGroup.GroupType;
 import com.rokuan.calliopecore.sentence.structure.data.place.LocationObject;
 import com.rokuan.calliopecore.sentence.structure.data.place.NamedPlaceObject;
 import com.rokuan.calliopecore.sentence.structure.data.place.PlaceAdverbial.PlaceType;
 import com.rokuan.calliopecore.sentence.structure.data.time.SingleTimeObject;
 import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial;
-import com.rokuan.calliopecore.sentence.structure.nominal.AdditionalObject;
-import com.rokuan.calliopecore.sentence.structure.nominal.ComplementObject;
-import com.rokuan.calliopecore.sentence.structure.nominal.PronounTarget;
-import com.rokuan.calliopecore.sentence.structure.nominal.NominalGroup.GroupType;
-import com.rokuan.calliopecore.sentence.structure.way.NominalWayObject;
 
 public class SentenceParseTest {
 	@Test
@@ -68,7 +67,7 @@ public class SentenceParseTest {
 		NamedPlaceObject monument = (NamedPlaceObject)place;
 		
 		assertEquals(monument.name, "Mairie");
-		assertEquals(((NominalWayObject)obj.how).object.object, "voiture");
+		assertEquals(((ComplementObject)obj.how).object, "voiture");
 	}
 
 	@Test
@@ -101,7 +100,7 @@ public class SentenceParseTest {
 		
 		assertEquals(place.getPlaceType(), PlaceType.NAMED_PLACE);
 
-		assertEquals(((NominalWayObject)obj.how).object.object, "voiture");
+		assertEquals(((ComplementObject)obj.how).object, "voiture");
 	}
 	
 	@Test
@@ -137,7 +136,7 @@ public class SentenceParseTest {
 		LocationObject state = (LocationObject)place;
 		
 		assertEquals(state.city.getName(), "Paris");
-		assertEquals(((NominalWayObject)obj.how).object.object, "voiture");
+		assertEquals(((ComplementObject)obj.how).object, "voiture");
 	}
 
 	@Test

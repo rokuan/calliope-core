@@ -1,14 +1,13 @@
 package com.rokuan.calliopecore.sentence.structure.data;
 
-import com.rokuan.calliopecore.content.IWayObject;
 import com.rokuan.calliopecore.parser.WordBuffer;
 import com.rokuan.calliopecore.pattern.WordPattern;
 import com.rokuan.calliopecore.sentence.Word.WordType;
-import com.rokuan.calliopecore.sentence.structure.nominal.ColorObject;
-import com.rokuan.calliopecore.sentence.structure.nominal.ComplementObject;
-import com.rokuan.calliopecore.sentence.structure.nominal.LanguageObject;
-import com.rokuan.calliopecore.sentence.structure.way.AdditionalMode;
-import com.rokuan.calliopecore.sentence.structure.way.NominalWayObject;
+import com.rokuan.calliopecore.sentence.structure.content.IWayObject;
+import com.rokuan.calliopecore.sentence.structure.data.nominal.ColorObject;
+import com.rokuan.calliopecore.sentence.structure.data.nominal.ComplementObject;
+import com.rokuan.calliopecore.sentence.structure.data.nominal.LanguageObject;
+import com.rokuan.calliopecore.sentence.structure.data.way.AdditionalMode;
 
 public class WayConverter {
 	public static final WordPattern MEANS_OF_TRANSPORT_PATTERN = WordPattern.sequence(
@@ -47,7 +46,6 @@ public class WayConverter {
 			
 			result = custom;
 		} else if(words.syntaxStartsWith(MEANS_OF_TRANSPORT_PATTERN)){
-			NominalWayObject nominal = new NominalWayObject();
 			ComplementObject compl = new ComplementObject();
 			String mean = null;
 
@@ -57,9 +55,8 @@ public class WayConverter {
 			words.consume();
 
 			compl.object = mean;
-			nominal.object = compl;
 			
-			result = nominal;
+			result = compl;
 		} else if(words.syntaxStartsWith(LANGUAGE_PATTERN)){
 			LanguageObject lang = new LanguageObject();
 			

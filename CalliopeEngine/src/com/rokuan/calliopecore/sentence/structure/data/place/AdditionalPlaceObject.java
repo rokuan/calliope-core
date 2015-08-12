@@ -1,9 +1,9 @@
 package com.rokuan.calliopecore.sentence.structure.data.place;
 
 import com.google.gson.annotations.Expose;
-import com.rokuan.calliopecore.content.INominalObject;
 import com.rokuan.calliopecore.sentence.CustomPlace;
-import com.rokuan.calliopecore.sentence.structure.nominal.NominalGroup.GroupType;
+import com.rokuan.calliopecore.sentence.structure.content.INominalObject;
+import com.rokuan.calliopecore.sentence.structure.data.nominal.NominalGroup.GroupType;
 
 public class AdditionalPlaceObject extends PlaceAdverbial implements INominalObject {
 	@Expose

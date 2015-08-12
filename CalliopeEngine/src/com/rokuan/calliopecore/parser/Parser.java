@@ -16,9 +16,9 @@ import com.rokuan.calliopecore.sentence.structure.data.PhoneNumberConverter;
 import com.rokuan.calliopecore.sentence.structure.data.PlaceConverter;
 import com.rokuan.calliopecore.sentence.structure.data.VerbConverter;
 import com.rokuan.calliopecore.sentence.structure.data.WayConverter;
-import com.rokuan.calliopecore.sentence.structure.nominal.AbstractTarget;
-import com.rokuan.calliopecore.sentence.structure.nominal.ComplementObject;
-import com.rokuan.calliopecore.sentence.structure.nominal.PronounTarget;
+import com.rokuan.calliopecore.sentence.structure.data.nominal.AbstractTarget;
+import com.rokuan.calliopecore.sentence.structure.data.nominal.ComplementObject;
+import com.rokuan.calliopecore.sentence.structure.data.nominal.PronounTarget;
 
 
 /**

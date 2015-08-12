@@ -8,44 +8,23 @@ import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
-import com.rokuan.calliopecore.content.IWayObject;
-import com.rokuan.calliopecore.sentence.structure.nominal.ColorObject;
-import com.rokuan.calliopecore.sentence.structure.nominal.LanguageObject;
-import com.rokuan.calliopecore.sentence.structure.nominal.NominalGroup;
-import com.rokuan.calliopecore.sentence.structure.nominal.VerbalGroup;
-import com.rokuan.calliopecore.sentence.structure.way.AdditionalMode;
-import com.rokuan.calliopecore.sentence.structure.way.NominalWayObject;
-import com.rokuan.calliopecore.sentence.structure.way.WayAdverbial;
+import com.rokuan.calliopecore.sentence.structure.content.IWayObject;
+import com.rokuan.calliopecore.sentence.structure.data.way.WayAdverbial;
 
 public class WayAdverbialDeserializer implements JsonDeserializer<IWayObject> {
 	@Override
 	public IWayObject deserialize(JsonElement arg0, Type arg1,
 			JsonDeserializationContext arg2) throws JsonParseException {
-		GsonBuilder builder = new GsonBuilder();
-		
-		builder.registerTypeAdapter(NominalGroup.class, new NominalGroupDeserializer());
-		
+		/*GsonBuilder builder = new GsonBuilder();
+
+		builder.excludeFieldsWithoutExposeAnnotation();
+		builder.registerTypeAdapter(INominalObject.class, new NominalGroupDeserializer());
+		builder.registerTypeAdapter(IPlaceObject.class, new PlaceAdverbialDeserializer());
+		builder.registerTypeAdapter(ITimeObject.class, new TimeAdverbialDeserializer());
+		builder.registerTypeAdapter(IWayObject.class, new WayAdverbialDeserializer());*/
+		GsonBuilder builder = FullGsonBuilder.getDeserializationGsonBuilder();
 		Gson gson = builder.create();
-		Class<? extends IWayObject> clazz = null;
-		
-		switch(WayAdverbial.WayType.valueOf(arg0.getAsJsonObject().get("wayType").getAsString())){
-		case CUSTOM:
-			clazz = AdditionalMode.class;
-			break;
-		case LANGUAGE:
-			clazz = LanguageObject.class;
-			break;
-		case NOMINAL:
-			clazz = NominalWayObject.class;
-			break;
-		case VERBAL:
-			clazz = VerbalGroup.class;
-			break;
-		case COLOR:
-			clazz = ColorObject.class;
-			break;
-		}
-		
+		Class<? extends IWayObject> clazz = WayAdverbial.getClassFromWayType(WayAdverbial.WayType.valueOf(arg0.getAsJsonObject().get("wayType").getAsString()));		
 		return gson.fromJson(arg0, clazz);
 	}   
 }

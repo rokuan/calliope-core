@@ -1,9 +1,9 @@
 package com.rokuan.calliopecore.sentence.structure;
 
-import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;
 import com.rokuan.calliopecore.json.InterpretationObjectDeserializer;
+import com.rokuan.calliopecore.json.InterpretationObjectSerializer;
 import com.rokuan.calliopecore.sentence.structure.common.FullContent;
 
 /**
@@ -47,19 +47,38 @@ public abstract class InterpretationObject extends FullContent {
 
 		return result.toString();
 	}
-	
+
 	public static String toJSON(InterpretationObject object){		
-		Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-		return gson.toJson(object);
+		GsonBuilder builder = new GsonBuilder().excludeFieldsWithoutExposeAnnotation()
+				.registerTypeAdapter(InterpretationObject.class, new InterpretationObjectSerializer());
+		return builder.create().toJson(object, InterpretationObject.class);
 	}
 
 	public static InterpretationObject fromJSON(String json){
-		GsonBuilder builder = new GsonBuilder();
-		builder.registerTypeAdapter(InterpretationObject.class, new InterpretationObjectDeserializer());
+		GsonBuilder builder = new GsonBuilder().excludeFieldsWithoutExposeAnnotation()
+				.registerTypeAdapter(InterpretationObject.class, new InterpretationObjectDeserializer());
 		return builder.create().fromJson(json, InterpretationObject.class);
 	}
 
 	public RequestType getRequestType(){
 		return requestType;
+	}
+
+	public static Class<? extends InterpretationObject> getClassFromRequestType(RequestType ty){
+		Class<? extends InterpretationObject> clazz = null;
+
+		switch(ty){
+		case AFFIRMATION:
+			clazz = AffirmationObject.class;
+			break;
+		case ORDER:
+			clazz = OrderObject.class;
+			break;			
+		case QUESTION:
+			clazz = QuestionObject.class;
+			break;
+		}
+
+		return clazz;
 	}
 }

@@ -10,7 +10,7 @@ import com.j256.ormlite.table.DatabaseTable;
 import com.rokuan.calliopecore.sentence.structure.data.place.PlaceAdverbial.PlaceContext;
 import com.rokuan.calliopecore.sentence.structure.data.purpose.PurposeAdverbial.PurposeContext;
 import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial.DateContext;
-import com.rokuan.calliopecore.sentence.structure.way.WayAdverbial.WayContext;
+import com.rokuan.calliopecore.sentence.structure.data.way.WayAdverbial.WayContext;
 
 /**
  * Created by LEBEAU Christophe on 22/02/2015.

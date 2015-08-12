@@ -3,7 +3,7 @@ package com.rokuan.calliopecore.sentence;
 import com.google.gson.annotations.Expose;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
-import com.rokuan.calliopecore.sentence.structure.way.WayAdverbial.WayContext;
+import com.rokuan.calliopecore.sentence.structure.data.way.WayAdverbial.WayContext;
 
 
 @DatabaseTable(tableName = "way_prepositions")

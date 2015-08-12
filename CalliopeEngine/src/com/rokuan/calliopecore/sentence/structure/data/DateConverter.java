@@ -7,11 +7,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import com.rokuan.calliopecore.content.ITimeObject;
 import com.rokuan.calliopecore.parser.WordBuffer;
 import com.rokuan.calliopecore.pattern.WordPattern;
 import com.rokuan.calliopecore.sentence.Word;
 import com.rokuan.calliopecore.sentence.Word.WordType;
+import com.rokuan.calliopecore.sentence.structure.content.ITimeObject;
 import com.rokuan.calliopecore.sentence.structure.data.time.SingleTimeObject;
 import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial;
 import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial.DateContext;
@@ -203,7 +203,7 @@ public class DateConverter {
 
 			if(words.getCurrentElement().isOfType(WordType.TIME_PREPOSITION)){
 				// TODO: parser la preposition
-				single.preposition = words.getCurrentElement().getDatePreposition();
+				single.setTimePreposition(words.getCurrentElement().getDatePreposition());
 				words.consume();
 			}
 
@@ -219,15 +219,16 @@ public class DateConverter {
 			result = single;
 		} else if(WordPattern.syntaxStartsWith(words, TIME_DECLARATION_PATTERN)){
 			SingleTimeObject single = new SingleTimeObject();
+			DateContext preposition = DateContext.WHEN;
 
 			if(words.getCurrentElement().isOfType(WordType.PREPOSITION_AT)){
-				single.preposition = DateContext.WHEN;
+				preposition = DateContext.WHEN;
 				words.consume();
 			} else if(words.getCurrentElement().isOfType(WordType.TIME_PREPOSITION)){
-				single.preposition = words.getCurrentElement().getDatePreposition();
+				preposition = words.getCurrentElement().getDatePreposition();
 				words.consume();
 			} else {
-				single.preposition = DateContext.WHEN;
+				preposition = DateContext.WHEN;
 				words.consume();
 				words.consume();
 				words.consume();
@@ -235,6 +236,7 @@ public class DateConverter {
 
 			int[] fixedTimeFields = parseTime(words);
 
+			single.setTimePreposition(preposition);
 			single.dateDefinition = DateDefinition.TIME_ONLY; 
 			single.date = buildDateFromArray(fixedTimeFields);
 

@@ -1,12 +1,12 @@
 package com.rokuan.calliopecore.sentence.structure.common;
 
 import com.google.gson.annotations.Expose;
-import com.rokuan.calliopecore.content.INominalObject;
-import com.rokuan.calliopecore.content.IPlaceObject;
-import com.rokuan.calliopecore.content.IPurposeObject;
-import com.rokuan.calliopecore.content.ITimeObject;
-import com.rokuan.calliopecore.content.IWayObject;
 import com.rokuan.calliopecore.sentence.Action;
+import com.rokuan.calliopecore.sentence.structure.content.INominalObject;
+import com.rokuan.calliopecore.sentence.structure.content.IPlaceObject;
+import com.rokuan.calliopecore.sentence.structure.content.IPurposeObject;
+import com.rokuan.calliopecore.sentence.structure.content.ITimeObject;
+import com.rokuan.calliopecore.sentence.structure.content.IWayObject;
 
 public abstract class FullContent implements ISubjectContent, IVerbalContent, IComplementContent {
 	@Expose
