@@ -18,7 +18,6 @@ public abstract class InterpretationObject extends FullContent {
 
 	@Expose
 	private RequestType requestType;
-	//public List<Adjective> adjectives = new ArrayList<Adjective>(); 
 
 	protected InterpretationObject(RequestType t){
 		requestType = t;

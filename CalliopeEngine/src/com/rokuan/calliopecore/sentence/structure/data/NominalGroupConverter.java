@@ -14,12 +14,12 @@ import com.rokuan.calliopecore.sentence.structure.data.nominal.PronounTarget;
 
 public class NominalGroupConverter {
 	// NominalGroup
-	public static final WordPattern PRONOUN_PATTERN = WordPattern.simple(WordType.PERSONAL_PRONOUN);
+	//public static final WordPattern PRONOUN_PATTERN = WordPattern.simple(WordType.PERSONAL_PRONOUN);
 	public static final WordPattern ABSTRACT_TARGET_PATTERN = WordPattern.simple(WordType.POSSESSIVE_ADJECTIVE); 
-	public static final WordPattern OBJECT_PATTERN = WordPattern.sequence(			
+	/*public static final WordPattern OBJECT_PATTERN = WordPattern.sequence(			
 			WordPattern.simple(WordType.POSSESSIVE_PRONOUN),
 			WordPattern.or(WordPattern.simple(WordType.NUMBER))
-			);
+			);*/
 	public static final WordPattern PLACE_PATTERN = PlaceConverter.PLACE_PATTERN;		
 	
 	// ComplementObject
@@ -63,6 +63,31 @@ public class NominalGroupConverter {
 	public static final WordPattern INDIRECT_OBJECT_PATTERN = WordPattern.sequence(TO_PATTERN,
 			WordPattern.or(PERSON_PATTERN)	// TODO: ajouter le cas groupe nominal
 					);
+	
+	//private static final WordPattern CHARACTER_PATTERN = WordPattern.simple(WordType.PERSON);
+	private static final WordPattern PRONOUN_PATTERN = WordPattern.simple(WordType.PERSONAL_PRONOUN);
+	private static final WordPattern COLOR_PATTERN = WordPattern.sequence(WordPattern.simple(WordType.DEFINITE_ARTICLE), WordPattern.simple(WordType.COLOR));
+	// TODO: ajouter les adjectifs
+	private static final WordPattern OBJECT_PATTERN = WordPattern.sequence(CountConverter.COUNT_PATTERN, WordPattern.simple(WordType.OBJECT));
+	private static final WordPattern COMMON_NAME_PATTERN = WordPattern.sequence(CountConverter.COUNT_PATTERN, WordPattern.simple(WordType.COMMON_NAME));
+	//private static final WordPattern LANGUAGE_PATTERN = WordPattern.sequence(WordPattern.simple(WordType.DEFINITE_ARTICLE), WordPattern.simple(WordType.LANGUAGE));
+
+	//private static final WordPattern CUSTOM_PLACE_PATTERN = WordPattern.sequence(WordPattern.simple(WordType.DEFINITE_ARTICLE), WordPattern.simple(WordType.ADDITIONAL_PLACE));
+	
+	
+	public static final WordPattern SUBJECT_PATTERN = WordPattern.or(
+			PlaceConverter.CITY_ONLY_PATTERN,
+			PlaceConverter.COUNTRY_ONLY_PATTERN,
+			PERSON_PATTERN,
+			PRONOUN_PATTERN,
+			DateConverter.FIXED_DATE_PATTERN,
+			COLOR_PATTERN,
+			WayConverter.LANGUAGE_ONLY_PATTERN,
+			COMMON_NAME_PATTERN,
+			PlaceConverter.ADDITIONAL_PLACE_ONLY_PATTERN,
+			PlaceConverter.PLACE_PATTERN
+			); 
+			
 	
 	public static boolean isANominalGroup(WordBuffer words){
 		return words.syntaxStartsWith(PRONOUN_PATTERN);

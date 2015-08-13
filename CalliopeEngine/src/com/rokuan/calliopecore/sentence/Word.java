@@ -62,8 +62,9 @@ public class Word {
 		SUPERLATIVE,	// moins/plus
 		TARGET_PRONOUN,	// moi/toi/me/te/...
 		DATE_UNIT_HOUR,	// midi/minuit
-		MEAN_OF_TRANSPORT, // pied/voiture/bus/avion
+		MEAN_OF_TRANSPORT, // pied/voiture/bus/avion/...
 		PLACE_TYPE,	// restaurant/cinéma/...
+		STREET_TYPE,	//rue/avenue/boulevard/...
 
 		CITY,
 		COUNTRY,
@@ -75,6 +76,7 @@ public class Word {
 		COLOR,
 		OBJECT,
 		ADDITIONAL_PLACE,
+		ADDRESS,
 
 		CONTRACTED,
 

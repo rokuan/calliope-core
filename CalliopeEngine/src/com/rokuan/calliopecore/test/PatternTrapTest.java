@@ -23,6 +23,6 @@ public class PatternTrapTest {
 		words.add(new Word("en", WordType.PREPOSITION));
 		words.add(new Word("voiture", WordType.MEAN_OF_TRANSPORT, WordType.COMMON_NAME));
 
-		assertTrue(words.syntaxStartsWith(PlaceConverter.WORLD_PLACE_PATTERN));
+		assertTrue(words.syntaxStartsWith(PlaceConverter.WORLD_LOCATION_PATTERN));
 	}
 }

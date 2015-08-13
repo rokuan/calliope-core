@@ -122,7 +122,7 @@ public class DateConverter {
 			);
 
 
-	// Indirect object patterns
+	// Direct object patterns
 
 	public static final WordPattern DIRECT_OBJECT_DATE_PATTERN = WordPattern.sequence(
 			WordPattern.simple(WordType.PREPOSITION_OF, "du"),

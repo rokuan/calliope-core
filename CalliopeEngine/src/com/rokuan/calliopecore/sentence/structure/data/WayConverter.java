@@ -3,6 +3,7 @@ package com.rokuan.calliopecore.sentence.structure.data;
 import com.rokuan.calliopecore.parser.WordBuffer;
 import com.rokuan.calliopecore.pattern.WordPattern;
 import com.rokuan.calliopecore.sentence.Word.WordType;
+import com.rokuan.calliopecore.sentence.structure.content.INominalObject;
 import com.rokuan.calliopecore.sentence.structure.content.IWayObject;
 import com.rokuan.calliopecore.sentence.structure.data.nominal.ColorObject;
 import com.rokuan.calliopecore.sentence.structure.data.nominal.ComplementObject;
@@ -13,6 +14,10 @@ public class WayConverter {
 	public static final WordPattern MEANS_OF_TRANSPORT_PATTERN = WordPattern.sequence(
 			WordPattern.simple(WordType.ANY, "à|en|par"),
 			WordPattern.simple(WordType.MEAN_OF_TRANSPORT));
+	
+	public static final WordPattern LANGUAGE_ONLY_PATTERN = WordPattern.sequence(
+			WordPattern.simple(WordType.DEFINITE_ARTICLE), 
+			WordPattern.simple(WordType.LANGUAGE));
 	
 	public static final WordPattern LANGUAGE_PATTERN = WordPattern.sequence(
 			WordPattern.simple(WordType.WAY_PREPOSITION, "en"),
@@ -32,6 +37,10 @@ public class WayConverter {
 				|| words.syntaxStartsWith(LANGUAGE_PATTERN)
 				|| words.syntaxStartsWith(MODE_PATTERN)
 				|| words.syntaxStartsWith(COLOR_PATTERN);
+	}
+	
+	public static boolean isANominalGroup(WordBuffer words){
+		return words.syntaxStartsWith(LANGUAGE_ONLY_PATTERN);
 	}
 
 	public static IWayObject parseWayAdverbial(WordBuffer words){
@@ -73,6 +82,25 @@ public class WayConverter {
 			words.consume();
 			
 			result = col;
+		}
+		
+		return result;
+	}
+	
+	public static INominalObject parseNominalWayObject(WordBuffer words){
+		INominalObject result = null;
+		
+		if(words.syntaxStartsWith(LANGUAGE_ONLY_PATTERN)){
+			LanguageObject language = new LanguageObject();
+			
+			if(words.getCurrentElement().isOfType(WordType.DEFINITE_ARTICLE)){
+				words.consume();
+			}
+			
+			language.language = words.getCurrentElement().getLanguageInfo();
+			words.consume();
+			
+			result = language;
 		}
 		
 		return result;

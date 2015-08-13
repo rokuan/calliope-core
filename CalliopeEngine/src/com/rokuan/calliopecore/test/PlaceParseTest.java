@@ -12,6 +12,8 @@ import com.rokuan.calliopecore.sentence.Word;
 import com.rokuan.calliopecore.sentence.Word.WordType;
 import com.rokuan.calliopecore.sentence.structure.content.IPlaceObject;
 import com.rokuan.calliopecore.sentence.structure.data.PlaceConverter;
+import com.rokuan.calliopecore.sentence.structure.data.nominal.CityObject;
+import com.rokuan.calliopecore.sentence.structure.data.nominal.CountryObject;
 import com.rokuan.calliopecore.sentence.structure.data.place.AdditionalPlaceObject;
 import com.rokuan.calliopecore.sentence.structure.data.place.LocationObject;
 import com.rokuan.calliopecore.sentence.structure.data.place.NamedPlaceObject;
@@ -27,17 +29,16 @@ public class PlaceParseTest {
 
 		paris.setCityInfo(new CityInfo("Paris", 48.8564528, 2.3524282));
 		
-		words.add(new Word("à", WordType.PREPOSITION_AT));
+		words.add(new Word("à", WordType.PREPOSITION_AT, WordType.PLACE_PREPOSITION));
 		words.add(paris);
 
 		IPlaceObject place = PlaceConverter.parsePlaceAdverbial(words);
 
-		assertEquals(place.getPlaceType(), PlaceType.LOCATION);
+		assertEquals(place.getPlaceType(), PlaceType.CITY);
 
-		LocationObject state = (LocationObject)place;
+		CityObject c = (CityObject)place;
 
-		assertEquals(state.city.getName(), "Paris");
-		assertNull(state.country);
+		assertEquals(c.city.getName(), "Paris");
 	}
 	
 	@Test
@@ -47,17 +48,17 @@ public class PlaceParseTest {
 		
 		france.setCountryInfo(new CountryInfo("France", "FR"));
 		
-		words.add(new Word("en", WordType.PREPOSITION_IN));
+		words.add(new Word("en", WordType.PREPOSITION_IN, WordType.PLACE_PREPOSITION));
 		words.add(france);
 
 		IPlaceObject place = PlaceConverter.parsePlaceAdverbial(words);
 
-		assertEquals(place.getPlaceType(), PlaceType.LOCATION);
+		assertEquals(place.getPlaceType(), PlaceType.COUNTRY);
 
-		LocationObject state = (LocationObject)place;
+		CountryObject c = (CountryObject)place;
 
-		assertEquals(state.city, null);
-		assertEquals(state.country.getName(), "France");
+		assertEquals(c.country.getName(), "France");
+		assertEquals(c.country.getCode(), "FR");
 	}
 
 	@Test
@@ -69,9 +70,9 @@ public class PlaceParseTest {
 		paris.setCityInfo(new CityInfo("Paris", 48.8564528, 2.3524282));
 		france.setCountryInfo(new CountryInfo("France", "FR"));
 		
-		words.add(new Word("à", WordType.PREPOSITION_AT));
+		words.add(new Word("à", WordType.PREPOSITION_AT, WordType.PLACE_PREPOSITION));
 		words.add(paris);
-		words.add(new Word("en", WordType.PREPOSITION_IN));
+		words.add(new Word("en", WordType.PREPOSITION_IN, WordType.PLACE_PREPOSITION));
 		words.add(france);
 
 		IPlaceObject place = PlaceConverter.parsePlaceAdverbial(words);
@@ -88,7 +89,7 @@ public class PlaceParseTest {
 	public void testMonumentParse(){
 		WordBuffer words = new WordBuffer();
 		
-		words.add(new Word("à", WordType.PREPOSITION_AT));
+		words.add(new Word("à", WordType.PREPOSITION_AT, WordType.PLACE_PREPOSITION));
 		words.add(new Word("la", WordType.DEFINITE_ARTICLE));
 		words.add(new Word("Tour", WordType.PROPER_NAME));
 		words.add(new Word("Eiffel", WordType.PROPER_NAME));
@@ -103,7 +104,7 @@ public class PlaceParseTest {
 	public void testCommonPlaceParse(){
 		WordBuffer words = new WordBuffer();
 		
-		words.add(new Word("à", WordType.PREPOSITION_AT));
+		words.add(new Word("à", WordType.PREPOSITION_AT, WordType.PLACE_PREPOSITION));
 		words.add(new Word("la", WordType.DEFINITE_ARTICLE));
 		words.add(new Word("Mairie", WordType.PLACE_TYPE, WordType.PROPER_NAME, WordType.COMMON_NAME));
 		words.add(new Word("de", WordType.PREPOSITION_OF));
