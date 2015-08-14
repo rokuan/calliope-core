@@ -3,18 +3,17 @@ package com.rokuan.calliopecore.sentence.structure.data;
 import com.rokuan.calliopecore.parser.WordBuffer;
 import com.rokuan.calliopecore.pattern.WordPattern;
 import com.rokuan.calliopecore.sentence.Type;
-import com.rokuan.calliopecore.sentence.Type.Pronoun;
 import com.rokuan.calliopecore.sentence.Word.WordType;
 import com.rokuan.calliopecore.sentence.structure.content.INominalObject;
 import com.rokuan.calliopecore.sentence.structure.data.nominal.AdditionalObject;
 import com.rokuan.calliopecore.sentence.structure.data.nominal.AdditionalPerson;
+import com.rokuan.calliopecore.sentence.structure.data.nominal.ColorObject;
 import com.rokuan.calliopecore.sentence.structure.data.nominal.ComplementObject;
 import com.rokuan.calliopecore.sentence.structure.data.nominal.NominalGroup;
 import com.rokuan.calliopecore.sentence.structure.data.nominal.PronounTarget;
 
 public class NominalGroupConverter {
 	// NominalGroup
-	//public static final WordPattern PRONOUN_PATTERN = WordPattern.simple(WordType.PERSONAL_PRONOUN);
 	public static final WordPattern ABSTRACT_TARGET_PATTERN = WordPattern.simple(WordType.POSSESSIVE_ADJECTIVE); 
 	/*public static final WordPattern OBJECT_PATTERN = WordPattern.sequence(			
 			WordPattern.simple(WordType.POSSESSIVE_PRONOUN),
@@ -33,12 +32,7 @@ public class NominalGroupConverter {
 			WordPattern.optional(CountConverter.COUNT_PATTERN),
 			WordPattern.simple(WordType.OBJECT));
 	public static final WordPattern CUSTOM_PERSON_PATTERN = WordPattern.simple(WordType.PERSON);
-	
-	/*public static final WordPattern personPattern = WordPattern.sequence(
-			WordPattern.nonEmptyList(WordPattern.simple(WordType.FIRSTNAME)),
-			WordPattern.optional(pattern)
-			);*/
-	
+
 	public static final WordPattern NAME_PATTERN = WordPattern.or(
 			WordPattern.simple(WordType.OBJECT),
 			WordPattern.simple(WordType.COMMON_NAME)
@@ -76,35 +70,60 @@ public class NominalGroupConverter {
 	
 	
 	public static final WordPattern SUBJECT_PATTERN = WordPattern.or(
+			OBJECT_PATTERN,
 			PlaceConverter.CITY_ONLY_PATTERN,
 			PlaceConverter.COUNTRY_ONLY_PATTERN,
 			PERSON_PATTERN,
 			PRONOUN_PATTERN,
-			DateConverter.FIXED_DATE_PATTERN,
+			DateConverter.FIXED_DATE_ONLY_PATTERN,
 			COLOR_PATTERN,
 			WayConverter.LANGUAGE_ONLY_PATTERN,
 			COMMON_NAME_PATTERN,
 			PlaceConverter.ADDITIONAL_PLACE_ONLY_PATTERN,
-			PlaceConverter.PLACE_PATTERN
+			PlaceConverter.PLACE_ONLY_PATTERN
+			// TODO: ajouter le pattern pour les groupes verbaux
 			); 
 			
 	
-	public static boolean isANominalGroup(WordBuffer words){
-		return words.syntaxStartsWith(PRONOUN_PATTERN);
-				/*|| words.syntaxStartsWith(abstractTargetPattern)
-				|| words.syntaxStartsWith(objectPattern);*/
+	public static boolean isASubject(WordBuffer words){
+		return words.syntaxStartsWith(SUBJECT_PATTERN);
 	}
 	
-	public static INominalObject parseNominalGroup(WordBuffer words){
-		if(words.syntaxStartsWith(PRONOUN_PATTERN)){
-			Pronoun pronoun = Type.parseSubjectPronoun(words.getCurrentElement().getValue());
+	public static INominalObject parseSubject(WordBuffer words){
+		INominalObject result = null;
+		
+		if(words.syntaxStartsWith(OBJECT_PATTERN)){
+			// TODO:
+		} else if(words.syntaxStartsWith(PlaceConverter.CITY_ONLY_PATTERN)){
+			result = PlaceConverter.parseNominalPlaceObject(words);
+		} else if(words.syntaxStartsWith(PlaceConverter.COUNTRY_ONLY_PATTERN)){
+			result = PlaceConverter.parseNominalPlaceObject(words);
+		} else if(words.syntaxStartsWith(PERSON_PATTERN)){
+			// TODO:
+		} else if(words.syntaxStartsWith(PRONOUN_PATTERN)){
+			PronounTarget pronoun = new PronounTarget(Type.parseSubjectPronoun(words.getCurrentElement().getValue()));
 			words.consume();
-			return new PronounTarget(pronoun);
-		} else if(words.syntaxStartsWith(OBJECT_PATTERN)){
+			result = pronoun;
+		} else if(words.syntaxStartsWith(DateConverter.FIXED_DATE_ONLY_PATTERN)){
+			result = DateConverter.parseNominalDateObject(words);
+		} else if(words.syntaxStartsWith(COLOR_PATTERN)){
+			ColorObject color = new ColorObject();
 			
+			color.color = words.getCurrentElement().getColorInfo();
+			words.consume();
+			
+			result = color;
+		} else if(words.syntaxStartsWith(WayConverter.LANGUAGE_ONLY_PATTERN)){
+			result = WayConverter.parseNominalWayObject(words);
+		} else if(words.syntaxStartsWith(COMMON_NAME_PATTERN)){
+			// TODO:
+		} else if(words.syntaxStartsWith(PlaceConverter.WORLD_LOCATION_PATTERN)){
+			result = PlaceConverter.parseNominalPlaceObject(words);
+		} else if(words.syntaxStartsWith(PlaceConverter.PLACE_ONLY_PATTERN)){
+			result = PlaceConverter.parseNominalPlaceObject(words);
 		}
 		
-		return null;
+		return result;
 	}
 	
 	public static boolean isADirectObject(WordBuffer words){

@@ -11,6 +11,7 @@ import com.rokuan.calliopecore.parser.WordBuffer;
 import com.rokuan.calliopecore.pattern.WordPattern;
 import com.rokuan.calliopecore.sentence.Word;
 import com.rokuan.calliopecore.sentence.Word.WordType;
+import com.rokuan.calliopecore.sentence.structure.content.INominalObject;
 import com.rokuan.calliopecore.sentence.structure.content.ITimeObject;
 import com.rokuan.calliopecore.sentence.structure.data.time.SingleTimeObject;
 import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial;
@@ -82,9 +83,16 @@ public class DateConverter {
 			WordPattern.sequence(WordPattern.optional(WordPattern.simple(WordType.TIME_PREPOSITION)), WordPattern.simple(WordType.DEFINITE_ARTICLE))
 			);
 
+	public static final WordPattern FIXED_DATE_ONLY_PATTERN = WordPattern.sequence(
+			WordPattern.simple(WordType.DEFINITE_ARTICLE),
+			WordPattern.or(WordPattern.simple(WordType.NUMBER), WordPattern.simple(WordType.NUMERICAL_POSITION)),
+			WordPattern.simple(WordType.DATE_MONTH),
+			WordPattern.optional(WordPattern.simple(WordType.NUMBER)));
+	
 	public static final WordPattern FIXED_DATE_PATTERN = WordPattern.sequence(
 			//WordPattern.sequence(WordPattern.optional(WordPattern.simple(WordType.ANY, "pour")), WordPattern.simple(WordType.DEFINITE_ARTICLE)),
 			DATE_PREPOSITION_PATTERN,
+			WordPattern.optional(WordPattern.simple(WordType.DEFINITE_ARTICLE)),
 			WordPattern.or(WordPattern.simple(WordType.NUMBER), WordPattern.simple(WordType.NUMERICAL_POSITION)),
 			WordPattern.simple(WordType.DATE_MONTH),
 			WordPattern.optional(WordPattern.simple(WordType.NUMBER))
@@ -146,6 +154,10 @@ public class DateConverter {
 				|| WordPattern.syntaxStartsWith(words, TIME_DECLARATION_PATTERN)
 				|| WordPattern.syntaxStartsWith(words, RELATIVE_DATE_PATTERN);
 		//|| WordPattern.syntaxStartsWith(words, timePattern); 
+	}
+	
+	public static boolean isANominalGroup(WordBuffer words){
+		return words.syntaxStartsWith(FIXED_DATE_ONLY_PATTERN);
 	}
 
 	public static boolean isAnObjectDateData(WordBuffer words){
@@ -247,6 +259,26 @@ public class DateConverter {
 			words.consume();
 		}
 
+		return result;
+	}
+	
+	public static INominalObject parseNominalDateObject(WordBuffer words){
+		INominalObject result = null;
+		
+		if(words.syntaxStartsWith(FIXED_DATE_PATTERN)){
+			SingleTimeObject single = new SingleTimeObject();
+			
+			if(words.getCurrentElement().isOfType(WordType.DEFINITE_ARTICLE)){
+				words.consume();
+			}
+
+			int[] dateFields = parseDate(words);
+
+			single.date = buildDateFromArray(dateFields);
+
+			result = single;
+		}
+		
 		return result;
 	}
 

@@ -136,7 +136,7 @@ public class Parser {
 			words.consume();
 
 			ComplementObject complement = new ComplementObject();
-			StringBuffer whatString = new StringBuffer();
+			StringBuilder whatString = new StringBuilder();
 
 			// TODO: modifier pour parser un groupe nominal entier
 			while(!VerbConverter.isAQuestionVerbalForm(words)){
