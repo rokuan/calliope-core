@@ -16,8 +16,6 @@ public class TimeAdverbialDeserializer implements JsonDeserializer<ITimeObject> 
 	@Override
 	public ITimeObject deserialize(JsonElement arg0, Type arg1,
 			JsonDeserializationContext arg2) throws JsonParseException {
-		/*GsonBuilder builder = new GsonBuilder();
-		builder.registerTypeAdapter(INominalObject.class, new NominalGroupDeserializer());*/
 		GsonBuilder builder = FullGsonBuilder.getDeserializationGsonBuilder();
 		Gson gson = builder.create();
 		Class<? extends ITimeObject> clazz = TimeAdverbial.getClassFromTimeType(TimeAdverbial.TimeType.valueOf(arg0.getAsJsonObject().get("timeType").getAsString()));

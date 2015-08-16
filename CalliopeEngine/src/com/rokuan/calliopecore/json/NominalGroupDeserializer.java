@@ -15,11 +15,6 @@ public class NominalGroupDeserializer implements JsonDeserializer<INominalObject
 	@Override
 	public INominalObject deserialize(JsonElement arg0, Type arg1,
 			JsonDeserializationContext arg2) throws JsonParseException {
-		/*GsonBuilder builder = new GsonBuilder();
-
-		builder.excludeFieldsWithoutExposeAnnotation();
-		builder.registerTypeAdapter(INominalObject.class, new NominalGroupDeserializer());
-		builder.registerTypeAdapter(CountObject.class, new CountObjectDeserializer());*/
 		GsonBuilder builder = FullGsonBuilder.getDeserializationGsonBuilder();		
 		Gson gson = builder.create();
 		Class<? extends INominalObject> clazz = NominalGroup.getClassFromGroupType(NominalGroup.GroupType.valueOf(arg0.getAsJsonObject().get("groupType").getAsString()));		

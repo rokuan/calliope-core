@@ -15,8 +15,6 @@ public class PurposeAdverbialDeserializer implements JsonDeserializer<IPurposeOb
 	@Override
 	public IPurposeObject deserialize(JsonElement arg0, Type arg1,
 			JsonDeserializationContext arg2) throws JsonParseException {
-		/*GsonBuilder builder = new GsonBuilder();
-		builder.registerTypeAdapter(INominalObject.class, new NominalGroupDeserializer());*/
 		GsonBuilder builder = FullGsonBuilder.getDeserializationGsonBuilder();
 		Gson gson = builder.create();
 		Class<? extends IPurposeObject> clazz = PurposeAdverbial.getClassFromPurposeType(PurposeAdverbial.PurposeType.valueOf(arg0.getAsJsonObject().get("purposeType").getAsString()));

@@ -6,13 +6,7 @@ import com.rokuan.calliopecore.sentence.Word.WordType;
 import com.rokuan.calliopecore.sentence.structure.content.IPurposeObject;
 import com.rokuan.calliopecore.sentence.structure.data.nominal.VerbalGroup;
 
-public class PurposeConverter {	
-	/*public static final WordPattern conjugatedPurposePattern = WordPattern.sequence(
-			WordPattern.simple(WordType.ANY, "afin"),
-			WordPattern.optional(WordPattern.simple(WordType.ANY, "que")),
-			WordPattern.optional(WordPattern.simple(WordType.TARGET_PRONOUN)),
-			WordPattern.simple(WordType.VERB)
-			);*/
+public class PurposeConverter {
 	public static final WordPattern VERBAL_PURPOSE_PATTERN = WordPattern.sequence(
 			WordPattern.simple(WordType.PURPOSE_PREPOSITION),
 			WordPattern.optional(WordPattern.simple(WordType.TARGET_PRONOUN)),

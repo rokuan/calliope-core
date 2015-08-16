@@ -19,8 +19,6 @@ public class WordBuffer extends TokenBuffer<Word> {
 	}
 	
 	public WordBuffer(List<Word> ws){
-		/*this();
-		this.addAll(ws);*/
 		super(ws);
 	}
 	

@@ -14,11 +14,7 @@ import com.rokuan.calliopecore.sentence.structure.data.nominal.PronounTarget;
 
 public class NominalGroupConverter {
 	// NominalGroup
-	public static final WordPattern ABSTRACT_TARGET_PATTERN = WordPattern.simple(WordType.POSSESSIVE_ADJECTIVE); 
-	/*public static final WordPattern OBJECT_PATTERN = WordPattern.sequence(			
-			WordPattern.simple(WordType.POSSESSIVE_PRONOUN),
-			WordPattern.or(WordPattern.simple(WordType.NUMBER))
-			);*/
+	public static final WordPattern ABSTRACT_TARGET_PATTERN = WordPattern.simple(WordType.POSSESSIVE_ADJECTIVE);
 	public static final WordPattern PLACE_PATTERN = PlaceConverter.PLACE_PATTERN;		
 	
 	// ComplementObject

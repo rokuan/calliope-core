@@ -43,9 +43,6 @@ public class TokenBuffer<T> extends ArrayList<T> {
     }
     
     public void previous(){
-        /*if(!hasPrevious()){
-            throw new NoSuchElementException();
-        }*/
     	if(currentIndex <= 0){
     		throw new IndexOutOfBoundsException();
     	}
@@ -54,9 +51,6 @@ public class TokenBuffer<T> extends ArrayList<T> {
     }
 
     public void next(){
-        /*if(!hasNext()){
-            throw new NoSuchElementException();
-        }*/
     	if(currentIndex >= this.size()){
     		throw new IndexOutOfBoundsException();
     	}

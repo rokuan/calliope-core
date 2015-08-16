@@ -37,8 +37,6 @@ public class VerbConverter {
 					WordPattern.sequence(WordPattern.simple(WordType.AUXILIARY), WordPattern.simple(WordType.VERB)),
 					WordPattern.simple(WordType.VERB)
 					)
-			/*WordPattern.optional(WordPattern.simple(WordType.AUXILIARY)),
-			WordPattern.simple(WordType.VERB)*/
 			);
 
 	// TODO: ajouter un moyen de verifier la forme du verbe

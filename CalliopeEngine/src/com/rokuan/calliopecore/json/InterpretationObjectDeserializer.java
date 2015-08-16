@@ -14,15 +14,6 @@ public class InterpretationObjectDeserializer implements JsonDeserializer<Interp
 	@Override
 	public InterpretationObject deserialize(JsonElement arg0, Type arg1,
 			JsonDeserializationContext arg2) throws JsonParseException {
-		/*GsonBuilder builder = new GsonBuilder();
-
-		builder.excludeFieldsWithoutExposeAnnotation();
-		builder.registerTypeAdapter(CountObject.class, new CountObjectDeserializer());
-		builder.registerTypeAdapter(INominalObject.class, new NominalGroupDeserializer());
-		builder.registerTypeAdapter(IPlaceObject.class, new PlaceAdverbialDeserializer());
-		builder.registerTypeAdapter(ITimeObject.class, new TimeAdverbialDeserializer());
-		builder.registerTypeAdapter(IWayObject.class, new WayAdverbialDeserializer());
-		builder.registerTypeAdapter(IPurposeObject.class, new PurposeAdverbialDeserializer());*/
 		GsonBuilder builder = FullGsonBuilder.getDeserializationGsonBuilder();		
 		Gson gson = builder.create();
 		Class<? extends InterpretationObject> clazz = InterpretationObject.getClassFromRequestType(InterpretationObject.RequestType.valueOf(arg0.getAsJsonObject().get("requestType").getAsString()));

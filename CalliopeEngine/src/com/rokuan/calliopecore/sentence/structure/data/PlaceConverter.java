@@ -71,12 +71,7 @@ public class PlaceConverter {
 			WordPattern.simple(WordType.PREPOSITION_AT), 
 			//WordPattern.optional(WordPattern.simple(WordType.DEFINITE_ARTICLE)), 
 			WordPattern.simple(WordType.CITY));
-
-	/*public static final WordPattern WORLD_PLACE_PATTERN = WordPattern.or(
-			WordPattern.sequence(CITY_PATTERN, COUNTRY_PATTERN),
-			CITY_PATTERN,
-			COUNTRY_PATTERN
-			);*/
+	
 	public static final WordPattern WORLD_LOCATION_PATTERN = WordPattern.sequence(CITY_PATTERN, COUNTRY_PATTERN);
 	
 	// devant l'Opera de Wasawakini

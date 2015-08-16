@@ -96,10 +96,7 @@ public class Type {
     		return SourcePronoun.NOUS;
     	} else if(str.equals("vous")){
     		return SourcePronoun.VOUS;
-    	}/* else if(str.equals("les")){
-    		return SourcePronoun.ILS;
-    	}*/
-    	else {
+    	} else {
     		return SourcePronoun.ILS;
     	}
     }

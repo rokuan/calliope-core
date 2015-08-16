@@ -62,22 +62,6 @@ public class DateConverter {
 							WordPattern.simple(WordType.DATE))
 			);
 
-	/*public static WordPattern timePattern = WordPattern.sequence(
-			WordPattern.simple(WordType.PREPOSITION_AT),
-			WordPattern.simple(WordType.NUMBER),
-			WordPattern.simple(WordType.DATE_UNIT_HOUR),
-			WordPattern.optional(WordPattern.simple(WordType.NUMBER))
-			);*/
-
-	/*public static final WordPattern FIXED_DATE_PATTERN = WordPattern.sequence(
-			WordPattern.or(WordPattern.simple(WordType.INDEFINITE_ARTICLE, "du"), 
-					WordPattern.sequence(WordPattern.optional(WordPattern.simple(WordType.ANY, "pour")), WordPattern.simple(WordType.DEFINITE_ARTICLE))
-					),
-					WordPattern.or(WordPattern.simple(WordType.NUMBER), WordPattern.simple(WordType.NUMERICAL_POSITION)),
-					WordPattern.simple(WordType.DATE_MONTH),
-					WordPattern.optional(WordPattern.simple(WordType.NUMBER))
-					//WordPattern.optional(timePattern)
-			);*/
 	public static final WordPattern DATE_PREPOSITION_PATTERN = WordPattern.or(
 			WordPattern.simple(new WordType[]{ WordType.TIME_PREPOSITION, WordType.CONTRACTED }),
 			WordPattern.sequence(WordPattern.optional(WordPattern.simple(WordType.TIME_PREPOSITION)), WordPattern.simple(WordType.DEFINITE_ARTICLE))
@@ -209,8 +193,6 @@ public class DateConverter {
 
 			result = period;
 		} else if(WordPattern.syntaxStartsWith(words, FIXED_DATE_PATTERN)){
-			/*WordPattern.simple(new WordType[]{ WordType.TIME_PREPOSITION, WordType.CONTRACTED }),
-			WordPattern.sequence(WordPattern.optional(WordPattern.simple(WordType.TIME_PREPOSITION)), WordPattern.simple(WordType.DEFINITE_ARTICLE))*/
 			SingleTimeObject single = new SingleTimeObject();
 
 			if(words.getCurrentElement().isOfType(WordType.TIME_PREPOSITION)){

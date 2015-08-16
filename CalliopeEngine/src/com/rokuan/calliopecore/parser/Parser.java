@@ -162,10 +162,6 @@ public class Parser {
 	}
 
 	public void parseObject(WordBuffer words, InterpretationObject obj){
-		/*if(words.getCurrentIndex() > words.size()){
-			return;
-		}*/
-
 		while(words.isIntoBounds()){
 			if(DateConverter.isATimeAdverbial(words)){
 				obj.when = DateConverter.parseTimeAdverbial(words);
