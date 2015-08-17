@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.rokuan.calliopecore.parser.WordBuffer;
 import com.rokuan.calliopecore.sentence.Word;
-import com.rokuan.calliopecore.sentence.Word.WordType;
 
 /**
  * Created by LEBEAU Christophe on 02/03/2015.
@@ -99,7 +98,7 @@ public abstract class WordPattern {
 	}
 
 	static class WordSimplePattern extends WordPattern {
-		private Word.WordType[] types;
+		/*private Word.WordType[] types;
 		private String valuePattern = null;
 		private String verbPattern = null;
 
@@ -125,7 +124,22 @@ public abstract class WordPattern {
 		@Override
 		protected boolean mayBeOptional() {
 			return false;
+		}*/
+		private WordMatcher matcher;
+		
+		public WordSimplePattern(WordMatcher m){
+			matcher = m;
 		}
+		
+		@Override
+		protected int getLength() {
+			return 1;
+		}
+
+		@Override
+		protected boolean mayBeOptional() {
+			return false;
+		}		
 	}
 
 	static class WordSeparatedListPattern extends WordPattern {
@@ -176,28 +190,51 @@ public abstract class WordPattern {
 		return new WordOptionalPattern(pattern);
 	}
 
-	public static WordPattern simple(Word.WordType ty){
-		return new WordSimplePattern(new WordType[]{ ty });
+	public static WordPattern simpleWord(Word.WordType ty){
+		return new WordSimplePattern(SimpleWordMatcher.builder().setTypes(ty).build());
 	}
 
-	public static WordPattern simple(Word.WordType[] ty){
-		return new WordSimplePattern(ty);
+	public static WordPattern simpleWord(Word.WordType[] ty){
+		return new WordSimplePattern(SimpleWordMatcher.builder().setTypes(ty).build());
+	}
+	
+	public static WordPattern simpleWord(String regex){
+		return new WordSimplePattern(SimpleWordMatcher.builder().setWordRegex(regex).build());
 	}
 
-	public static WordPattern simple(Word.WordType ty, String regex){
-		return new WordSimplePattern(new WordType[]{ ty }, regex);
+	public static WordPattern simpleWord(Word.WordType ty, String regex){
+		return new WordSimplePattern(SimpleWordMatcher.builder().setTypes(ty).setWordRegex(regex).build());
 	}
 
-	public static WordPattern simple(Word.WordType[] ty, String regex){
-		return new WordSimplePattern(ty, regex);
+	public static WordPattern simpleWord(Word.WordType[] ty, String regex){
+		return new WordSimplePattern(SimpleWordMatcher.builder().setTypes(ty).setWordRegex(regex).build());
 	}
 
-	public static WordPattern simple(Word.WordType ty, String valueRegex, String verbRegex){
-		return new WordSimplePattern(new WordType[]{ ty }, valueRegex, verbRegex);
+	/*public static WordPattern simple(Word.WordType ty, String valueRegex, String verbRegex){
+		return new WordSimplePattern(null);
+	}*/
+	
+	public static WordPattern simpleVerb(String verbRegex){
+		return new WordSimplePattern(VerbMatcher.builder().setVerbRegex(verbRegex).build());
 	}
-
-	public static WordPattern simple(Word.WordType[] ty, String valueRegex, String verbRegex){
-		return new WordSimplePattern(ty, valueRegex, verbRegex);
+	
+	public static WordPattern simpleVerb(String verbRegex, String conjugationRegex){
+		return new WordSimplePattern(VerbMatcher.builder()
+				.setVerbRegex(verbRegex)
+				.setConjugatedVerbRegex(conjugationRegex)
+				.build());
+	}
+	
+	public static WordPattern simpleVerb(boolean auxiliary, String verbRegex, String conjugationRegex){
+		return new WordSimplePattern(VerbMatcher.builder()
+				.setAuxiliary(auxiliary)
+				.setVerbRegex(verbRegex)
+				.setConjugatedVerbRegex(conjugationRegex)
+				.build());
+	}
+	
+	public static WordPattern simple(WordMatcher matcher){
+		return new WordSimplePattern(matcher);
 	}
 
 	public static WordPattern sequence(WordPattern... patterns){
@@ -247,14 +284,14 @@ public abstract class WordPattern {
 				return false;
 			}
 
-			for(int i=0; i<simple.types.length; i++){
+			/*for(int i=0; i<simple.types.length; i++){
 				if(!words.getCurrentElement().isOfType(simple.types[i])){
 					return false;
 				}
 			}
 
 			try{
-				if(simple.valuePattern != null && !words.getCurrentElement().getValue().matches(simple.valuePattern)){
+				/*if(simple.valuePattern != null && !words.getCurrentElement().getValue().matches(simple.valuePattern)){
 					return false;
 				}
 
@@ -265,6 +302,10 @@ public abstract class WordPattern {
 				// TODO: lancer l'exception quoi qu'il arrive ?
 				//System.out.println(e);
 				e.printStackTrace();
+				return false;
+			}*/
+			
+			if(!simple.matcher.matches(words.getCurrentElement())){
 				return false;
 			}
 

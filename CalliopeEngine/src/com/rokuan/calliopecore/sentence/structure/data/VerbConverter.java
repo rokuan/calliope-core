@@ -1,10 +1,12 @@
 package com.rokuan.calliopecore.sentence.structure.data;
 
 import com.rokuan.calliopecore.parser.WordBuffer;
+import com.rokuan.calliopecore.pattern.VerbMatcher;
 import com.rokuan.calliopecore.pattern.WordPattern;
 import com.rokuan.calliopecore.sentence.Action;
 import com.rokuan.calliopecore.sentence.Type;
 import com.rokuan.calliopecore.sentence.VerbConjugation;
+import com.rokuan.calliopecore.sentence.Verb.Form;
 import com.rokuan.calliopecore.sentence.Word.WordType;
 import com.rokuan.calliopecore.sentence.structure.common.FullContent;
 import com.rokuan.calliopecore.sentence.structure.data.nominal.PronounTarget;
@@ -12,35 +14,35 @@ import com.rokuan.calliopecore.sentence.structure.data.nominal.PronounTarget;
 public class VerbConverter {
 	// existe-t-il / suis-je / m'envoie-t-il
 	public static final WordPattern PRESENT_QUESTION_PATTERN = WordPattern.sequence(
-			WordPattern.optional(WordPattern.simple(WordType.TARGET_PRONOUN)),
-			WordPattern.simple(WordType.VERB), 
-			WordPattern.optional(WordPattern.simple(WordType.CONJUGATION_LINK)), 
-			WordPattern.simple(WordType.PERSONAL_PRONOUN)); 
+			WordPattern.optional(WordPattern.simpleWord(WordType.TARGET_PRONOUN)),
+			WordPattern.simpleWord(WordType.VERB), 
+			WordPattern.optional(WordPattern.simpleWord(WordType.CONJUGATION_LINK)), 
+			WordPattern.simpleWord(WordType.PERSONAL_PRONOUN)); 
 
 	// a-t-il mangé / suis-je venu / TODO: m'a-t-il donné
 	public static final WordPattern PAST_QUESTION_PATTERN = WordPattern.sequence(
-			WordPattern.optional(WordPattern.simple(WordType.TARGET_PRONOUN)), 
-			WordPattern.simple(WordType.AUXILIARY), 
-			WordPattern.optional(WordPattern.simple(WordType.CONJUGATION_LINK)), 
-			WordPattern.simple(WordType.PERSONAL_PRONOUN), 
-			WordPattern.simple(WordType.VERB));
+			WordPattern.optional(WordPattern.simpleWord(WordType.TARGET_PRONOUN)), 
+			WordPattern.simpleWord(WordType.AUXILIARY), 
+			WordPattern.optional(WordPattern.simpleWord(WordType.CONJUGATION_LINK)), 
+			WordPattern.simpleWord(WordType.PERSONAL_PRONOUN), 
+			WordPattern.simpleWord(WordType.VERB));
 
 	public static final WordPattern IS_THERE_PATTERN = WordPattern.sequence(
-			WordPattern.simple(WordType.ANY, "y"),
-			WordPattern.simple(WordType.AUXILIARY, null, "avoir"),
-			WordPattern.optional(WordPattern.simple(WordType.CONJUGATION_LINK, "t")),
-			WordPattern.simple(WordType.PERSONAL_PRONOUN, "il")
+			WordPattern.simpleWord("y"),
+			WordPattern.simpleVerb("avoir"),
+			WordPattern.optional(WordPattern.simpleWord(WordType.CONJUGATION_LINK, "t")),
+			WordPattern.simpleWord(WordType.PERSONAL_PRONOUN, "il")
 			);
 
 	public static final WordPattern CONJUGATED_VERB_PATTERN = WordPattern.sequence(
 			WordPattern.or(
-					WordPattern.sequence(WordPattern.simple(WordType.AUXILIARY), WordPattern.simple(WordType.VERB)),
-					WordPattern.simple(WordType.VERB)
+					WordPattern.sequence(WordPattern.simpleWord(WordType.AUXILIARY), WordPattern.simpleWord(WordType.VERB)),
+					WordPattern.simpleWord(WordType.VERB)
 					)
 			);
 
 	// TODO: ajouter un moyen de verifier la forme du verbe
-	public static final WordPattern INFINITIVE_PATTERN = WordPattern.simple(WordType.VERB);
+	public static final WordPattern INFINITIVE_PATTERN = WordPattern.simple(VerbMatcher.builder().setForm(Form.INFINITIVE).build());
 
 	public static final WordPattern QUESTION_VERB_PATTERN = WordPattern.or(
 			PAST_QUESTION_PATTERN,

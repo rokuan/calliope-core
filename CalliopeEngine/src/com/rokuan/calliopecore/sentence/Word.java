@@ -18,7 +18,6 @@ import com.rokuan.calliopecore.sentence.structure.data.way.WayAdverbial.WayConte
 @DatabaseTable(tableName = "words")
 public class Word {
 	public enum WordType {
-		ANY,
 		PROPER_NAME,
 		COMMON_NAME,
 		ADVERB,
@@ -147,10 +146,6 @@ public class Word {
 	}
 
 	public boolean isOfType(WordType type){
-		if(type == WordType.ANY){
-			return true;
-		}
-
 		return types.contains(type);
 	}
 	

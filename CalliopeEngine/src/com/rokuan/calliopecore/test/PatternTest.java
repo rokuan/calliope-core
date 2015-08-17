@@ -13,7 +13,7 @@ public class PatternTest {
 	@Test
 	public void testSequence(){
 		WordBuffer words = new WordBuffer();
-		WordPattern sequence = WordPattern.sequence(WordPattern.simple(WordType.DEFINITE_ARTICLE), WordPattern.simple(WordType.COMMON_NAME));
+		WordPattern sequence = WordPattern.sequence(WordPattern.simpleWord(WordType.DEFINITE_ARTICLE), WordPattern.simpleWord(WordType.COMMON_NAME));
 
 		assertFalse(words.syntaxStartsWith(sequence));
 
@@ -28,7 +28,7 @@ public class PatternTest {
 	@Test
 	public void testOptional(){
 		WordBuffer words = new WordBuffer();
-		WordPattern optional = WordPattern.optional(WordPattern.simple(WordType.QUANTITY));
+		WordPattern optional = WordPattern.optional(WordPattern.simpleWord(WordType.QUANTITY));
 
 		assertFalse(words.syntaxStartsWith(optional));
 
@@ -44,7 +44,7 @@ public class PatternTest {
 	@Test
 	public void testSimple(){
 		WordBuffer words = new WordBuffer();
-		WordPattern simple = WordPattern.simple(WordType.PROPER_NAME);
+		WordPattern simple = WordPattern.simpleWord(WordType.PROPER_NAME);
 
 		assertFalse(words.syntaxStartsWith(simple));
 
@@ -59,7 +59,7 @@ public class PatternTest {
 	@Test
 	public void testOr(){
 		WordBuffer words = new WordBuffer();
-		WordPattern or = WordPattern.or(WordPattern.simple(WordType.PROPER_NAME), WordPattern.simple(WordType.COMMON_NAME));
+		WordPattern or = WordPattern.or(WordPattern.simpleWord(WordType.PROPER_NAME), WordPattern.simpleWord(WordType.COMMON_NAME));
 		
 		words.add(new Word("programme", WordType.COMMON_NAME));
 		
@@ -70,7 +70,7 @@ public class PatternTest {
 	public void testList(){
 		WordBuffer words = new WordBuffer();
 		WordPattern list = WordPattern.nonEmptyList(
-				WordPattern.sequence(WordPattern.simple(WordType.INDEFINITE_ARTICLE), WordPattern.simple(WordType.COMMON_NAME)));
+				WordPattern.sequence(WordPattern.simpleWord(WordType.INDEFINITE_ARTICLE), WordPattern.simpleWord(WordType.COMMON_NAME)));
 
 		assertFalse(words.syntaxStartsWith(list));
 
@@ -88,8 +88,8 @@ public class PatternTest {
 	public void testSeparatedList(){
 		WordBuffer words = new WordBuffer();
 		WordPattern separatedList = WordPattern.separatedNonEmptyList(
-				WordPattern.sequence(WordPattern.simple(WordType.DEFINITE_ARTICLE), WordPattern.simple(WordType.COMMON_NAME)),
-				WordPattern.optional(WordPattern.simple(WordType.PREPOSITION_AND))
+				WordPattern.sequence(WordPattern.simpleWord(WordType.DEFINITE_ARTICLE), WordPattern.simpleWord(WordType.COMMON_NAME)),
+				WordPattern.optional(WordPattern.simpleWord(WordType.PREPOSITION_AND))
 				);
 
 		assertFalse(words.syntaxStartsWith(separatedList));

@@ -13,7 +13,7 @@ import com.rokuan.calliopecore.sentence.structure.data.nominal.NominalGroup;
 import com.rokuan.calliopecore.sentence.structure.data.nominal.PronounTarget;
 
 public class NominalGroupConverter {
-	// NominalGroup
+	/*// NominalGroup
 	public static final WordPattern ABSTRACT_TARGET_PATTERN = WordPattern.simple(WordType.POSSESSIVE_ADJECTIVE);
 	public static final WordPattern PLACE_PATTERN = PlaceConverter.PLACE_PATTERN;		
 	
@@ -78,7 +78,74 @@ public class NominalGroupConverter {
 			PlaceConverter.ADDITIONAL_PLACE_ONLY_PATTERN,
 			PlaceConverter.PLACE_ONLY_PATTERN
 			// TODO: ajouter le pattern pour les groupes verbaux
-			); 
+			);*/
+	
+	// NominalGroup
+		public static final WordPattern ABSTRACT_TARGET_PATTERN = WordPattern.simpleWord(WordType.POSSESSIVE_ADJECTIVE);
+		public static final WordPattern PLACE_PATTERN = PlaceConverter.PLACE_PATTERN;		
+		
+		// ComplementObject
+		public static final WordPattern DIRECT_OBJECT_PATTERN = WordPattern.sequence(
+				WordPattern.optional(CountConverter.COUNT_PATTERN),
+				WordPattern.simpleWord(WordType.COMMON_NAME),
+				WordPattern.optional(CountConverter.MULTIPLE_ITEMS_PATTERN),
+				WordPattern.optional(CriterionConverter.CRITERIA_PATTERN));	
+		
+		public static final WordPattern CUSTOM_OBJECT_PATTERN = WordPattern.sequence(
+				WordPattern.optional(CountConverter.COUNT_PATTERN),
+				WordPattern.simpleWord(WordType.OBJECT));
+		public static final WordPattern CUSTOM_PERSON_PATTERN = WordPattern.simpleWord(WordType.PERSON);
+
+		public static final WordPattern NAME_PATTERN = WordPattern.or(
+				WordPattern.simpleWord(WordType.OBJECT),
+				WordPattern.simpleWord(WordType.COMMON_NAME)
+				);
+		
+		public static final WordPattern TO_PATTERN = WordPattern.or(
+				WordPattern.sequence(WordPattern.simpleWord(WordType.PREPOSITION_AT, "à"), WordPattern.optional(WordPattern.simpleWord(WordType.DEFINITE_ARTICLE, "la"))),
+				WordPattern.simpleWord(WordType.PREPOSITION_AT, "au.*")
+				);
+		
+		public static final WordPattern FIRST_NAME_SEQUENCE_PATTERN = WordPattern.nonEmptyList(WordPattern.simpleWord(WordType.FIRSTNAME));
+		public static final WordPattern LAST_NAME_SEQUENCE_PATTERN = WordPattern.nonEmptyList(WordPattern.simpleWord(WordType.PROPER_NAME));
+		
+		public static final WordPattern PERSON_PATTERN = WordPattern.or(
+				WordPattern.simpleWord(WordType.PERSON),
+				LAST_NAME_SEQUENCE_PATTERN,
+				FIRST_NAME_SEQUENCE_PATTERN,
+				WordPattern.sequence(FIRST_NAME_SEQUENCE_PATTERN, LAST_NAME_SEQUENCE_PATTERN),
+				WordPattern.sequence(LAST_NAME_SEQUENCE_PATTERN, FIRST_NAME_SEQUENCE_PATTERN)
+				);
+		
+		public static final WordPattern INDIRECT_OBJECT_PATTERN = WordPattern.sequence(TO_PATTERN,
+				WordPattern.or(PERSON_PATTERN)	// TODO: ajouter le cas groupe nominal
+						);
+		
+		//private static final WordPattern CHARACTER_PATTERN = WordPattern.simple(WordType.PERSON);
+		private static final WordPattern PRONOUN_PATTERN = WordPattern.simpleWord(WordType.PERSONAL_PRONOUN);
+		private static final WordPattern COLOR_PATTERN = WordPattern.sequence(WordPattern.simpleWord(WordType.DEFINITE_ARTICLE), WordPattern.simpleWord(WordType.COLOR));
+		// TODO: ajouter les adjectifs
+		private static final WordPattern OBJECT_PATTERN = WordPattern.sequence(CountConverter.COUNT_PATTERN, WordPattern.simpleWord(WordType.OBJECT));
+		private static final WordPattern COMMON_NAME_PATTERN = WordPattern.sequence(CountConverter.COUNT_PATTERN, WordPattern.simpleWord(WordType.COMMON_NAME));
+		//private static final WordPattern LANGUAGE_PATTERN = WordPattern.sequence(WordPattern.simple(WordType.DEFINITE_ARTICLE), WordPattern.simple(WordType.LANGUAGE));
+
+		//private static final WordPattern CUSTOM_PLACE_PATTERN = WordPattern.sequence(WordPattern.simple(WordType.DEFINITE_ARTICLE), WordPattern.simple(WordType.ADDITIONAL_PLACE));
+		
+		
+		public static final WordPattern SUBJECT_PATTERN = WordPattern.or(
+				OBJECT_PATTERN,
+				PlaceConverter.CITY_ONLY_PATTERN,
+				PlaceConverter.COUNTRY_ONLY_PATTERN,
+				PERSON_PATTERN,
+				PRONOUN_PATTERN,
+				DateConverter.FIXED_DATE_ONLY_PATTERN,
+				COLOR_PATTERN,
+				WayConverter.LANGUAGE_ONLY_PATTERN,
+				COMMON_NAME_PATTERN,
+				PlaceConverter.ADDITIONAL_PLACE_ONLY_PATTERN,
+				PlaceConverter.PLACE_ONLY_PATTERN
+				// TODO: ajouter le pattern pour les groupes verbaux
+				);
 			
 	
 	public static boolean isASubject(WordBuffer words){

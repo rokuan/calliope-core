@@ -7,10 +7,11 @@ import com.rokuan.calliopecore.sentence.structure.content.IPurposeObject;
 import com.rokuan.calliopecore.sentence.structure.data.nominal.VerbalGroup;
 
 public class PurposeConverter {
+	// TODO: mettre le bon pattern pour le verb + rajouter le pattern pour les sujets
 	public static final WordPattern VERBAL_PURPOSE_PATTERN = WordPattern.sequence(
-			WordPattern.simple(WordType.PURPOSE_PREPOSITION),
-			WordPattern.optional(WordPattern.simple(WordType.TARGET_PRONOUN)),
-			WordPattern.simple(WordType.VERB)
+			WordPattern.simpleWord(WordType.PURPOSE_PREPOSITION),
+			WordPattern.optional(WordPattern.simpleWord(WordType.TARGET_PRONOUN)),
+			WordPattern.simpleWord(WordType.VERB)
 			);
 	
 	public static boolean isAPurposeAdverbial(WordBuffer words){

@@ -7,51 +7,51 @@ import com.rokuan.calliopecore.sentence.structure.data.VerbConverter;
 
 public class SentencePattern {
 	public static final WordPattern YES_NO_QUESTION_PATTERN = WordPattern.sequence(
-			WordPattern.optional(WordPattern.simple(WordType.PERSONAL_PRONOUN)),	// m', t'
-			WordPattern.simple(WordType.AUXILIARY),
-			WordPattern.optional(WordPattern.simple(WordType.CONJUGATION_LINK)),
-			WordPattern.simple(WordType.PERSONAL_PRONOUN),
-			WordPattern.simple(WordType.VERB)
+			WordPattern.optional(WordPattern.simpleWord(WordType.PERSONAL_PRONOUN)),	// m', t'
+			WordPattern.simpleWord(WordType.AUXILIARY),
+			WordPattern.optional(WordPattern.simpleWord(WordType.CONJUGATION_LINK)),
+			WordPattern.simpleWord(WordType.PERSONAL_PRONOUN),
+			WordPattern.simpleWord(WordType.VERB)
 			);
 
 	public static final WordPattern IS_ARE_PATTERN = WordPattern.sequence(
-			WordPattern.simple(WordType.ANY, "est-ce"),
-			WordPattern.simple(WordType.ANY, "que")
+			WordPattern.simpleWord("est-ce"),
+			WordPattern.simpleWord("que")
 			);
 	public static final WordPattern INDIRECT_ORDER_PATTERN = WordPattern.sequence(
 			WordPattern.or(
 					// Est-ce que tu peux/pourrais
-					WordPattern.sequence(IS_ARE_PATTERN, WordPattern.simple(WordType.PERSONAL_PRONOUN, "tu"), WordPattern.simple(WordType.VERB, null, "pouvoir")),
+					WordPattern.sequence(IS_ARE_PATTERN, WordPattern.simpleWord(WordType.PERSONAL_PRONOUN, "tu"), WordPattern.simpleVerb("pouvoir")),
 					// (Peux/pourrais)-tu
-					WordPattern.sequence(WordPattern.simple(WordType.VERB, null, "pouvoir"), WordPattern.simple(WordType.PERSONAL_PRONOUN, "tu"))
+					WordPattern.sequence(WordPattern.simpleVerb("pouvoir"), WordPattern.simpleWord(WordType.PERSONAL_PRONOUN, "tu"))
 					),
-					WordPattern.optional(WordPattern.simple(WordType.PERSONAL_PRONOUN)),
-					WordPattern.simple(WordType.VERB)
+					WordPattern.optional(WordPattern.simpleWord(WordType.PERSONAL_PRONOUN)),
+					WordPattern.simpleWord(WordType.VERB)
 			);
 	
 	public static final String ORDER_VERB_REGEX = "ordonner|demander|souhaiter|vouloir|exiger|aimer|sommer";
 	// Je t'ordonne de ... || Je souhaite que tu (me/te/...)...
 	// TODO: voir les autres cas
 	public static final WordPattern AFFIRMATIVE_ORDER = WordPattern.sequence(
-			WordPattern.simple(WordType.PERSONAL_PRONOUN, "je"),
-			WordPattern.optional(WordPattern.simple(WordType.PERSONAL_PRONOUN)),
-			WordPattern.simple(WordType.VERB, null, ORDER_VERB_REGEX),
+			WordPattern.simpleWord(WordType.PERSONAL_PRONOUN, "je"),
+			WordPattern.optional(WordPattern.simpleWord(WordType.PERSONAL_PRONOUN, "t|te")),
+			WordPattern.simpleVerb(ORDER_VERB_REGEX),
 			WordPattern.or(
-					WordPattern.sequence(WordPattern.simple(WordType.ANY, "que"), WordPattern.simple(WordType.PERSONAL_PRONOUN, "tu"), WordPattern.optional(WordPattern.simple(WordType.PERSONAL_PRONOUN))),
-					WordPattern.simple(WordType.ANY, "de"))
+					WordPattern.sequence(WordPattern.simpleWord("que"), WordPattern.simpleWord(WordType.PERSONAL_PRONOUN, "tu"), WordPattern.optional(WordPattern.simpleWord(WordType.PERSONAL_PRONOUN))),
+					WordPattern.simpleWord("de"))
 					);
 
 	// Affiche-moi
 	public static final WordPattern ORDER_PATTERN = WordPattern.sequence(
-			WordPattern.simple(WordType.VERB), 
+			WordPattern.simpleWord(WordType.VERB), 
 			WordPattern.optional(WordPattern.sequence(
-					WordPattern.optional(WordPattern.simple(WordType.DEFINITE_ARTICLE)),
-					WordPattern.optional(WordPattern.simple(WordType.TARGET_PRONOUN))
+					WordPattern.optional(WordPattern.simpleWord(WordType.DEFINITE_ARTICLE)),
+					WordPattern.optional(WordPattern.simpleWord(WordType.TARGET_PRONOUN))
 			)));
 
 	// Quelle temperature fait-il
 	public static final WordPattern RESULT_QUESTION_PATTERN = WordPattern.sequence(
-			WordPattern.or(WordPattern.simple(WordType.INTERROGATIVE_ADJECTIVE, "quel.*"), WordPattern.simple(WordType.INTERROGATIVE_ADJECTIVE, "quel.*")),
+			WordPattern.or(WordPattern.simpleWord(WordType.INTERROGATIVE_ADJECTIVE, "quel.*"), WordPattern.simpleWord(WordType.INTERROGATIVE_ADJECTIVE, "quel.*")),
 			// TODO: remplacer par un groupe nominal en prenant en compte les adjectifs (ex: quel petit chat)
 			//WordPattern.nonEmptyList(WordPattern.simple(WordType.COMMON_NAME)),
 			NominalGroupConverter.NAME_PATTERN,
@@ -60,7 +60,13 @@ public class SentencePattern {
 
 	// Quel(s/le(s)) est/sont
 	public static final WordPattern INTERROGATIVE_PATTERN = WordPattern.sequence(
-			WordPattern.or(WordPattern.simple(WordType.INTERROGATIVE_PRONOUN), WordPattern.simple(WordType.INTERROGATIVE_ADJECTIVE)),
+			WordPattern.or(WordPattern.simpleWord(WordType.INTERROGATIVE_PRONOUN), WordPattern.simpleWord(WordType.INTERROGATIVE_ADJECTIVE)),
 			VerbConverter.CONJUGATED_VERB_PATTERN
 			);
+	
+	public static final WordPattern AFFIRMATIVE_SENTENCE_PATTERN = WordPattern.sequence(
+			NominalGroupConverter.SUBJECT_PATTERN,
+			VerbConverter.CONJUGATED_VERB_PATTERN,
+			WordPattern.optional(NominalGroupConverter.DIRECT_OBJECT_PATTERN));
+			
 }

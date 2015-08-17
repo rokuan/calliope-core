@@ -11,7 +11,7 @@ import com.rokuan.calliopecore.sentence.structure.data.criteria.FieldCriterionOb
 import com.rokuan.calliopecore.sentence.structure.data.criteria.SuperlativeCriterionObject;
 
 public class CriterionConverter {
-	// Le plus proche
+	/*// Le plus proche
 	public static final WordPattern CRITERIA_PATTERN = WordPattern.sequence(
 			WordPattern.simple(WordType.DEFINITE_ARTICLE),
 			WordPattern.simple(WordType.SUPERLATIVE),
@@ -48,7 +48,46 @@ public class CriterionConverter {
 			WordPattern.optional(WordPattern.simple(WordType.RELATIVE_PRONOUN, "qui")),
 			WordPattern.simple(WordType.VERB, null, "être"),
 			WordPattern.separatedNonEmptyList(CRITERIA_PATTERN, WordPattern.optional(WordPattern.simple(WordType.PREPOSITION_AND)))
-			);
+			);*/
+	
+	// Le plus proche
+		public static final WordPattern CRITERIA_PATTERN = WordPattern.sequence(
+				WordPattern.simpleWord(WordType.DEFINITE_ARTICLE),
+				WordPattern.simpleWord(WordType.SUPERLATIVE),
+				WordPattern.simpleWord(WordType.ADJECTIVE)
+				);
+
+		// Le plus petit homme
+		//public static final WordPattern superlativePattern = WordPattern.sequence(criteriaPattern, WordPattern.optional(WordPattern.simple(WordType.COMMON_NAME)));
+		public static final WordPattern SUPERLATIVE_PATTERN = WordPattern.separatedNonEmptyList(CRITERIA_PATTERN, WordPattern.optional(WordPattern.simpleWord(WordType.PREPOSITION_AND)));
+
+		public static final WordPattern SUPERLATIVE_ADJECTIVE_FIRST_PATTERN = WordPattern.sequence(WordPattern.simpleWord(WordType.SUPERLATIVE), WordPattern.simpleWord(WordType.ADJECTIVE), WordPattern.simpleWord(WordType.COMMON_NAME));
+		public static final WordPattern SUPERLATIVE_NAME_FIRST_PATTERN = WordPattern.sequence(WordPattern.simpleWord(WordType.COMMON_NAME), WordPattern.simpleWord(WordType.DEFINITE_ARTICLE), WordPattern.simpleWord(WordType.SUPERLATIVE), WordPattern.simpleWord(WordType.ADJECTIVE)); 
+
+		// L'homme le plus riche / le plus petit homme
+		public static final WordPattern FIELD_CRITERIA_PATTERN = WordPattern.sequence(
+				WordPattern.simpleWord(WordType.DEFINITE_ARTICLE),
+				WordPattern.or(
+						SUPERLATIVE_ADJECTIVE_FIRST_PATTERN,
+						SUPERLATIVE_NAME_FIRST_PATTERN
+						)
+				);
+
+		// TODO: avoir la possibilite d'ajouter un filtre sur la valeur du mot
+		// qui a/ayant/avec la plus grande surface
+		public static final WordPattern SPECIFICATION_HAVE_PATTERN = WordPattern.sequence(
+				WordPattern.or(
+						WordPattern.simpleWord(WordType.PREPOSITION_WITH),
+						WordPattern.sequence(WordPattern.optional(WordPattern.simpleWord(WordType.RELATIVE_PRONOUN, "qui")), WordPattern.simpleVerb("avoir"))
+						),
+						WordPattern.separatedNonEmptyList(FIELD_CRITERIA_PATTERN, WordPattern.optional(WordPattern.simpleWord(WordType.PREPOSITION_AND)))
+				);
+		// qui est/etant le plus proche
+		public static final WordPattern SPECIFICATION_BE_PATTERN = WordPattern.sequence(
+				WordPattern.optional(WordPattern.simpleWord(WordType.RELATIVE_PRONOUN, "qui")),
+				WordPattern.simpleVerb("être"),
+				WordPattern.separatedNonEmptyList(CRITERIA_PATTERN, WordPattern.optional(WordPattern.simpleWord(WordType.PREPOSITION_AND)))
+				);
 
 	public static boolean isACriterionData(WordBuffer words){
 		return words.syntaxStartsWith(SPECIFICATION_HAVE_PATTERN)

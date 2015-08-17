@@ -26,13 +26,13 @@ public class SyntaxTest {
 
 		// PREPOSITION_FROM (NUMBER | NUMERICAL_POSITION) (DATE_MONTH NUMBER?)? PREPOSITION_TO NUMBER DATE_MONTH NUMBER
 		assertEquals(true, WordPattern.syntaxStartsWith(words,
-				WordPattern.simple(Word.WordType.PREPOSITION_FROM),
-				WordPattern.or(WordPattern.simple(Word.WordType.NUMERICAL_POSITION), WordPattern.simple(Word.WordType.NUMBER)),
-				WordPattern.optional(WordPattern.sequence(WordPattern.simple(WordType.DATE_MONTH), WordPattern.optional(WordPattern.simple(WordType.NUMBER)))),
-				WordPattern.simple(Word.WordType.PREPOSITION_TO),
-				WordPattern.or(WordPattern.simple(Word.WordType.NUMBER), WordPattern.simple(Word.WordType.NUMERICAL_POSITION)),
-				WordPattern.simple(Word.WordType.DATE_MONTH),
-				WordPattern.optional(WordPattern.simple(Word.WordType.NUMBER))
+				WordPattern.simpleWord(Word.WordType.PREPOSITION_FROM),
+				WordPattern.or(WordPattern.simpleWord(Word.WordType.NUMERICAL_POSITION), WordPattern.simpleWord(Word.WordType.NUMBER)),
+				WordPattern.optional(WordPattern.sequence(WordPattern.simpleWord(WordType.DATE_MONTH), WordPattern.optional(WordPattern.simpleWord(WordType.NUMBER)))),
+				WordPattern.simpleWord(Word.WordType.PREPOSITION_TO),
+				WordPattern.or(WordPattern.simpleWord(Word.WordType.NUMBER), WordPattern.simpleWord(Word.WordType.NUMERICAL_POSITION)),
+				WordPattern.simpleWord(Word.WordType.DATE_MONTH),
+				WordPattern.optional(WordPattern.simpleWord(Word.WordType.NUMBER))
 				));
 	}
 
@@ -51,13 +51,13 @@ public class SyntaxTest {
 		// PREPOSITION_FROM (NUMBER | NUMERICAL_POSITION) (DATE_MONTH NUMBER?)? PREPOSITION_TO NUMBER DATE_MONTH NUMBER
 		assertEquals(true, WordPattern.syntaxStartsWith(words,
 				WordPattern.sequence(
-						WordPattern.simple(Word.WordType.PREPOSITION_FROM),
-						WordPattern.or(WordPattern.simple(Word.WordType.NUMERICAL_POSITION), WordPattern.simple(Word.WordType.NUMBER)),
-						WordPattern.optional(WordPattern.sequence(WordPattern.simple(WordType.DATE_MONTH), WordPattern.optional(WordPattern.simple(WordType.NUMBER)))),
-						WordPattern.simple(Word.WordType.PREPOSITION_TO),
-						WordPattern.or(WordPattern.simple(Word.WordType.NUMBER), WordPattern.simple(Word.WordType.NUMERICAL_POSITION)),
-						WordPattern.simple(Word.WordType.DATE_MONTH),
-						WordPattern.optional(WordPattern.simple(Word.WordType.NUMBER))
+						WordPattern.simpleWord(Word.WordType.PREPOSITION_FROM),
+						WordPattern.or(WordPattern.simpleWord(Word.WordType.NUMERICAL_POSITION), WordPattern.simpleWord(Word.WordType.NUMBER)),
+						WordPattern.optional(WordPattern.sequence(WordPattern.simpleWord(WordType.DATE_MONTH), WordPattern.optional(WordPattern.simpleWord(WordType.NUMBER)))),
+						WordPattern.simpleWord(Word.WordType.PREPOSITION_TO),
+						WordPattern.or(WordPattern.simpleWord(Word.WordType.NUMBER), WordPattern.simpleWord(Word.WordType.NUMERICAL_POSITION)),
+						WordPattern.simpleWord(Word.WordType.DATE_MONTH),
+						WordPattern.optional(WordPattern.simpleWord(Word.WordType.NUMBER))
 						))
 				);
 	}

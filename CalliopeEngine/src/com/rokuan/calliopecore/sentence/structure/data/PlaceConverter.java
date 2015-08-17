@@ -13,64 +13,64 @@ import com.rokuan.calliopecore.sentence.structure.data.place.NamedPlaceObject;
 
 public class PlaceConverter {
 	public static final WordPattern ADDRESS_ONLY_PATTERN = WordPattern.sequence(
-			WordPattern.simple(WordType.DEFINITE_ARTICLE),
-			WordPattern.optional(WordPattern.simple(WordType.NUMBER)),
-			WordPattern.simple(WordType.STREET_TYPE),
-			WordPattern.nonEmptyList(WordPattern.simple(WordType.PROPER_NAME)));		
+			WordPattern.simpleWord(WordType.DEFINITE_ARTICLE),
+			WordPattern.optional(WordPattern.simpleWord(WordType.NUMBER)),
+			WordPattern.simpleWord(WordType.STREET_TYPE),
+			WordPattern.nonEmptyList(WordPattern.simpleWord(WordType.PROPER_NAME)));		
 	
 	public static final WordPattern PLACE_ONLY_PATTERN = WordPattern.sequence(
-			WordPattern.simple(WordType.DEFINITE_ARTICLE),
-			WordPattern.optional(WordPattern.simple(WordType.PLACE_TYPE)),
-			WordPattern.optional(WordPattern.nonEmptyList(WordPattern.simple(WordType.PROPER_NAME))),
-			WordPattern.optional(WordPattern.sequence(WordPattern.simple(WordType.PREPOSITION_OF), 
-					WordPattern.optional(WordPattern.simple(WordType.DEFINITE_ARTICLE)),
+			WordPattern.simpleWord(WordType.DEFINITE_ARTICLE),
+			WordPattern.optional(WordPattern.simpleWord(WordType.PLACE_TYPE)),
+			WordPattern.optional(WordPattern.nonEmptyList(WordPattern.simpleWord(WordType.PROPER_NAME))),
+			WordPattern.optional(WordPattern.sequence(WordPattern.simpleWord(WordType.PREPOSITION_OF), 
+					WordPattern.optional(WordPattern.simpleWord(WordType.DEFINITE_ARTICLE)),
 					WordPattern.optional(WordPattern.or(
-							WordPattern.simple(WordType.COUNTRY),
-							WordPattern.simple(WordType.CITY),
-							WordPattern.nonEmptyList(WordPattern.simple(WordType.PROPER_NAME))
+							WordPattern.simpleWord(WordType.COUNTRY),
+							WordPattern.simpleWord(WordType.CITY),
+							WordPattern.nonEmptyList(WordPattern.simpleWord(WordType.PROPER_NAME))
 							))
 					))
 			);
 	
 	public static final WordPattern ADDITIONAL_PLACE_ONLY_PATTERN = WordPattern.sequence(
-			WordPattern.optional(WordPattern.simple(WordType.DEFINITE_ARTICLE)),
-			WordPattern.simple(WordType.ADDITIONAL_PLACE)
+			WordPattern.optional(WordPattern.simpleWord(WordType.DEFINITE_ARTICLE)),
+			WordPattern.simpleWord(WordType.ADDITIONAL_PLACE)
 			);
 	
-	public static final WordPattern CITY_ONLY_PATTERN = WordPattern.simple(WordType.CITY);
+	public static final WordPattern CITY_ONLY_PATTERN = WordPattern.simpleWord(WordType.CITY);
 	
-	public static final WordPattern COUNTRY_ONLY_PATTERN = WordPattern.simple(WordType.COUNTRY);
+	public static final WordPattern COUNTRY_ONLY_PATTERN = WordPattern.simpleWord(WordType.COUNTRY);
 	
 	// le musée du Louvre, la Grande Muraille de Chine 
 	public static final WordPattern PLACE_PATTERN = WordPattern.sequence(
 			/*WordPattern.or(
 					WordPattern.sequence(WordPattern.simple(WordType.PREPOSITION_AT, "à"), WordPattern.simple(WordType.DEFINITE_ARTICLE, "la|l")),
 					WordPattern.simple(WordType.PREPOSITION_AT, "au(x?)")),*/
-			WordPattern.simple(WordType.PLACE_PREPOSITION),
-			WordPattern.optional(WordPattern.simple(WordType.DEFINITE_ARTICLE)),
+			WordPattern.simpleWord(WordType.PLACE_PREPOSITION),
+			WordPattern.optional(WordPattern.simpleWord(WordType.DEFINITE_ARTICLE)),
 					//WordPattern.simple(WordType.DEFINITE_ARTICLE),
-					WordPattern.optional(WordPattern.simple(WordType.PLACE_TYPE)),
-					WordPattern.optional(WordPattern.nonEmptyList(WordPattern.simple(WordType.PROPER_NAME))),
-					WordPattern.optional(WordPattern.sequence(WordPattern.simple(WordType.PREPOSITION_OF), 
-							WordPattern.optional(WordPattern.simple(WordType.DEFINITE_ARTICLE)),
+					WordPattern.optional(WordPattern.simpleWord(WordType.PLACE_TYPE)),
+					WordPattern.optional(WordPattern.nonEmptyList(WordPattern.simpleWord(WordType.PROPER_NAME))),
+					WordPattern.optional(WordPattern.sequence(WordPattern.simpleWord(WordType.PREPOSITION_OF), 
+							WordPattern.optional(WordPattern.simpleWord(WordType.DEFINITE_ARTICLE)),
 							WordPattern.optional(WordPattern.or(
-									WordPattern.simple(WordType.COUNTRY),
-									WordPattern.simple(WordType.CITY),
-									WordPattern.nonEmptyList(WordPattern.simple(WordType.PROPER_NAME))
+									WordPattern.simpleWord(WordType.COUNTRY),
+									WordPattern.simpleWord(WordType.CITY),
+									WordPattern.nonEmptyList(WordPattern.simpleWord(WordType.PROPER_NAME))
 									))
 							)));
 
 	//private static final WordPattern locationPrepositionPattern = WordPattern.sequence(WordPattern.)
 
 	public static final WordPattern COUNTRY_PATTERN = WordPattern.sequence(WordPattern.or(
-			WordPattern.sequence(WordPattern.simple(WordType.PREPOSITION_AT), WordPattern.optional(WordPattern.simple(WordType.DEFINITE_ARTICLE))),
-			WordPattern.sequence(WordPattern.simple(WordType.ANY, "en"))
-			), WordPattern.simple(WordType.COUNTRY));
+			WordPattern.sequence(WordPattern.simpleWord(WordType.PREPOSITION_AT), WordPattern.optional(WordPattern.simpleWord(WordType.DEFINITE_ARTICLE))),
+			WordPattern.sequence(WordPattern.simpleWord("en"))
+			), WordPattern.simpleWord(WordType.COUNTRY));
 
 	public static final WordPattern CITY_PATTERN = WordPattern.sequence(
-			WordPattern.simple(WordType.PREPOSITION_AT), 
+			WordPattern.simpleWord(WordType.PREPOSITION_AT), 
 			//WordPattern.optional(WordPattern.simple(WordType.DEFINITE_ARTICLE)), 
-			WordPattern.simple(WordType.CITY));
+			WordPattern.simpleWord(WordType.CITY));
 	
 	public static final WordPattern WORLD_LOCATION_PATTERN = WordPattern.sequence(CITY_PATTERN, COUNTRY_PATTERN);
 	
@@ -78,10 +78,10 @@ public class PlaceConverter {
 	// jusqu'aux Chutes Fanis
 	public static final WordPattern ADDITIONAL_PLACE_PATTERN = WordPattern.sequence(
 			WordPattern.or(
-					WordPattern.sequence(WordPattern.simple(WordType.PLACE_PREPOSITION), WordPattern.optional(WordPattern.simple(WordType.DEFINITE_ARTICLE))),
-					WordPattern.simple(new WordType[]{ WordType.PLACE_PREPOSITION, WordType.CONTRACTED })
+					WordPattern.sequence(WordPattern.simpleWord(WordType.PLACE_PREPOSITION), WordPattern.optional(WordPattern.simpleWord(WordType.DEFINITE_ARTICLE))),
+					WordPattern.simpleWord(new WordType[]{ WordType.PLACE_PREPOSITION, WordType.CONTRACTED })
 					),
-					WordPattern.simple(WordType.ADDITIONAL_PLACE)
+					WordPattern.simpleWord(WordType.ADDITIONAL_PLACE)
 			);
 
 	// A Paris en France

@@ -12,25 +12,25 @@ import com.rokuan.calliopecore.sentence.structure.data.way.AdditionalMode;
 
 public class WayConverter {
 	public static final WordPattern MEANS_OF_TRANSPORT_PATTERN = WordPattern.sequence(
-			WordPattern.simple(WordType.ANY, "à|en|par"),
-			WordPattern.simple(WordType.MEAN_OF_TRANSPORT));
+			WordPattern.simpleWord("à|en|par"),
+			WordPattern.simpleWord(WordType.MEAN_OF_TRANSPORT));
 	
 	public static final WordPattern LANGUAGE_ONLY_PATTERN = WordPattern.sequence(
-			WordPattern.simple(WordType.DEFINITE_ARTICLE), 
-			WordPattern.simple(WordType.LANGUAGE));
+			WordPattern.simpleWord(WordType.DEFINITE_ARTICLE), 
+			WordPattern.simpleWord(WordType.LANGUAGE));
 	
 	public static final WordPattern LANGUAGE_PATTERN = WordPattern.sequence(
-			WordPattern.simple(WordType.WAY_PREPOSITION, "en"),
-			WordPattern.simple(WordType.LANGUAGE)
+			WordPattern.simpleWord(WordType.WAY_PREPOSITION, "en"),
+			WordPattern.simpleWord(WordType.LANGUAGE)
 			);
 	
 	public static final WordPattern MODE_PATTERN = WordPattern.sequence(
-			WordPattern.simple(WordType.WAY_PREPOSITION),
-			WordPattern.simple(WordType.MODE));
+			WordPattern.simpleWord(WordType.WAY_PREPOSITION),
+			WordPattern.simpleWord(WordType.MODE));
 	
 	public static final WordPattern COLOR_PATTERN = WordPattern.sequence(
-			WordPattern.simple(WordType.WAY_PREPOSITION, "en"),
-			WordPattern.simple(WordType.COLOR)); 
+			WordPattern.simpleWord(WordType.WAY_PREPOSITION, "en"),
+			WordPattern.simpleWord(WordType.COLOR)); 
 
 	public static boolean isAWayAdverbial(WordBuffer words){
 		return words.syntaxStartsWith(MEANS_OF_TRANSPORT_PATTERN)

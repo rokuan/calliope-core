@@ -210,13 +210,13 @@ public class DateParseTest {
 		
 		words.add(imperativeAlert);
 		words.add(new Word("moi", WordType.TARGET_PRONOUN));
-		words.add(new Word("quand", Word.WordType.ANY));
+		words.add(new Word("quand", Word.WordType.TIME_PREPOSITION));
 		words.add(new Word("il", Word.WordType.PERSONAL_PRONOUN));		
 		words.add(futureBe);
 		words.add(new Word("15h47", WordType.TIME));
 		
 		InterpretationObject object = new Parser().parseInterpretationObject(words);
-		//TimeObject dateObj = DateConverter.parseDateObject(words);
+		//ITimeObject dateObj = DateConverter.parseTimeAdverbial(words);
 		ITimeObject dateObj = object.when;
 		
 		assertEquals(dateObj.getTimeType(), TimeAdverbial.TimeType.SINGLE);

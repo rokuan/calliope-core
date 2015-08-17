@@ -33,7 +33,7 @@ public class VerbConjugation {
 	@Expose
 	@DatabaseField(columnName = FORM_FIELD_NAME, uniqueCombo = true)
     protected Verb.Form form;
-
+	
 	@Expose
 	@DatabaseField(columnName = PERSON_FIELD_NAME, uniqueCombo = true)
     protected Verb.Pronoun pronoun;
@@ -57,4 +57,9 @@ public class VerbConjugation {
     public void setVerb(Verb verb) {
         this.verb = verb;
     }
+
+	public Verb.Form getForm() {
+		return form;
+	}
+
 }

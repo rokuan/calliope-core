@@ -60,43 +60,43 @@ public class CountConverter {
 		"_",
 		"milliard"
 	};
-
+	
 	public static final WordPattern FIXED_ITEM_PATTERN = WordPattern.sequence(
-			WordPattern.simple(WordType.DEFINITE_ARTICLE), 
-			WordPattern.simple(Word.WordType.NUMERICAL_POSITION));
+			WordPattern.simpleWord(WordType.DEFINITE_ARTICLE), 
+			WordPattern.simpleWord(Word.WordType.NUMERICAL_POSITION));
 
 	public static final WordPattern FIXED_RANGE_PATTERN = WordPattern.sequence(
-			WordPattern.simple(WordType.DEFINITE_ARTICLE), 
-			WordPattern.simple(Word.WordType.NUMBER), 
-			WordPattern.simple(Word.WordType.NUMERICAL_POSITION));
+			WordPattern.simpleWord(WordType.DEFINITE_ARTICLE), 
+			WordPattern.simpleWord(Word.WordType.NUMBER), 
+			WordPattern.simpleWord(Word.WordType.NUMERICAL_POSITION));
 
 	public static final WordPattern ALL_PATTERN = WordPattern.sequence(
-			WordPattern.simple(Word.WordType.QUANTITY), 
-			WordPattern.simple(Word.WordType.DEFINITE_ARTICLE));
+			WordPattern.simpleWord(Word.WordType.QUANTITY), 
+			WordPattern.simpleWord(Word.WordType.DEFINITE_ARTICLE));
 	
 	public static final WordPattern QUANTITY_PATTERN = WordPattern.sequence(
-			WordPattern.simple(WordType.DEFINITE_ARTICLE),
-			WordPattern.simple(WordType.NUMBER));
+			WordPattern.simpleWord(WordType.DEFINITE_ARTICLE),
+			WordPattern.simpleWord(WordType.NUMBER));
 
 	public static final WordPattern SIMPLE_ARTICLE_PATTERN = WordPattern.or(
-			WordPattern.simple(WordType.DEFINITE_ARTICLE),
-			WordPattern.simple(WordType.INDEFINITE_ARTICLE));
+			WordPattern.simpleWord(WordType.DEFINITE_ARTICLE),
+			WordPattern.simpleWord(WordType.INDEFINITE_ARTICLE));
 
 	private static final WordPattern SINGLE_ITEM_PATTERN = WordPattern.sequence(
-			WordPattern.optional(WordPattern.simple(WordType.PREPOSITION_AND)),
-			WordPattern.optional(WordPattern.simple(WordType.ANY, "numéro(s?)")), 
-			WordPattern.simple(WordType.NUMBER));
+			WordPattern.optional(WordPattern.simpleWord(WordType.PREPOSITION_AND)),
+			WordPattern.optional(WordPattern.simpleWord("numéro(s?)")), 
+			WordPattern.simpleWord(WordType.NUMBER));
 
 	private static final WordPattern SINGLE_POSITION_PATTERN = WordPattern.sequence(
-			WordPattern.optional(WordPattern.simple(WordType.PREPOSITION_AND)),
-			WordPattern.simple(WordType.NUMERICAL_POSITION));
+			WordPattern.optional(WordPattern.simpleWord(WordType.PREPOSITION_AND)),
+			WordPattern.simpleWord(WordType.NUMERICAL_POSITION));
 
 	public static final WordPattern MULTIPLE_ITEMS_PATTERN = WordPattern.sequence(
 			WordPattern.nonEmptyList(SINGLE_ITEM_PATTERN));
 
 	public static final WordPattern MULTIPLE_POSITIONS_PATTERN = WordPattern.sequence(
-			WordPattern.simple(WordType.DEFINITE_ARTICLE), 
-			WordPattern.simple(WordType.NUMERICAL_POSITION),
+			WordPattern.simpleWord(WordType.DEFINITE_ARTICLE), 
+			WordPattern.simpleWord(WordType.NUMERICAL_POSITION),
 			WordPattern.nonEmptyList(SINGLE_POSITION_PATTERN));
 
 	public static final WordPattern COUNT_PATTERN = WordPattern.or(FIXED_ITEM_PATTERN, FIXED_RANGE_PATTERN, ALL_PATTERN, QUANTITY_PATTERN, SIMPLE_ARTICLE_PATTERN);
