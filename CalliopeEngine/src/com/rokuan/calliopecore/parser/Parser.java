@@ -5,6 +5,7 @@ import com.rokuan.calliopecore.sentence.SentencePattern;
 import com.rokuan.calliopecore.sentence.Type;
 import com.rokuan.calliopecore.sentence.VerbConjugation;
 import com.rokuan.calliopecore.sentence.Word.WordType;
+import com.rokuan.calliopecore.sentence.structure.AffirmationObject;
 import com.rokuan.calliopecore.sentence.structure.InterpretationObject;
 import com.rokuan.calliopecore.sentence.structure.OrderObject;
 import com.rokuan.calliopecore.sentence.structure.QuestionObject;
@@ -153,6 +154,15 @@ public class Parser {
 			parseObject(words, qObject);
 
 			inter = qObject;
+		} else if(words.syntaxStartsWith(SentencePattern.AFFIRMATIVE_SENTENCE_PATTERN)){
+			AffirmationObject affirm = new AffirmationObject();
+			
+			affirm.subject = NominalGroupConverter.parseSubject(words);
+			
+			VerbConverter.parseConjugatedVerb(words, affirm);
+			
+			parseObject(words, affirm);
+			inter = affirm;
 		} else {
 			// TODO: Le sujet est un groupe nominal ?
 			// ComplementObject

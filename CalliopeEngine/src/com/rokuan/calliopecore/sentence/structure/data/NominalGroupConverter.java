@@ -179,7 +179,7 @@ public class NominalGroupConverter {
 		} else if(words.syntaxStartsWith(WayConverter.LANGUAGE_ONLY_PATTERN)){
 			result = WayConverter.parseNominalWayObject(words);
 		} else if(words.syntaxStartsWith(COMMON_NAME_PATTERN)){
-			// TODO:
+			result = parseComplementObject(words);
 		} else if(words.syntaxStartsWith(PlaceConverter.WORLD_LOCATION_PATTERN)){
 			result = PlaceConverter.parseNominalPlaceObject(words);
 		} else if(words.syntaxStartsWith(PlaceConverter.PLACE_ONLY_PATTERN)){
@@ -214,39 +214,7 @@ public class NominalGroupConverter {
 			custom.person = words.getCurrentElement().getCustomPerson();
 			result = custom;
 		} else if(words.syntaxStartsWith(DIRECT_OBJECT_PATTERN)){
-			ComplementObject obj = new ComplementObject();
-			
-			if(CountConverter.isACountData(words)){
-				obj.count = CountConverter.parseCountObject(words);
-			}
-			
-			// TODO: parser les adjectifs et autres
-			obj.object = words.getCurrentElement().getValue();
-			words.consume();
-			
-			if(CountConverter.isASuffixCountData(words)){
-				obj.count = CountConverter.parseSuffixCountObject(words);
-			}
-			
-			if(CriterionConverter.isACriterionData(words)){
-				obj.criteria = CriterionConverter.parseCriterionData(words);
-			} else if(words.isIntoBounds() && words.getCurrentElement().isOfType(WordType.PREPOSITION_OF)){
-				words.next();
-				
-				if(NominalGroupConverter.isADirectObject(words)){
-					words.previous();
-					words.consume();
-					
-					try{
-						obj.of = (ComplementObject)NominalGroupConverter.parseDirectObject(words);
-					}catch(Exception e){
-						System.out.println(e);
-					}
-				} else {
-					words.previous();
-				}
-			}
-			
+			ComplementObject obj = parseComplementObject(words);			
 			result = obj;
 		} else if(words.syntaxStartsWith(PERSON_PATTERN)){
 			ComplementObject obj = new ComplementObject();			
@@ -275,6 +243,43 @@ public class NominalGroupConverter {
 			
 			//obj.object = name.toString().trim();
 			obj.object = parsePerson(words);
+		}
+		
+		return obj;
+	}
+	
+	private static ComplementObject parseComplementObject(WordBuffer words){
+		ComplementObject obj = new ComplementObject();
+		
+		if(CountConverter.isACountData(words)){
+			obj.count = CountConverter.parseCountObject(words);
+		}
+		
+		// TODO: parser les adjectifs et autres
+		obj.object = words.getCurrentElement().getValue();
+		words.consume();
+		
+		if(CountConverter.isASuffixCountData(words)){
+			obj.count = CountConverter.parseSuffixCountObject(words);
+		}
+		
+		if(CriterionConverter.isACriterionData(words)){
+			obj.criteria = CriterionConverter.parseCriterionData(words);
+		} else if(words.isIntoBounds() && words.getCurrentElement().isOfType(WordType.PREPOSITION_OF)){
+			words.next();
+			
+			if(NominalGroupConverter.isADirectObject(words)){
+				words.previous();
+				words.consume();
+				
+				try{
+					obj.of = (ComplementObject)NominalGroupConverter.parseDirectObject(words);
+				}catch(Exception e){
+					System.out.println(e);
+				}
+			} else {
+				words.previous();
+			}
 		}
 		
 		return obj;

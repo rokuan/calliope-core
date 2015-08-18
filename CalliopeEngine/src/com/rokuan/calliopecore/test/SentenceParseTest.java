@@ -26,10 +26,10 @@ import com.rokuan.calliopecore.sentence.structure.QuestionObject;
 import com.rokuan.calliopecore.sentence.structure.QuestionObject.QuestionType;
 import com.rokuan.calliopecore.sentence.structure.content.IPlaceObject;
 import com.rokuan.calliopecore.sentence.structure.data.nominal.AdditionalObject;
+import com.rokuan.calliopecore.sentence.structure.data.nominal.CityObject;
 import com.rokuan.calliopecore.sentence.structure.data.nominal.ComplementObject;
 import com.rokuan.calliopecore.sentence.structure.data.nominal.PronounTarget;
 import com.rokuan.calliopecore.sentence.structure.data.nominal.NominalGroup.GroupType;
-import com.rokuan.calliopecore.sentence.structure.data.place.LocationObject;
 import com.rokuan.calliopecore.sentence.structure.data.place.NamedPlaceObject;
 import com.rokuan.calliopecore.sentence.structure.data.place.PlaceAdverbial.PlaceType;
 import com.rokuan.calliopecore.sentence.structure.data.time.SingleTimeObject;
@@ -47,7 +47,7 @@ public class SentenceParseTest {
 
 		words.add(new Word("comment", WordType.INTERROGATIVE_PRONOUN));
 		words.add(go);
-		words.add(new Word("à", WordType.PREPOSITION_AT));
+		words.add(new Word("à", WordType.PREPOSITION_AT, WordType.PLACE_PREPOSITION));
 		words.add(new Word("la", WordType.DEFINITE_ARTICLE));
 		words.add(new Word("Mairie", WordType.PLACE_TYPE, WordType.PROPER_NAME, WordType.COMMON_NAME));
 		words.add(new Word("de", WordType.PREPOSITION_OF));
@@ -81,7 +81,7 @@ public class SentenceParseTest {
 
 		words.add(new Word("comment", WordType.INTERROGATIVE_PRONOUN));
 		words.add(go);
-		words.add(new Word("à", WordType.PREPOSITION_AT));
+		words.add(new Word("à", WordType.PREPOSITION_AT, WordType.PLACE_PREPOSITION));
 		words.add(new Word("la", WordType.DEFINITE_ARTICLE));
 		words.add(new Word("Tour", WordType.PROPER_NAME, WordType.COMMON_NAME));
 		words.add(new Word("Eiffel", WordType.PROPER_NAME));
@@ -118,7 +118,7 @@ public class SentenceParseTest {
 
 		words.add(new Word("comment", WordType.INTERROGATIVE_PRONOUN));
 		words.add(go);
-		words.add(new Word("à", WordType.PREPOSITION_AT));
+		words.add(new Word("à", WordType.PREPOSITION_AT, WordType.PLACE_PREPOSITION));
 		words.add(paris);
 		words.add(new Word("en", WordType.PREPOSITION));
 		words.add(new Word("voiture", WordType.MEAN_OF_TRANSPORT));
@@ -133,9 +133,9 @@ public class SentenceParseTest {
 
 		IPlaceObject place = obj.where;
 		
-		LocationObject state = (LocationObject)place;
+		CityObject city = (CityObject)place;
 		
-		assertEquals(state.city.getName(), "Paris");
+		assertEquals(city.city.getName(), "Paris");
 		assertEquals(((ComplementObject)obj.how).object, "voiture");
 	}
 
@@ -276,5 +276,26 @@ public class SentenceParseTest {
 		AdditionalObject customObject = (AdditionalObject)obj.what;
 		
 		assertEquals(customObject.object.getContent(), objectName);
+	}
+	
+	@Test
+	public void testAffirmativeSentence(){
+		WordBuffer words = new WordBuffer();
+		Word hate = new Word("détestent", WordType.VERB);
+		Verb toHate = new Verb("détester", Action.VerbAction.HATE, false);
+		VerbConjugation hateConjugation = new VerbConjugation(ConjugationTense.PRESENT, Form.INDICATIVE, Pronoun.ILS_ELLES, "détestent", toHate);
+		
+		hate.setVerbInfo(hateConjugation);
+		
+		words.add(new Word("les", WordType.DEFINITE_ARTICLE));
+		words.add(new Word("chiens", WordType.COMMON_NAME));
+		words.add(hate);
+		words.add(new Word("les", WordType.DEFINITE_ARTICLE));
+		words.add(new Word("chats", WordType.COMMON_NAME));
+		
+		InterpretationObject obj = new Parser().parseInterpretationObject(words);
+		
+		assertEquals(obj.getRequestType(), RequestType.AFFIRMATION);
+		assertEquals(obj.subject.getGroupType(), GroupType.COMPLEMENT);
 	}
 }
