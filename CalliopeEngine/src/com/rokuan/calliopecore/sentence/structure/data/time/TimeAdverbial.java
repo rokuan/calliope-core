@@ -58,11 +58,24 @@ public abstract class TimeAdverbial implements ITimeObject {
     	SINCE
     }
 
+    @Expose
+    private DateContext timePreposition;
+    
 	@Expose
     public TimeTense tense = TimeTense.PRESENT;
 
 	@Expose
     public TimeInterval interval = TimeInterval.SINGLE;
+	
+	@Override
+	public DateContext getTimePreposition() {
+		return timePreposition;
+	}
+
+	@Override
+	public void setTimePreposition(DateContext prep) {
+		timePreposition = prep;
+	}
 	
 	public static Class<? extends ITimeObject> getClassFromTimeType(TimeType ty){
 		Class<? extends ITimeObject> clazz = null;

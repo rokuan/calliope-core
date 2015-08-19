@@ -9,6 +9,7 @@ import com.rokuan.calliopecore.sentence.structure.data.nominal.NominalGroup.Grou
 public class LocationObject extends PlaceAdverbial implements INominalObject {
 	@Expose
 	public CityInfo city;
+	
 	@Expose
 	public CountryInfo country;
 	

@@ -9,11 +9,8 @@ public class CustomPlace {
 	public static final String PLACE_FIELD_NAME = "name";
 	public static final String CODE_FIELD_NAME = "code";
 	
-	@DatabaseField(id = true)
-	private int id;
-
 	@Expose
-	@DatabaseField(columnName = PLACE_FIELD_NAME, unique = true, uniqueIndex = true)
+	@DatabaseField(columnName = PLACE_FIELD_NAME, id = true)
 	private String name;
 
 	@Expose

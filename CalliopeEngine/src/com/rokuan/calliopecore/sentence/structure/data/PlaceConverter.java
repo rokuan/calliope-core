@@ -104,7 +104,7 @@ public class PlaceConverter {
 			AdditionalPlaceObject additional = new AdditionalPlaceObject();
 			
 			if(words.getCurrentElement().isOfType(WordType.PLACE_PREPOSITION)){
-				additional.location = words.getCurrentElement().getPlacePreposition();
+				additional.setPlacePreposition(words.getCurrentElement().getPlacePreposition());
 				words.consume();
 			}
 
@@ -160,7 +160,7 @@ public class PlaceConverter {
 			NamedPlaceObject place = new NamedPlaceObject();
 			
 			if(words.getCurrentElement().isOfType(WordType.PLACE_PREPOSITION)){
-				place.location = words.getCurrentElement().getPlacePreposition();
+				place.setPlacePreposition(words.getCurrentElement().getPlacePreposition());
 				words.consume();
 			}
 			

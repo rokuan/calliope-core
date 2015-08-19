@@ -8,8 +8,7 @@ import com.rokuan.calliopecore.sentence.structure.data.place.PlaceAdverbial.Plac
 @DatabaseTable(tableName = "place_prepositions")
 public class PlacePreposition {
 	public static final String VALUE_FIELD_NAME = "value";
-	public static final String PREPOSITION_FIELD_NAME = "preposition"; 
-	
+	public static final String PREPOSITION_FIELD_NAME = "preposition";	
 
 	@Expose
 	@DatabaseField(columnName = VALUE_FIELD_NAME, id = true)

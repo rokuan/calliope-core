@@ -12,9 +12,6 @@ import com.rokuan.calliopecore.sentence.structure.data.nominal.NominalGroup.Grou
  */
 public class SingleTimeObject extends TimeAdverbial implements INominalObject {
 	@Expose
-	private DateContext timePreposition;
-
-	@Expose
 	public DateDefinition dateDefinition = DateDefinition.DATE_AND_TIME;
 
 	@Expose
@@ -23,16 +20,6 @@ public class SingleTimeObject extends TimeAdverbial implements INominalObject {
 	@Override
 	public TimeType getTimeType() {
 		return TimeType.SINGLE;
-	}
-
-	@Override
-	public DateContext getTimePreposition() {
-		return timePreposition;
-	}
-
-	@Override
-	public void setTimePreposition(DateContext prep) {
-		timePreposition = prep;		
 	}
 
 	@Override

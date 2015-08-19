@@ -28,5 +28,4 @@ public class CityObject extends NominalGroup implements IPlaceObject {
 	public void setPlacePreposition(PlaceContext prep) {
 		placePreposition = prep;
 	}
-
 }

@@ -43,7 +43,7 @@ public abstract class PlaceAdverbial implements IPlaceObject {
 	}
 
 	@Expose
-	public PlaceContext location;
+	private PlaceContext location;
 	
 	@Override
 	public PlaceContext getPlacePreposition(){

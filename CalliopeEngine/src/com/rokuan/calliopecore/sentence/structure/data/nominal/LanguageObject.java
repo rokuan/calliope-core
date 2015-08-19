@@ -8,6 +8,9 @@ import com.rokuan.calliopecore.sentence.structure.data.way.WayAdverbial.WayType;
 
 public class LanguageObject extends NominalGroup implements IWayObject {
 	@Expose
+	private WayContext wayPreposition;
+	
+	@Expose
 	public LanguageInfo language;
 
 	@Override
@@ -22,13 +25,11 @@ public class LanguageObject extends NominalGroup implements IWayObject {
 
 	@Override
 	public WayContext getWayPreposition() {
-		// TODO Auto-generated method stub
-		return null;
+		return wayPreposition;
 	}
 
 	@Override
 	public void setWayPreposition(WayContext prep) {
-		// TODO Auto-generated method stub
-		
+		wayPreposition = prep;
 	}
 }

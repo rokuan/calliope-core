@@ -21,6 +21,7 @@ public abstract class NominalGroup implements INominalObject {
     	PERSON,
     	COLOR,
     	NUMBER,
+    	PHONE_NUMBER,
     	DATE,
     	OBJECT,
     	ADDITIONAL_PLACE,
@@ -79,7 +80,10 @@ public abstract class NominalGroup implements INominalObject {
 			break;
 		case NAMED_PLACE:
 			clazz = NamedPlaceObject.class;
-			break;			
+			break;		
+		case PHONE_NUMBER:
+			clazz = PhoneNumberObject.class;
+			break;
 		}
     	
     	return clazz;

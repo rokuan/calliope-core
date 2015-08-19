@@ -1,5 +1,6 @@
 package com.rokuan.calliopecore.sentence.structure.data.way;
 
+import com.google.gson.annotations.Expose;
 import com.rokuan.calliopecore.sentence.structure.content.IWayObject;
 import com.rokuan.calliopecore.sentence.structure.data.nominal.ColorObject;
 import com.rokuan.calliopecore.sentence.structure.data.nominal.ComplementObject;
@@ -14,14 +15,27 @@ public abstract class WayAdverbial implements IWayObject {
 		LANGUAGE,
 		COLOR
 	}
-	
+
 	public enum WayContext {
 		BY
 	}
-	
+
+	@Expose
+	private WayContext wayPreposition;
+
+	@Override
+	public WayContext getWayPreposition() {
+		return wayPreposition;
+	}
+
+	@Override
+	public void setWayPreposition(WayContext prep) {
+		wayPreposition = prep;
+	}	
+
 	public static Class<? extends IWayObject> getClassFromWayType(WayType ty){
 		Class<? extends IWayObject> clazz = null;
-		
+
 		switch(ty){
 		case CUSTOM:
 			clazz = AdditionalMode.class;
@@ -39,7 +53,7 @@ public abstract class WayAdverbial implements IWayObject {
 			clazz = ColorObject.class;
 			break;
 		}
-		
+
 		return clazz;
 	}
 }

@@ -1,11 +1,16 @@
 package com.rokuan.calliopecore.sentence.structure.data.nominal;
 
+import com.google.gson.annotations.Expose;
 import com.rokuan.calliopecore.sentence.ColorInfo;
 import com.rokuan.calliopecore.sentence.structure.content.IWayObject;
 import com.rokuan.calliopecore.sentence.structure.data.way.WayAdverbial.WayContext;
 import com.rokuan.calliopecore.sentence.structure.data.way.WayAdverbial.WayType;
 
 public class ColorObject extends NominalGroup implements IWayObject {
+	@Expose
+	private WayContext wayPreposition;
+	
+	@Expose
 	public ColorInfo color;
 
 	@Override
@@ -20,13 +25,11 @@ public class ColorObject extends NominalGroup implements IWayObject {
 
 	@Override
 	public WayContext getWayPreposition() {
-		// TODO Auto-generated method stub
-		return null;
+		return wayPreposition;
 	}
 
 	@Override
 	public void setWayPreposition(WayContext prep) {
-		// TODO Auto-generated method stub
-		
+		wayPreposition = prep;
 	}
 }

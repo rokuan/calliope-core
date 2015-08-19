@@ -136,7 +136,7 @@ public class PlaceParseTest {
 		
 		AdditionalPlaceObject customPlace = (AdditionalPlaceObject)place;
 		
-		assertEquals(customPlace.location, PlaceContext.NEAR);
+		assertEquals(customPlace.getPlacePreposition(), PlaceContext.NEAR);
 		assertEquals(customPlace.place.getName(), placeName);
 	}	
 }

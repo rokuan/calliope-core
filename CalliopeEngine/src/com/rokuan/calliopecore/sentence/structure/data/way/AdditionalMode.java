@@ -12,16 +12,4 @@ public class AdditionalMode extends WayAdverbial {
 	public WayType getWayType() {
 		return WayType.CUSTOM;
 	}
-
-	@Override
-	public WayContext getWayPreposition() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void setWayPreposition(WayContext prep) {
-		// TODO Auto-generated method stub
-		
-	}	
 }

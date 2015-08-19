@@ -8,8 +8,7 @@ import com.j256.ormlite.table.DatabaseTable;
 public final class CityInfo {
 	public static final String CITY_FIELD_NAME = "name";
 	public static final String LATITUDE_FIELD_NAME = "lat";
-	public static final String LONGITUDE_FIELD_NAME = "lng";
-	
+	public static final String LONGITUDE_FIELD_NAME = "lng";	
 	
 	@DatabaseField(generatedId = true)
 	private int id;

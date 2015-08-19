@@ -15,5 +15,4 @@ public class AdditionalObject extends NominalGroup {
 	public GroupType getGroupType() {
 		return GroupType.OBJECT;
 	}
-
 }

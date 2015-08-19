@@ -49,16 +49,4 @@ public class RelativeTimeObject extends TimeAdverbial {
 	public TimeType getTimeType() {
 		return TimeType.RELATIVE;
 	}
-
-	@Override
-	public DateContext getTimePreposition() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void setTimePreposition(DateContext prep) {
-		// TODO Auto-generated method stub
-		
-	}
 }

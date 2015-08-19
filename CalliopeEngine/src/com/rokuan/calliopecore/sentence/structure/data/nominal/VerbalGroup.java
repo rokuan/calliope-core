@@ -1,5 +1,6 @@
 package com.rokuan.calliopecore.sentence.structure.data.nominal;
 
+import com.google.gson.annotations.Expose;
 import com.rokuan.calliopecore.sentence.structure.content.IPurposeObject;
 import com.rokuan.calliopecore.sentence.structure.content.ITimeObject;
 import com.rokuan.calliopecore.sentence.structure.content.IWayObject;
@@ -12,8 +13,13 @@ import com.rokuan.calliopecore.sentence.structure.data.way.WayAdverbial.WayType;
 
 
 public class VerbalGroup extends NominalGroup implements IWayObject, ITimeObject, IPurposeObject {
+	@Expose
 	private WayContext wayPreposition;
+	
+	@Expose
 	private DateContext timePreposition;
+	
+	@Expose
 	private PurposeContext purposePreposition;
 	
 	@Override
