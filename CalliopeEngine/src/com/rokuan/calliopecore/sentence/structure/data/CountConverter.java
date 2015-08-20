@@ -61,6 +61,9 @@ public class CountConverter {
 		"milliard"
 	};
 	
+	public static final String NUMBER_REGEX = "\\d+";
+	public static final String NUMERICAL_POSITION_REGEX = "(\\d+(è|e)me$)|(\\d+e$)";
+	
 	public static final WordPattern FIXED_ITEM_PATTERN = WordPattern.sequence(
 			WordPattern.simpleWord(WordType.DEFINITE_ARTICLE), 
 			WordPattern.simpleWord(Word.WordType.NUMERICAL_POSITION));

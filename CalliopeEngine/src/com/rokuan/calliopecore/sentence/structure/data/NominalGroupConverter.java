@@ -34,11 +34,6 @@ public class NominalGroupConverter {
 			WordPattern.simpleWord(WordType.COMMON_NAME)
 			);
 
-	public static final WordPattern TO_PATTERN = WordPattern.or(
-			WordPattern.sequence(WordPattern.simpleWord(WordType.PREPOSITION_AT, "à"), WordPattern.optional(WordPattern.simpleWord(WordType.DEFINITE_ARTICLE, "la"))),
-			WordPattern.simpleWord(WordType.PREPOSITION_AT, "au.*")
-			);
-
 	public static final WordPattern FIRST_NAME_SEQUENCE_PATTERN = WordPattern.nonEmptyList(WordPattern.simpleWord(WordType.FIRSTNAME));
 	public static final WordPattern LAST_NAME_SEQUENCE_PATTERN = WordPattern.nonEmptyList(WordPattern.simpleWord(WordType.PROPER_NAME));
 
@@ -83,10 +78,27 @@ public class NominalGroupConverter {
 			PlaceConverter.PLACE_ONLY_PATTERN
 			// TODO: ajouter le pattern pour les groupes verbaux
 			);
-	public static final WordPattern INDIRECT_OBJECT_PATTERN = WordPattern.sequence(TO_PATTERN,
-			WordPattern.or(PERSON_PATTERN,
-					PHONE_NUMBER_PATTERN)	// TODO: ajouter le cas groupe nominal
+	
+	public static final WordPattern TO_PATTERN = WordPattern.or(
+			WordPattern.sequence(WordPattern.simpleWord(WordType.PREPOSITION_AT, "à"), WordPattern.optional(WordPattern.simpleWord(WordType.DEFINITE_ARTICLE, "la"))),
+			WordPattern.simpleWord(WordType.PREPOSITION_AT, "au.*")
 			);
+	
+	/*public static final WordPattern INDIRECT_OBJECT_PATTERN = WordPattern.sequence(TO_PATTERN,
+			WordPattern.or(PERSON_PATTERN,
+					PHONE_NUMBER_PATTERN,
+					)	// TODO: ajouter le cas groupe nominal
+			);*/
+	private static final WordPattern INDIRECT_PERSON_PATTERN = WordPattern.sequence(
+			WordPattern.simpleWord("à"),
+			WordPattern.simpleWord(WordType.PERSON));
+	private static final WordPattern INDIRECT_PERSON_TYPE_PATTERN = WordPattern.sequence(
+			WordPattern.or(WordPattern.simpleWord("à"), WordPattern.simpleWord(WordType.DEFINITE_ARTICLE, "la"),
+					WordPattern.simpleWord("au")),
+			WordPattern.simpleWord(WordType.PERSON_TYPE));
+	public static final WordPattern INDIRECT_OBJECT_PATTERN = WordPattern.or(
+			INDIRECT_PERSON_PATTERN,
+			INDIRECT_PERSON_TYPE_PATTERN);
 
 	public static boolean isASubject(WordBuffer words){
 		return words.syntaxStartsWith(SUBJECT_PATTERN);
@@ -140,6 +152,8 @@ public class NominalGroupConverter {
 		} else if(words.syntaxStartsWith(DateConverter.FIXED_DATE_ONLY_PATTERN)){
 			result = DateConverter.parseNominalDateObject(words);
 		} else if(words.syntaxStartsWith(COLOR_PATTERN)){
+			words.consume();
+			
 			ColorObject color = new ColorObject();
 
 			color.color = words.getCurrentElement().getColorInfo();
@@ -200,19 +214,29 @@ public class NominalGroupConverter {
 	public static INominalObject parseIndirectObject(WordBuffer words){
 		INominalObject result = null;
 
-		if(words.syntaxStartsWith(INDIRECT_OBJECT_PATTERN)){
-			//StringBuilder name = new StringBuilder();
-
+		if(words.syntaxStartsWith(INDIRECT_PERSON_PATTERN)){
 			words.consume();	// PREPOSITION_AT
 
 			if(words.getCurrentElement().isOfType(WordType.DEFINITE_ARTICLE)){
 				words.consume();
 			}
 
-			//obj.object = name.toString().trim();
-			if(words.syntaxStartsWith(PERSON_PATTERN)){
-				result = parseAdditionalPerson(words);
+			result = parseAdditionalPerson(words);
+		} else if(words.syntaxStartsWith(INDIRECT_PERSON_TYPE_PATTERN)){
+			ComplementObject compl = new ComplementObject();
+			
+			// TODO: affecter la quantité (/possession)
+			words.consume();	// PREPOSITION_AT
+			
+			if(words.getCurrentElement().isOfType(WordType.DEFINITE_ARTICLE)){
+				words.consume();	// DEFINITE_ARTICLE
 			}
+
+			// TODO: voir s'il faut creer un type pour les mots en rapport avec la famille (cousin/tante/soeur/...)
+			compl.object = words.getCurrentElement().getValue();
+			words.consume();
+			
+			result = compl;
 		}
 
 		return result;
