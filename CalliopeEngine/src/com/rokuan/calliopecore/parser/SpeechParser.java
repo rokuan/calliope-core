@@ -69,7 +69,7 @@ public final class SpeechParser {
 
                     if (tmpWord == null) {
                         // TODO: faire le split sur le tiret
-                        charIndex = tmpPart.indexOf('-');
+                        /*charIndex = tmpPart.indexOf('-');
 
                         if (charIndex != -1) {
                             String leftPart = tmpPart.substring(0, charIndex);
@@ -86,7 +86,20 @@ public final class SpeechParser {
                                 wordBuilder = new StringBuilder(rightPart);
                                 shouldContinue = true;
                             }
-                        }
+                        }*/
+                    	String[] parts = tmpPart.split("-");
+                    	
+                    	for(String p: parts){
+                    		Word partWord = getWord(p);
+                    		
+                    		if(partWord == null){
+                    			buffer.add(new Word(words[i], Word.WordType.OTHER));
+                    		} else {
+                    			buffer.add(partWord);
+                    		}
+                    	}
+                    	
+                    	continue;
                     } else {
                         shouldContinue = true;
                     }
@@ -154,6 +167,7 @@ public final class SpeechParser {
                 }
             }
         }*/
+        
         try{
             Integer.parseInt(q);
             return new Word(q, Word.WordType.NUMBER);

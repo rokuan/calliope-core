@@ -13,6 +13,7 @@ import com.rokuan.calliopecore.parser.WordBuffer;
 import com.rokuan.calliopecore.sentence.Action;
 import com.rokuan.calliopecore.sentence.CityInfo;
 import com.rokuan.calliopecore.sentence.CustomObject;
+import com.rokuan.calliopecore.sentence.CustomPerson;
 import com.rokuan.calliopecore.sentence.Verb;
 import com.rokuan.calliopecore.sentence.Verb.Pronoun;
 import com.rokuan.calliopecore.sentence.VerbConjugation;
@@ -26,6 +27,7 @@ import com.rokuan.calliopecore.sentence.structure.QuestionObject;
 import com.rokuan.calliopecore.sentence.structure.QuestionObject.QuestionType;
 import com.rokuan.calliopecore.sentence.structure.content.IPlaceObject;
 import com.rokuan.calliopecore.sentence.structure.data.nominal.AdditionalObject;
+import com.rokuan.calliopecore.sentence.structure.data.nominal.AdditionalPerson;
 import com.rokuan.calliopecore.sentence.structure.data.nominal.CityObject;
 import com.rokuan.calliopecore.sentence.structure.data.nominal.ComplementObject;
 import com.rokuan.calliopecore.sentence.structure.data.nominal.PronounTarget;
@@ -138,6 +140,42 @@ public class SentenceParseTest {
 		assertEquals(city.city.getName(), "Paris");
 		assertEquals(((ComplementObject)obj.how).object, "voiture");
 	}
+	
+	@Test
+	public void testGoTo4(){
+		WordBuffer words = new WordBuffer();
+		Word go = new Word("aller", Word.WordType.VERB, WordType.COMMON_NAME);
+		Verb toGo = new Verb("aller", Action.VerbAction.GO, false);
+		VerbConjugation toGoConjug = new VerbConjugation(ConjugationTense.PRESENT, Form.INFINITIVE, null, "aller", toGo);
+		Word paris = new Word("Paris", WordType.CITY);
+		
+		toGoConjug.setVerb(toGo);
+		go.setVerbInfo(toGoConjug);
+
+		paris.setCityInfo(new CityInfo("Paris", 48.8564528, 2.3524282));
+
+		words.add(new Word("comment", WordType.INTERROGATIVE_PRONOUN));
+		words.add(go);
+		words.add(new Word("à", WordType.PREPOSITION_AT, WordType.PLACE_PREPOSITION));
+		words.add(paris);
+		words.add(new Word("à", WordType.PREPOSITION_AT));
+		words.add(new Word("voiture", WordType.COMMON_NAME, WordType.MEAN_OF_TRANSPORT));
+
+		InterpretationObject obj = new Parser().parseInterpretationObject(words);
+
+		assertEquals(obj.getRequestType(), InterpretationObject.RequestType.QUESTION);
+		assertEquals(obj.action, Action.VerbAction.GO);
+
+		QuestionObject question = (QuestionObject)obj;
+		assertEquals(question.questionType, QuestionType.HOW);
+
+		IPlaceObject place = obj.where;
+		
+		CityObject city = (CityObject)place;
+		
+		assertEquals(city.city.getName(), "Paris");
+		assertEquals(((ComplementObject)obj.how).object, "voiture");
+	}
 
 	@Test
 	public void testWhoIs(){
@@ -148,11 +186,17 @@ public class SentenceParseTest {
 		VerbConjugation toBeConjug = new VerbConjugation(ConjugationTense.PRESENT, Form.INDICATIVE, Pronoun.IL_ELLE_ON, "être", toBe);		
 		toBeConjug.setVerb(toBe);
 		be.setVerbInfo(toBeConjug);
-
+		Word person = new Word("Arnold Schwarzenegger", WordType.PERSON);
+		CustomPerson schwarzy = new CustomPerson("Arnold Schwarzenegger", "SCHWARZY");
+		person.setCustomPerson(schwarzy);
+		
+		
 		words.add(new Word("qui", WordType.INTERROGATIVE_PRONOUN));
 		words.add(be);
-		words.add(new Word("Arnold", WordType.FIRSTNAME));
-		words.add(new Word("Schwarzenegger", WordType.PROPER_NAME));
+		words.add(person);
+		
+		/*words.add(new Word("Arnold", WordType.FIRSTNAME));
+		words.add(new Word("Schwarzenegger", WordType.PROPER_NAME));*/
 
 		InterpretationObject obj = new Parser().parseInterpretationObject(words);
 
@@ -161,10 +205,12 @@ public class SentenceParseTest {
 
 		QuestionObject question = (QuestionObject)obj;
 		assertEquals(question.questionType, QuestionType.WHO);
-		assertEquals(question.what.getGroupType(), GroupType.COMPLEMENT);
+		//assertEquals(question.what.getGroupType(), GroupType.COMPLEMENT);
+		assertEquals(question.what.getGroupType(), GroupType.PERSON);
 
-		ComplementObject compl = (ComplementObject)question.what;
-		assertEquals(compl.object, "Arnold Schwarzenegger");
+		/*ComplementObject compl = (ComplementObject)question.what;
+		assertEquals(compl.object, "Arnold Schwarzenegger");*/
+		assertEquals(((AdditionalPerson)question.what).person.getName(), "Arnold Schwarzenegger");
 	}
 
 	@Test
@@ -189,7 +235,7 @@ public class SentenceParseTest {
 		ComplementObject compl = (ComplementObject)obj.what;
 		assertEquals(compl.object, "vidéos");
 		assert (compl.of != null);
-		assertEquals(compl.of.object, "chats");
+		assertEquals(((ComplementObject)compl.of).object, "chats");
 	}
 
 	@Test

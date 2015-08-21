@@ -66,6 +66,11 @@ public class DateConverter {
 			WordPattern.simpleWord(new WordType[]{ WordType.TIME_PREPOSITION, WordType.CONTRACTED }),
 			WordPattern.sequence(WordPattern.optional(WordPattern.simpleWord(WordType.TIME_PREPOSITION)), WordPattern.simpleWord(WordType.DEFINITE_ARTICLE))
 			);
+	
+	public static final WordPattern SINGLE_DATE_ONLY_PATTERN = WordPattern.sequence(
+			WordPattern.or(WordPattern.simpleWord(WordType.NUMBER), WordPattern.simpleWord(WordType.NUMERICAL_POSITION)),
+			WordPattern.simpleWord(WordType.DATE_MONTH),
+			WordPattern.optional(WordPattern.simpleWord(WordType.NUMBER))); 
 
 	public static final WordPattern FIXED_DATE_ONLY_PATTERN = WordPattern.sequence(
 			WordPattern.simpleWord(WordType.DEFINITE_ARTICLE),
@@ -128,6 +133,10 @@ public class DateConverter {
 			WordPattern.simpleWord(WordType.PREPOSITION_OF, "de"),
 			TIME_PATTERN
 			);
+	
+	public static final WordPattern SINGLE_DATE_SECOND_OBJECT_PATTERN = WordPattern.sequence(
+			WordPattern.simpleWord(WordType.PREPOSITION_OF),
+			SINGLE_DATE_ONLY_PATTERN);
 
 	public static final WordPattern RELATIVE_DATE_PATTERN = WordPattern.simpleWord(WordType.DATE);
 

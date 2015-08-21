@@ -62,6 +62,12 @@ public class PlaceConverter {
 
 	//private static final WordPattern locationPrepositionPattern = WordPattern.sequence(WordPattern.)
 
+	private static final WordPattern CITY_SECOND_OBJECT_PATTERN = WordPattern.sequence(
+			WordPattern.simpleWord(WordType.PREPOSITION_OF), PlaceConverter.CITY_ONLY_PATTERN);
+	
+	private static final WordPattern PLACE_SECOND_OBJECT_PATTERN = WordPattern.or(
+			CITY_SECOND_OBJECT_PATTERN);
+	
 	public static final WordPattern COUNTRY_PATTERN = WordPattern.sequence(WordPattern.or(
 			WordPattern.sequence(WordPattern.simpleWord(WordType.PREPOSITION_AT), WordPattern.optional(WordPattern.simpleWord(WordType.DEFINITE_ARTICLE))),
 			WordPattern.sequence(WordPattern.simpleWord("en"))
@@ -194,6 +200,21 @@ public class PlaceConverter {
 		return result;
 	}
 	
+	public static boolean isAPlaceSecondObject(WordBuffer words){
+		return words.syntaxStartsWith(PLACE_SECOND_OBJECT_PATTERN);
+	}
+	
+	public static IPlaceObject parsePlaceSecondObject(WordBuffer words){
+		IPlaceObject result = null;
+		
+		if(words.syntaxStartsWith(CITY_SECOND_OBJECT_PATTERN)){
+			words.consume();
+			result = parseCityObject(words);
+		}
+		
+		return result;
+	}
+	
 	private static void parseAdditionalPlace(AdditionalPlaceObject additional, WordBuffer words){
 		if(words.getCurrentElement().isOfType(WordType.DEFINITE_ARTICLE)){
 			words.consume();
@@ -201,6 +222,15 @@ public class PlaceConverter {
 
 		additional.place = words.getCurrentElement().getCustomPlace();
 		words.consume();
+	}
+	
+	private static CityObject parseCityObject(WordBuffer words){
+		CityObject city = new CityObject();
+		
+		city.city = words.getCurrentElement().getCityInfo();
+		words.consume();
+		
+		return city;
 	}
 	
 	private static void parseNamedPlace(NamedPlaceObject place, WordBuffer words){

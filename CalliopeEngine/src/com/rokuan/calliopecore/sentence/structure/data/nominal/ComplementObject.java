@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.google.gson.annotations.Expose;
 import com.rokuan.calliopecore.sentence.Adjective;
+import com.rokuan.calliopecore.sentence.structure.content.INominalObject;
 import com.rokuan.calliopecore.sentence.structure.content.IPlaceObject;
 import com.rokuan.calliopecore.sentence.structure.content.IPurposeObject;
 import com.rokuan.calliopecore.sentence.structure.content.ITimeObject;
@@ -33,7 +34,7 @@ public class ComplementObject extends NominalGroup implements IWayObject {
     public String object = "";
 
 	@Expose
-    public ComplementObject of;
+    public INominalObject of;
 
 	@Expose
     public ITimeObject when;

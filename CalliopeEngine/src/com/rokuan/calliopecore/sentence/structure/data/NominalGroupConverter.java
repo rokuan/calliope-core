@@ -42,15 +42,15 @@ public class NominalGroupConverter {
 	public static final WordPattern FIRST_NAME_SEQUENCE_PATTERN = WordPattern.nonEmptyList(WordPattern.simpleWord(WordType.FIRSTNAME));
 	public static final WordPattern LAST_NAME_SEQUENCE_PATTERN = WordPattern.nonEmptyList(WordPattern.simpleWord(WordType.PROPER_NAME));
 
-	public static final WordPattern PERSON_PATTERN = WordPattern.or(
+	/*public static final WordPattern PERSON_PATTERN = WordPattern.or(
 			WordPattern.simpleWord(WordType.PERSON)
 			// TODO: trouver un moyen de parser les noms non enregistres (ex: Ludwig Van Beethoven)
-			/*, LAST_NAME_SEQUENCE_PATTERN,
-			FIRST_NAME_SEQUENCE_PATTERN,
-			WordPattern.sequence(FIRST_NAME_SEQUENCE_PATTERN, LAST_NAME_SEQUENCE_PATTERN),
-			WordPattern.sequence(LAST_NAME_SEQUENCE_PATTERN, FIRST_NAME_SEQUENCE_PATTERN)*/
-			);
-
+			//, LAST_NAME_SEQUENCE_PATTERN,
+			//FIRST_NAME_SEQUENCE_PATTERN,
+			//WordPattern.sequence(FIRST_NAME_SEQUENCE_PATTERN, LAST_NAME_SEQUENCE_PATTERN),
+			//WordPattern.sequence(LAST_NAME_SEQUENCE_PATTERN, FIRST_NAME_SEQUENCE_PATTERN)
+			);*/
+	public static final WordPattern PERSON_PATTERN = WordPattern.simpleWord(WordType.PERSON);
 	
 
 	private static final WordPattern PRONOUN_PATTERN = WordPattern.simpleWord(WordType.PERSONAL_PRONOUN);
@@ -66,8 +66,24 @@ public class NominalGroupConverter {
 			WordPattern.simpleWord(WordType.NUMBER),
 			WordPattern.simpleWord(WordType.NUMBER),
 			WordPattern.simpleWord(WordType.NUMBER),
-			WordPattern.simpleWord(WordType.NUMBER));
-
+			WordPattern.simpleWord(WordType.NUMBER)); 
+	
+	private static final WordPattern PERSON_SECOND_OBJECT_PATTERN = WordPattern.sequence(
+			WordPattern.simpleWord(WordType.PREPOSITION_OF),
+			PERSON_PATTERN);			
+	private static final WordPattern COMPLEMENT_SECOND_OBJECT_PATTERN = WordPattern.sequence(
+			WordPattern.simpleWord(WordType.PREPOSITION_OF),
+			WordPattern.optional(CountConverter.COUNT_PATTERN),
+			WordPattern.simpleWord(WordType.COMMON_NAME));
+	private static final WordPattern CUSTOM_OBJECT_SECOND_OBJECT_PATTERN = WordPattern.sequence(
+			WordPattern.simpleWord(WordType.PREPOSITION_OF),
+			CUSTOM_OBJECT_PATTERN);
+	
+	private static final WordPattern NOMINAL_SECOND_OBJECT_PATTERN = WordPattern.or(
+			COMPLEMENT_SECOND_OBJECT_PATTERN,
+			CUSTOM_OBJECT_SECOND_OBJECT_PATTERN,
+			PERSON_SECOND_OBJECT_PATTERN);
+	
 	public static final WordPattern SUBJECT_PATTERN = WordPattern.or(
 			OBJECT_PATTERN,
 			PHONE_NUMBER_PATTERN,
@@ -96,7 +112,7 @@ public class NominalGroupConverter {
 		INominalObject result = null;
 
 		if(words.syntaxStartsWith(OBJECT_PATTERN)){
-			AdditionalObject obj = new AdditionalObject();
+			/*AdditionalObject obj = new AdditionalObject();
 
 			if(CountConverter.isACountData(words)){
 				obj.count = CountConverter.parseCountObject(words);
@@ -105,7 +121,8 @@ public class NominalGroupConverter {
 			obj.object = words.getCurrentElement().getCustomObject();
 			words.consume();
 
-			result = obj;
+			result = obj;*/
+			result = parseAdditionalObject(words);
 		} else if(words.syntaxStartsWith(PHONE_NUMBER_PATTERN)){
 			PhoneNumberObject phoneNumber = new PhoneNumberObject();
 			StringBuilder builder = new StringBuilder();
@@ -179,15 +196,15 @@ public class NominalGroupConverter {
 			words.consume();
 
 			result = custom;
-		} else if(words.syntaxStartsWith(CUSTOM_PERSON_PATTERN)){
+		} else if(words.syntaxStartsWith(PERSON_PATTERN)){
+			result = parseAdditionalPerson(words);
+		}/* else if(words.syntaxStartsWith(CUSTOM_PERSON_PATTERN)){
 			AdditionalPerson custom = new AdditionalPerson();			
 			custom.person = words.getCurrentElement().getCustomPerson();
 			result = custom;
-		} else if(words.syntaxStartsWith(DIRECT_OBJECT_PATTERN)){
+		}*/ else if(words.syntaxStartsWith(DIRECT_OBJECT_PATTERN)){
 			ComplementObject obj = parseComplementObject(words);			
 			result = obj;
-		} else if(words.syntaxStartsWith(PERSON_PATTERN)){
-			result = parseAdditionalPerson(words);
 		}
 
 		return result;
@@ -217,7 +234,43 @@ public class NominalGroupConverter {
 
 		return result;
 	}
+	
+	public static boolean isANominalSecondObject(WordBuffer words){
+		return words.syntaxStartsWith(NOMINAL_SECOND_OBJECT_PATTERN);
+	}
+	
+	public static INominalObject parseNominalSecondObject(WordBuffer words){
+		INominalObject result = null;
+		
+		if(words.syntaxStartsWith(CUSTOM_OBJECT_SECOND_OBJECT_PATTERN)){
+			words.consume();
+			result = parseAdditionalObject(words);
+		} else if(words.syntaxStartsWith(PERSON_SECOND_OBJECT_PATTERN)){
+			words.consume();
+			result = parseAdditionalPerson(words);
+		} else if(words.syntaxStartsWith(COMPLEMENT_SECOND_OBJECT_PATTERN)){
+			words.consume();
+			result = parseComplementObject(words);
+		} 
+		
+		// TODO: ajouter les autres
+		
+		return result;
+	}
 
+	private static AdditionalObject parseAdditionalObject(WordBuffer words){
+		AdditionalObject obj = new AdditionalObject();
+		
+		if(CountConverter.isACountData(words)){
+			obj.count = CountConverter.parseCountObject(words);
+		}
+		
+		obj.object = words.getCurrentElement().getCustomObject();
+		words.consume();
+		
+		return obj;
+	}
+	
 	private static ComplementObject parseComplementObject(WordBuffer words){
 		ComplementObject obj = new ComplementObject();
 
