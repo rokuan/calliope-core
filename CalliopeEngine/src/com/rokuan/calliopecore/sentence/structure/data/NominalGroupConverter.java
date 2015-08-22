@@ -5,12 +5,14 @@ import com.rokuan.calliopecore.pattern.WordPattern;
 import com.rokuan.calliopecore.sentence.Type;
 import com.rokuan.calliopecore.sentence.Word.WordType;
 import com.rokuan.calliopecore.sentence.structure.content.INominalObject;
+import com.rokuan.calliopecore.sentence.structure.content.IVerbalObject;
 import com.rokuan.calliopecore.sentence.structure.data.nominal.AdditionalObject;
 import com.rokuan.calliopecore.sentence.structure.data.nominal.AdditionalPerson;
 import com.rokuan.calliopecore.sentence.structure.data.nominal.ColorObject;
 import com.rokuan.calliopecore.sentence.structure.data.nominal.ComplementObject;
 import com.rokuan.calliopecore.sentence.structure.data.nominal.PhoneNumberObject;
 import com.rokuan.calliopecore.sentence.structure.data.nominal.PronounTarget;
+import com.rokuan.calliopecore.sentence.structure.data.nominal.VerbalGroup;
 
 public class NominalGroupConverter {
 	// NominalGroup
@@ -61,7 +63,23 @@ public class NominalGroupConverter {
 			WordPattern.simpleWord(WordType.NUMBER),
 			WordPattern.simpleWord(WordType.NUMBER),
 			WordPattern.simpleWord(WordType.NUMBER),
-			WordPattern.simpleWord(WordType.NUMBER)); 
+			WordPattern.simpleWord(WordType.NUMBER));
+	
+	public static final WordPattern SUBJECT_PATTERN = WordPattern.or(
+			OBJECT_PATTERN,
+			PHONE_NUMBER_PATTERN,
+			PlaceConverter.CITY_ONLY_PATTERN,
+			PlaceConverter.COUNTRY_ONLY_PATTERN,
+			PERSON_PATTERN,
+			PRONOUN_PATTERN,
+			DateConverter.FIXED_DATE_ONLY_PATTERN,
+			COLOR_PATTERN,
+			WayConverter.LANGUAGE_ONLY_PATTERN,
+			COMMON_NAME_PATTERN,
+			PlaceConverter.ADDITIONAL_PLACE_ONLY_PATTERN,
+			PlaceConverter.PLACE_ONLY_PATTERN
+			// TODO: ajouter le pattern pour les groupes verbaux
+			);
 	
 	private static final WordPattern PERSON_SECOND_OBJECT_PATTERN = WordPattern.sequence(
 			WordPattern.simpleWord(WordType.PREPOSITION_OF),
@@ -79,21 +97,11 @@ public class NominalGroupConverter {
 			CUSTOM_OBJECT_SECOND_OBJECT_PATTERN,
 			PERSON_SECOND_OBJECT_PATTERN);
 	
-	public static final WordPattern SUBJECT_PATTERN = WordPattern.or(
-			OBJECT_PATTERN,
-			PHONE_NUMBER_PATTERN,
-			PlaceConverter.CITY_ONLY_PATTERN,
-			PlaceConverter.COUNTRY_ONLY_PATTERN,
-			PERSON_PATTERN,
-			PRONOUN_PATTERN,
-			DateConverter.FIXED_DATE_ONLY_PATTERN,
-			COLOR_PATTERN,
-			WayConverter.LANGUAGE_ONLY_PATTERN,
-			COMMON_NAME_PATTERN,
-			PlaceConverter.ADDITIONAL_PLACE_ONLY_PATTERN,
-			PlaceConverter.PLACE_ONLY_PATTERN
-			// TODO: ajouter le pattern pour les groupes verbaux
-			);
+	private static final WordPattern VERBAL_SECOND_OBJECT_PATTERN = WordPattern.sequence(
+			WordPattern.simpleWord("qu(e?)"),
+			SUBJECT_PATTERN,
+			VerbConverter.CONJUGATED_VERB_PATTERN
+			);	
 	
 	public static final WordPattern TO_PATTERN = WordPattern.or(
 			WordPattern.sequence(WordPattern.simpleWord(WordType.PREPOSITION_AT, "à"), WordPattern.optional(WordPattern.simpleWord(WordType.DEFINITE_ARTICLE, "la"))),
@@ -200,7 +208,7 @@ public class NominalGroupConverter {
 		INominalObject result = null;
 
 		if(words.syntaxStartsWith(CUSTOM_OBJECT_PATTERN)){
-			AdditionalObject custom = new AdditionalObject();
+			/*AdditionalObject custom = new AdditionalObject();
 
 			if(CountConverter.isACountData(words)){
 				custom.count = CountConverter.parseCountObject(words);
@@ -209,7 +217,8 @@ public class NominalGroupConverter {
 			custom.object = words.getCurrentElement().getCustomObject();
 			words.consume();
 
-			result = custom;
+			result = custom;*/
+			result = parseAdditionalObject(words);
 		} else if(words.syntaxStartsWith(PERSON_PATTERN)){
 			result = parseAdditionalPerson(words);
 		}/* else if(words.syntaxStartsWith(CUSTOM_PERSON_PATTERN)){
@@ -217,7 +226,7 @@ public class NominalGroupConverter {
 			custom.person = words.getCurrentElement().getCustomPerson();
 			result = custom;
 		}*/ else if(words.syntaxStartsWith(DIRECT_OBJECT_PATTERN)){
-			ComplementObject obj = parseComplementObject(words);			
+			ComplementObject obj = parseComplementObject(words);		
 			result = obj;
 		}
 
@@ -281,6 +290,20 @@ public class NominalGroupConverter {
 		
 		return result;
 	}
+	
+	public static boolean isAVerbalSecondObject(WordBuffer words){
+		return words.syntaxStartsWith(VERBAL_SECOND_OBJECT_PATTERN);
+	}
+	
+	public static IVerbalObject parseVerbalSecondObject(WordBuffer words){
+		VerbalGroup result = null;
+		
+		if(words.syntaxStartsWith(VERBAL_SECOND_OBJECT_PATTERN)){
+			
+		}
+		
+		return result;
+	}
 
 	private static AdditionalObject parseAdditionalObject(WordBuffer words){
 		AdditionalObject obj = new AdditionalObject();
@@ -310,7 +333,7 @@ public class NominalGroupConverter {
 			obj.count = CountConverter.parseSuffixCountObject(words);
 		}
 
-		if(CriterionConverter.isACriterionData(words)){
+		/*if(CriterionConverter.isACriterionData(words)){
 			obj.criteria = CriterionConverter.parseCriterionData(words);
 		} else if(words.isIntoBounds() && words.getCurrentElement().isOfType(WordType.PREPOSITION_OF)){
 			words.next();
@@ -327,6 +350,14 @@ public class NominalGroupConverter {
 			} else {
 				words.previous();
 			}
+		}*/
+		
+		if(isANominalSecondObject(words)){
+			obj.setNominalSecondObject(parseNominalSecondObject(words));
+		}
+		
+		if(isAVerbalSecondObject(words)){
+			obj.setVerbalSecondObject(parseVerbalSecondObject(words));
 		}
 
 		return obj;

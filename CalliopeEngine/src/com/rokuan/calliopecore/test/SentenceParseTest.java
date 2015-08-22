@@ -234,8 +234,8 @@ public class SentenceParseTest {
 
 		ComplementObject compl = (ComplementObject)obj.what;
 		assertEquals(compl.object, "vidéos");
-		assert (compl.of != null);
-		assertEquals(((ComplementObject)compl.of).object, "chats");
+		assert (compl.getNominalSecondObject() != null);
+		assertEquals(((ComplementObject)compl.getNominalSecondObject()).object, "chats");
 	}
 
 	@Test
@@ -343,5 +343,10 @@ public class SentenceParseTest {
 		
 		assertEquals(obj.getRequestType(), RequestType.AFFIRMATION);
 		assertEquals(obj.subject.getGroupType(), GroupType.COMPLEMENT);
+	}
+	
+	@Test
+	public void testAffirmativeSentenceWithVerbalSecondObject(){
+		// TODO:
 	}
 }
