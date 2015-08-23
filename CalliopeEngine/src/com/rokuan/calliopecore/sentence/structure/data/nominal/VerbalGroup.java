@@ -2,6 +2,7 @@ package com.rokuan.calliopecore.sentence.structure.data.nominal;
 
 import com.google.gson.annotations.Expose;
 import com.rokuan.calliopecore.sentence.Action;
+import com.rokuan.calliopecore.sentence.Action.VerbAction;
 import com.rokuan.calliopecore.sentence.structure.content.INominalObject;
 import com.rokuan.calliopecore.sentence.structure.content.IPlaceObject;
 import com.rokuan.calliopecore.sentence.structure.content.IPurposeObject;
@@ -27,28 +28,28 @@ public class VerbalGroup extends NominalGroup implements IWayObject, ITimeObject
 	private PurposeContext purposePreposition;
 	
 	@Expose
-	public INominalObject subject;
+	private INominalObject subject;
 
 	@Expose
-	public Action.VerbAction action;
+	private Action.VerbAction action = VerbAction.UNDEFINED;
 
 	@Expose
-	public INominalObject what;
+	private INominalObject what;
 
 	@Expose
-	public INominalObject target;
+	private INominalObject target;
 
 	@Expose
-	public IPlaceObject where;
+	private IPlaceObject where;
 
 	@Expose
-	public ITimeObject when;
+	private ITimeObject when;
 
 	@Expose
-	public IWayObject how;
+	private IWayObject how;
 
 	@Expose
-	public IPurposeObject why;
+	private IPurposeObject why;
 	
 	@Override
 	public GroupType getGroupType() {

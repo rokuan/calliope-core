@@ -1,6 +1,7 @@
 package com.rokuan.calliopecore.test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -26,6 +27,7 @@ import com.rokuan.calliopecore.sentence.structure.InterpretationObject.RequestTy
 import com.rokuan.calliopecore.sentence.structure.QuestionObject;
 import com.rokuan.calliopecore.sentence.structure.QuestionObject.QuestionType;
 import com.rokuan.calliopecore.sentence.structure.content.IPlaceObject;
+import com.rokuan.calliopecore.sentence.structure.content.IVerbalObject;
 import com.rokuan.calliopecore.sentence.structure.data.nominal.AdditionalObject;
 import com.rokuan.calliopecore.sentence.structure.data.nominal.AdditionalPerson;
 import com.rokuan.calliopecore.sentence.structure.data.nominal.CityObject;
@@ -347,6 +349,41 @@ public class SentenceParseTest {
 	
 	@Test
 	public void testAffirmativeSentenceWithVerbalSecondObject(){
-		// TODO:
+		WordBuffer words = new WordBuffer();
+		Word sont = new Word("sont", WordType.VERB, WordType.AUXILIARY);
+		Word ai = new Word("ai", WordType.VERB, WordType.AUXILIARY);
+		Word envoyees = new Word("envoyées", WordType.VERB, WordType.AUXILIARY);
+		
+		Verb avoir = new Verb("avoir", Action.VerbAction.HAVE, true);
+		VerbConjugation conjugAvoir = new VerbConjugation(ConjugationTense.PRESENT, Form.INDICATIVE, Pronoun.JE, "ai", avoir);
+		ai.setVerbInfo(conjugAvoir);
+		Verb envoyer = new Verb("envoyer", Action.VerbAction.SEND, false);
+		VerbConjugation conjugEnvoyer = new VerbConjugation(ConjugationTense.PAST, Form.PARTICIPLE, null, "envoyées", envoyer);
+		envoyees.setVerbInfo(conjugEnvoyer);
+		
+		words.add(new Word("où", WordType.INTERROGATIVE_ADJECTIVE));
+		words.add(sont);
+		words.add(new Word("les", WordType.DEFINITE_ARTICLE));
+		words.add(new Word("lettres", WordType.COMMON_NAME));
+		words.add(new Word("que", WordType.PREPOSITION));
+		words.add(new Word("je", WordType.PERSONAL_PRONOUN));
+		words.add(new Word("t", WordType.TARGET_PRONOUN));
+		words.add(ai);
+		words.add(envoyees);
+		words.add(new Word("hier", WordType.DATE));
+		
+		InterpretationObject obj = new Parser().parseInterpretationObject(words);
+		
+		assertEquals(obj.getRequestType(), RequestType.QUESTION);
+		assertEquals(obj.what.getGroupType(), GroupType.COMPLEMENT);
+		
+		ComplementObject compl = (ComplementObject)obj.what;
+		
+		assertEquals(compl.object, "lettres");
+		assertNotNull(compl.getVerbalSecondObject());
+		
+		IVerbalObject verbal = compl.getVerbalSecondObject();
+		
+		assertEquals(verbal.getAction(), Action.VerbAction.SEND);
 	}
 }
