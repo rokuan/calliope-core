@@ -31,7 +31,7 @@ public class TimePreposition {
 		return name;
 	}
 
-	public DateContext getTimePreposition() {
+	public DateContext getValue() {
 		return timePreposition;
 	}
 }

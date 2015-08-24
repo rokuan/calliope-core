@@ -69,12 +69,13 @@ public class PlaceConverter {
 			CITY_SECOND_OBJECT_PATTERN);
 	
 	public static final WordPattern COUNTRY_PATTERN = WordPattern.sequence(WordPattern.or(
-			WordPattern.sequence(WordPattern.simpleWord(WordType.PREPOSITION_AT), WordPattern.optional(WordPattern.simpleWord(WordType.DEFINITE_ARTICLE))),
+			// TODO: trouver le bon pattern pour la preposition
+			WordPattern.sequence(WordPattern.simpleWord("à|au"), WordPattern.optional(WordPattern.simpleWord(WordType.DEFINITE_ARTICLE))),
 			WordPattern.sequence(WordPattern.simpleWord("en"))
 			), WordPattern.simpleWord(WordType.COUNTRY));
 
 	public static final WordPattern CITY_PATTERN = WordPattern.sequence(
-			WordPattern.simpleWord(WordType.PREPOSITION_AT), 
+			WordPattern.simpleWord("à"), 
 			//WordPattern.optional(WordPattern.simple(WordType.DEFINITE_ARTICLE)), 
 			WordPattern.simpleWord(WordType.CITY));
 	
@@ -110,7 +111,7 @@ public class PlaceConverter {
 			AdditionalPlaceObject additional = new AdditionalPlaceObject();
 			
 			if(words.getCurrentElement().isOfType(WordType.PLACE_PREPOSITION)){
-				additional.setPlacePreposition(words.getCurrentElement().getPlacePreposition());
+				additional.setPlacePreposition(words.getCurrentElement().getPlacePreposition().getValue());
 				words.consume();
 			}
 
@@ -142,7 +143,7 @@ public class PlaceConverter {
 			CityObject city = new CityObject();
 			
 			if(words.getCurrentElement().isOfType(WordType.PLACE_PREPOSITION)){
-				city.setPlacePreposition(words.getCurrentElement().getPlacePreposition());
+				city.setPlacePreposition(words.getCurrentElement().getPlacePreposition().getValue());
 				words.consume();
 			}
 			
@@ -154,7 +155,7 @@ public class PlaceConverter {
 			CountryObject country = new CountryObject();
 			
 			if(words.getCurrentElement().isOfType(WordType.PLACE_PREPOSITION)){
-				country.setPlacePreposition(words.getCurrentElement().getPlacePreposition());
+				country.setPlacePreposition(words.getCurrentElement().getPlacePreposition().getValue());
 				words.consume();
 			}
 			
@@ -166,7 +167,7 @@ public class PlaceConverter {
 			NamedPlaceObject place = new NamedPlaceObject();
 			
 			if(words.getCurrentElement().isOfType(WordType.PLACE_PREPOSITION)){
-				place.setPlacePreposition(words.getCurrentElement().getPlacePreposition());
+				place.setPlacePreposition(words.getCurrentElement().getPlacePreposition().getValue());
 				words.consume();
 			}
 			
@@ -179,9 +180,9 @@ public class PlaceConverter {
 	
 	public static boolean isANominalGroup(WordBuffer words){
 		return words.syntaxStartsWith(ADDITIONAL_PLACE_ONLY_PATTERN)
-				|| words.syntaxStartsWith(PLACE_ONLY_PATTERN)
 				|| words.syntaxStartsWith(CITY_ONLY_PATTERN)
-				|| words.syntaxStartsWith(COUNTRY_ONLY_PATTERN);
+				|| words.syntaxStartsWith(COUNTRY_ONLY_PATTERN)
+				|| words.syntaxStartsWith(PLACE_ONLY_PATTERN);
 	}
 	
 	public static INominalObject parseNominalPlaceObject(WordBuffer words){

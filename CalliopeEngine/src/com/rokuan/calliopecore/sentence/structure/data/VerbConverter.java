@@ -123,14 +123,10 @@ public class VerbConverter {
 	}
 
 	public static final void parseConjugatedVerb(WordBuffer words, IVerbalObject object){
-		System.out.println("FIRST " + words.getCurrentElement());
-		
 		if(words.syntaxStartsWith(CONJUGATED_VERB_PATTERN)){
 			if(words.getCurrentElement().isOfType(WordType.AUXILIARY)){
 				if(words.hasNext()){
 					words.next();
-					
-					System.out.println("CURRENT " + words.getCurrentElement());
 
 					if(words.getCurrentElement().isOfType(WordType.VERB)){
 						words.previous();
@@ -140,8 +136,6 @@ public class VerbConverter {
 					}
 				}
 			}
-
-			System.out.println("AFTER " + words.getCurrentElement());
 			
 			if(words.getCurrentElement().isOfType(WordType.VERB)){
 				object.setAction(getActionFromVerb(words.getCurrentElement().getVerbInfo()));

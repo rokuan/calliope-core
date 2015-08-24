@@ -160,8 +160,6 @@ public class DateConverter {
 
 	public static ITimeObject parseTimeAdverbial(WordBuffer words){
 		TimeAdverbial result = null;
-		
-		System.out.println(words.getCurrentElement());
 
 		if(WordPattern.syntaxStartsWith(words, FROM_TO_DATE_PATTERN)){
 			TimePeriodObject period = new TimePeriodObject();
@@ -208,7 +206,7 @@ public class DateConverter {
 
 			if(words.getCurrentElement().isOfType(WordType.TIME_PREPOSITION)){
 				// TODO: parser la preposition
-				single.setTimePreposition(words.getCurrentElement().getDatePreposition());
+				single.setTimePreposition(words.getCurrentElement().getTimePreposition().getValue());
 				words.consume();
 			}
 
@@ -230,7 +228,7 @@ public class DateConverter {
 				preposition = DateContext.WHEN;
 				words.consume();
 			} else if(words.getCurrentElement().isOfType(WordType.TIME_PREPOSITION)){
-				preposition = words.getCurrentElement().getDatePreposition();
+				preposition = words.getCurrentElement().getTimePreposition().getValue();
 				words.consume();
 			} else {
 				preposition = DateContext.WHEN;

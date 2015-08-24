@@ -24,7 +24,7 @@ public class PurposeConverter {
 		if(words.syntaxStartsWith(VERBAL_PURPOSE_PATTERN)){
 			VerbalGroup verbal = new VerbalGroup();
 			
-			verbal.setPurposePreposition(words.getCurrentElement().getPurposePreposition());
+			verbal.setPurposePreposition(words.getCurrentElement().getPurposePreposition().getValue());
 			words.consume();
 			
 			result = verbal;

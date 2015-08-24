@@ -31,7 +31,7 @@ public class PurposePreposition {
 		return name;
 	}
 
-	public PurposeContext getPurposePreposition() {
+	public PurposeContext getValue() {
 		return purposePreposition;
 	}
 }

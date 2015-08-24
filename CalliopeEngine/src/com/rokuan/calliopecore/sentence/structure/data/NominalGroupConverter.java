@@ -276,6 +276,8 @@ public class NominalGroupConverter {
 		if(words.syntaxStartsWith(VERBAL_SECOND_OBJECT_PATTERN)){
 			VerbalGroup verbal = new VerbalGroup();
 			
+			words.consume();	// qu(e)
+			
 			verbal.setSubject(parseSubject(words));
 			VerbConverter.parseAffirmativeConjugatedVerb(words, verbal);
 			

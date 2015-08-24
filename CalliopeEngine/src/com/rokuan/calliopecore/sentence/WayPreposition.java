@@ -32,7 +32,7 @@ public class WayPreposition {
 		return name;
 	}
 
-	public WayContext getWayPreposition() {
+	public WayContext getValue() {
 		return wayPreposition;
 	}
 }

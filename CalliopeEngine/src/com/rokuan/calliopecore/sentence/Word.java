@@ -7,10 +7,6 @@ import java.util.Set;
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
-import com.rokuan.calliopecore.sentence.structure.data.place.PlaceAdverbial.PlaceContext;
-import com.rokuan.calliopecore.sentence.structure.data.purpose.PurposeAdverbial.PurposeContext;
-import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial.DateContext;
-import com.rokuan.calliopecore.sentence.structure.data.way.WayAdverbial.WayContext;
 
 /**
  * Created by LEBEAU Christophe on 22/02/2015.
@@ -100,10 +96,14 @@ public class Word {
 	private ColorInfo colorInfo;
 	private CountryInfo countryInfo;
 	private CityInfo cityInfo;
-	private DateContext datePreposition;
+	/*private DateContext datePreposition;
 	private PlaceContext placePreposition;
 	private WayContext wayPreposition;
-	private PurposeContext purposePreposition;
+	private PurposeContext purposePreposition;*/
+	private TimePreposition timePreposition;
+	private PlacePreposition placePreposition;
+	private WayPreposition wayPreposition;
+	private PurposePreposition purposePreposition;
 	private CustomObject customObject;
 	private CustomPlace customPlace;
 	private CustomPerson customPerson;
@@ -202,20 +202,36 @@ public class Word {
 		this.cityInfo = cityInfo;
 	}
 
-	public DateContext getDatePreposition() {
-		return datePreposition;
+	public TimePreposition getTimePreposition() {
+		return timePreposition;
 	}
 
-	public void setDatePreposition(DateContext datePreposition) {
-		this.datePreposition = datePreposition;
+	public void setTimePreposition(TimePreposition timePreposition) {
+		this.timePreposition = timePreposition;
 	}
 
-	public PlaceContext getPlacePreposition() {
+	public PlacePreposition getPlacePreposition() {
 		return placePreposition;
 	}
 
-	public void setPlacePreposition(PlaceContext placePreposition) {
+	public void setPlacePreposition(PlacePreposition placePreposition) {
 		this.placePreposition = placePreposition;
+	}
+
+	public WayPreposition getWayPreposition() {
+		return wayPreposition;
+	}
+
+	public void setWayPreposition(WayPreposition wayPreposition) {
+		this.wayPreposition = wayPreposition;
+	}
+
+	public PurposePreposition getPurposePreposition() {
+		return purposePreposition;
+	}
+
+	public void setPurposePreposition(PurposePreposition purposePreposition) {
+		this.purposePreposition = purposePreposition;
 	}
 
 	public CustomObject getCustomObject() {
@@ -248,22 +264,6 @@ public class Word {
 
 	public void setCustomMode(CustomMode customMode) {
 		this.customMode = customMode;
-	}
-
-	public WayContext getWayPreposition() {
-		return wayPreposition;
-	}
-
-	public void setWayPreposition(WayContext wayPreposition) {
-		this.wayPreposition = wayPreposition;
-	}
-
-	public PurposeContext getPurposePreposition() {
-		return purposePreposition;
-	}
-
-	public void setPurposePreposition(PurposeContext purposePreposition) {
-		this.purposePreposition = purposePreposition;
 	}
 
 	@Override
