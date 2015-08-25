@@ -39,7 +39,8 @@ public abstract class PlaceAdverbial implements IPlaceObject {
 		COUNTRY,
 		NAMED_PLACE,
 		NOMINAL,
-		CUSTOM
+		CUSTOM,
+		ADDRESS
 	}
 
 	@Expose

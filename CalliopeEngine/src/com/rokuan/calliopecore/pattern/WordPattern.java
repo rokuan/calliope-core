@@ -5,6 +5,10 @@ import java.util.List;
 
 import com.rokuan.calliopecore.parser.WordBuffer;
 import com.rokuan.calliopecore.sentence.Word;
+import com.rokuan.calliopecore.sentence.structure.data.place.PlaceAdverbial.PlaceType;
+import com.rokuan.calliopecore.sentence.structure.data.purpose.PurposeAdverbial.PurposeType;
+import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial.TimeType;
+import com.rokuan.calliopecore.sentence.structure.data.way.WayAdverbial.WayType;
 
 /**
  * Created by LEBEAU Christophe on 02/03/2015.
@@ -126,11 +130,11 @@ public abstract class WordPattern {
 			return false;
 		}*/
 		private WordMatcher matcher;
-		
+
 		public WordSimplePattern(WordMatcher m){
 			matcher = m;
 		}
-		
+
 		@Override
 		protected int getLength() {
 			return 1;
@@ -197,7 +201,7 @@ public abstract class WordPattern {
 	public static WordPattern simpleWord(Word.WordType[] ty){
 		return new WordSimplePattern(SimpleWordMatcher.builder().setTypes(ty).build());
 	}
-	
+
 	public static WordPattern simpleWord(String regex){
 		return new WordSimplePattern(SimpleWordMatcher.builder().setWordRegex(regex).build());
 	}
@@ -213,18 +217,18 @@ public abstract class WordPattern {
 	/*public static WordPattern simple(Word.WordType ty, String valueRegex, String verbRegex){
 		return new WordSimplePattern(null);
 	}*/
-	
+
 	public static WordPattern simpleVerb(String verbRegex){
 		return new WordSimplePattern(VerbMatcher.builder().setVerbRegex(verbRegex).build());
 	}
-	
+
 	public static WordPattern simpleVerb(String verbRegex, String conjugationRegex){
 		return new WordSimplePattern(VerbMatcher.builder()
 				.setVerbRegex(verbRegex)
 				.setConjugatedVerbRegex(conjugationRegex)
 				.build());
 	}
-	
+
 	public static WordPattern simpleVerb(boolean auxiliary, String verbRegex, String conjugationRegex){
 		return new WordSimplePattern(VerbMatcher.builder()
 				.setAuxiliary(auxiliary)
@@ -232,7 +236,51 @@ public abstract class WordPattern {
 				.setConjugatedVerbRegex(conjugationRegex)
 				.build());
 	}
+
+	public static WordPattern simplePlacePrep(PlaceType next){
+		return simplePlacePrep(next, false);
+	}
+
+	public static WordPattern simplePlacePrep(PlaceType follower, boolean contracted){
+		return new WordSimplePattern(new PlacePrepositionMatcher.PlacePrepositionMatcherBuilder()
+		.setMatchContractedForm(contracted)
+		.setPossibleFollowers(follower)
+		.build()); 
+	}
+
+	public static WordPattern simpleTimePrep(TimeType next){
+		return simpleTimePrep(next, false);
+	}
+
+	public static WordPattern simpleTimePrep(TimeType next, boolean contracted){
+		return new WordSimplePattern(new TimePrepositionMatcher.TimePrepositionMatcherBuilder()
+		.setMatchContractedForm(contracted)
+		.setPossibleFollowers(next)
+		.build());
+	}
 	
+	public static WordPattern simpleWayPrep(WayType next){
+		return simpleWayPrep(next, false);
+	}
+
+	public static WordPattern simpleWayPrep(WayType next, boolean contracted){
+		return new WordSimplePattern(new WayPrepositionMatcher.WayPrepositionMatcherBuilder()
+		.setMatchContractedForm(contracted)
+		.setPossibleFollowers(next)
+		.build());
+	}
+	
+	public static WordPattern simplePurposePrep(PurposeType next){
+		return simplePurposePrep(next, false);
+	}
+
+	public static WordPattern simplePurposePrep(PurposeType next, boolean contracted){
+		return new WordSimplePattern(new PurposePrepositionMatcher.PurposePrepositionMatcherBuilder()
+		.setMatchContractedForm(contracted)
+		.setPossibleFollowers(next)
+		.build());
+	}
+
 	public static WordPattern simple(WordMatcher matcher){
 		return new WordSimplePattern(matcher);
 	}
@@ -264,13 +312,13 @@ public abstract class WordPattern {
 
 			for(WordPattern pat: or.choices){
 				words.start();
-				
+
 				if(realSyntaxStartsWith(words, pat)){
 					patternMatch = true;
 					words.end();
 					break;
 				}
-				
+
 				words.cancel();
 			}
 
@@ -279,7 +327,7 @@ public abstract class WordPattern {
 			}                
 		} else if (pattern instanceof WordSimplePattern){
 			WordSimplePattern simple = (WordSimplePattern)pattern;
-			
+
 			if(words.getCurrentIndex() >= words.size()){
 				return false;
 			}
@@ -304,7 +352,7 @@ public abstract class WordPattern {
 				e.printStackTrace();
 				return false;
 			}*/
-			
+
 			if(!simple.matcher.matches(words.getCurrentElement())){
 				return false;
 			}
@@ -319,7 +367,7 @@ public abstract class WordPattern {
 				words.cancel();
 				return true;
 			}
-			
+
 			words.end();
 		} else if(pattern instanceof WordSequencePattern){
 			WordSequencePattern sequence = (WordSequencePattern)pattern;
@@ -332,7 +380,7 @@ public abstract class WordPattern {
 					return false;
 				}
 			}
-			
+
 			words.end();
 		} else if(pattern instanceof WordListPattern){
 			WordListPattern list = (WordListPattern)pattern;
@@ -343,21 +391,21 @@ public abstract class WordPattern {
 				words.cancel();
 				return false;
 			}
-			
+
 			words.end();
 
 			while(true){
 				if(words.getCurrentIndex() >= words.size()){
 					break;
 				}
-				
+
 				words.start();
 
 				if(!realSyntaxStartsWith(words, list.element)){
 					words.cancel();
 					break;
 				}
-				
+
 				words.end();
 			}
 		} else if(pattern instanceof WordSeparatedListPattern){
@@ -370,21 +418,21 @@ public abstract class WordPattern {
 				words.cancel();
 				return false;
 			}			
-			
+
 			words.end();
 
 			while(true){
 				if(words.getCurrentIndex() >= words.size()){
 					break;
 				}
-				
+
 				words.start();
 
 				if(!realSyntaxStartsWith(words, separatorSequence)){
 					words.cancel();
 					break;
 				}
-				
+
 				words.end();
 			}
 		} else {

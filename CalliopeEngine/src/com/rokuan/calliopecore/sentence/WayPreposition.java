@@ -39,6 +39,14 @@ public class WayPreposition extends Preposition {
 		this(v, prep);
 		followersTypes.addAll(types);
 	}
+	
+	public WayPreposition(String v, WayContext prep, WayType... types){
+		this(v, prep);
+
+		for(int i=0; i<types.length; i++){
+			followersTypes.add(types[i]);
+		}
+	}
 
 	public String getName() {
 		return name;

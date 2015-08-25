@@ -39,6 +39,14 @@ public class TimePreposition extends Preposition {
 		this(v, prep);
 		followersTypes.addAll(types);
 	}
+	
+	public TimePreposition(String v, DateContext prep, TimeType... types){
+		this(v, prep);
+
+		for(int i=0; i<types.length; i++){
+			followersTypes.add(types[i]);
+		}
+	}
 
 	public String getName() {
 		return name;

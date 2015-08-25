@@ -17,7 +17,7 @@ import com.rokuan.calliopecore.sentence.structure.data.nominal.VerbalGroup;
 public class NominalGroupConverter {
 	// NominalGroup
 	public static final WordPattern ABSTRACT_TARGET_PATTERN = WordPattern.simpleWord(WordType.POSSESSIVE_ADJECTIVE);
-	public static final WordPattern PLACE_PATTERN = PlaceConverter.PLACE_PATTERN;		
+	//public static final WordPattern PLACE_PATTERN = PlaceConverter.PLACE_PATTERN;		
 
 	// ComplementObject
 	public static final WordPattern DIRECT_OBJECT_PATTERN = WordPattern.sequence(

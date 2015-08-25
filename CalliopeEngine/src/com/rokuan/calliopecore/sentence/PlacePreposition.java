@@ -40,6 +40,14 @@ public class PlacePreposition {
 		this(v, prep);
 		followersTypes.addAll(types);
 	}
+	
+	public PlacePreposition(String v, PlaceContext prep, PlaceType... types){
+		this(v, prep);
+		
+		for(int i=0; i<types.length; i++){
+			followersTypes.add(types[i]);
+		}
+	}
 
 	public String getName() {
 		return name;
