@@ -30,7 +30,7 @@ public class PlaceParseTest {
 		Word in = new Word("à", WordType.PLACE_PREPOSITION);
 
 		paris.setCityInfo(new CityInfo("Paris", 48.8564528, 2.3524282));
-		in.setPlacePreposition(new PlacePreposition("à", PlaceContext.IN));
+		in.setPlacePreposition(new PlacePreposition("à", PlaceContext.IN, PlaceType.CITY));
 		
 		words.add(in);
 		words.add(paris);
@@ -51,7 +51,7 @@ public class PlaceParseTest {
 		Word in = new Word("en", WordType.PREPOSITION_IN, WordType.PLACE_PREPOSITION);
 		
 		france.setCountryInfo(new CountryInfo("France", "FR"));
-		in.setPlacePreposition(new PlacePreposition("en", PlaceContext.IN));
+		in.setPlacePreposition(new PlacePreposition("en", PlaceContext.IN, PlaceType.COUNTRY));
 		
 		words.add(in);
 		words.add(france);
@@ -76,8 +76,8 @@ public class PlaceParseTest {
 
 		paris.setCityInfo(new CityInfo("Paris", 48.8564528, 2.3524282));
 		france.setCountryInfo(new CountryInfo("France", "FR"));
-		in1.setPlacePreposition(new PlacePreposition("à", PlaceContext.IN));
-		in2.setPlacePreposition(new PlacePreposition("en", PlaceContext.IN));
+		in1.setPlacePreposition(new PlacePreposition("à", PlaceContext.IN, PlaceType.CITY));
+		in2.setPlacePreposition(new PlacePreposition("en", PlaceContext.IN, PlaceType.COUNTRY));
 		
 		words.add(in1);
 		words.add(paris);
@@ -99,7 +99,7 @@ public class PlaceParseTest {
 		WordBuffer words = new WordBuffer();
 		Word at = new Word("à", WordType.PLACE_PREPOSITION);		
 
-		at.setPlacePreposition(new PlacePreposition("à", PlaceContext.AT));
+		at.setPlacePreposition(new PlacePreposition("à", PlaceContext.AT, PlaceType.NAMED_PLACE));
 		
 		words.add(at);
 		words.add(new Word("la", WordType.DEFINITE_ARTICLE));
@@ -117,7 +117,7 @@ public class PlaceParseTest {
 		WordBuffer words = new WordBuffer();
 		Word at = new Word("à", WordType.PLACE_PREPOSITION);
 		
-		at.setPlacePreposition(new PlacePreposition("à", PlaceContext.AT));
+		at.setPlacePreposition(new PlacePreposition("à", PlaceContext.AT, PlaceType.NAMED_PLACE));
 		
 		words.add(at);
 		words.add(new Word("la", WordType.DEFINITE_ARTICLE));
@@ -137,7 +137,7 @@ public class PlaceParseTest {
 		WordBuffer words = new WordBuffer();
 		String placeName = "Mont Compote Energie";
 		Word near = new Word("à proximité de", WordType.PLACE_PREPOSITION);
-		near.setPlacePreposition(new PlacePreposition("à proximité de", PlaceContext.NEAR));
+		near.setPlacePreposition(new PlacePreposition("à proximité de", PlaceContext.NEAR, PlaceType.CUSTOM));
 		Word mountCompoteEnergie = new Word(placeName, WordType.ADDITIONAL_PLACE);
 		mountCompoteEnergie.setCustomPlace(new CustomPlace(placeName, "MOUNT_COMP"));
 		

@@ -8,6 +8,10 @@ public abstract class PrepositionMatcher<FollowerType> implements WordMatcher {
 	public static class PrepositionMatcherBuilder<FType> {
 		private PrepositionMatcher<FType> matcher;		
 		
+		protected PrepositionMatcherBuilder(PrepositionMatcher<FType> m){
+			matcher = m;
+		}
+		
 		public PrepositionMatcherBuilder<FType> setMatchContractedForm(boolean shouldMatch){
 			matcher.matchContractedForm = shouldMatch;
 			return this;
@@ -21,9 +25,5 @@ public abstract class PrepositionMatcher<FollowerType> implements WordMatcher {
 		public PrepositionMatcher<FType> build(){
 			return matcher;
 		}
-	}
-	
-	public PrepositionMatcher() {
-
 	}
 }

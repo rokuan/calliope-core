@@ -55,7 +55,7 @@ public class SentenceParseTest {
 
 		words.add(new Word("comment", WordType.INTERROGATIVE_PRONOUN));
 		words.add(go);
-		words.add(new Word("à", WordType.PREPOSITION_AT, WordType.PLACE_PREPOSITION));
+		words.add(to);
 		words.add(new Word("la", WordType.DEFINITE_ARTICLE));
 		words.add(new Word("Mairie", WordType.PLACE_TYPE, WordType.PROPER_NAME, WordType.COMMON_NAME));
 		words.add(new Word("de", WordType.PREPOSITION_OF));
@@ -86,10 +86,12 @@ public class SentenceParseTest {
 		VerbConjugation toGoConjug = new VerbConjugation(ConjugationTense.PRESENT, Form.INFINITIVE, null, "aller", toGo);		
 		toGoConjug.setVerb(toGo);
 		go.setVerbInfo(toGoConjug);
+		Word to = new Word("à", WordType.PLACE_PREPOSITION);
+		to.setPlacePreposition(new PlacePreposition("à", PlaceContext.TO, PlaceType.NAMED_PLACE, PlaceType.CITY));
 
 		words.add(new Word("comment", WordType.INTERROGATIVE_PRONOUN));
 		words.add(go);
-		words.add(new Word("à", WordType.PREPOSITION_AT, WordType.PLACE_PREPOSITION));
+		words.add(to);
 		words.add(new Word("la", WordType.DEFINITE_ARTICLE));
 		words.add(new Word("Tour", WordType.PROPER_NAME, WordType.COMMON_NAME));
 		words.add(new Word("Eiffel", WordType.PROPER_NAME));
@@ -118,6 +120,8 @@ public class SentenceParseTest {
 		Verb toGo = new Verb("aller", Action.VerbAction.GO, false);
 		VerbConjugation toGoConjug = new VerbConjugation(ConjugationTense.PRESENT, Form.INFINITIVE, null, "aller", toGo);
 		Word paris = new Word("Paris", WordType.CITY);
+		Word to = new Word("à", WordType.PLACE_PREPOSITION);
+		to.setPlacePreposition(new PlacePreposition("à", PlaceContext.TO, PlaceType.NAMED_PLACE, PlaceType.CITY));
 		
 		toGoConjug.setVerb(toGo);
 		go.setVerbInfo(toGoConjug);
@@ -126,7 +130,7 @@ public class SentenceParseTest {
 
 		words.add(new Word("comment", WordType.INTERROGATIVE_PRONOUN));
 		words.add(go);
-		words.add(new Word("à", WordType.PREPOSITION_AT, WordType.PLACE_PREPOSITION));
+		words.add(to);
 		words.add(paris);
 		words.add(new Word("en", WordType.PREPOSITION));
 		words.add(new Word("voiture", WordType.MEAN_OF_TRANSPORT));
@@ -154,6 +158,8 @@ public class SentenceParseTest {
 		Verb toGo = new Verb("aller", Action.VerbAction.GO, false);
 		VerbConjugation toGoConjug = new VerbConjugation(ConjugationTense.PRESENT, Form.INFINITIVE, null, "aller", toGo);
 		Word paris = new Word("Paris", WordType.CITY);
+		Word to = new Word("à", WordType.PLACE_PREPOSITION);
+		to.setPlacePreposition(new PlacePreposition("à", PlaceContext.TO, PlaceType.NAMED_PLACE, PlaceType.CITY));
 		
 		toGoConjug.setVerb(toGo);
 		go.setVerbInfo(toGoConjug);
@@ -162,7 +168,7 @@ public class SentenceParseTest {
 
 		words.add(new Word("comment", WordType.INTERROGATIVE_PRONOUN));
 		words.add(go);
-		words.add(new Word("à", WordType.PREPOSITION_AT, WordType.PLACE_PREPOSITION));
+		words.add(to);
 		words.add(paris);
 		words.add(new Word("à", WordType.PREPOSITION_AT));
 		words.add(new Word("voiture", WordType.COMMON_NAME, WordType.MEAN_OF_TRANSPORT));

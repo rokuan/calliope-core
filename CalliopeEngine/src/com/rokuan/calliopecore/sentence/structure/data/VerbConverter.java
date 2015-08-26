@@ -39,7 +39,7 @@ public class VerbConverter {
 					WordPattern.simpleWord(WordType.VERB));
 
 	// TODO: ajouter un moyen de verifier la forme du verbe
-	public static final WordPattern INFINITIVE_PATTERN = WordPattern.simple(VerbMatcher.builder().setForm(Form.INFINITIVE).build());
+	public static final WordPattern INFINITIVE_PATTERN = WordPattern.simple(new VerbMatcher().getBuilder().setForm(Form.INFINITIVE).build());
 
 	public static final WordPattern QUESTION_VERB_PATTERN = WordPattern.or(
 			PAST_QUESTION_PATTERN,

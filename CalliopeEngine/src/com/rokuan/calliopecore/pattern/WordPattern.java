@@ -219,18 +219,18 @@ public abstract class WordPattern {
 	}*/
 
 	public static WordPattern simpleVerb(String verbRegex){
-		return new WordSimplePattern(VerbMatcher.builder().setVerbRegex(verbRegex).build());
+		return new WordSimplePattern(new VerbMatcher().getBuilder().setVerbRegex(verbRegex).build());
 	}
 
 	public static WordPattern simpleVerb(String verbRegex, String conjugationRegex){
-		return new WordSimplePattern(VerbMatcher.builder()
+		return new WordSimplePattern(new VerbMatcher().getBuilder()
 				.setVerbRegex(verbRegex)
 				.setConjugatedVerbRegex(conjugationRegex)
 				.build());
 	}
 
 	public static WordPattern simpleVerb(boolean auxiliary, String verbRegex, String conjugationRegex){
-		return new WordSimplePattern(VerbMatcher.builder()
+		return new WordSimplePattern(new VerbMatcher().getBuilder()
 				.setAuxiliary(auxiliary)
 				.setVerbRegex(verbRegex)
 				.setConjugatedVerbRegex(conjugationRegex)
@@ -242,7 +242,7 @@ public abstract class WordPattern {
 	}
 
 	public static WordPattern simplePlacePrep(PlaceType follower, boolean contracted){
-		return new WordSimplePattern(new PlacePrepositionMatcher.PlacePrepositionMatcherBuilder()
+		return new WordSimplePattern(new PlacePrepositionMatcher().getBuilder()
 		.setMatchContractedForm(contracted)
 		.setPossibleFollowers(follower)
 		.build()); 
@@ -253,7 +253,7 @@ public abstract class WordPattern {
 	}
 
 	public static WordPattern simpleTimePrep(TimeType next, boolean contracted){
-		return new WordSimplePattern(new TimePrepositionMatcher.TimePrepositionMatcherBuilder()
+		return new WordSimplePattern(new TimePrepositionMatcher().getBuilder()
 		.setMatchContractedForm(contracted)
 		.setPossibleFollowers(next)
 		.build());
@@ -264,7 +264,7 @@ public abstract class WordPattern {
 	}
 
 	public static WordPattern simpleWayPrep(WayType next, boolean contracted){
-		return new WordSimplePattern(new WayPrepositionMatcher.WayPrepositionMatcherBuilder()
+		return new WordSimplePattern(new WayPrepositionMatcher().getBuilder()
 		.setMatchContractedForm(contracted)
 		.setPossibleFollowers(next)
 		.build());
@@ -275,7 +275,7 @@ public abstract class WordPattern {
 	}
 
 	public static WordPattern simplePurposePrep(PurposeType next, boolean contracted){
-		return new WordSimplePattern(new PurposePrepositionMatcher.PurposePrepositionMatcherBuilder()
+		return new WordSimplePattern(new PurposePrepositionMatcher().getBuilder()
 		.setMatchContractedForm(contracted)
 		.setPossibleFollowers(next)
 		.build());
