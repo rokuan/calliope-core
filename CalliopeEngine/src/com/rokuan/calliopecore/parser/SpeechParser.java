@@ -8,12 +8,15 @@ import java.util.regex.Pattern;
 import com.rokuan.calliopecore.sentence.CityInfo;
 import com.rokuan.calliopecore.sentence.ColorInfo;
 import com.rokuan.calliopecore.sentence.CountryInfo;
+import com.rokuan.calliopecore.sentence.CustomMode;
 import com.rokuan.calliopecore.sentence.CustomObject;
+import com.rokuan.calliopecore.sentence.CustomPerson;
 import com.rokuan.calliopecore.sentence.CustomPlace;
 import com.rokuan.calliopecore.sentence.LanguageInfo;
 import com.rokuan.calliopecore.sentence.PlacePreposition;
 import com.rokuan.calliopecore.sentence.PurposePreposition;
 import com.rokuan.calliopecore.sentence.TimePreposition;
+import com.rokuan.calliopecore.sentence.TransportInfo;
 import com.rokuan.calliopecore.sentence.VerbConjugation;
 import com.rokuan.calliopecore.sentence.WayPreposition;
 import com.rokuan.calliopecore.sentence.Word;
@@ -189,8 +192,11 @@ public final class SpeechParser {
 		ColorInfo color = db.findColorInfo(q);
 		CityInfo city = db.findCityInfo(q);
 		CountryInfo country = db.findCountryInfo(q);
+		TransportInfo transport = db.findTransportInfo(q);
 		CustomObject object = db.findCustomObject(q);
 		CustomPlace place = db.findCustomPlace(q);
+		CustomMode mode = db.findCustomMode(q);
+		CustomPerson person = db.findCustomPerson(q);
 		PlacePreposition placePreposition = db.findPlacePreposition(q);
 		TimePreposition timePreposition = db.findTimePreposition(q);
 		WayPreposition wayPreposition = db.findWayPreposition(q);
@@ -229,6 +235,14 @@ public final class SpeechParser {
 
 		if(place != null){
 			types.add(Word.WordType.ADDITIONAL_PLACE);
+		}
+		
+		if(mode != null){
+			types.add(WordType.MODE);
+		}
+		
+		if(person != null){
+			types.add(WordType.PERSON);
 		}
 
 		if(placePreposition != null){
@@ -272,9 +286,15 @@ public final class SpeechParser {
 			result.setColorInfo(color);
 			result.setCityInfo(city);
 			result.setCountryInfo(country);
+			result.setTransportInfo(transport);
+			
 			result.setCustomObject(object);
 			result.setCustomPlace(place);
+			result.setCustomMode(mode);
+			result.setCustomPerson(person);
+			
 			result.setVerbInfo(conjugation);
+			
 			result.setPlacePreposition(placePreposition);
 			result.setTimePreposition(timePreposition);
 			result.setWayPreposition(wayPreposition);

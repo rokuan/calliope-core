@@ -14,91 +14,9 @@ import com.rokuan.calliopecore.sentence.structure.data.place.NamedPlaceObject;
 import com.rokuan.calliopecore.sentence.structure.data.place.PlaceAdverbial.PlaceType;
 
 public class PlaceConverter {
-	/*public static final WordPattern ADDRESS_ONLY_PATTERN = WordPattern.sequence(
-			WordPattern.simpleWord(WordType.DEFINITE_ARTICLE),
-			WordPattern.optional(WordPattern.simpleWord(WordType.NUMBER)),
-			WordPattern.simpleWord(WordType.STREET_TYPE),
-			WordPattern.nonEmptyList(WordPattern.simpleWord(WordType.PROPER_NAME)));		
-
-	public static final WordPattern PLACE_ONLY_PATTERN = WordPattern.sequence(
-			WordPattern.simpleWord(WordType.DEFINITE_ARTICLE),
-			WordPattern.optional(WordPattern.simpleWord(WordType.PLACE_TYPE)),
-			WordPattern.optional(WordPattern.nonEmptyList(WordPattern.simpleWord(WordType.PROPER_NAME))),
-			WordPattern.optional(WordPattern.sequence(WordPattern.simpleWord(WordType.PREPOSITION_OF), 
-					WordPattern.optional(WordPattern.simpleWord(WordType.DEFINITE_ARTICLE)),
-					WordPattern.optional(WordPattern.or(
-							WordPattern.simpleWord(WordType.COUNTRY),
-							WordPattern.simpleWord(WordType.CITY),
-							WordPattern.nonEmptyList(WordPattern.simpleWord(WordType.PROPER_NAME))
-							))
-					))
-			);
-
-	public static final WordPattern ADDITIONAL_PLACE_ONLY_PATTERN = WordPattern.sequence(
-			WordPattern.optional(WordPattern.simpleWord(WordType.DEFINITE_ARTICLE)),
-			WordPattern.simpleWord(WordType.ADDITIONAL_PLACE)
-			);
-
-	public static final WordPattern CITY_ONLY_PATTERN = WordPattern.simpleWord(WordType.CITY);
-
-	public static final WordPattern COUNTRY_ONLY_PATTERN = WordPattern.simpleWord(WordType.COUNTRY);*/	
-
 	public static final WordPattern STREET_ADDRESS_PATTERN = WordPattern.sequence(WordPattern.optional(WordPattern.simpleWord(WordType.NUMBER)),
 			WordPattern.simpleWord(WordType.STREET_TYPE),
 			WordPattern.nonEmptyList(WordPattern.simpleWord(WordType.PROPER_NAME)));
-
-	/*public static final WordPattern ADDRESS_PATTERN = WordPattern.sequence(
-			WordPattern.simpleWord(WordType.DEFINITE_ARTICLE),
-			STREET_ADDRESS_PATTERN);
-	//WordPattern.or(
-	//		WordPattern.sequence(WordPattern.simple(WordType.PREPOSITION_AT, "à"), WordPattern.simple(WordType.DEFINITE_ARTICLE, "la|l")),
-	//		WordPattern.simple(WordType.PREPOSITION_AT, "au(x?)")),
-	// le musée du Louvre, la Grande Muraille de Chine 
-	public static final WordPattern PLACE_PATTERN = WordPattern.sequence(			
-			WordPattern.simpleWord(WordType.PLACE_PREPOSITION),
-			WordPattern.optional(WordPattern.simpleWord(WordType.DEFINITE_ARTICLE)),
-					//WordPattern.simple(WordType.DEFINITE_ARTICLE),
-					WordPattern.optional(WordPattern.simpleWord(WordType.PLACE_TYPE)),
-					WordPattern.optional(WordPattern.nonEmptyList(WordPattern.simpleWord(WordType.PROPER_NAME))),
-					WordPattern.optional(WordPattern.sequence(WordPattern.simpleWord(WordType.PREPOSITION_OF), 
-							WordPattern.optional(WordPattern.simpleWord(WordType.DEFINITE_ARTICLE)),
-							WordPattern.optional(WordPattern.or(
-									WordPattern.simpleWord(WordType.COUNTRY),
-									WordPattern.simpleWord(WordType.CITY),
-									WordPattern.nonEmptyList(WordPattern.simpleWord(WordType.PROPER_NAME))
-									))
-							)));
-
-	//private static final WordPattern locationPrepositionPattern = WordPattern.sequence(WordPattern.)
-
-	private static final WordPattern CITY_SECOND_OBJECT_PATTERN = WordPattern.sequence(
-			WordPattern.simpleWord(WordType.PREPOSITION_OF), PlaceConverter.CITY_ONLY_PATTERN);
-
-	private static final WordPattern PLACE_SECOND_OBJECT_PATTERN = WordPattern.or(
-			CITY_SECOND_OBJECT_PATTERN);
-
-	public static final WordPattern COUNTRY_PATTERN = WordPattern.sequence(WordPattern.or(
-			// TODO: trouver le bon pattern pour la preposition
-			WordPattern.sequence(WordPattern.simpleWord("à|au"), WordPattern.optional(WordPattern.simpleWord(WordType.DEFINITE_ARTICLE))),
-			WordPattern.sequence(WordPattern.simpleWord("en"))
-			), WordPattern.simpleWord(WordType.COUNTRY));
-
-	public static final WordPattern CITY_PATTERN = WordPattern.sequence(
-			WordPattern.simpleWord("à"), 
-			//WordPattern.optional(WordPattern.simple(WordType.DEFINITE_ARTICLE)), 
-			WordPattern.simpleWord(WordType.CITY));
-
-	public static final WordPattern WORLD_LOCATION_PATTERN = WordPattern.sequence(CITY_PATTERN, COUNTRY_PATTERN);
-
-	// devant l'Opera de Wasawakini
-	// jusqu'aux Chutes Fanis
-	public static final WordPattern ADDITIONAL_PLACE_PATTERN = WordPattern.sequence(
-			WordPattern.or(
-					WordPattern.sequence(WordPattern.simpleWord(WordType.PLACE_PREPOSITION), WordPattern.optional(WordPattern.simpleWord(WordType.DEFINITE_ARTICLE))),
-					WordPattern.simpleWord(new WordType[]{ WordType.PLACE_PREPOSITION, WordType.CONTRACTED })
-					),
-					WordPattern.simpleWord(WordType.ADDITIONAL_PLACE)
-			);*/
 	
 	public static final WordPattern CITY_ONLY_PATTERN = WordPattern.simpleWord(WordType.CITY);
 
@@ -126,7 +44,6 @@ public class PlaceConverter {
 			WordPattern.optional(WordPattern.simpleWord(WordType.DEFINITE_ARTICLE)),
 			WordPattern.simpleWord(WordType.ADDITIONAL_PLACE)
 			);	
-
 	
 	private static final WordPattern COUNTRY_PREPOSITION_PATTERN = WordPattern.or(
 			WordPattern.sequence(WordPattern.simplePlacePrep(PlaceType.COUNTRY), WordPattern.optional(WordPattern.simpleWord(WordType.DEFINITE_ARTICLE))),
@@ -150,9 +67,7 @@ public class PlaceConverter {
 
 	public static final WordPattern CITY_PATTERN = WordPattern.sequence(
 			CITY_PREPOSITION_PATTERN, 
-			WordPattern.simpleWord(WordType.CITY));
-	
-			
+			WordPattern.simpleWord(WordType.CITY));			
 
 	public static final WordPattern WORLD_LOCATION_PATTERN = WordPattern.sequence(CITY_PATTERN, COUNTRY_PATTERN);
 
@@ -175,9 +90,6 @@ public class PlaceConverter {
 	public static final WordPattern ADDRESS_PATTERN = WordPattern.sequence(
 			ADDRESS_PREPOSITION_PATTERN,
 			STREET_ADDRESS_PATTERN);
-
-	
-	//private static final WordPattern locationPrepositionPattern = WordPattern.sequence(WordPattern.)
 
 	private static final WordPattern CITY_SECOND_OBJECT_PATTERN = WordPattern.sequence(
 			WordPattern.simpleWord(WordType.PREPOSITION_OF), PlaceConverter.CITY_ONLY_PATTERN);
@@ -263,7 +175,7 @@ public class PlaceConverter {
 			result = country;
 		} else if(words.syntaxStartsWith(ADDRESS_PATTERN)){ 
 			AddressObject address = new AddressObject();
-			
+			// TODO:
 			result = address;
 		} else if(words.syntaxStartsWith(PLACE_PATTERN)){
 			NamedPlaceObject place = new NamedPlaceObject();

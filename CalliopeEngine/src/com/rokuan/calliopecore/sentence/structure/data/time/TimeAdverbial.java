@@ -40,7 +40,8 @@ public abstract class TimeAdverbial implements ITimeObject {
     	SINGLE,
     	RELATIVE,
     	PERIOD,
-    	VERBAL
+    	VERBAL,
+    	DAY_PART
     }
     
     public enum DateDefinition {

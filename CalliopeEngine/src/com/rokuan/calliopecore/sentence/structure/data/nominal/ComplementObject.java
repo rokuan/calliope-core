@@ -15,6 +15,8 @@ import com.rokuan.calliopecore.sentence.structure.content.IWayObject;
 import com.rokuan.calliopecore.sentence.structure.data.count.AllItemsObject;
 import com.rokuan.calliopecore.sentence.structure.data.count.CountObject;
 import com.rokuan.calliopecore.sentence.structure.data.criteria.CriterionObject;
+import com.rokuan.calliopecore.sentence.structure.data.place.PlaceAdverbial.PlaceContext;
+import com.rokuan.calliopecore.sentence.structure.data.place.PlaceAdverbial.PlaceType;
 import com.rokuan.calliopecore.sentence.structure.data.way.WayAdverbial.WayContext;
 import com.rokuan.calliopecore.sentence.structure.data.way.WayAdverbial.WayType;
 
@@ -22,7 +24,10 @@ import com.rokuan.calliopecore.sentence.structure.data.way.WayAdverbial.WayType;
 /**
  * Created by LEBEAU Christophe on 20/02/2015.
  */
-public class ComplementObject extends NominalGroup implements IWayObject, ISecondObject {
+public class ComplementObject extends NominalGroup implements IPlaceObject, IWayObject, ISecondObject {
+	@Expose
+	private PlaceContext placePreposition;
+	
 	@Expose
 	private WayContext wayPreposition;
 	
@@ -100,5 +105,20 @@ public class ComplementObject extends NominalGroup implements IWayObject, ISecon
 	@Override
 	public IVerbalObject getVerbalSecondObject() {
 		return which;
+	}
+
+	@Override
+	public PlaceType getPlaceType() {
+		return PlaceType.NOMINAL;
+	}
+
+	@Override
+	public PlaceContext getPlacePreposition() {
+		return placePreposition;
+	}
+
+	@Override
+	public void setPlacePreposition(PlaceContext prep) {
+		placePreposition = prep;
 	}
 }

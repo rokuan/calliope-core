@@ -7,20 +7,24 @@ public abstract class PurposeAdverbial implements IPurposeObject {
 	public enum PurposeContext {
 		TO
 	}
-	
+
 	public enum PurposeType {
-		VERBAL
+		VERBAL,
+		INFINITIVE_VERB,
+		CONJUGATED_VERB
 	}
-	
+
 	public static Class<? extends IPurposeObject> getClassFromPurposeType(PurposeType ty){
 		Class<? extends IPurposeObject> clazz = null;
-		
+
 		switch(ty){
 		case VERBAL:
 			clazz = VerbalGroup.class;
 			break;
+		default:
+			break;
 		}
-		
+
 		return clazz;
 	}
 }

@@ -6,13 +6,15 @@ import com.rokuan.calliopecore.sentence.Word.WordType;
 import com.rokuan.calliopecore.sentence.structure.content.INominalObject;
 import com.rokuan.calliopecore.sentence.structure.content.IWayObject;
 import com.rokuan.calliopecore.sentence.structure.data.nominal.ColorObject;
-import com.rokuan.calliopecore.sentence.structure.data.nominal.ComplementObject;
 import com.rokuan.calliopecore.sentence.structure.data.nominal.LanguageObject;
 import com.rokuan.calliopecore.sentence.structure.data.way.AdditionalMode;
+import com.rokuan.calliopecore.sentence.structure.data.way.TransportObject;
+import com.rokuan.calliopecore.sentence.structure.data.way.WayAdverbial.WayType;
 
 public class WayConverter {
 	public static final WordPattern MEANS_OF_TRANSPORT_PATTERN = WordPattern.sequence(
-			WordPattern.simpleWord("à|en|par"),
+			//WordPattern.simpleWord("à|en|par"),
+			WordPattern.simpleWayPrep(WayType.TRANSPORT),
 			WordPattern.simpleWord(WordType.MEAN_OF_TRANSPORT));
 	
 	public static final WordPattern LANGUAGE_ONLY_PATTERN = WordPattern.sequence(
@@ -20,7 +22,8 @@ public class WayConverter {
 			WordPattern.simpleWord(WordType.LANGUAGE));
 	
 	public static final WordPattern LANGUAGE_PATTERN = WordPattern.sequence(
-			WordPattern.simpleWord(WordType.WAY_PREPOSITION, "en"),
+			//WordPattern.simpleWord(WordType.WAY_PREPOSITION, "en"),
+			WordPattern.simpleWayPrep(WayType.LANGUAGE),
 			WordPattern.simpleWord(WordType.LANGUAGE)
 			);
 	
@@ -29,7 +32,8 @@ public class WayConverter {
 			WordPattern.simpleWord(WordType.MODE));
 	
 	public static final WordPattern COLOR_PATTERN = WordPattern.sequence(
-			WordPattern.simpleWord(WordType.WAY_PREPOSITION, "en"),
+			//WordPattern.simpleWord(WordType.WAY_PREPOSITION, "en"),
+			WordPattern.simpleWayPrep(WayType.COLOR),
 			WordPattern.simpleWord(WordType.COLOR)); 
 
 	public static boolean isAWayAdverbial(WordBuffer words){
@@ -55,7 +59,7 @@ public class WayConverter {
 			
 			result = custom;
 		} else if(words.syntaxStartsWith(MEANS_OF_TRANSPORT_PATTERN)){
-			ComplementObject compl = new ComplementObject();
+			/*ComplementObject compl = new ComplementObject();
 			String mean = null;
 
 			words.consume();
@@ -65,7 +69,14 @@ public class WayConverter {
 
 			compl.object = mean;
 			
-			result = compl;
+			result = compl;*/
+			TransportObject transport = new TransportObject();
+			
+			transport.setWayPreposition(words.getCurrentElement().getWayPreposition().getValue());
+			transport.transportType = words.getCurrentElement().getTransportInfo().getTransportType();
+			
+			words.consume();
+			result = transport;
 		} else if(words.syntaxStartsWith(LANGUAGE_PATTERN)){
 			LanguageObject lang = new LanguageObject();
 			

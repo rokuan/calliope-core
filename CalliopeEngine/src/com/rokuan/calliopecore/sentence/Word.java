@@ -96,6 +96,7 @@ public class Word {
 	private ColorInfo colorInfo;
 	private CountryInfo countryInfo;
 	private CityInfo cityInfo;
+	private TransportInfo transportInfo;
 	/*private DateContext datePreposition;
 	private PlaceContext placePreposition;
 	private WayContext wayPreposition;
@@ -200,6 +201,14 @@ public class Word {
 
 	public void setCityInfo(CityInfo cityInfo) {
 		this.cityInfo = cityInfo;
+	}
+
+	public TransportInfo getTransportInfo() {
+		return transportInfo;
+	}
+
+	public void setTransportInfo(TransportInfo transportInfo) {
+		this.transportInfo = transportInfo;
 	}
 
 	public TimePreposition getTimePreposition() {

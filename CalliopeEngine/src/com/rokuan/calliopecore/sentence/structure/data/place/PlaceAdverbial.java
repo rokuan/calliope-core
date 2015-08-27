@@ -19,6 +19,14 @@ public abstract class PlaceAdverbial implements IPlaceObject {
 		BOTTOM,
 		DOWN,
 		CENTER,
+		NORTH,
+		WEST,
+		SOUTH,
+		EAST,
+		NORTH_WEST,
+		NORTH_EAST,
+		SOUTH_WEST,
+		SOUTH_EAST,
 		AT,
 		TO,
 		AGAINST,
@@ -78,7 +86,8 @@ public abstract class PlaceAdverbial implements IPlaceObject {
 		case COUNTRY:
 			clazz = CountryObject.class;
 			break;
-		default:
+		case ADDRESS:
+			clazz = AddressObject.class;
 			break;
 		}
 		
