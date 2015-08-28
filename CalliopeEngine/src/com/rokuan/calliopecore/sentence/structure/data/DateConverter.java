@@ -121,7 +121,7 @@ public class DateConverter {
 
 	// Direct object patterns
 
-	public static final WordPattern DIRECT_OBJECT_DATE_PATTERN = WordPattern.sequence(
+	public static final WordPattern SECOND_OBJECT_DATE_PATTERN = WordPattern.sequence(
 			WordPattern.simpleWord(WordType.PREPOSITION_OF, "du"),
 			WordPattern.or(WordPattern.simpleWord(WordType.NUMBER), WordPattern.simpleWord(WordType.NUMERICAL_POSITION)),
 			WordPattern.simpleWord(WordType.DATE_MONTH),
@@ -129,7 +129,7 @@ public class DateConverter {
 			WordPattern.optional(WordPattern.sequence(WordPattern.simpleWord(WordType.PREPOSITION_AT), TIME_PATTERN))
 			);
 
-	public static final WordPattern DIRECT_OBJECT_TIME_PATTERN = WordPattern.sequence(
+	public static final WordPattern SECOND_OBJECT_TIME_PATTERN = WordPattern.sequence(
 			WordPattern.simpleWord(WordType.PREPOSITION_OF, "de"),
 			TIME_PATTERN
 			);
@@ -153,9 +153,9 @@ public class DateConverter {
 		return words.syntaxStartsWith(FIXED_DATE_ONLY_PATTERN);
 	}
 
-	public static boolean isAnObjectDateData(WordBuffer words){
-		return WordPattern.syntaxStartsWith(words, DIRECT_OBJECT_DATE_PATTERN)
-				|| WordPattern.syntaxStartsWith(words, DIRECT_OBJECT_TIME_PATTERN);
+	public static boolean isAnDateSecondObject(WordBuffer words){
+		return WordPattern.syntaxStartsWith(words, SECOND_OBJECT_DATE_PATTERN)
+				|| WordPattern.syntaxStartsWith(words, SECOND_OBJECT_TIME_PATTERN);
 	}
 
 	public static ITimeObject parseTimeAdverbial(WordBuffer words){
@@ -274,7 +274,7 @@ public class DateConverter {
 	}
 
 	public static ITimeObject parseDirectObjectTimeAdverbial(WordBuffer words){
-		if(words.syntaxStartsWith(DIRECT_OBJECT_DATE_PATTERN)){
+		if(words.syntaxStartsWith(SECOND_OBJECT_DATE_PATTERN)){
 			words.consume();	// PREPOSITION_OF
 
 			SingleTimeObject single = new SingleTimeObject();
@@ -283,7 +283,7 @@ public class DateConverter {
 			single.date = buildDateFromArray(dateFields);
 
 			return single;
-		} else if(words.syntaxStartsWith(DIRECT_OBJECT_TIME_PATTERN)){
+		} else if(words.syntaxStartsWith(SECOND_OBJECT_TIME_PATTERN)){
 			words.consume();	// PREPOSITION_OF			
 
 			SingleTimeObject single = new SingleTimeObject();

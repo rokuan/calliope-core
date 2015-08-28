@@ -12,6 +12,7 @@ import com.rokuan.calliopecore.sentence.structure.data.nominal.ColorObject;
 import com.rokuan.calliopecore.sentence.structure.data.nominal.ComplementObject;
 import com.rokuan.calliopecore.sentence.structure.data.nominal.PhoneNumberObject;
 import com.rokuan.calliopecore.sentence.structure.data.nominal.PronounTarget;
+import com.rokuan.calliopecore.sentence.structure.data.nominal.UnitObject;
 import com.rokuan.calliopecore.sentence.structure.data.nominal.VerbalGroup;
 
 public class NominalGroupConverter {
@@ -65,8 +66,13 @@ public class NominalGroupConverter {
 			WordPattern.simpleWord(WordType.NUMBER),
 			WordPattern.simpleWord(WordType.NUMBER));
 	
+	private static final WordPattern UNIT_PATTERN = WordPattern.sequence(
+			WordPattern.or(WordPattern.simpleWord(WordType.NUMBER), WordPattern.simpleWord(WordType.REAL)),
+			WordPattern.simpleWord(WordType.UNIT));
+	
 	public static final WordPattern SUBJECT_PATTERN = WordPattern.or(
 			OBJECT_PATTERN,
+			UNIT_PATTERN,
 			PHONE_NUMBER_PATTERN,
 			PlaceConverter.CITY_ONLY_PATTERN,
 			PlaceConverter.COUNTRY_ONLY_PATTERN,
@@ -133,6 +139,8 @@ public class NominalGroupConverter {
 
 		if(words.syntaxStartsWith(OBJECT_PATTERN)){
 			result = parseAdditionalObject(words);
+		} else if(words.syntaxStartsWith(UNIT_PATTERN)){
+			result = parseUnitObject(words);
 		} else if(words.syntaxStartsWith(PHONE_NUMBER_PATTERN)){
 			PhoneNumberObject phoneNumber = new PhoneNumberObject();
 			StringBuilder builder = new StringBuilder();
@@ -190,6 +198,7 @@ public class NominalGroupConverter {
 
 	public static boolean isADirectObject(WordBuffer words){
 		return words.syntaxStartsWith(CUSTOM_OBJECT_PATTERN)
+				|| words.syntaxStartsWith(UNIT_PATTERN)
 				|| words.syntaxStartsWith(DIRECT_OBJECT_PATTERN) 
 				|| words.syntaxStartsWith(PERSON_PATTERN);
 	}
@@ -199,6 +208,8 @@ public class NominalGroupConverter {
 
 		if(words.syntaxStartsWith(CUSTOM_OBJECT_PATTERN)){
 			result = parseAdditionalObject(words);
+		} else if(words.syntaxStartsWith(UNIT_PATTERN)){
+			result = parseUnitObject(words);
 		} else if(words.syntaxStartsWith(PERSON_PATTERN)){
 			result = parseAdditionalPerson(words);
 		} else if(words.syntaxStartsWith(DIRECT_OBJECT_PATTERN)){
@@ -311,6 +322,17 @@ public class NominalGroupConverter {
 		}
 		
 		obj.object = words.getCurrentElement().getCustomObject();
+		words.consume();
+		
+		return obj;
+	}
+	
+	private static UnitObject parseUnitObject(WordBuffer words){
+		UnitObject obj = new UnitObject();
+		
+		obj.amount = Double.parseDouble(words.getCurrentElement().getValue());
+		words.consume();
+		obj.unitType = words.getCurrentElement().getUnitInfo().getUnitType();
 		words.consume();
 		
 		return obj;

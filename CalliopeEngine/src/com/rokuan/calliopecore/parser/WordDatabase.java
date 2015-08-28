@@ -12,6 +12,7 @@ import com.rokuan.calliopecore.sentence.PlacePreposition;
 import com.rokuan.calliopecore.sentence.PurposePreposition;
 import com.rokuan.calliopecore.sentence.TimePreposition;
 import com.rokuan.calliopecore.sentence.TransportInfo;
+import com.rokuan.calliopecore.sentence.UnitInfo;
 import com.rokuan.calliopecore.sentence.VerbConjugation;
 import com.rokuan.calliopecore.sentence.WayPreposition;
 import com.rokuan.calliopecore.sentence.Word;
@@ -26,6 +27,7 @@ public interface WordDatabase {
 	CityInfo findCityInfo(String q);
 	CountryInfo findCountryInfo(String q);
 	TransportInfo findTransportInfo(String q);
+	UnitInfo findUnitInfo(String q);
 	
 	CustomObject findCustomObject(String q);
 	CustomPlace findCustomPlace(String q);

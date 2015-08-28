@@ -31,6 +31,7 @@ public class Word {
 		RELATIVE_PRONOUN,
 		NUMERICAL_ADJECTIVE,
 		NUMBER,
+		REAL,
 		NUMERICAL_POSITION,
 		DEMONSTRATIVE_ADJECTIVE,
 		PERSONAL_PRONOUN,
@@ -66,6 +67,7 @@ public class Word {
 		COUNTRY,
 		FIRSTNAME,
 		LANGUAGE,
+		UNIT,
 		PERSON,
 		PLACE,
 		MODE,
@@ -97,10 +99,7 @@ public class Word {
 	private CountryInfo countryInfo;
 	private CityInfo cityInfo;
 	private TransportInfo transportInfo;
-	/*private DateContext datePreposition;
-	private PlaceContext placePreposition;
-	private WayContext wayPreposition;
-	private PurposeContext purposePreposition;*/
+	private UnitInfo unitInfo;
 	private TimePreposition timePreposition;
 	private PlacePreposition placePreposition;
 	private WayPreposition wayPreposition;
@@ -209,6 +208,14 @@ public class Word {
 
 	public void setTransportInfo(TransportInfo transportInfo) {
 		this.transportInfo = transportInfo;
+	}
+
+	public UnitInfo getUnitInfo() {
+		return unitInfo;
+	}
+
+	public void setUnitInfo(UnitInfo unitInfo) {
+		this.unitInfo = unitInfo;
 	}
 
 	public TimePreposition getTimePreposition() {

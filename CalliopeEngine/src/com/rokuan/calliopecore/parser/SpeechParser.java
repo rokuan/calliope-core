@@ -17,6 +17,7 @@ import com.rokuan.calliopecore.sentence.PlacePreposition;
 import com.rokuan.calliopecore.sentence.PurposePreposition;
 import com.rokuan.calliopecore.sentence.TimePreposition;
 import com.rokuan.calliopecore.sentence.TransportInfo;
+import com.rokuan.calliopecore.sentence.UnitInfo;
 import com.rokuan.calliopecore.sentence.VerbConjugation;
 import com.rokuan.calliopecore.sentence.WayPreposition;
 import com.rokuan.calliopecore.sentence.Word;
@@ -153,6 +154,14 @@ public final class SpeechParser {
 		if(q.matches(DateConverter.FULL_TIME_REGEX) || q.matches(DateConverter.HOUR_ONLY_REGEX)){
 			return new Word(q, Word.WordType.TIME);
 		}
+		
+		if(q.matches(CountConverter.REAL_REGEX)){
+			return new Word(q, WordType.REAL);
+		}
+		
+		if(q.matches(CountConverter.NUMBER_REGEX)){
+			return new Word(q, WordType.NUMBER);
+		}
 
 		/*if(Character.isDigit(w.charAt(0))){
             return new Word(Word.WordType.NUMBER, w);
@@ -193,6 +202,7 @@ public final class SpeechParser {
 		CityInfo city = db.findCityInfo(q);
 		CountryInfo country = db.findCountryInfo(q);
 		TransportInfo transport = db.findTransportInfo(q);
+		UnitInfo unit = db.findUnitInfo(q);
 		CustomObject object = db.findCustomObject(q);
 		CustomPlace place = db.findCustomPlace(q);
 		CustomMode mode = db.findCustomMode(q);
@@ -227,6 +237,14 @@ public final class SpeechParser {
 
 		if(country != null){
 			types.add(Word.WordType.COUNTRY);
+		}
+		
+		if(transport != null){
+			types.add(WordType.MEAN_OF_TRANSPORT);
+		}
+		
+		if(unit != null){
+			types.add(WordType.UNIT);
 		}
 
 		if(object != null){
@@ -287,6 +305,7 @@ public final class SpeechParser {
 			result.setCityInfo(city);
 			result.setCountryInfo(country);
 			result.setTransportInfo(transport);
+			result.setUnitInfo(unit);
 			
 			result.setCustomObject(object);
 			result.setCustomPlace(place);
