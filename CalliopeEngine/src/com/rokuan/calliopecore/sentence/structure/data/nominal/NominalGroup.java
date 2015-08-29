@@ -28,7 +28,8 @@ public abstract class NominalGroup implements INominalObject {
     	NAMED_PLACE,
     	CITY,
     	COUNTRY,
-    	LOCATION
+    	LOCATION,
+    	UNIT
     }
     
     public static Class<? extends INominalObject> getClassFromGroupType(GroupType ty){
@@ -83,6 +84,9 @@ public abstract class NominalGroup implements INominalObject {
 			break;		
 		case PHONE_NUMBER:
 			clazz = PhoneNumberObject.class;
+			break;
+		case UNIT:
+			clazz = UnitObject.class;
 			break;
 		}
     	

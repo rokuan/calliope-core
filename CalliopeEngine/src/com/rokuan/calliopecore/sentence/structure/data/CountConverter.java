@@ -61,6 +61,7 @@ public class CountConverter {
 		"milliard"
 	};
 	
+	public static final String REAL_REGEX = "\\d+(\\.|\\,)\\d+";
 	public static final String NUMBER_REGEX = "\\d+";
 	public static final String NUMERICAL_POSITION_REGEX = "(\\d+(è|e)me$)|(\\d+e$)";
 	

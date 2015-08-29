@@ -5,17 +5,20 @@ import com.rokuan.calliopecore.pattern.WordPattern;
 import com.rokuan.calliopecore.sentence.Type;
 import com.rokuan.calliopecore.sentence.Word.WordType;
 import com.rokuan.calliopecore.sentence.structure.content.INominalObject;
+import com.rokuan.calliopecore.sentence.structure.content.IVerbalObject;
 import com.rokuan.calliopecore.sentence.structure.data.nominal.AdditionalObject;
 import com.rokuan.calliopecore.sentence.structure.data.nominal.AdditionalPerson;
 import com.rokuan.calliopecore.sentence.structure.data.nominal.ColorObject;
 import com.rokuan.calliopecore.sentence.structure.data.nominal.ComplementObject;
 import com.rokuan.calliopecore.sentence.structure.data.nominal.PhoneNumberObject;
 import com.rokuan.calliopecore.sentence.structure.data.nominal.PronounTarget;
+import com.rokuan.calliopecore.sentence.structure.data.nominal.UnitObject;
+import com.rokuan.calliopecore.sentence.structure.data.nominal.VerbalGroup;
 
 public class NominalGroupConverter {
 	// NominalGroup
 	public static final WordPattern ABSTRACT_TARGET_PATTERN = WordPattern.simpleWord(WordType.POSSESSIVE_ADJECTIVE);
-	public static final WordPattern PLACE_PATTERN = PlaceConverter.PLACE_PATTERN;		
+	//public static final WordPattern PLACE_PATTERN = PlaceConverter.PLACE_PATTERN;		
 
 	// ComplementObject
 	public static final WordPattern DIRECT_OBJECT_PATTERN = WordPattern.sequence(
@@ -61,7 +64,28 @@ public class NominalGroupConverter {
 			WordPattern.simpleWord(WordType.NUMBER),
 			WordPattern.simpleWord(WordType.NUMBER),
 			WordPattern.simpleWord(WordType.NUMBER),
-			WordPattern.simpleWord(WordType.NUMBER)); 
+			WordPattern.simpleWord(WordType.NUMBER));
+	
+	private static final WordPattern UNIT_PATTERN = WordPattern.sequence(
+			WordPattern.or(WordPattern.simpleWord(WordType.NUMBER), WordPattern.simpleWord(WordType.REAL)),
+			WordPattern.simpleWord(WordType.UNIT));
+	
+	public static final WordPattern SUBJECT_PATTERN = WordPattern.or(
+			OBJECT_PATTERN,
+			UNIT_PATTERN,
+			PHONE_NUMBER_PATTERN,
+			PlaceConverter.CITY_ONLY_PATTERN,
+			PlaceConverter.COUNTRY_ONLY_PATTERN,
+			PERSON_PATTERN,
+			PRONOUN_PATTERN,
+			DateConverter.FIXED_DATE_ONLY_PATTERN,
+			COLOR_PATTERN,
+			WayConverter.LANGUAGE_ONLY_PATTERN,
+			COMMON_NAME_PATTERN,
+			PlaceConverter.ADDITIONAL_PLACE_ONLY_PATTERN,
+			PlaceConverter.PLACE_ONLY_PATTERN
+			// TODO: ajouter le pattern pour les groupes verbaux
+			);
 	
 	private static final WordPattern PERSON_SECOND_OBJECT_PATTERN = WordPattern.sequence(
 			WordPattern.simpleWord(WordType.PREPOSITION_OF),
@@ -79,21 +103,11 @@ public class NominalGroupConverter {
 			CUSTOM_OBJECT_SECOND_OBJECT_PATTERN,
 			PERSON_SECOND_OBJECT_PATTERN);
 	
-	public static final WordPattern SUBJECT_PATTERN = WordPattern.or(
-			OBJECT_PATTERN,
-			PHONE_NUMBER_PATTERN,
-			PlaceConverter.CITY_ONLY_PATTERN,
-			PlaceConverter.COUNTRY_ONLY_PATTERN,
-			PERSON_PATTERN,
-			PRONOUN_PATTERN,
-			DateConverter.FIXED_DATE_ONLY_PATTERN,
-			COLOR_PATTERN,
-			WayConverter.LANGUAGE_ONLY_PATTERN,
-			COMMON_NAME_PATTERN,
-			PlaceConverter.ADDITIONAL_PLACE_ONLY_PATTERN,
-			PlaceConverter.PLACE_ONLY_PATTERN
-			// TODO: ajouter le pattern pour les groupes verbaux
-			);
+	private static final WordPattern VERBAL_SECOND_OBJECT_PATTERN = WordPattern.sequence(
+			WordPattern.simpleWord("qu(e?)"),
+			SUBJECT_PATTERN,
+			VerbConverter.AFFIRMATIVE_VERB_PATTERN
+			);	
 	
 	public static final WordPattern TO_PATTERN = WordPattern.or(
 			WordPattern.sequence(WordPattern.simpleWord(WordType.PREPOSITION_AT, "à"), WordPattern.optional(WordPattern.simpleWord(WordType.DEFINITE_ARTICLE, "la"))),
@@ -120,6 +134,8 @@ public class NominalGroupConverter {
 
 		if(words.syntaxStartsWith(OBJECT_PATTERN)){
 			result = parseAdditionalObject(words);
+		} else if(words.syntaxStartsWith(UNIT_PATTERN)){
+			result = parseUnitObject(words);
 		} else if(words.syntaxStartsWith(PHONE_NUMBER_PATTERN)){
 			PhoneNumberObject phoneNumber = new PhoneNumberObject();
 			StringBuilder builder = new StringBuilder();
@@ -177,6 +193,7 @@ public class NominalGroupConverter {
 
 	public static boolean isADirectObject(WordBuffer words){
 		return words.syntaxStartsWith(CUSTOM_OBJECT_PATTERN)
+				|| words.syntaxStartsWith(UNIT_PATTERN)
 				|| words.syntaxStartsWith(DIRECT_OBJECT_PATTERN) 
 				|| words.syntaxStartsWith(PERSON_PATTERN);
 	}
@@ -185,25 +202,13 @@ public class NominalGroupConverter {
 		INominalObject result = null;
 
 		if(words.syntaxStartsWith(CUSTOM_OBJECT_PATTERN)){
-			AdditionalObject custom = new AdditionalObject();
-
-			if(CountConverter.isACountData(words)){
-				custom.count = CountConverter.parseCountObject(words);
-			}
-
-			custom.object = words.getCurrentElement().getCustomObject();
-			words.consume();
-
-			result = custom;
+			result = parseAdditionalObject(words);
+		} else if(words.syntaxStartsWith(UNIT_PATTERN)){
+			result = parseUnitObject(words);
 		} else if(words.syntaxStartsWith(PERSON_PATTERN)){
 			result = parseAdditionalPerson(words);
-		}/* else if(words.syntaxStartsWith(CUSTOM_PERSON_PATTERN)){
-			AdditionalPerson custom = new AdditionalPerson();			
-			custom.person = words.getCurrentElement().getCustomPerson();
-			result = custom;
-		}*/ else if(words.syntaxStartsWith(DIRECT_OBJECT_PATTERN)){
-			ComplementObject obj = parseComplementObject(words);			
-			result = obj;
+		} else if(words.syntaxStartsWith(DIRECT_OBJECT_PATTERN)){
+			result = parseComplementObject(words);
 		}
 
 		return result;
@@ -266,6 +271,43 @@ public class NominalGroupConverter {
 		
 		return result;
 	}
+	
+	public static boolean isAVerbalSecondObject(WordBuffer words){
+		return words.syntaxStartsWith(VERBAL_SECOND_OBJECT_PATTERN);
+	}
+	
+	public static IVerbalObject parseVerbalSecondObject(WordBuffer words){
+		VerbalGroup result = null;
+		
+		if(words.syntaxStartsWith(VERBAL_SECOND_OBJECT_PATTERN)){
+			VerbalGroup verbal = new VerbalGroup();
+			
+			words.consume();	// qu(e)
+			
+			verbal.setSubject(parseSubject(words));
+			VerbConverter.parseAffirmativeConjugatedVerb(words, verbal);
+			
+			while(words.isIntoBounds()){
+				if(DateConverter.isATimeAdverbial(words)){
+					verbal.setTimeAdverbial(DateConverter.parseTimeAdverbial(words));
+				} else if(WayConverter.isAWayAdverbial(words)){ 
+					verbal.setWayAdverbial(WayConverter.parseWayAdverbial(words));
+				} else if(PlaceConverter.isAPlaceAdverbial(words)){
+					verbal.setPlaceAdverbial(PlaceConverter.parsePlaceAdverbial(words));
+				} else if(NominalGroupConverter.isADirectObject(words)){
+					verbal.setDirectObject(NominalGroupConverter.parseDirectObject(words));
+				} else if(NominalGroupConverter.isAnIndirectObject(words)){ 
+					verbal.setTarget(NominalGroupConverter.parseIndirectObject(words));
+				} else {
+					break;
+				}
+			}
+			
+			result = verbal;
+		}
+		
+		return result;
+	}
 
 	private static AdditionalObject parseAdditionalObject(WordBuffer words){
 		AdditionalObject obj = new AdditionalObject();
@@ -275,6 +317,17 @@ public class NominalGroupConverter {
 		}
 		
 		obj.object = words.getCurrentElement().getCustomObject();
+		words.consume();
+		
+		return obj;
+	}
+	
+	private static UnitObject parseUnitObject(WordBuffer words){
+		UnitObject obj = new UnitObject();
+		
+		obj.amount = Double.parseDouble(words.getCurrentElement().getValue());
+		words.consume();
+		obj.unitType = words.getCurrentElement().getUnitInfo().getUnitType();
 		words.consume();
 		
 		return obj;
@@ -291,11 +344,11 @@ public class NominalGroupConverter {
 		obj.object = words.getCurrentElement().getValue();
 		words.consume();
 
-		if(CountConverter.isASuffixCountData(words)){
+		/*if(CountConverter.isASuffixCountData(words)){
 			obj.count = CountConverter.parseSuffixCountObject(words);
-		}
+		}*/
 
-		if(CriterionConverter.isACriterionData(words)){
+		/*if(CriterionConverter.isACriterionData(words)){
 			obj.criteria = CriterionConverter.parseCriterionData(words);
 		} else if(words.isIntoBounds() && words.getCurrentElement().isOfType(WordType.PREPOSITION_OF)){
 			words.next();
@@ -312,6 +365,14 @@ public class NominalGroupConverter {
 			} else {
 				words.previous();
 			}
+		}*/
+		
+		if(isANominalSecondObject(words)){
+			obj.setNominalSecondObject(parseNominalSecondObject(words));
+		}
+		
+		if(isAVerbalSecondObject(words)){
+			obj.setVerbalSecondObject(parseVerbalSecondObject(words));
 		}
 
 		return obj;

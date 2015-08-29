@@ -174,23 +174,7 @@ public class Parser {
 		while(words.isIntoBounds()){
 			if(DateConverter.isATimeAdverbial(words)){
 				obj.when = DateConverter.parseTimeAdverbial(words);
-			}/* else if(PhoneNumberConverter.isAPhoneNumber(words)){	
-				// TODO: creer une classe pour les numeros de telephone ?
-				boolean objectField = words.getCurrentElement().isOfType(WordType.DEFINITE_ARTICLE);
-				String phoneNumber = PhoneNumberConverter.parsePhoneNumber(words);
-
-				if(objectField){
-					ComplementObject phoneObj = new ComplementObject();
-
-					phoneObj.object = phoneNumber;
-					obj.what = phoneObj;
-				} else {
-					//obj.to = phoneNumber;
-					ComplementObject to = new ComplementObject();					
-					to.object = phoneNumber;					
-					obj.target = to;
-				}
-			}*/ else if(WayConverter.isAWayAdverbial(words)){ 
+			} else if(WayConverter.isAWayAdverbial(words)){ 
 				obj.how = WayConverter.parseWayAdverbial(words);
 			} else if(PlaceConverter.isAPlaceAdverbial(words)){
 				obj.where = PlaceConverter.parsePlaceAdverbial(words);

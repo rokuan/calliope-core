@@ -66,7 +66,8 @@ public class SentencePattern {
 	
 	public static final WordPattern AFFIRMATIVE_SENTENCE_PATTERN = WordPattern.sequence(
 			NominalGroupConverter.SUBJECT_PATTERN,
-			VerbConverter.CONJUGATED_VERB_PATTERN,
-			WordPattern.optional(NominalGroupConverter.DIRECT_OBJECT_PATTERN));
+			VerbConverter.CONJUGATED_VERB_PATTERN
+			/*,
+			WordPattern.optional(NominalGroupConverter.DIRECT_OBJECT_PATTERN)*/);
 			
 }

@@ -40,7 +40,8 @@ public abstract class TimeAdverbial implements ITimeObject {
     	SINGLE,
     	RELATIVE,
     	PERIOD,
-    	VERBAL
+    	VERBAL,
+    	DAY_PART
     }
     
     public enum DateDefinition {
@@ -59,7 +60,7 @@ public abstract class TimeAdverbial implements ITimeObject {
     }
 
     @Expose
-    private DateContext timePreposition;
+    private DateContext timePreposition = DateContext.WHEN;
     
 	@Expose
     public TimeTense tense = TimeTense.PRESENT;
@@ -92,6 +93,9 @@ public abstract class TimeAdverbial implements ITimeObject {
 			break;
 		case VERBAL:
 			clazz = VerbalGroup.class;
+			break;
+		case DAY_PART:
+			clazz = DayPartObject.class;
 			break;
 		}
 		

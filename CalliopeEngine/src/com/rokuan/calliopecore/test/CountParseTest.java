@@ -2,6 +2,7 @@ package com.rokuan.calliopecore.test;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -131,5 +132,16 @@ public class CountParseTest {
 		CountObject count = CountConverter.parseCountObject(words);
 		
 		assertEquals(count.getType(), CountType.QUANTITY);
+	}
+	
+	@Test
+	public void testNumberRegex(){
+		assertTrue("14".matches(CountConverter.NUMBER_REGEX));
+	}
+	
+	@Test
+	public void testRealRegex(){
+		assertTrue("32,567".matches(CountConverter.REAL_REGEX));
+		assertTrue("32.567".matches(CountConverter.REAL_REGEX));
 	}
 }

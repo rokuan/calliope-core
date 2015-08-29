@@ -1,6 +1,7 @@
 package com.rokuan.calliopecore.test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -14,6 +15,7 @@ import com.rokuan.calliopecore.sentence.Action;
 import com.rokuan.calliopecore.sentence.CityInfo;
 import com.rokuan.calliopecore.sentence.CustomObject;
 import com.rokuan.calliopecore.sentence.CustomPerson;
+import com.rokuan.calliopecore.sentence.PlacePreposition;
 import com.rokuan.calliopecore.sentence.Verb;
 import com.rokuan.calliopecore.sentence.Verb.Pronoun;
 import com.rokuan.calliopecore.sentence.VerbConjugation;
@@ -26,6 +28,7 @@ import com.rokuan.calliopecore.sentence.structure.InterpretationObject.RequestTy
 import com.rokuan.calliopecore.sentence.structure.QuestionObject;
 import com.rokuan.calliopecore.sentence.structure.QuestionObject.QuestionType;
 import com.rokuan.calliopecore.sentence.structure.content.IPlaceObject;
+import com.rokuan.calliopecore.sentence.structure.content.IVerbalObject;
 import com.rokuan.calliopecore.sentence.structure.data.nominal.AdditionalObject;
 import com.rokuan.calliopecore.sentence.structure.data.nominal.AdditionalPerson;
 import com.rokuan.calliopecore.sentence.structure.data.nominal.CityObject;
@@ -33,6 +36,7 @@ import com.rokuan.calliopecore.sentence.structure.data.nominal.ComplementObject;
 import com.rokuan.calliopecore.sentence.structure.data.nominal.PronounTarget;
 import com.rokuan.calliopecore.sentence.structure.data.nominal.NominalGroup.GroupType;
 import com.rokuan.calliopecore.sentence.structure.data.place.NamedPlaceObject;
+import com.rokuan.calliopecore.sentence.structure.data.place.PlaceAdverbial.PlaceContext;
 import com.rokuan.calliopecore.sentence.structure.data.place.PlaceAdverbial.PlaceType;
 import com.rokuan.calliopecore.sentence.structure.data.time.SingleTimeObject;
 import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial;
@@ -46,10 +50,12 @@ public class SentenceParseTest {
 		VerbConjugation toGoConjug = new VerbConjugation(ConjugationTense.PRESENT, Form.INFINITIVE, null, "aller", toGo);		
 		toGoConjug.setVerb(toGo);
 		go.setVerbInfo(toGoConjug);
+		Word to = new Word("à", WordType.PLACE_PREPOSITION);
+		to.setPlacePreposition(new PlacePreposition("à", PlaceContext.TO, PlaceType.NAMED_PLACE, PlaceType.CITY));
 
 		words.add(new Word("comment", WordType.INTERROGATIVE_PRONOUN));
 		words.add(go);
-		words.add(new Word("à", WordType.PREPOSITION_AT, WordType.PLACE_PREPOSITION));
+		words.add(to);
 		words.add(new Word("la", WordType.DEFINITE_ARTICLE));
 		words.add(new Word("Mairie", WordType.PLACE_TYPE, WordType.PROPER_NAME, WordType.COMMON_NAME));
 		words.add(new Word("de", WordType.PREPOSITION_OF));
@@ -80,10 +86,12 @@ public class SentenceParseTest {
 		VerbConjugation toGoConjug = new VerbConjugation(ConjugationTense.PRESENT, Form.INFINITIVE, null, "aller", toGo);		
 		toGoConjug.setVerb(toGo);
 		go.setVerbInfo(toGoConjug);
+		Word to = new Word("à", WordType.PLACE_PREPOSITION);
+		to.setPlacePreposition(new PlacePreposition("à", PlaceContext.TO, PlaceType.NAMED_PLACE, PlaceType.CITY));
 
 		words.add(new Word("comment", WordType.INTERROGATIVE_PRONOUN));
 		words.add(go);
-		words.add(new Word("à", WordType.PREPOSITION_AT, WordType.PLACE_PREPOSITION));
+		words.add(to);
 		words.add(new Word("la", WordType.DEFINITE_ARTICLE));
 		words.add(new Word("Tour", WordType.PROPER_NAME, WordType.COMMON_NAME));
 		words.add(new Word("Eiffel", WordType.PROPER_NAME));
@@ -112,6 +120,8 @@ public class SentenceParseTest {
 		Verb toGo = new Verb("aller", Action.VerbAction.GO, false);
 		VerbConjugation toGoConjug = new VerbConjugation(ConjugationTense.PRESENT, Form.INFINITIVE, null, "aller", toGo);
 		Word paris = new Word("Paris", WordType.CITY);
+		Word to = new Word("à", WordType.PLACE_PREPOSITION);
+		to.setPlacePreposition(new PlacePreposition("à", PlaceContext.TO, PlaceType.NAMED_PLACE, PlaceType.CITY));
 		
 		toGoConjug.setVerb(toGo);
 		go.setVerbInfo(toGoConjug);
@@ -120,7 +130,7 @@ public class SentenceParseTest {
 
 		words.add(new Word("comment", WordType.INTERROGATIVE_PRONOUN));
 		words.add(go);
-		words.add(new Word("à", WordType.PREPOSITION_AT, WordType.PLACE_PREPOSITION));
+		words.add(to);
 		words.add(paris);
 		words.add(new Word("en", WordType.PREPOSITION));
 		words.add(new Word("voiture", WordType.MEAN_OF_TRANSPORT));
@@ -148,6 +158,8 @@ public class SentenceParseTest {
 		Verb toGo = new Verb("aller", Action.VerbAction.GO, false);
 		VerbConjugation toGoConjug = new VerbConjugation(ConjugationTense.PRESENT, Form.INFINITIVE, null, "aller", toGo);
 		Word paris = new Word("Paris", WordType.CITY);
+		Word to = new Word("à", WordType.PLACE_PREPOSITION);
+		to.setPlacePreposition(new PlacePreposition("à", PlaceContext.TO, PlaceType.NAMED_PLACE, PlaceType.CITY));
 		
 		toGoConjug.setVerb(toGo);
 		go.setVerbInfo(toGoConjug);
@@ -156,7 +168,7 @@ public class SentenceParseTest {
 
 		words.add(new Word("comment", WordType.INTERROGATIVE_PRONOUN));
 		words.add(go);
-		words.add(new Word("à", WordType.PREPOSITION_AT, WordType.PLACE_PREPOSITION));
+		words.add(to);
 		words.add(paris);
 		words.add(new Word("à", WordType.PREPOSITION_AT));
 		words.add(new Word("voiture", WordType.COMMON_NAME, WordType.MEAN_OF_TRANSPORT));
@@ -234,8 +246,8 @@ public class SentenceParseTest {
 
 		ComplementObject compl = (ComplementObject)obj.what;
 		assertEquals(compl.object, "vidéos");
-		assert (compl.of != null);
-		assertEquals(((ComplementObject)compl.of).object, "chats");
+		assert (compl.getNominalSecondObject() != null);
+		assertEquals(((ComplementObject)compl.getNominalSecondObject()).object, "chats");
 	}
 
 	@Test
@@ -343,5 +355,45 @@ public class SentenceParseTest {
 		
 		assertEquals(obj.getRequestType(), RequestType.AFFIRMATION);
 		assertEquals(obj.subject.getGroupType(), GroupType.COMPLEMENT);
+	}
+	
+	@Test
+	public void testAffirmativeSentenceWithVerbalSecondObject(){
+		WordBuffer words = new WordBuffer();
+		Word sont = new Word("sont", WordType.VERB, WordType.AUXILIARY);
+		Word ai = new Word("ai", WordType.VERB, WordType.AUXILIARY);
+		Word envoyees = new Word("envoyées", WordType.VERB, WordType.AUXILIARY);
+		
+		Verb avoir = new Verb("avoir", Action.VerbAction.HAVE, true);
+		VerbConjugation conjugAvoir = new VerbConjugation(ConjugationTense.PRESENT, Form.INDICATIVE, Pronoun.JE, "ai", avoir);
+		ai.setVerbInfo(conjugAvoir);
+		Verb envoyer = new Verb("envoyer", Action.VerbAction.SEND, false);
+		VerbConjugation conjugEnvoyer = new VerbConjugation(ConjugationTense.PAST, Form.PARTICIPLE, null, "envoyées", envoyer);
+		envoyees.setVerbInfo(conjugEnvoyer);
+		
+		words.add(new Word("où", WordType.INTERROGATIVE_ADJECTIVE));
+		words.add(sont);
+		words.add(new Word("les", WordType.DEFINITE_ARTICLE));
+		words.add(new Word("lettres", WordType.COMMON_NAME));
+		words.add(new Word("que", WordType.PREPOSITION));
+		words.add(new Word("je", WordType.PERSONAL_PRONOUN));
+		words.add(new Word("t", WordType.TARGET_PRONOUN));
+		words.add(ai);
+		words.add(envoyees);
+		words.add(new Word("hier", WordType.DATE));
+		
+		InterpretationObject obj = new Parser().parseInterpretationObject(words);
+		
+		assertEquals(obj.getRequestType(), RequestType.QUESTION);
+		assertEquals(obj.what.getGroupType(), GroupType.COMPLEMENT);
+		
+		ComplementObject compl = (ComplementObject)obj.what;
+		
+		assertEquals(compl.object, "lettres");
+		assertNotNull(compl.getVerbalSecondObject());
+		
+		IVerbalObject verbal = compl.getVerbalSecondObject();
+		
+		assertEquals(verbal.getAction(), Action.VerbAction.SEND);
 	}
 }

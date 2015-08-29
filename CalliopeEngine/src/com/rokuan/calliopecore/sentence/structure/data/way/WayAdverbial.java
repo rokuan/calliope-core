@@ -13,7 +13,8 @@ public abstract class WayAdverbial implements IWayObject {
 		VERBAL,
 		NOMINAL,
 		LANGUAGE,
-		COLOR
+		COLOR,
+		TRANSPORT
 	}
 
 	public enum WayContext {
@@ -51,6 +52,9 @@ public abstract class WayAdverbial implements IWayObject {
 			break;
 		case COLOR:
 			clazz = ColorObject.class;
+			break;
+		case TRANSPORT:
+			clazz = TransportObject.class;
 			break;
 		}
 

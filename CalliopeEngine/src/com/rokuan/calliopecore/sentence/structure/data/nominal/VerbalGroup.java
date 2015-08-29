@@ -1,8 +1,13 @@
 package com.rokuan.calliopecore.sentence.structure.data.nominal;
 
 import com.google.gson.annotations.Expose;
+import com.rokuan.calliopecore.sentence.Action;
+import com.rokuan.calliopecore.sentence.Action.VerbAction;
+import com.rokuan.calliopecore.sentence.structure.content.INominalObject;
+import com.rokuan.calliopecore.sentence.structure.content.IPlaceObject;
 import com.rokuan.calliopecore.sentence.structure.content.IPurposeObject;
 import com.rokuan.calliopecore.sentence.structure.content.ITimeObject;
+import com.rokuan.calliopecore.sentence.structure.content.IVerbalObject;
 import com.rokuan.calliopecore.sentence.structure.content.IWayObject;
 import com.rokuan.calliopecore.sentence.structure.data.purpose.PurposeAdverbial.PurposeContext;
 import com.rokuan.calliopecore.sentence.structure.data.purpose.PurposeAdverbial.PurposeType;
@@ -12,7 +17,7 @@ import com.rokuan.calliopecore.sentence.structure.data.way.WayAdverbial.WayConte
 import com.rokuan.calliopecore.sentence.structure.data.way.WayAdverbial.WayType;
 
 
-public class VerbalGroup extends NominalGroup implements IWayObject, ITimeObject, IPurposeObject {
+public class VerbalGroup extends NominalGroup implements IWayObject, ITimeObject, IPurposeObject, IVerbalObject {
 	@Expose
 	private WayContext wayPreposition;
 	
@@ -21,6 +26,30 @@ public class VerbalGroup extends NominalGroup implements IWayObject, ITimeObject
 	
 	@Expose
 	private PurposeContext purposePreposition;
+	
+	@Expose
+	private INominalObject subject;
+
+	@Expose
+	private Action.VerbAction action = VerbAction.UNDEFINED;
+
+	@Expose
+	private INominalObject what;
+
+	@Expose
+	private INominalObject target;
+
+	@Expose
+	private IPlaceObject where;
+
+	@Expose
+	private ITimeObject when;
+
+	@Expose
+	private IWayObject how;
+
+	@Expose
+	private IPurposeObject why;
 	
 	@Override
 	public GroupType getGroupType() {
@@ -70,5 +99,85 @@ public class VerbalGroup extends NominalGroup implements IWayObject, ITimeObject
 	@Override
 	public void setWayPreposition(WayContext prep) {
 		wayPreposition = prep;		
+	}
+
+	@Override
+	public void setSubject(INominalObject source){
+		subject = source;
+	}
+	
+	@Override
+	public void setAction(Action.VerbAction verb){
+		action = verb;
+	}
+	
+	@Override
+	public void setDirectObject(INominalObject direct){
+		what = direct;
+	}
+
+	@Override
+	public void setTarget(INominalObject indirect){
+		target = indirect;
+	}
+
+	@Override
+	public void setPlaceAdverbial(IPlaceObject place){
+		where = place;
+	}
+
+	@Override
+	public void setTimeAdverbial(ITimeObject time){
+		when = time;
+	}
+
+	@Override
+	public void setWayAdverbial(IWayObject way){
+		how = way;
+	}
+
+	@Override
+	public void setPurposeAdverbial(IPurposeObject purpose){
+		why = purpose;
+	}
+
+	@Override
+	public INominalObject getSubject(){
+		return subject;
+	}
+	
+	@Override
+	public Action.VerbAction getAction(){
+		return action;
+	}
+	
+	@Override
+	public INominalObject getDirectObject(){
+		return what;
+	}
+
+	@Override
+	public INominalObject getTarget(){
+		return target;
+	}
+
+	@Override
+	public IPlaceObject getPlaceAdverbial(){
+		return where;
+	}
+
+	@Override
+	public ITimeObject getTimeAdverbial(){
+		return when;
+	}
+
+	@Override
+	public IWayObject getWayAdverbial(){
+		return how;
+	}
+
+	@Override
+	public IPurposeObject getPurposeAdverbial(){
+		return why;
 	}
 }

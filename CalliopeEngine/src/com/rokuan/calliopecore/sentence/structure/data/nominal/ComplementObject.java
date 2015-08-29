@@ -8,11 +8,15 @@ import com.rokuan.calliopecore.sentence.Adjective;
 import com.rokuan.calliopecore.sentence.structure.content.INominalObject;
 import com.rokuan.calliopecore.sentence.structure.content.IPlaceObject;
 import com.rokuan.calliopecore.sentence.structure.content.IPurposeObject;
+import com.rokuan.calliopecore.sentence.structure.content.ISecondObject;
 import com.rokuan.calliopecore.sentence.structure.content.ITimeObject;
+import com.rokuan.calliopecore.sentence.structure.content.IVerbalObject;
 import com.rokuan.calliopecore.sentence.structure.content.IWayObject;
 import com.rokuan.calliopecore.sentence.structure.data.count.AllItemsObject;
 import com.rokuan.calliopecore.sentence.structure.data.count.CountObject;
 import com.rokuan.calliopecore.sentence.structure.data.criteria.CriterionObject;
+import com.rokuan.calliopecore.sentence.structure.data.place.PlaceAdverbial.PlaceContext;
+import com.rokuan.calliopecore.sentence.structure.data.place.PlaceAdverbial.PlaceType;
 import com.rokuan.calliopecore.sentence.structure.data.way.WayAdverbial.WayContext;
 import com.rokuan.calliopecore.sentence.structure.data.way.WayAdverbial.WayType;
 
@@ -20,7 +24,10 @@ import com.rokuan.calliopecore.sentence.structure.data.way.WayAdverbial.WayType;
 /**
  * Created by LEBEAU Christophe on 20/02/2015.
  */
-public class ComplementObject extends NominalGroup implements IWayObject {
+public class ComplementObject extends NominalGroup implements IPlaceObject, IWayObject, ISecondObject {
+	@Expose
+	private PlaceContext placePreposition;
+	
 	@Expose
 	private WayContext wayPreposition;
 	
@@ -34,7 +41,10 @@ public class ComplementObject extends NominalGroup implements IWayObject {
     public String object = "";
 
 	@Expose
-    public INominalObject of;
+    private INominalObject of;
+	
+	@Expose
+	private IVerbalObject which;
 
 	@Expose
     public ITimeObject when;
@@ -75,5 +85,40 @@ public class ComplementObject extends NominalGroup implements IWayObject {
 	@Override
 	public void setWayPreposition(WayContext prep) {
 		wayPreposition = prep;
+	}
+
+	@Override
+	public void setNominalSecondObject(INominalObject nObject) {
+		of = nObject;
+	}
+
+	@Override
+	public void setVerbalSecondObject(IVerbalObject vObject) {
+		which = vObject;
+	}
+
+	@Override
+	public INominalObject getNominalSecondObject() {
+		return of;
+	}
+
+	@Override
+	public IVerbalObject getVerbalSecondObject() {
+		return which;
+	}
+
+	@Override
+	public PlaceType getPlaceType() {
+		return PlaceType.NOMINAL;
+	}
+
+	@Override
+	public PlaceContext getPlacePreposition() {
+		return placePreposition;
+	}
+
+	@Override
+	public void setPlacePreposition(PlaceContext prep) {
+		placePreposition = prep;
 	}
 }

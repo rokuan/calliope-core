@@ -8,16 +8,24 @@ import com.rokuan.calliopecore.sentence.structure.content.IPlaceObject;
 import com.rokuan.calliopecore.sentence.structure.data.nominal.CityObject;
 import com.rokuan.calliopecore.sentence.structure.data.nominal.CountryObject;
 import com.rokuan.calliopecore.sentence.structure.data.place.AdditionalPlaceObject;
+import com.rokuan.calliopecore.sentence.structure.data.place.AddressObject;
 import com.rokuan.calliopecore.sentence.structure.data.place.LocationObject;
 import com.rokuan.calliopecore.sentence.structure.data.place.NamedPlaceObject;
+import com.rokuan.calliopecore.sentence.structure.data.place.PlaceAdverbial.PlaceType;
 
 public class PlaceConverter {
+	public static final WordPattern STREET_ADDRESS_PATTERN = WordPattern.sequence(WordPattern.optional(WordPattern.simpleWord(WordType.NUMBER)),
+			WordPattern.simpleWord(WordType.STREET_TYPE),
+			WordPattern.nonEmptyList(WordPattern.simpleWord(WordType.PROPER_NAME)));
+	
+	public static final WordPattern CITY_ONLY_PATTERN = WordPattern.simpleWord(WordType.CITY);
+
+	public static final WordPattern COUNTRY_ONLY_PATTERN = WordPattern.simpleWord(WordType.COUNTRY);
+
 	public static final WordPattern ADDRESS_ONLY_PATTERN = WordPattern.sequence(
 			WordPattern.simpleWord(WordType.DEFINITE_ARTICLE),
-			WordPattern.optional(WordPattern.simpleWord(WordType.NUMBER)),
-			WordPattern.simpleWord(WordType.STREET_TYPE),
-			WordPattern.nonEmptyList(WordPattern.simpleWord(WordType.PROPER_NAME)));		
-	
+			STREET_ADDRESS_PATTERN);			
+
 	public static final WordPattern PLACE_ONLY_PATTERN = WordPattern.sequence(
 			WordPattern.simpleWord(WordType.DEFINITE_ARTICLE),
 			WordPattern.optional(WordPattern.simpleWord(WordType.PLACE_TYPE)),
@@ -31,64 +39,66 @@ public class PlaceConverter {
 							))
 					))
 			);
-	
+
 	public static final WordPattern ADDITIONAL_PLACE_ONLY_PATTERN = WordPattern.sequence(
 			WordPattern.optional(WordPattern.simpleWord(WordType.DEFINITE_ARTICLE)),
 			WordPattern.simpleWord(WordType.ADDITIONAL_PLACE)
-			);
+			);	
 	
-	public static final WordPattern CITY_ONLY_PATTERN = WordPattern.simpleWord(WordType.CITY);
+	private static final WordPattern COUNTRY_PREPOSITION_PATTERN = WordPattern.or(
+			WordPattern.sequence(WordPattern.simplePlacePrep(PlaceType.COUNTRY), WordPattern.optional(WordPattern.simpleWord(WordType.DEFINITE_ARTICLE))),
+			WordPattern.simplePlacePrep(PlaceType.COUNTRY, true));
+	private static final WordPattern CITY_PREPOSITION_PATTERN = WordPattern.or(
+			WordPattern.sequence(WordPattern.simplePlacePrep(PlaceType.CITY), WordPattern.optional(WordPattern.simpleWord(WordType.DEFINITE_ARTICLE))),
+			WordPattern.simplePlacePrep(PlaceType.CITY, true));
+	private static final WordPattern ADDITIONAL_PLACE_PREPOSITION_PATTERN = WordPattern.or(
+			WordPattern.sequence(WordPattern.simplePlacePrep(PlaceType.CUSTOM), WordPattern.optional(WordPattern.simpleWord(WordType.DEFINITE_ARTICLE))),
+			WordPattern.simplePlacePrep(PlaceType.CUSTOM, true));
+	private static final WordPattern NAMED_PLACE_PREPOSITION_PATTERN = WordPattern.or(
+			WordPattern.sequence(WordPattern.simplePlacePrep(PlaceType.NAMED_PLACE), WordPattern.optional(WordPattern.simpleWord(WordType.DEFINITE_ARTICLE))),
+			WordPattern.simplePlacePrep(PlaceType.NAMED_PLACE, true));
+	private static final WordPattern ADDRESS_PREPOSITION_PATTERN = WordPattern.or(
+			WordPattern.sequence(WordPattern.simplePlacePrep(PlaceType.ADDRESS), WordPattern.optional(WordPattern.simpleWord(WordType.DEFINITE_ARTICLE))),
+			WordPattern.simplePlacePrep(PlaceType.ADDRESS, true));	
 	
-	public static final WordPattern COUNTRY_ONLY_PATTERN = WordPattern.simpleWord(WordType.COUNTRY);
-	
-	// le musée du Louvre, la Grande Muraille de Chine 
-	public static final WordPattern PLACE_PATTERN = WordPattern.sequence(
-			/*WordPattern.or(
-					WordPattern.sequence(WordPattern.simple(WordType.PREPOSITION_AT, "à"), WordPattern.simple(WordType.DEFINITE_ARTICLE, "la|l")),
-					WordPattern.simple(WordType.PREPOSITION_AT, "au(x?)")),*/
-			WordPattern.simpleWord(WordType.PLACE_PREPOSITION),
-			WordPattern.optional(WordPattern.simpleWord(WordType.DEFINITE_ARTICLE)),
-					//WordPattern.simple(WordType.DEFINITE_ARTICLE),
-					WordPattern.optional(WordPattern.simpleWord(WordType.PLACE_TYPE)),
-					WordPattern.optional(WordPattern.nonEmptyList(WordPattern.simpleWord(WordType.PROPER_NAME))),
-					WordPattern.optional(WordPattern.sequence(WordPattern.simpleWord(WordType.PREPOSITION_OF), 
-							WordPattern.optional(WordPattern.simpleWord(WordType.DEFINITE_ARTICLE)),
-							WordPattern.optional(WordPattern.or(
-									WordPattern.simpleWord(WordType.COUNTRY),
-									WordPattern.simpleWord(WordType.CITY),
-									WordPattern.nonEmptyList(WordPattern.simpleWord(WordType.PROPER_NAME))
-									))
-							)));
-
-	//private static final WordPattern locationPrepositionPattern = WordPattern.sequence(WordPattern.)
-
-	private static final WordPattern CITY_SECOND_OBJECT_PATTERN = WordPattern.sequence(
-			WordPattern.simpleWord(WordType.PREPOSITION_OF), PlaceConverter.CITY_ONLY_PATTERN);
-	
-	private static final WordPattern PLACE_SECOND_OBJECT_PATTERN = WordPattern.or(
-			CITY_SECOND_OBJECT_PATTERN);
-	
-	public static final WordPattern COUNTRY_PATTERN = WordPattern.sequence(WordPattern.or(
-			WordPattern.sequence(WordPattern.simpleWord(WordType.PREPOSITION_AT), WordPattern.optional(WordPattern.simpleWord(WordType.DEFINITE_ARTICLE))),
-			WordPattern.sequence(WordPattern.simpleWord("en"))
-			), WordPattern.simpleWord(WordType.COUNTRY));
+	public static final WordPattern COUNTRY_PATTERN = WordPattern.sequence(
+			COUNTRY_PREPOSITION_PATTERN, 
+			WordPattern.simpleWord(WordType.COUNTRY));
 
 	public static final WordPattern CITY_PATTERN = WordPattern.sequence(
-			WordPattern.simpleWord(WordType.PREPOSITION_AT), 
-			//WordPattern.optional(WordPattern.simple(WordType.DEFINITE_ARTICLE)), 
-			WordPattern.simpleWord(WordType.CITY));
-	
+			CITY_PREPOSITION_PATTERN, 
+			WordPattern.simpleWord(WordType.CITY));			
+
 	public static final WordPattern WORLD_LOCATION_PATTERN = WordPattern.sequence(CITY_PATTERN, COUNTRY_PATTERN);
-	
+
 	// devant l'Opera de Wasawakini
 	// jusqu'aux Chutes Fanis
 	public static final WordPattern ADDITIONAL_PLACE_PATTERN = WordPattern.sequence(
-			WordPattern.or(
-					WordPattern.sequence(WordPattern.simpleWord(WordType.PLACE_PREPOSITION), WordPattern.optional(WordPattern.simpleWord(WordType.DEFINITE_ARTICLE))),
-					WordPattern.simpleWord(new WordType[]{ WordType.PLACE_PREPOSITION, WordType.CONTRACTED })
-					),
-					WordPattern.simpleWord(WordType.ADDITIONAL_PLACE)
+			ADDITIONAL_PLACE_PREPOSITION_PATTERN,
+			WordPattern.simpleWord(WordType.ADDITIONAL_PLACE)
 			);
+
+	// le musée du Louvre, la Grande Muraille de Chine 
+	public static final WordPattern PLACE_PATTERN = WordPattern.sequence(
+			NAMED_PLACE_PREPOSITION_PATTERN,
+			WordPattern.or(
+					WordPattern.simpleWord(WordType.PLACE_TYPE),
+					WordPattern.nonEmptyList(WordPattern.simpleWord(WordType.PROPER_NAME)))
+			// TODO: pouvoir parser les noms composes (ex: musee du Louvre)
+					);
+	
+	public static final WordPattern ADDRESS_PATTERN = WordPattern.sequence(
+			ADDRESS_PREPOSITION_PATTERN,
+			STREET_ADDRESS_PATTERN);
+
+	private static final WordPattern CITY_SECOND_OBJECT_PATTERN = WordPattern.sequence(
+			WordPattern.simpleWord(WordType.PREPOSITION_OF), PlaceConverter.CITY_ONLY_PATTERN);
+
+	private static final WordPattern PLACE_SECOND_OBJECT_PATTERN = WordPattern.or(
+			CITY_SECOND_OBJECT_PATTERN);
+
+	
+
 
 	// A Paris en France
 	// A Mexico au Mexique
@@ -99,6 +109,7 @@ public class PlaceConverter {
 				|| words.syntaxStartsWith(WORLD_LOCATION_PATTERN)
 				|| words.syntaxStartsWith(CITY_PATTERN)
 				|| words.syntaxStartsWith(COUNTRY_PATTERN)
+				|| words.syntaxStartsWith(ADDRESS_PATTERN)
 				|| words.syntaxStartsWith(PLACE_PATTERN);
 	}
 
@@ -108,9 +119,9 @@ public class PlaceConverter {
 		// TODO: gerer les locations pleines (Le musee du Louvre a Paris en France)
 		if(words.syntaxStartsWith(ADDITIONAL_PLACE_PATTERN)){
 			AdditionalPlaceObject additional = new AdditionalPlaceObject();
-			
+
 			if(words.getCurrentElement().isOfType(WordType.PLACE_PREPOSITION)){
-				additional.setPlacePreposition(words.getCurrentElement().getPlacePreposition());
+				additional.setPlacePreposition(words.getCurrentElement().getPlacePreposition().getValue());
 				words.consume();
 			}
 
@@ -118,21 +129,21 @@ public class PlaceConverter {
 			result = additional;
 		} else if(words.syntaxStartsWith(WORLD_LOCATION_PATTERN)){
 			LocationObject state = new LocationObject();
-			
+
 			if(words.syntaxStartsWith(CITY_PATTERN)){
 				while(!words.getCurrentElement().isOfType(WordType.CITY)){
 					words.consume();					
 				}
-				
+
 				state.city = words.getCurrentElement().getCityInfo();
 				words.consume();
 			}
-			
+
 			if(words.syntaxStartsWith(COUNTRY_PATTERN)){
 				while(!words.getCurrentElement().isOfType(WordType.COUNTRY)){
 					words.consume();
 				}
-				
+
 				state.country = words.getCurrentElement().getCountryInfo();
 				words.consume();
 			}
@@ -140,50 +151,54 @@ public class PlaceConverter {
 			result = state;
 		} else if(words.syntaxStartsWith(CITY_PATTERN)){
 			CityObject city = new CityObject();
-			
+
 			if(words.getCurrentElement().isOfType(WordType.PLACE_PREPOSITION)){
-				city.setPlacePreposition(words.getCurrentElement().getPlacePreposition());
+				city.setPlacePreposition(words.getCurrentElement().getPlacePreposition().getValue());
 				words.consume();
 			}
-			
+
 			city.city = words.getCurrentElement().getCityInfo();
 			words.consume();
-			
+
 			result = city;
 		} else if(words.syntaxStartsWith(COUNTRY_PATTERN)){
 			CountryObject country = new CountryObject();
-			
+
 			if(words.getCurrentElement().isOfType(WordType.PLACE_PREPOSITION)){
-				country.setPlacePreposition(words.getCurrentElement().getPlacePreposition());
+				country.setPlacePreposition(words.getCurrentElement().getPlacePreposition().getValue());
 				words.consume();
 			}
-			
+
 			country.country = words.getCurrentElement().getCountryInfo();
 			words.consume();
-			
+
 			result = country;
+		} else if(words.syntaxStartsWith(ADDRESS_PATTERN)){ 
+			AddressObject address = new AddressObject();
+			// TODO:
+			result = address;
 		} else if(words.syntaxStartsWith(PLACE_PATTERN)){
 			NamedPlaceObject place = new NamedPlaceObject();
-			
+
 			if(words.getCurrentElement().isOfType(WordType.PLACE_PREPOSITION)){
-				place.setPlacePreposition(words.getCurrentElement().getPlacePreposition());
+				place.setPlacePreposition(words.getCurrentElement().getPlacePreposition().getValue());
 				words.consume();
 			}
-			
+
 			parseNamedPlace(place, words);
 			result = place;
 		}
 
 		return result;
 	}
-	
+
 	public static boolean isANominalGroup(WordBuffer words){
 		return words.syntaxStartsWith(ADDITIONAL_PLACE_ONLY_PATTERN)
-				|| words.syntaxStartsWith(PLACE_ONLY_PATTERN)
 				|| words.syntaxStartsWith(CITY_ONLY_PATTERN)
-				|| words.syntaxStartsWith(COUNTRY_ONLY_PATTERN);
+				|| words.syntaxStartsWith(COUNTRY_ONLY_PATTERN)
+				|| words.syntaxStartsWith(PLACE_ONLY_PATTERN);
 	}
-	
+
 	public static INominalObject parseNominalPlaceObject(WordBuffer words){
 		INominalObject result = null;
 
@@ -196,25 +211,25 @@ public class PlaceConverter {
 			parseNamedPlace(place, words);
 			result = place;
 		}
-		
+
 		return result;
 	}
-	
+
 	public static boolean isAPlaceSecondObject(WordBuffer words){
 		return words.syntaxStartsWith(PLACE_SECOND_OBJECT_PATTERN);
 	}
-	
+
 	public static IPlaceObject parsePlaceSecondObject(WordBuffer words){
 		IPlaceObject result = null;
-		
+
 		if(words.syntaxStartsWith(CITY_SECOND_OBJECT_PATTERN)){
 			words.consume();
 			result = parseCityObject(words);
 		}
-		
+
 		return result;
 	}
-	
+
 	private static void parseAdditionalPlace(AdditionalPlaceObject additional, WordBuffer words){
 		if(words.getCurrentElement().isOfType(WordType.DEFINITE_ARTICLE)){
 			words.consume();
@@ -223,19 +238,19 @@ public class PlaceConverter {
 		additional.place = words.getCurrentElement().getCustomPlace();
 		words.consume();
 	}
-	
+
 	private static CityObject parseCityObject(WordBuffer words){
 		CityObject city = new CityObject();
-		
+
 		city.city = words.getCurrentElement().getCityInfo();
 		words.consume();
-		
+
 		return city;
 	}
-	
+
 	private static void parseNamedPlace(NamedPlaceObject place, WordBuffer words){
 		StringBuilder buffer = new StringBuilder();
-		
+
 		if(words.getCurrentElement().isOfType(WordType.DEFINITE_ARTICLE)){
 			words.consume();
 		}
@@ -256,7 +271,7 @@ public class PlaceConverter {
 
 		if(words.isIntoBounds() && words.getCurrentElement().isOfType(WordType.PREPOSITION_OF)){
 			words.consume();	// PREPOSITION_OF				
-			
+
 			if(words.getCurrentElement().isOfType(WordType.CITY)){ 
 				place.city = words.getCurrentElement().getValue();
 				words.consume();

@@ -9,6 +9,7 @@ import org.junit.Test;
 import com.rokuan.calliopecore.parser.Parser;
 import com.rokuan.calliopecore.parser.WordBuffer;
 import com.rokuan.calliopecore.sentence.Action;
+import com.rokuan.calliopecore.sentence.TimePreposition;
 import com.rokuan.calliopecore.sentence.Verb;
 import com.rokuan.calliopecore.sentence.Verb.ConjugationTense;
 import com.rokuan.calliopecore.sentence.Verb.Form;
@@ -234,7 +235,7 @@ public class DateParseTest {
 	public void testParseWithPreposition(){
 		WordBuffer words = new WordBuffer();
 		Word before = new Word("avant", WordType.TIME_PREPOSITION);
-		before.setDatePreposition(DateContext.BEFORE);
+		before.setTimePreposition(new TimePreposition("avant", DateContext.BEFORE));
 		
 		words.add(before);
 		words.add(new Word("le", Word.WordType.DEFINITE_ARTICLE));
@@ -255,7 +256,7 @@ public class DateParseTest {
 	public void testParseWithContractedPreposition(){
 		WordBuffer words = new WordBuffer();
 		Word until = new Word("jusqu'au", WordType.TIME_PREPOSITION, WordType.CONTRACTED);
-		until.setDatePreposition(DateContext.UNTIL);
+		until.setTimePreposition(new TimePreposition("jusqu'au", DateContext.UNTIL));
 		
 		words.add(until);
 		//words.add(new Word("le", Word.WordType.DEFINITE_ARTICLE));
