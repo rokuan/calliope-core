@@ -207,7 +207,7 @@ public class DateParseTest {
 		Verb toAlert = new Verb("prévenir", Action.VerbAction.ALERT, false);
 		VerbConjugation alertConjug = new VerbConjugation(ConjugationTense.PRESENT, Form.IMPERATIVE, Pronoun.TU, "préviens", toAlert);		
 		alertConjug.setVerb(toAlert);
-		imperativeAlert.setVerbInfo(alertConjug);
+		imperativeAlert.setVerbInfo(alertConjug);		
 		
 		words.add(imperativeAlert);
 		words.add(new Word("moi", WordType.TARGET_PRONOUN));

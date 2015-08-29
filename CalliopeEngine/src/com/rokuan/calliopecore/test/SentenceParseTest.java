@@ -16,9 +16,11 @@ import com.rokuan.calliopecore.sentence.CityInfo;
 import com.rokuan.calliopecore.sentence.CustomObject;
 import com.rokuan.calliopecore.sentence.CustomPerson;
 import com.rokuan.calliopecore.sentence.PlacePreposition;
+import com.rokuan.calliopecore.sentence.TransportInfo;
 import com.rokuan.calliopecore.sentence.Verb;
 import com.rokuan.calliopecore.sentence.Verb.Pronoun;
 import com.rokuan.calliopecore.sentence.VerbConjugation;
+import com.rokuan.calliopecore.sentence.WayPreposition;
 import com.rokuan.calliopecore.sentence.Word;
 import com.rokuan.calliopecore.sentence.Verb.ConjugationTense;
 import com.rokuan.calliopecore.sentence.Verb.Form;
@@ -40,6 +42,10 @@ import com.rokuan.calliopecore.sentence.structure.data.place.PlaceAdverbial.Plac
 import com.rokuan.calliopecore.sentence.structure.data.place.PlaceAdverbial.PlaceType;
 import com.rokuan.calliopecore.sentence.structure.data.time.SingleTimeObject;
 import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial;
+import com.rokuan.calliopecore.sentence.structure.data.way.TransportObject;
+import com.rokuan.calliopecore.sentence.structure.data.way.TransportObject.TransportType;
+import com.rokuan.calliopecore.sentence.structure.data.way.WayAdverbial.WayContext;
+import com.rokuan.calliopecore.sentence.structure.data.way.WayAdverbial.WayType;
 
 public class SentenceParseTest {
 	@Test
@@ -52,6 +58,11 @@ public class SentenceParseTest {
 		go.setVerbInfo(toGoConjug);
 		Word to = new Word("à", WordType.PLACE_PREPOSITION);
 		to.setPlacePreposition(new PlacePreposition("à", PlaceContext.TO, PlaceType.NAMED_PLACE, PlaceType.CITY));
+		Word by = new Word("en", WordType.WAY_PREPOSITION);
+		Word car = new Word("voiture", WordType.COMMON_NAME, WordType.MEAN_OF_TRANSPORT);
+
+		by.setWayPreposition(new WayPreposition("en", WayContext.BY, WayType.TRANSPORT));
+		car.setTransportInfo(new TransportInfo("voiture", TransportType.CAR));		
 
 		words.add(new Word("comment", WordType.INTERROGATIVE_PRONOUN));
 		words.add(go);
@@ -60,8 +71,8 @@ public class SentenceParseTest {
 		words.add(new Word("Mairie", WordType.PLACE_TYPE, WordType.PROPER_NAME, WordType.COMMON_NAME));
 		words.add(new Word("de", WordType.PREPOSITION_OF));
 		words.add(new Word("Paris", WordType.PROPER_NAME, WordType.CITY));
-		words.add(new Word("en", WordType.PREPOSITION));
-		words.add(new Word("voiture", WordType.MEAN_OF_TRANSPORT));
+		words.add(by);
+		words.add(car);
 
 		InterpretationObject obj = new Parser().parseInterpretationObject(words);
 
@@ -75,7 +86,7 @@ public class SentenceParseTest {
 		NamedPlaceObject monument = (NamedPlaceObject)place;
 		
 		assertEquals(monument.name, "Mairie");
-		assertEquals(((ComplementObject)obj.how).object, "voiture");
+		assertEquals(((TransportObject)obj.how).transportType, TransportType.CAR);
 	}
 
 	@Test
@@ -83,11 +94,16 @@ public class SentenceParseTest {
 		WordBuffer words = new WordBuffer();
 		Word go = new Word("aller", Word.WordType.VERB);
 		Verb toGo = new Verb("aller", Action.VerbAction.GO, false);
-		VerbConjugation toGoConjug = new VerbConjugation(ConjugationTense.PRESENT, Form.INFINITIVE, null, "aller", toGo);		
+		VerbConjugation toGoConjug = new VerbConjugation(ConjugationTense.PRESENT, Form.INFINITIVE, null, "aller", toGo);
+		Word to = new Word("à", WordType.PLACE_PREPOSITION);
+		Word by = new Word("en", WordType.WAY_PREPOSITION);
+		Word car = new Word("voiture", WordType.COMMON_NAME, WordType.MEAN_OF_TRANSPORT);
+		
 		toGoConjug.setVerb(toGo);
 		go.setVerbInfo(toGoConjug);
-		Word to = new Word("à", WordType.PLACE_PREPOSITION);
 		to.setPlacePreposition(new PlacePreposition("à", PlaceContext.TO, PlaceType.NAMED_PLACE, PlaceType.CITY));
+		by.setWayPreposition(new WayPreposition("en", WayContext.BY, WayType.TRANSPORT));
+		car.setTransportInfo(new TransportInfo("voiture", TransportType.CAR));
 
 		words.add(new Word("comment", WordType.INTERROGATIVE_PRONOUN));
 		words.add(go);
@@ -95,8 +111,8 @@ public class SentenceParseTest {
 		words.add(new Word("la", WordType.DEFINITE_ARTICLE));
 		words.add(new Word("Tour", WordType.PROPER_NAME, WordType.COMMON_NAME));
 		words.add(new Word("Eiffel", WordType.PROPER_NAME));
-		words.add(new Word("en", WordType.PREPOSITION));
-		words.add(new Word("voiture", WordType.MEAN_OF_TRANSPORT));
+		words.add(by);
+		words.add(car);
 
 		InterpretationObject obj = new Parser().parseInterpretationObject(words);
 
@@ -110,7 +126,8 @@ public class SentenceParseTest {
 		
 		assertEquals(place.getPlaceType(), PlaceType.NAMED_PLACE);
 
-		assertEquals(((ComplementObject)obj.how).object, "voiture");
+		//assertEquals(((ComplementObject)obj.how).object, "voiture");
+		assertEquals(((TransportObject)obj.how).transportType, TransportType.CAR);
 	}
 	
 	@Test
@@ -122,9 +139,13 @@ public class SentenceParseTest {
 		Word paris = new Word("Paris", WordType.CITY);
 		Word to = new Word("à", WordType.PLACE_PREPOSITION);
 		to.setPlacePreposition(new PlacePreposition("à", PlaceContext.TO, PlaceType.NAMED_PLACE, PlaceType.CITY));
+		Word by = new Word("par", WordType.WAY_PREPOSITION);
+		Word plane = new Word("avion", WordType.COMMON_NAME, WordType.MEAN_OF_TRANSPORT);
 		
 		toGoConjug.setVerb(toGo);
 		go.setVerbInfo(toGoConjug);
+		by.setWayPreposition(new WayPreposition("en", WayContext.BY, WayType.TRANSPORT));
+		plane.setTransportInfo(new TransportInfo("avion", TransportType.PLANE));
 
 		paris.setCityInfo(new CityInfo("Paris", 48.8564528, 2.3524282));
 
@@ -132,8 +153,8 @@ public class SentenceParseTest {
 		words.add(go);
 		words.add(to);
 		words.add(paris);
-		words.add(new Word("en", WordType.PREPOSITION));
-		words.add(new Word("voiture", WordType.MEAN_OF_TRANSPORT));
+		words.add(by);
+		words.add(plane);
 
 		InterpretationObject obj = new Parser().parseInterpretationObject(words);
 
@@ -148,7 +169,7 @@ public class SentenceParseTest {
 		CityObject city = (CityObject)place;
 		
 		assertEquals(city.city.getName(), "Paris");
-		assertEquals(((ComplementObject)obj.how).object, "voiture");
+		assertEquals(((TransportObject)obj.how).transportType, TransportType.PLANE);
 	}
 	
 	@Test
@@ -160,9 +181,13 @@ public class SentenceParseTest {
 		Word paris = new Word("Paris", WordType.CITY);
 		Word to = new Word("à", WordType.PLACE_PREPOSITION);
 		to.setPlacePreposition(new PlacePreposition("à", PlaceContext.TO, PlaceType.NAMED_PLACE, PlaceType.CITY));
+		Word by = new Word("à", WordType.WAY_PREPOSITION);
+		Word walk = new Word("pied", WordType.COMMON_NAME, WordType.MEAN_OF_TRANSPORT);
 		
 		toGoConjug.setVerb(toGo);
 		go.setVerbInfo(toGoConjug);
+		by.setWayPreposition(new WayPreposition("à", WayContext.BY, WayType.TRANSPORT));
+		walk.setTransportInfo(new TransportInfo("pied", TransportType.WALK));
 
 		paris.setCityInfo(new CityInfo("Paris", 48.8564528, 2.3524282));
 
@@ -170,8 +195,8 @@ public class SentenceParseTest {
 		words.add(go);
 		words.add(to);
 		words.add(paris);
-		words.add(new Word("à", WordType.PREPOSITION_AT));
-		words.add(new Word("voiture", WordType.COMMON_NAME, WordType.MEAN_OF_TRANSPORT));
+		words.add(by);
+		words.add(walk);
 
 		InterpretationObject obj = new Parser().parseInterpretationObject(words);
 
@@ -186,7 +211,7 @@ public class SentenceParseTest {
 		CityObject city = (CityObject)place;
 		
 		assertEquals(city.city.getName(), "Paris");
-		assertEquals(((ComplementObject)obj.how).object, "voiture");
+		assertEquals(((TransportObject)obj.how).transportType, TransportType.WALK);
 	}
 
 	@Test
@@ -395,5 +420,10 @@ public class SentenceParseTest {
 		IVerbalObject verbal = compl.getVerbalSecondObject();
 		
 		assertEquals(verbal.getAction(), Action.VerbAction.SEND);
+	}
+	
+	@Test
+	public void testAffirmativeUnitSentence(){
+		
 	}
 }

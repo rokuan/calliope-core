@@ -7,22 +7,11 @@ import java.text.SimpleDateFormat;
 
 import org.junit.Test;
 
-import com.rokuan.calliopecore.parser.Parser;
-import com.rokuan.calliopecore.parser.WordBuffer;
-import com.rokuan.calliopecore.sentence.Action;
 import com.rokuan.calliopecore.sentence.Action.VerbAction;
 import com.rokuan.calliopecore.sentence.CustomObject;
-import com.rokuan.calliopecore.sentence.Verb;
-import com.rokuan.calliopecore.sentence.VerbConjugation;
-import com.rokuan.calliopecore.sentence.Word;
-import com.rokuan.calliopecore.sentence.Verb.ConjugationTense;
-import com.rokuan.calliopecore.sentence.Verb.Form;
-import com.rokuan.calliopecore.sentence.Word.WordType;
 import com.rokuan.calliopecore.sentence.structure.InterpretationObject;
 import com.rokuan.calliopecore.sentence.structure.OrderObject;
-import com.rokuan.calliopecore.sentence.structure.QuestionObject;
 import com.rokuan.calliopecore.sentence.structure.InterpretationObject.RequestType;
-import com.rokuan.calliopecore.sentence.structure.QuestionObject.QuestionType;
 import com.rokuan.calliopecore.sentence.structure.data.count.AllItemsObject;
 import com.rokuan.calliopecore.sentence.structure.data.nominal.AdditionalObject;
 import com.rokuan.calliopecore.sentence.structure.data.time.SingleTimeObject;
@@ -30,7 +19,7 @@ import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial.DateCo
 import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial.DateDefinition;
 
 public class JsonTest {
-	@Test
+	/*@Test
 	public void testInterpretationObjectDeserialization(){
 		WordBuffer words = new WordBuffer();
 		Word go = new Word("aller", Word.WordType.VERB);
@@ -56,7 +45,7 @@ public class JsonTest {
 		
 		assertEquals(object.getRequestType(), RequestType.QUESTION);
 		assertEquals(((QuestionObject)object).questionType, QuestionType.HOW);		
-	}
+	}*/
 	
 	@Test
 	public void testInterpretationObjectDeserialization2() throws ParseException{

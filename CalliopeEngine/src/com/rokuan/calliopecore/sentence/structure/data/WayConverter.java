@@ -73,9 +73,10 @@ public class WayConverter {
 			TransportObject transport = new TransportObject();
 			
 			transport.setWayPreposition(words.getCurrentElement().getWayPreposition().getValue());
-			transport.transportType = words.getCurrentElement().getTransportInfo().getTransportType();
-			
 			words.consume();
+			transport.transportType = words.getCurrentElement().getTransportInfo().getTransportType();			
+			words.consume();
+			
 			result = transport;
 		} else if(words.syntaxStartsWith(LANGUAGE_PATTERN)){
 			LanguageObject lang = new LanguageObject();

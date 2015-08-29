@@ -66,7 +66,7 @@ public class DateConverter {
 			WordPattern.simpleWord(new WordType[]{ WordType.TIME_PREPOSITION, WordType.CONTRACTED }),
 			WordPattern.sequence(WordPattern.optional(WordPattern.simpleWord(WordType.TIME_PREPOSITION)), WordPattern.simpleWord(WordType.DEFINITE_ARTICLE))
 			);
-	
+
 	public static final WordPattern SINGLE_DATE_ONLY_PATTERN = WordPattern.sequence(
 			WordPattern.or(WordPattern.simpleWord(WordType.NUMBER), WordPattern.simpleWord(WordType.NUMERICAL_POSITION)),
 			WordPattern.simpleWord(WordType.DATE_MONTH),
@@ -109,9 +109,11 @@ public class DateConverter {
 							WordPattern.optional(WordPattern.or(WordPattern.simpleWord(WordType.NUMBER), MINUTES_DEFINITION_PATTERN)))
 			);
 
+	private static final WordPattern VERBAL_WHEN = WordPattern.sequence(WordPattern.simpleWord("quand"), WordPattern.simpleWord(WordType.PERSONAL_PRONOUN, "il"), WordPattern.simpleVerb("être", "sera")); 
+
 	public static final WordPattern TIME_DECLARATION_PATTERN = WordPattern.sequence(
 			WordPattern.or(
-					WordPattern.sequence(WordPattern.simpleWord("quand"), WordPattern.simpleWord(WordType.PERSONAL_PRONOUN, "il"), WordPattern.simpleVerb("être", "sera")),
+					VERBAL_WHEN,
 					WordPattern.simpleWord(WordType.PREPOSITION_AT),
 					WordPattern.simpleWord(WordType.TIME_PREPOSITION)),
 					//WordPattern.simple(WordType.ANY, "pour"), 
@@ -133,7 +135,7 @@ public class DateConverter {
 			WordPattern.simpleWord(WordType.PREPOSITION_OF, "de"),
 			TIME_PATTERN
 			);
-	
+
 	public static final WordPattern SINGLE_DATE_SECOND_OBJECT_PATTERN = WordPattern.sequence(
 			WordPattern.simpleWord(WordType.PREPOSITION_OF),
 			SINGLE_DATE_ONLY_PATTERN);
@@ -224,16 +226,16 @@ public class DateConverter {
 			SingleTimeObject single = new SingleTimeObject();
 			DateContext preposition = DateContext.WHEN;
 
-			if(words.getCurrentElement().isOfType(WordType.PREPOSITION_AT)){
+			if(words.syntaxStartsWith(VERBAL_WHEN)){
 				preposition = DateContext.WHEN;
+				words.consume();
+				words.consume();
 				words.consume();
 			} else if(words.getCurrentElement().isOfType(WordType.TIME_PREPOSITION)){
 				preposition = words.getCurrentElement().getTimePreposition().getValue();
 				words.consume();
-			} else {
+			} else if(words.getCurrentElement().isOfType(WordType.PREPOSITION_AT)){
 				preposition = DateContext.WHEN;
-				words.consume();
-				words.consume();
 				words.consume();
 			}
 
