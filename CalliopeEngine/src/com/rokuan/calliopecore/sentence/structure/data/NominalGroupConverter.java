@@ -99,12 +99,7 @@ public class NominalGroupConverter {
 			WordPattern.sequence(WordPattern.simpleWord(WordType.PREPOSITION_AT, "à"), WordPattern.optional(WordPattern.simpleWord(WordType.DEFINITE_ARTICLE, "la"))),
 			WordPattern.simpleWord(WordType.PREPOSITION_AT, "au.*")
 			);
-	
-	/*public static final WordPattern INDIRECT_OBJECT_PATTERN = WordPattern.sequence(TO_PATTERN,
-			WordPattern.or(PERSON_PATTERN,
-					PHONE_NUMBER_PATTERN,
-					)	// TODO: ajouter le cas groupe nominal
-			);*/
+
 	private static final WordPattern INDIRECT_PERSON_PATTERN = WordPattern.sequence(
 			WordPattern.simpleWord("à"),
 			WordPattern.simpleWord(WordType.PERSON));
@@ -124,16 +119,6 @@ public class NominalGroupConverter {
 		INominalObject result = null;
 
 		if(words.syntaxStartsWith(OBJECT_PATTERN)){
-			/*AdditionalObject obj = new AdditionalObject();
-
-			if(CountConverter.isACountData(words)){
-				obj.count = CountConverter.parseCountObject(words);
-			}
-
-			obj.object = words.getCurrentElement().getCustomObject();
-			words.consume();
-
-			result = obj;*/
 			result = parseAdditionalObject(words);
 		} else if(words.syntaxStartsWith(PHONE_NUMBER_PATTERN)){
 			PhoneNumberObject phoneNumber = new PhoneNumberObject();

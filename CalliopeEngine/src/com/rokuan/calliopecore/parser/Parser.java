@@ -116,7 +116,7 @@ public class Parser {
 				}
 			}
 
-			parseObject(words, inter);
+			parseObject(words, order);
 			inter = order;
 		} else if(words.syntaxStartsWith(SentencePattern.INTERROGATIVE_PATTERN)){
 			QuestionObject qObject = new QuestionObject();
