@@ -24,7 +24,7 @@ public abstract class TimeAdverbial implements ITimeObject {
         FUTURE
     }
 
-    public enum TimeState {
+    /*public enum TimeState {
         FIXED,
         RELATIVE
     }
@@ -34,7 +34,7 @@ public abstract class TimeAdverbial implements ITimeObject {
         FROM_MIN_TO_MAX,
         FROM_PAST_TO_NOW,
         FROM_NOW_TO_FUTURE
-    }
+    }*/
 
     public enum TimeType {
     	SINGLE,
@@ -50,31 +50,33 @@ public abstract class TimeAdverbial implements ITimeObject {
     	TIME_ONLY
     }
     
-    public enum DateContext {
+    public enum TimeContext {
     	BEFORE,
     	AFTER,
     	DURING,
     	UNTIL,
     	WHEN,
-    	SINCE
+    	SINCE,
+    	START,
+    	END
     }
 
     @Expose
-    private DateContext timePreposition = DateContext.WHEN;
+    private TimeContext timePreposition = TimeContext.WHEN;
     
-	@Expose
+	/*@Expose
     public TimeTense tense = TimeTense.PRESENT;
 
 	@Expose
-    public TimeInterval interval = TimeInterval.SINGLE;
+    public TimeInterval interval = TimeInterval.SINGLE;*/
 	
 	@Override
-	public DateContext getTimePreposition() {
+	public TimeContext getTimePreposition() {
 		return timePreposition;
 	}
 
 	@Override
-	public void setTimePreposition(DateContext prep) {
+	public void setTimePreposition(TimeContext prep) {
 		timePreposition = prep;
 	}
 	

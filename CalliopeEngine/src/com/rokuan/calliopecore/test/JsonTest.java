@@ -15,7 +15,7 @@ import com.rokuan.calliopecore.sentence.structure.InterpretationObject.RequestTy
 import com.rokuan.calliopecore.sentence.structure.data.count.AllItemsObject;
 import com.rokuan.calliopecore.sentence.structure.data.nominal.AdditionalObject;
 import com.rokuan.calliopecore.sentence.structure.data.time.SingleTimeObject;
-import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial.DateContext;
+import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial.TimeContext;
 import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial.DateDefinition;
 
 public class JsonTest {
@@ -56,7 +56,7 @@ public class JsonTest {
 		customObject.object = new CustomObject("lumière de la cuisine", "KITCHEN_LIGHT");
 		SingleTimeObject time = new SingleTimeObject();
 		time.dateDefinition = DateDefinition.TIME_ONLY;
-		time.setTimePreposition(DateContext.WHEN);
+		time.setTimePreposition(TimeContext.WHEN);
 		time.date = new SimpleDateFormat("HH:mm").parse("17:40");
 		
 		obj.action = VerbAction.TURN_ON;

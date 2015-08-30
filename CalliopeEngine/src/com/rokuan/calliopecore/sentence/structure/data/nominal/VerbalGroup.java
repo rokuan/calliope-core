@@ -11,7 +11,7 @@ import com.rokuan.calliopecore.sentence.structure.content.IVerbalObject;
 import com.rokuan.calliopecore.sentence.structure.content.IWayObject;
 import com.rokuan.calliopecore.sentence.structure.data.purpose.PurposeAdverbial.PurposeContext;
 import com.rokuan.calliopecore.sentence.structure.data.purpose.PurposeAdverbial.PurposeType;
-import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial.DateContext;
+import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial.TimeContext;
 import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial.TimeType;
 import com.rokuan.calliopecore.sentence.structure.data.way.WayAdverbial.WayContext;
 import com.rokuan.calliopecore.sentence.structure.data.way.WayAdverbial.WayType;
@@ -22,7 +22,7 @@ public class VerbalGroup extends NominalGroup implements IWayObject, ITimeObject
 	private WayContext wayPreposition;
 	
 	@Expose
-	private DateContext timePreposition;
+	private TimeContext timePreposition;
 	
 	@Expose
 	private PurposeContext purposePreposition;
@@ -82,12 +82,12 @@ public class VerbalGroup extends NominalGroup implements IWayObject, ITimeObject
 	}
 
 	@Override
-	public DateContext getTimePreposition() {
+	public TimeContext getTimePreposition() {
 		return timePreposition;
 	}
 
 	@Override
-	public void setTimePreposition(DateContext prep) {
+	public void setTimePreposition(TimeContext prep) {
 		timePreposition = prep;
 	}
 

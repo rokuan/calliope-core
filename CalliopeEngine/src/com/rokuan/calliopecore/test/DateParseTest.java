@@ -22,7 +22,7 @@ import com.rokuan.calliopecore.sentence.structure.content.ITimeObject;
 import com.rokuan.calliopecore.sentence.structure.data.DateConverter;
 import com.rokuan.calliopecore.sentence.structure.data.time.SingleTimeObject;
 import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial;
-import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial.DateContext;
+import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial.TimeContext;
 import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial.DateDefinition;
 import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial.TimeType;
 import com.rokuan.calliopecore.sentence.structure.data.time.TimePeriodObject;
@@ -235,7 +235,7 @@ public class DateParseTest {
 	public void testParseWithPreposition(){
 		WordBuffer words = new WordBuffer();
 		Word before = new Word("avant", WordType.TIME_PREPOSITION);
-		before.setTimePreposition(new TimePreposition("avant", DateContext.BEFORE));
+		before.setTimePreposition(new TimePreposition("avant", TimeContext.BEFORE));
 		
 		words.add(before);
 		words.add(new Word("le", Word.WordType.DEFINITE_ARTICLE));
@@ -249,14 +249,14 @@ public class DateParseTest {
 		
 		SingleTimeObject single = (SingleTimeObject)time;
 		
-		assertEquals(single.getTimePreposition(), DateContext.BEFORE);		
+		assertEquals(single.getTimePreposition(), TimeContext.BEFORE);		
 	}
 	
 	@Test
 	public void testParseWithContractedPreposition(){
 		WordBuffer words = new WordBuffer();
 		Word until = new Word("jusqu'au", WordType.TIME_PREPOSITION, WordType.CONTRACTED);
-		until.setTimePreposition(new TimePreposition("jusqu'au", DateContext.UNTIL));
+		until.setTimePreposition(new TimePreposition("jusqu'au", TimeContext.UNTIL));
 		
 		words.add(until);
 		//words.add(new Word("le", Word.WordType.DEFINITE_ARTICLE));
@@ -270,7 +270,7 @@ public class DateParseTest {
 		
 		SingleTimeObject single = (SingleTimeObject)time;
 		
-		assertEquals(single.getTimePreposition(), DateContext.UNTIL);
+		assertEquals(single.getTimePreposition(), TimeContext.UNTIL);
 	}
 	
 	@Test

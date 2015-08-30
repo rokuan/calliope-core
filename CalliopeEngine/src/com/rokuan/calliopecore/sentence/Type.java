@@ -53,7 +53,9 @@ public class Type {
         try{
             Pronoun.valueOf(str.toUpperCase());
         } catch (Exception e){
-            if(str.equals("on")){
+        	if(str.equals("j")){
+        		return Pronoun.JE;
+        	} else if(str.equals("on")){
                 return Pronoun.NOUS;
             } else if(str.equals("il") || str.equals("elle")) {
             	return Pronoun.IL_ELLE_ON;

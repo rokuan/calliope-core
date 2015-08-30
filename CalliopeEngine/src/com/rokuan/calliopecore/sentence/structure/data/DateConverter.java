@@ -15,10 +15,8 @@ import com.rokuan.calliopecore.sentence.structure.content.INominalObject;
 import com.rokuan.calliopecore.sentence.structure.content.ITimeObject;
 import com.rokuan.calliopecore.sentence.structure.data.time.SingleTimeObject;
 import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial;
-import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial.DateContext;
+import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial.TimeContext;
 import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial.DateDefinition;
-import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial.TimeInterval;
-import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial.TimeTense;
 import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial.TimeUnit;
 import com.rokuan.calliopecore.sentence.structure.data.time.TimePeriodObject;
 
@@ -218,16 +216,17 @@ public class DateConverter {
 			//words.consume();
 
 			int[] dateFields = parseDate(words);
-
+			
+			single.dateDefinition = DateDefinition.values()[dateFields[dateFields.length - 1]];
 			single.date = buildDateFromArray(dateFields);
 
 			result = single;
 		} else if(WordPattern.syntaxStartsWith(words, TIME_DECLARATION_PATTERN)){
 			SingleTimeObject single = new SingleTimeObject();
-			DateContext preposition = DateContext.WHEN;
+			TimeContext preposition = TimeContext.WHEN;
 
 			if(words.syntaxStartsWith(VERBAL_WHEN)){
-				preposition = DateContext.WHEN;
+				preposition = TimeContext.WHEN;
 				words.consume();
 				words.consume();
 				words.consume();
@@ -235,7 +234,7 @@ public class DateConverter {
 				preposition = words.getCurrentElement().getTimePreposition().getValue();
 				words.consume();
 			} else if(words.getCurrentElement().isOfType(WordType.PREPOSITION_AT)){
-				preposition = DateContext.WHEN;
+				preposition = TimeContext.WHEN;
 				words.consume();
 			}
 
@@ -266,7 +265,8 @@ public class DateConverter {
 			}
 
 			int[] dateFields = parseDate(words);
-
+			
+			single.dateDefinition = DateDefinition.values()[dateFields[dateFields.length - 1]];
 			single.date = buildDateFromArray(dateFields);
 
 			result = single;
@@ -282,6 +282,7 @@ public class DateConverter {
 			SingleTimeObject single = new SingleTimeObject();
 			int[] dateFields = parseDate(words);
 
+			single.dateDefinition = DateDefinition.values()[dateFields[dateFields.length - 1]];
 			single.date = buildDateFromArray(dateFields);
 
 			return single;
@@ -331,7 +332,7 @@ public class DateConverter {
 			words.consume();
 		}
 
-		if(words.getCurrentElement().isOfType(WordType.NUMBER)){
+		if(words.isIntoBounds() && words.getCurrentElement().isOfType(WordType.NUMBER)){
 			date[TimeUnit.YEAR.ordinal()] = Integer.parseInt(words.getCurrentElement().getValue());
 			words.consume();
 		}
@@ -531,20 +532,20 @@ public class DateConverter {
 		SingleTimeObject oneDay = new SingleTimeObject();
 
 		oneDay.dateDefinition = DateDefinition.DATE_ONLY; 
-		oneDay.interval = TimeInterval.SINGLE;
+		//oneDay.interval = TimeInterval.SINGLE;
 
 		if(dayStr.equals("aujourd'hui")){
-			oneDay.tense = TimeTense.PRESENT;
+			//oneDay.tense = TimeTense.PRESENT;
 		} else {
 			String[] parts = dayStr.split("-");
 
 			for(int i=0; i<parts.length; i++){
 				if(parts[i].equals("avant") || parts[i].equals("hier")){
 					calendar.add(Calendar.DAY_OF_MONTH, -1);
-					oneDay.tense = TimeTense.PAST;
+					//oneDay.tense = TimeTense.PAST;
 				} else if(parts[i].equals("après") || parts[i].equals("demain")){
 					calendar.add(Calendar.DAY_OF_MONTH, 1);
-					oneDay.tense = TimeTense.FUTURE;
+					//oneDay.tense = TimeTense.FUTURE;
 				}
 			}
 		}

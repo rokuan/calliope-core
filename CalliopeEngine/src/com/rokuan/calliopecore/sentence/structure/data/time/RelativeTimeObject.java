@@ -14,6 +14,9 @@ public class RelativeTimeObject extends TimeAdverbial {
 
 	@Expose
     public DateDefinition dateDefinition = DateDefinition.DATE_AND_TIME;
+	
+	@Expose
+	public TimeTense tense = TimeTense.PRESENT;
 
     public RelativeTimeObject(){    	
         for(int i=0; i<periods.length; i++){

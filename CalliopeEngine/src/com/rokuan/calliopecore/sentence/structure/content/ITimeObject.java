@@ -1,11 +1,11 @@
 package com.rokuan.calliopecore.sentence.structure.content;
 
-import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial.DateContext;
+import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial.TimeContext;
 import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial.TimeType;
 
 public interface ITimeObject {
 	TimeType getTimeType();
 	
-	DateContext getTimePreposition();
-	void setTimePreposition(DateContext prep);
+	TimeContext getTimePreposition();
+	void setTimePreposition(TimeContext prep);
 }

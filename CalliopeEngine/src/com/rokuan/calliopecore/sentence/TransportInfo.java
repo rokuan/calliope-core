@@ -6,15 +6,15 @@ import com.rokuan.calliopecore.sentence.structure.data.way.TransportObject.Trans
 
 @DatabaseTable(tableName = "transports")
 public class TransportInfo {
-	public static final String VALUE_FIELD_NAME = "name";
-	public static final String TRANSPORT_FIELD_NAME = "transport_type";
+	public static final String TRANSPORT_FIELD_NAME = "name";
+	public static final String TYPE_FIELD_NAME = "transport_type";
 	
 	//@Expose
-	@DatabaseField(columnName = VALUE_FIELD_NAME, id = true)
+	@DatabaseField(columnName = TRANSPORT_FIELD_NAME, id = true)
 	private String name;
 	
 	//@Expose
-	@DatabaseField(columnName = TRANSPORT_FIELD_NAME)
+	@DatabaseField(columnName = TYPE_FIELD_NAME)
 	private TransportType transportType;
 	
 	public TransportInfo(){

@@ -6,7 +6,7 @@ import java.util.Set;
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
-import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial.DateContext;
+import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial.TimeContext;
 import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial.TimeType;
 
 @DatabaseTable(tableName = "time_prepositions")
@@ -21,7 +21,7 @@ public class TimePreposition extends Preposition {
 
 	//@Expose
 	@DatabaseField(columnName = PREPOSITION_FIELD_NAME)
-	private DateContext timePreposition;
+	private TimeContext timePreposition;
 	
 	@DatabaseField(columnName = FOLLOWERS_FIELD_NAME, dataType = DataType.SERIALIZABLE)
 	private HashSet<TimeType> followersTypes = new HashSet<TimeType>();
@@ -30,17 +30,17 @@ public class TimePreposition extends Preposition {
 		
 	}
 	
-	public TimePreposition(String v, DateContext prep){
+	public TimePreposition(String v, TimeContext prep){
 		name = v;
 		timePreposition = prep;
 	}
 	
-	public TimePreposition(String v, DateContext prep, Set<TimeType> types){
+	public TimePreposition(String v, TimeContext prep, Set<TimeType> types){
 		this(v, prep);
 		followersTypes.addAll(types);
 	}
 	
-	public TimePreposition(String v, DateContext prep, TimeType... types){
+	public TimePreposition(String v, TimeContext prep, TimeType... types){
 		this(v, prep);
 
 		for(int i=0; i<types.length; i++){
@@ -52,7 +52,7 @@ public class TimePreposition extends Preposition {
 		return name;
 	}
 
-	public DateContext getValue() {
+	public TimeContext getValue() {
 		return timePreposition;
 	}
 

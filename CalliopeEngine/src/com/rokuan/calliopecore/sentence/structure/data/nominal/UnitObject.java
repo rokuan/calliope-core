@@ -18,9 +18,9 @@ public class UnitObject extends NominalGroup {
 		GIGABYTE,
 		TERABYTE,
 		
-		MILLISECONDS,
-		SECONDS,
-		MINUTES,
+		MILLISECOND,
+		SECOND,
+		MINUTE,
 		HOUR,
 		DAY,
 		YEAR,
