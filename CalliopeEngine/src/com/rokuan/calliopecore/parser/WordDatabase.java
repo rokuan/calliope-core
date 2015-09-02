@@ -1,5 +1,6 @@
 package com.rokuan.calliopecore.parser;
 
+import com.rokuan.calliopecore.sentence.CharacterInfo;
 import com.rokuan.calliopecore.sentence.CityInfo;
 import com.rokuan.calliopecore.sentence.ColorInfo;
 import com.rokuan.calliopecore.sentence.CountryInfo;
@@ -8,6 +9,7 @@ import com.rokuan.calliopecore.sentence.CustomObject;
 import com.rokuan.calliopecore.sentence.CustomPerson;
 import com.rokuan.calliopecore.sentence.CustomPlace;
 import com.rokuan.calliopecore.sentence.LanguageInfo;
+import com.rokuan.calliopecore.sentence.PlaceInfo;
 import com.rokuan.calliopecore.sentence.PlacePreposition;
 import com.rokuan.calliopecore.sentence.PurposePreposition;
 import com.rokuan.calliopecore.sentence.TimePreposition;
@@ -28,6 +30,8 @@ public interface WordDatabase {
 	CountryInfo findCountryInfo(String q);
 	TransportInfo findTransportInfo(String q);
 	UnitInfo findUnitInfo(String q);
+	CharacterInfo findCharacterInfo(String q);
+	PlaceInfo findPlaceInfo(String q);
 	
 	CustomObject findCustomObject(String q);
 	CustomPlace findCustomPlace(String q);

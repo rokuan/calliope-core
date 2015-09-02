@@ -100,6 +100,8 @@ public class Word {
 	private CityInfo cityInfo;
 	private TransportInfo transportInfo;
 	private UnitInfo unitInfo;
+	private CharacterInfo characterInfo;
+	private PlaceInfo placeInfo;
 	private TimePreposition timePreposition;
 	private PlacePreposition placePreposition;
 	private WayPreposition wayPreposition;
@@ -216,6 +218,22 @@ public class Word {
 
 	public void setUnitInfo(UnitInfo unitInfo) {
 		this.unitInfo = unitInfo;
+	}
+
+	public CharacterInfo getCharacterInfo() {
+		return characterInfo;
+	}
+
+	public void setCharacterInfo(CharacterInfo characterInfo) {
+		this.characterInfo = characterInfo;
+	}
+
+	public PlaceInfo getPlaceInfo() {
+		return placeInfo;
+	}
+
+	public void setPlaceInfo(PlaceInfo placeInfo) {
+		this.placeInfo = placeInfo;
 	}
 
 	public TimePreposition getTimePreposition() {

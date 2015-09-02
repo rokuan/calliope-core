@@ -46,6 +46,7 @@ public abstract class PlaceAdverbial implements IPlaceObject {
 		CITY,
 		COUNTRY,
 		NAMED_PLACE,
+		PLACE_TYPE,
 		NOMINAL,
 		CUSTOM,
 		ADDRESS
@@ -88,6 +89,9 @@ public abstract class PlaceAdverbial implements IPlaceObject {
 			break;
 		case ADDRESS:
 			clazz = AddressObject.class;
+			break;
+		case PLACE_TYPE:
+			clazz = PlaceObject.class;
 			break;
 		}
 		
