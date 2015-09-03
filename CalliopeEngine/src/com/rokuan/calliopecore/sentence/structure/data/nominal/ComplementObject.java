@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gson.annotations.Expose;
-import com.rokuan.calliopecore.sentence.Adjective;
+import com.rokuan.calliopecore.sentence.AdjectiveInfo.AdjectiveValue;
 import com.rokuan.calliopecore.sentence.structure.content.INominalObject;
 import com.rokuan.calliopecore.sentence.structure.content.IPlaceObject;
 import com.rokuan.calliopecore.sentence.structure.content.IPurposeObject;
@@ -35,7 +35,7 @@ public class ComplementObject extends NominalGroup implements IPlaceObject, IWay
 	public CountObject count = new AllItemsObject();
 
 	@Expose
-	public List<Adjective> adjectives = new ArrayList<Adjective>();
+	public List<AdjectiveValue> adjectives = new ArrayList<AdjectiveValue>();
 
 	@Expose
     public String object = "";

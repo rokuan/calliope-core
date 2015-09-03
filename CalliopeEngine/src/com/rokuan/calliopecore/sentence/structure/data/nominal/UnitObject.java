@@ -1,9 +1,14 @@
 package com.rokuan.calliopecore.sentence.structure.data.nominal;
 
 import com.google.gson.annotations.Expose;
+import com.rokuan.calliopecore.sentence.structure.content.IWayObject;
+import com.rokuan.calliopecore.sentence.structure.data.way.WayAdverbial.WayContext;
+import com.rokuan.calliopecore.sentence.structure.data.way.WayAdverbial.WayType;
 
-public class UnitObject extends NominalGroup {
+public class UnitObject extends NominalGroup implements IWayObject {
 	public enum UnitType {
+		NONE,
+		
 		MILLIMETER,
 		CENTIMETER,
 		DECIMETER,
@@ -36,13 +41,28 @@ public class UnitObject extends NominalGroup {
 	}
 	
 	@Expose
-	public double amount = 0;
+	private WayContext wayPreposition;
 	
 	@Expose
-	public UnitType unitType;
+	public UnitType unitType = UnitType.NONE;
 		
 	@Override
 	public GroupType getGroupType() {
 		return GroupType.UNIT;
+	}
+
+	@Override
+	public WayType getWayType() {
+		return WayType.UNIT;
+	}
+
+	@Override
+	public WayContext getWayPreposition() {
+		return wayPreposition;
+	}
+
+	@Override
+	public void setWayPreposition(WayContext prep) {
+		wayPreposition = prep;
 	}
 }

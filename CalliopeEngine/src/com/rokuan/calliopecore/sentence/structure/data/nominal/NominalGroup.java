@@ -1,7 +1,7 @@
 package com.rokuan.calliopecore.sentence.structure.data.nominal;
 
 import com.rokuan.calliopecore.sentence.structure.content.INominalObject;
-import com.rokuan.calliopecore.sentence.structure.data.place.AdditionalPlaceObject;
+import com.rokuan.calliopecore.sentence.structure.data.place.AdditionalPlace;
 import com.rokuan.calliopecore.sentence.structure.data.place.LocationObject;
 import com.rokuan.calliopecore.sentence.structure.data.place.NamedPlaceObject;
 import com.rokuan.calliopecore.sentence.structure.data.place.PlaceObject;
@@ -32,7 +32,8 @@ public abstract class NominalGroup implements INominalObject {
     	COUNTRY,
     	LOCATION,
     	UNIT,
-    	CHARACTER
+    	CHARACTER,
+    	QUANTITY
     }
     
     public static Class<? extends INominalObject> getClassFromGroupType(GroupType ty){
@@ -73,7 +74,7 @@ public abstract class NominalGroup implements INominalObject {
 			clazz = SingleTimeObject.class;
 			break;
 		case ADDITIONAL_PLACE:
-			clazz = AdditionalPlaceObject.class;
+			clazz = AdditionalPlace.class;
 			break;
 		case CITY:
 			clazz = CityObject.class;
@@ -95,6 +96,9 @@ public abstract class NominalGroup implements INominalObject {
 			break;
 		case PLACE_TYPE:
 			clazz = PlaceObject.class;
+			break;
+		case QUANTITY:
+			clazz = QuantityObject.class;
 			break;
 		}
     	

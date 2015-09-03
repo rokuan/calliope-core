@@ -5,6 +5,7 @@ import com.rokuan.calliopecore.sentence.structure.content.IWayObject;
 import com.rokuan.calliopecore.sentence.structure.data.nominal.ColorObject;
 import com.rokuan.calliopecore.sentence.structure.data.nominal.ComplementObject;
 import com.rokuan.calliopecore.sentence.structure.data.nominal.LanguageObject;
+import com.rokuan.calliopecore.sentence.structure.data.nominal.UnitObject;
 import com.rokuan.calliopecore.sentence.structure.data.nominal.VerbalGroup;
 
 public abstract class WayAdverbial implements IWayObject {
@@ -14,7 +15,8 @@ public abstract class WayAdverbial implements IWayObject {
 		NOMINAL,
 		LANGUAGE,
 		COLOR,
-		TRANSPORT
+		TRANSPORT,
+		UNIT
 	}
 
 	public enum WayContext {
@@ -55,6 +57,9 @@ public abstract class WayAdverbial implements IWayObject {
 			break;
 		case TRANSPORT:
 			clazz = TransportObject.class;
+			break;
+		case UNIT:
+			clazz = UnitObject.class;
 			break;
 		}
 

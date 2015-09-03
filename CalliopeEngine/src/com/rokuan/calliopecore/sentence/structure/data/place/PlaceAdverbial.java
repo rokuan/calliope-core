@@ -70,7 +70,7 @@ public abstract class PlaceAdverbial implements IPlaceObject {
 		
 		switch(ty){
 		case CUSTOM:
-			clazz = AdditionalPlaceObject.class;
+			clazz = AdditionalPlace.class;
 			break;
 		case NOMINAL:
 			clazz = NominalPlaceObject.class;
