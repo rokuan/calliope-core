@@ -23,30 +23,6 @@ public abstract class InterpretationObject extends FullContent {
 		requestType = t;
 	}
 
-	public String getDescription(){
-		// TODO:
-		String leftPart = (action == null) ? "" : action.toString();
-		String rightPart = (what == null) ? "" : what.toString();
-		//String rightPart = (what == null) ? "" : what;
-		return leftPart + ':' + rightPart;
-	}
-
-	@Override
-	public String toString(){
-		StringBuilder result = new StringBuilder();
-
-		result.append("type=");
-		result.append(requestType);
-		result.append(";");
-		result.append("action=");
-		result.append(action);
-		result.append(";");
-		result.append("what=");
-		result.append(what);
-
-		return result.toString();
-	}
-
 	public static String toJSON(InterpretationObject object){		
 		GsonBuilder builder = new GsonBuilder().excludeFieldsWithoutExposeAnnotation()
 				.registerTypeAdapter(InterpretationObject.class, new InterpretationObjectSerializer());

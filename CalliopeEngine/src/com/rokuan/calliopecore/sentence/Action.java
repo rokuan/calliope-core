@@ -470,7 +470,7 @@ public class Action {
         WRITE_AGAIN
     }
 
-    public static enum VerbAction {
+    /*public static enum VerbAction {
         ABANDON,
         ABSTRACT,
         ACCEPT,
@@ -935,5 +935,5 @@ public class Action {
         WORK,
         WRITE,
         WRITE_AGAIN
-    }
+    }*/
 }

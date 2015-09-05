@@ -1,8 +1,7 @@
 package com.rokuan.calliopecore.sentence.structure.data.nominal;
 
 import com.google.gson.annotations.Expose;
-import com.rokuan.calliopecore.sentence.Action;
-import com.rokuan.calliopecore.sentence.Action.VerbAction;
+import com.rokuan.calliopecore.sentence.ActionObject;
 import com.rokuan.calliopecore.sentence.structure.content.INominalObject;
 import com.rokuan.calliopecore.sentence.structure.content.IPlaceObject;
 import com.rokuan.calliopecore.sentence.structure.content.IPurposeObject;
@@ -31,7 +30,7 @@ public class VerbalGroup extends NominalGroup implements IWayObject, ITimeObject
 	private INominalObject subject;
 
 	@Expose
-	private Action.VerbAction action = VerbAction.UNDEFINED;
+	private ActionObject action = null;
 
 	@Expose
 	private INominalObject what;
@@ -107,8 +106,8 @@ public class VerbalGroup extends NominalGroup implements IWayObject, ITimeObject
 	}
 	
 	@Override
-	public void setAction(Action.VerbAction verb){
-		action = verb;
+	public void setAction(ActionObject act){
+		action = act;
 	}
 	
 	@Override
@@ -147,7 +146,7 @@ public class VerbalGroup extends NominalGroup implements IWayObject, ITimeObject
 	}
 	
 	@Override
-	public Action.VerbAction getAction(){
+	public ActionObject getAction(){
 		return action;
 	}
 	

@@ -62,4 +62,7 @@ public class VerbConjugation {
 		return form;
 	}
 
+	public boolean does(Action.ActionType action){
+		return verb != null && verb.hasAction(action);
+	}
 }

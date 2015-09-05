@@ -1,9 +1,9 @@
 package com.rokuan.calliopecore.sentence.structure.common;
 
-import com.rokuan.calliopecore.sentence.Action;
+import com.rokuan.calliopecore.sentence.ActionObject;
 
 public interface IVerbalContent {
-	void setAction(Action.VerbAction action);
+	void setAction(ActionObject action);
 
-	Action.VerbAction getAction();
+	ActionObject getAction();
 }

@@ -1,7 +1,7 @@
 package com.rokuan.calliopecore.sentence.structure.common;
 
 import com.google.gson.annotations.Expose;
-import com.rokuan.calliopecore.sentence.Action;
+import com.rokuan.calliopecore.sentence.ActionObject;
 import com.rokuan.calliopecore.sentence.structure.content.INominalObject;
 import com.rokuan.calliopecore.sentence.structure.content.IPlaceObject;
 import com.rokuan.calliopecore.sentence.structure.content.IPurposeObject;
@@ -15,7 +15,7 @@ public abstract class FullContent implements IVerbalObject {
 	public INominalObject subject;
 
 	@Expose
-	public Action.VerbAction action;
+	public ActionObject action;
 
 	@Expose
 	public INominalObject what;
@@ -41,7 +41,7 @@ public abstract class FullContent implements IVerbalObject {
 	}
 	
 	@Override
-	public void setAction(Action.VerbAction verb){
+	public void setAction(ActionObject verb){
 		action = verb;
 	}
 	
@@ -82,7 +82,7 @@ public abstract class FullContent implements IVerbalObject {
 	}
 	
 	@Override
-	public Action.VerbAction getAction(){
+	public ActionObject getAction(){
 		return action;
 	}
 	

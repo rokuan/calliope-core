@@ -1,10 +1,10 @@
 package com.rokuan.calliopecore.sentence.structure.content;
 
-import com.rokuan.calliopecore.sentence.Action;
+import com.rokuan.calliopecore.sentence.ActionObject;
 
 public interface IVerbalObject {
 	void setSubject(INominalObject subject);
-	void setAction(Action.VerbAction action);
+	void setAction(ActionObject action);
 	void setDirectObject(INominalObject dObject);
 	void setTarget(INominalObject target);
 	void setPlaceAdverbial(IPlaceObject pObject);
@@ -13,7 +13,7 @@ public interface IVerbalObject {
 	void setPurposeAdverbial(IPurposeObject pObject);
 	
 	INominalObject getSubject();
-	Action.VerbAction getAction();
+	ActionObject getAction();
 	INominalObject getDirectObject();
 	INominalObject getTarget();
 	IPlaceObject getPlaceAdverbial();

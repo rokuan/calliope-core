@@ -1,8 +1,13 @@
 package com.rokuan.calliopecore.sentence;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
+import com.google.gson.annotations.Expose;
+import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
-import com.rokuan.calliopecore.sentence.Action.VerbAction;
 
 /**
  * Created by LEBEAU Christophe on 19/02/2015.
@@ -47,23 +52,32 @@ public class Verb {
     }
     
     public static final String ID_FIELD_NAME = "verb";
-    public static final String ACTION_FIELD_NAME = "action";
+    public static final String ACTIONS_FIELD_NAME = "actions";
     public static final String AUXILIARY_FIELD_NAME = "auxiliary";
     
+    @Expose
     @DatabaseField(columnName = ID_FIELD_NAME, id = true)
-    protected String verb = "";
-    @DatabaseField(columnName = ACTION_FIELD_NAME)
-    protected Action.VerbAction action = VerbAction.UNDEFINED;
+    private String verb = "";
+    
+    @Expose
+    @DatabaseField(columnName = ACTIONS_FIELD_NAME, dataType = DataType.SERIALIZABLE)
+    private HashSet<Action.ActionType> actions = new HashSet<Action.ActionType>(); //VerbAction.UNDEFINED;
+    
+    @Expose
     @DatabaseField(columnName = AUXILIARY_FIELD_NAME)
-    protected boolean auxiliary = false;
+    private boolean auxiliary = false;
     
     public Verb(){
     	
     }
     
-    public Verb(String infinitiveForm, Action.VerbAction verbAction, boolean aux){
+    public Verb(String infinitiveForm, boolean aux, Action.ActionType verbActions){
+    	this(infinitiveForm, new HashSet<Action.ActionType>(Arrays.asList(verbActions)), aux);
+    }
+    
+    public Verb(String infinitiveForm, Set<Action.ActionType> verbActions, boolean aux){
     	verb = infinitiveForm;
-    	action = verbAction;
+    	actions.addAll(verbActions);
     	auxiliary = aux;
     }
 
@@ -71,11 +85,11 @@ public class Verb {
         return verb;
     }
 
-    public Action.VerbAction getAction() {
-        return action;
-    }
-
     public boolean isAuxiliary() {
         return auxiliary;
+    }
+    
+    public boolean hasAction(Action.ActionType action){
+    	return actions.contains(action);
     }
 }
