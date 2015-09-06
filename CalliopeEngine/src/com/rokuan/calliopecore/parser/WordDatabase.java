@@ -8,6 +8,7 @@ import com.rokuan.calliopecore.sentence.CustomMode;
 import com.rokuan.calliopecore.sentence.CustomObject;
 import com.rokuan.calliopecore.sentence.CustomPerson;
 import com.rokuan.calliopecore.sentence.CustomPlace;
+import com.rokuan.calliopecore.sentence.IVerbConjugation;
 import com.rokuan.calliopecore.sentence.LanguageInfo;
 import com.rokuan.calliopecore.sentence.PlaceInfo;
 import com.rokuan.calliopecore.sentence.PlacePreposition;
@@ -15,7 +16,6 @@ import com.rokuan.calliopecore.sentence.PurposePreposition;
 import com.rokuan.calliopecore.sentence.TimePreposition;
 import com.rokuan.calliopecore.sentence.TransportInfo;
 import com.rokuan.calliopecore.sentence.UnitInfo;
-import com.rokuan.calliopecore.sentence.VerbConjugation;
 import com.rokuan.calliopecore.sentence.WayPreposition;
 import com.rokuan.calliopecore.sentence.Word;
 
@@ -43,5 +43,5 @@ public interface WordDatabase {
 	WayPreposition findWayPreposition(String q);
 	PurposePreposition findPurposePreposition(String q);
 	
-	VerbConjugation findConjugation(String q);
+	IVerbConjugation findConjugation(String q);
 }

@@ -1,6 +1,6 @@
 package com.rokuan.calliopecore.pattern;
 
-import com.rokuan.calliopecore.sentence.Verb.Form;
+import com.rokuan.calliopecore.sentence.Type.Form;
 import com.rokuan.calliopecore.sentence.Word;
 import com.rokuan.calliopecore.sentence.Word.WordType;
 
@@ -69,7 +69,7 @@ public class VerbMatcher implements WordMatcher {
 		}
 
 		if(infiniteVerb != null
-				&& (word.getVerbInfo() == null || !word.getVerbInfo().getVerb().getVerb().matches(infiniteVerb))){
+				&& (word.getVerbInfo() == null || !word.getVerbInfo().getVerb().getName().matches(infiniteVerb))){
 			return false;
 		}
 

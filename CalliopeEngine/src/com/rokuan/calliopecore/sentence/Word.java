@@ -93,7 +93,7 @@ public class Word {
 	private String value;
 	@DatabaseField(columnName = TYPES_FIELD_NAME, dataType = DataType.SERIALIZABLE)
 	private HashSet<WordType> types = new HashSet<WordType>();
-	private VerbConjugation verbInfo;
+	private IVerbConjugation verbInfo;
 	private LanguageInfo langInfo;
 	private ColorInfo colorInfo;
 	private CountryInfo countryInfo;
@@ -164,11 +164,11 @@ public class Word {
 		return value;
 	}
 
-	public VerbConjugation getVerbInfo() {
+	public IVerbConjugation getVerbInfo() {
 		return verbInfo;
 	}
 
-	public void setVerbInfo(VerbConjugation verbInfo) {
+	public void setVerbInfo(IVerbConjugation verbInfo) {
 		this.verbInfo = verbInfo;
 	}
 
