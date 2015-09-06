@@ -1,6 +1,6 @@
 package com.rokuan.calliopecore.pattern;
 
-import com.rokuan.calliopecore.sentence.Type.Form;
+import com.rokuan.calliopecore.sentence.IVerbConjugation.Form;
 import com.rokuan.calliopecore.sentence.Word;
 import com.rokuan.calliopecore.sentence.Word.WordType;
 

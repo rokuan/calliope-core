@@ -1,14 +1,13 @@
 package com.rokuan.calliopecore.sentence.structure.data.nominal;
 
 import com.google.gson.annotations.Expose;
-import com.rokuan.calliopecore.sentence.Type;
-import com.rokuan.calliopecore.sentence.Type.Pronoun;
+import com.rokuan.calliopecore.sentence.IPronoun;
 
-public class PronounTarget extends NominalGroup {
+public class PronounSubject extends NominalGroup {
 	@Expose
-	public Pronoun pronoun;
+	public IPronoun pronoun;
 
-	public PronounTarget(Type.Pronoun pro){
+	public PronounSubject(IPronoun pro){
 		pronoun = pro;
     }
 

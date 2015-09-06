@@ -1,7 +1,7 @@
 package com.rokuan.calliopecore.sentence.structure.data.count;
 
 import com.google.gson.annotations.Expose;
-import com.rokuan.calliopecore.sentence.Type.Pronoun;
+import com.rokuan.calliopecore.sentence.IPronoun;
 
 /**
  * Created by LEBEAU Christophe on 01/03/2015.
@@ -37,7 +37,12 @@ public abstract class CountObject {
 	public ArticleType definition = ArticleType.NONE;
 
 	@Expose
-	public Pronoun possessiveTarget = Pronoun.UNDEFINED;
+	public IPronoun possessiveTarget = new IPronoun() {		
+		@Override
+		public PronounSource getSource() {
+			return PronounSource.UNDEFINED;
+		}
+	};
 
 	// TODO: ajouter les intervalles du type "du 5eme au dernier"
 	protected CountObject(CountType ty){

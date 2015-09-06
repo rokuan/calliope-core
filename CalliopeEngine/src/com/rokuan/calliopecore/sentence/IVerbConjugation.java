@@ -1,6 +1,5 @@
 package com.rokuan.calliopecore.sentence;
 
-import com.rokuan.calliopecore.sentence.Type.Form;
 
 /**
  * Created by LEBEAU Christophe on 19/02/2015.
@@ -11,10 +10,21 @@ public interface IVerbConjugation {
         PRESENT,
         FUTURE
     }
+
+    public enum Form {
+        INDICATIVE,
+        CONDITIONAL,
+        SUBJUNCTIVE,
+        IMPERATIVE,
+        INFINITIVE,
+        PARTICIPLE,
+    }
 	
     IVerb getVerb();
 
     Form getForm();
+    
+    Tense getTense();
 
 	boolean does(Action.ActionType action);
 }

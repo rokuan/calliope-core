@@ -62,7 +62,7 @@ public abstract class NominalGroup implements INominalObject {
 			clazz = AdditionalPerson.class;
 			break;				
 		case PRONOUN:
-			clazz = PronounTarget.class;
+			clazz = PronounSubject.class;
 			break;
 		case LOCATION:
 			clazz = LocationObject.class;
