@@ -1,6 +1,8 @@
 package com.rokuan.calliopecore.json;
 
 import com.google.gson.GsonBuilder;
+import com.rokuan.calliopecore.sentence.IPronoun;
+import com.rokuan.calliopecore.sentence.IVerbConjugation;
 import com.rokuan.calliopecore.sentence.structure.InterpretationObject;
 import com.rokuan.calliopecore.sentence.structure.content.INominalObject;
 import com.rokuan.calliopecore.sentence.structure.content.IPlaceObject;
@@ -20,6 +22,8 @@ public class FullGsonBuilder {
 		builder.registerTypeAdapter(ITimeObject.class, new TimeAdverbialSerializer());
 		builder.registerTypeAdapter(IWayObject.class, new WayAdverbialSerializer());
 		builder.registerTypeAdapter(IPurposeObject.class, new PurposeAdverbialSerializer());
+		builder.registerTypeAdapter(IVerbConjugation.class, new IVerbConjugationSerializer());
+		builder.registerTypeAdapter(IPronoun.class, new IPronounSerializer());
 		
 		return builder;
 	}
@@ -35,6 +39,8 @@ public class FullGsonBuilder {
 		builder.registerTypeAdapter(IWayObject.class, new WayAdverbialDeserializer());
 		builder.registerTypeAdapter(IPurposeObject.class, new PurposeAdverbialDeserializer());
 		builder.registerTypeAdapter(CountObject.class, new CountObjectDeserializer());
+		builder.registerTypeAdapter(IVerbConjugation.class, new IVerbConjugationDeserializer());
+		builder.registerTypeAdapter(IPronoun.class, new IPronounDeserializer());
 		
 		return builder;
 	}

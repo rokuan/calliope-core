@@ -218,7 +218,7 @@ public abstract class WordPattern {
 		return new WordSimplePattern(null);
 	}*/
 
-	public static WordPattern simpleVerb(String verbRegex){
+	/*public static WordPattern simpleVerb(String verbRegex){
 		return new WordSimplePattern(new VerbMatcher().getBuilder().setVerbRegex(verbRegex).build());
 	}
 
@@ -235,7 +235,7 @@ public abstract class WordPattern {
 				.setVerbRegex(verbRegex)
 				.setConjugatedVerbRegex(conjugationRegex)
 				.build());
-	}
+	}*/
 
 	public static WordPattern simplePlacePrep(PlaceType next){
 		return simplePlacePrep(next, false);
