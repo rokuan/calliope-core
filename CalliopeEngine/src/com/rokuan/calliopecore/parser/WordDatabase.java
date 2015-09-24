@@ -17,12 +17,12 @@ import com.rokuan.calliopecore.sentence.TimePreposition;
 import com.rokuan.calliopecore.sentence.TransportInfo;
 import com.rokuan.calliopecore.sentence.UnitInfo;
 import com.rokuan.calliopecore.sentence.WayPreposition;
-import com.rokuan.calliopecore.sentence.Word;
+import com.rokuan.calliopecore.sentence.IWord;
 
 public interface WordDatabase {
 	boolean wordStartsWith(String q);
 
-	Word findWord(String q);
+	IWord findWord(String q);
 	
 	LanguageInfo findLanguageInfo(String q);
 	ColorInfo findColorInfo(String q);

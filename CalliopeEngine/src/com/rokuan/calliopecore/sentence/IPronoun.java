@@ -12,7 +12,7 @@ public interface IPronoun {
         YOU_,
         HE_,
         SHE_,
-        HE__SHE__,
+        THEY,
         UNDEFINED
     }
 	

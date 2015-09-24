@@ -3,12 +3,12 @@ package com.rokuan.calliopecore.parser;
 import java.util.List;
 
 import com.rokuan.calliopecore.pattern.WordPattern;
-import com.rokuan.calliopecore.sentence.Word;
+import com.rokuan.calliopecore.sentence.IWord;
 
 /**
  * Created by LEBEAU Christophe on 01/03/2015.
  */
-public class WordBuffer extends TokenBuffer<Word> {
+public class WordBuffer<T extends IWord> extends TokenBuffer<T> {
 	/**
 	 * 
 	 */
@@ -18,19 +18,19 @@ public class WordBuffer extends TokenBuffer<Word> {
 		super();
 	}
 	
-	public WordBuffer(List<Word> ws){
+	public WordBuffer(List<T> ws){
 		super(ws);
 	}
 	
-	public WordBuffer(WordBuffer wb){
+	public WordBuffer(WordBuffer<T> wb){
 		super(wb);
 	}
 	
-	public WordBuffer cut(){
-		return new WordBuffer(this.subList(getCurrentIndex(), this.size()));
+	public WordBuffer<T> cut(){
+		return new WordBuffer<T>(this.subList(getCurrentIndex(), this.size()));
 	}
 	
-    public boolean matchesSyntax(Word.WordType... types){
+    /*public boolean matchesSyntax(IWord.WordType... types){
         if(types.length + this.getCurrentIndex() != this.size()){
             return false;
         }
@@ -38,7 +38,7 @@ public class WordBuffer extends TokenBuffer<Word> {
         return matchesSyntax(types.length, types);
     }
 
-    private boolean matchesSyntax(int length, Word.WordType... types){
+    private boolean matchesSyntax(int length, IWord.WordType... types){
         for(int i=0; i<length; i++){
             if(!this.get(i + this.getCurrentIndex()).isOfType(types[i])){
                 return false;
@@ -48,13 +48,13 @@ public class WordBuffer extends TokenBuffer<Word> {
         return true;
     }
 
-    public boolean syntaxStartsWith(Word.WordType... types){
+    public boolean syntaxStartsWith(IWord.WordType... types){
         if(types.length + this.getCurrentIndex() > this.size()){
             return false;
         }
 
         return matchesSyntax(types.length, types);
-    }
+    }*/
     
     public boolean syntaxStartsWith(WordPattern... patterns){
     	return WordPattern.syntaxStartsWith(this, patterns);

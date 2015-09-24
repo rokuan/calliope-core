@@ -4,11 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.rokuan.calliopecore.parser.WordBuffer;
-import com.rokuan.calliopecore.sentence.Word;
-import com.rokuan.calliopecore.sentence.structure.data.place.PlaceAdverbial.PlaceType;
-import com.rokuan.calliopecore.sentence.structure.data.purpose.PurposeAdverbial.PurposeType;
-import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial.TimeType;
-import com.rokuan.calliopecore.sentence.structure.data.way.WayAdverbial.WayType;
+import com.rokuan.calliopecore.sentence.IWord;
 
 /**
  * Created by LEBEAU Christophe on 02/03/2015.
@@ -193,94 +189,7 @@ public abstract class WordPattern {
 	public static WordPattern optional(WordPattern pattern){
 		return new WordOptionalPattern(pattern);
 	}
-
-	public static WordPattern simpleWord(Word.WordType ty){
-		return new WordSimplePattern(SimpleWordMatcher.builder().setTypes(ty).build());
-	}
-
-	public static WordPattern simpleWord(Word.WordType[] ty){
-		return new WordSimplePattern(SimpleWordMatcher.builder().setTypes(ty).build());
-	}
-
-	public static WordPattern simpleWord(String regex){
-		return new WordSimplePattern(SimpleWordMatcher.builder().setWordRegex(regex).build());
-	}
-
-	public static WordPattern simpleWord(Word.WordType ty, String regex){
-		return new WordSimplePattern(SimpleWordMatcher.builder().setTypes(ty).setWordRegex(regex).build());
-	}
-
-	public static WordPattern simpleWord(Word.WordType[] ty, String regex){
-		return new WordSimplePattern(SimpleWordMatcher.builder().setTypes(ty).setWordRegex(regex).build());
-	}
-
-	/*public static WordPattern simple(Word.WordType ty, String valueRegex, String verbRegex){
-		return new WordSimplePattern(null);
-	}*/
-
-	/*public static WordPattern simpleVerb(String verbRegex){
-		return new WordSimplePattern(new VerbMatcher().getBuilder().setVerbRegex(verbRegex).build());
-	}
-
-	public static WordPattern simpleVerb(String verbRegex, String conjugationRegex){
-		return new WordSimplePattern(new VerbMatcher().getBuilder()
-				.setVerbRegex(verbRegex)
-				.setConjugatedVerbRegex(conjugationRegex)
-				.build());
-	}
-
-	public static WordPattern simpleVerb(boolean auxiliary, String verbRegex, String conjugationRegex){
-		return new WordSimplePattern(new VerbMatcher().getBuilder()
-				.setAuxiliary(auxiliary)
-				.setVerbRegex(verbRegex)
-				.setConjugatedVerbRegex(conjugationRegex)
-				.build());
-	}*/
-
-	public static WordPattern simplePlacePrep(PlaceType next){
-		return simplePlacePrep(next, false);
-	}
-
-	public static WordPattern simplePlacePrep(PlaceType follower, boolean contracted){
-		return new WordSimplePattern(new PlacePrepositionMatcher().getBuilder()
-		.setMatchContractedForm(contracted)
-		.setPossibleFollowers(follower)
-		.build()); 
-	}
-
-	public static WordPattern simpleTimePrep(TimeType next){
-		return simpleTimePrep(next, false);
-	}
-
-	public static WordPattern simpleTimePrep(TimeType next, boolean contracted){
-		return new WordSimplePattern(new TimePrepositionMatcher().getBuilder()
-		.setMatchContractedForm(contracted)
-		.setPossibleFollowers(next)
-		.build());
-	}
 	
-	public static WordPattern simpleWayPrep(WayType next){
-		return simpleWayPrep(next, false);
-	}
-
-	public static WordPattern simpleWayPrep(WayType next, boolean contracted){
-		return new WordSimplePattern(new WayPrepositionMatcher().getBuilder()
-		.setMatchContractedForm(contracted)
-		.setPossibleFollowers(next)
-		.build());
-	}
-	
-	public static WordPattern simplePurposePrep(PurposeType next){
-		return simplePurposePrep(next, false);
-	}
-
-	public static WordPattern simplePurposePrep(PurposeType next, boolean contracted){
-		return new WordSimplePattern(new PurposePrepositionMatcher().getBuilder()
-		.setMatchContractedForm(contracted)
-		.setPossibleFollowers(next)
-		.build());
-	}
-
 	public static WordPattern simple(WordMatcher matcher){
 		return new WordSimplePattern(matcher);
 	}
@@ -297,15 +206,15 @@ public abstract class WordPattern {
 		return new WordSeparatedListPattern(part, separator);
 	}
 
-	public static boolean syntaxStartsWith(WordBuffer words, WordPattern... patterns){
+	public static <T extends IWord> boolean  syntaxStartsWith(WordBuffer<T> words, WordPattern... patterns){
 		if(!words.isIntoBounds()){
 			return false;
 		}
 
-		return realSyntaxStartsWith(new WordBuffer(words), new WordSequencePattern(patterns));
+		return realSyntaxStartsWith(new WordBuffer<T>(words), new WordSequencePattern(patterns));
 	}
 
-	private static boolean realSyntaxStartsWith(WordBuffer words, WordPattern pattern){		
+	private static <T extends IWord> boolean realSyntaxStartsWith(WordBuffer<T> words, WordPattern pattern){		
 		if(pattern instanceof WordOrPattern){
 			WordOrPattern or = (WordOrPattern)pattern;
 			boolean patternMatch = false;
@@ -331,27 +240,6 @@ public abstract class WordPattern {
 			if(words.getCurrentIndex() >= words.size()){
 				return false;
 			}
-
-			/*for(int i=0; i<simple.types.length; i++){
-				if(!words.getCurrentElement().isOfType(simple.types[i])){
-					return false;
-				}
-			}
-
-			try{
-				/*if(simple.valuePattern != null && !words.getCurrentElement().getValue().matches(simple.valuePattern)){
-					return false;
-				}
-
-				if(simple.verbPattern != null && !words.getCurrentElement().getVerbInfo().getVerb().getVerb().matches(simple.verbPattern)){
-					return false;
-				}
-			}catch(Exception e){
-				// TODO: lancer l'exception quoi qu'il arrive ?
-				//System.out.println(e);
-				e.printStackTrace();
-				return false;
-			}*/
 
 			if(!simple.matcher.matches(words.getCurrentElement())){
 				return false;
