@@ -7,11 +7,14 @@ import com.rokuan.calliopecore.sentence.structure.data.nominal.CharacterObject.C
 
 @DatabaseTable(tableName = "characters")
 public class CharacterInfo {
-	public static final String CHARACTER_FIELD_NAME = "character";
+	public static final String CHARACTER_FIELD_NAME = "character_value";
 	public static final String TYPE_FIELD_NAME = "character_type";
 	
+	@DatabaseField(generatedId = true)
+	private int id;
+	
 	@Expose
-	@DatabaseField(columnName = CHARACTER_FIELD_NAME, id = true)
+	@DatabaseField(columnName = CHARACTER_FIELD_NAME, uniqueIndex = true)
 	private String name;
 	
 	@Expose

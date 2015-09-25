@@ -6,11 +6,14 @@ import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable(tableName = "countries")
 public final class CountryInfo {
-	public static final String COUNTRY_FIELD_NAME = "name";
-	public static final String CODE_FIELD_NAME = "code";
+	public static final String COUNTRY_FIELD_NAME = "country_name";
+	public static final String CODE_FIELD_NAME = "country_code";
+	
+	@DatabaseField(generatedId = true)
+	private int id;
 
 	@Expose
-	@DatabaseField(columnName = COUNTRY_FIELD_NAME, id = true)
+	@DatabaseField(columnName = COUNTRY_FIELD_NAME, uniqueIndex = true)
 	private String name;
 
 	@Expose

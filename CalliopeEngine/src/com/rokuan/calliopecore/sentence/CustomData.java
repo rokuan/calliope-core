@@ -4,14 +4,14 @@ import com.google.gson.annotations.Expose;
 import com.j256.ormlite.field.DatabaseField;
 
 public abstract class CustomData {
-	public static final String DATA_FIELD_NAME = "name";
-	public static final String CODE_FIELD_NAME = "code";
+	public static final String DATA_FIELD_NAME = "data_name";
+	public static final String CODE_FIELD_NAME = "data_code";
 	
-	@DatabaseField(id = true)
+	@DatabaseField(generatedId = true)
 	private String id;
 	
 	@Expose
-	@DatabaseField(columnName = DATA_FIELD_NAME, unique = true)
+	@DatabaseField(columnName = DATA_FIELD_NAME, uniqueIndex = true)
 	private String name;
 	
 	@Expose

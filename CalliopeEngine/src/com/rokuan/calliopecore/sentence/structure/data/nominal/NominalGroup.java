@@ -44,7 +44,7 @@ public abstract class NominalGroup implements INominalObject {
 			clazz = AbstractTarget.class;
 			break;
 		case COMPLEMENT:
-			clazz = ComplementObject.class;
+			clazz = NameObject.class;
 			break;
 		case COLOR:
 			// TODO

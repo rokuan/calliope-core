@@ -6,7 +6,7 @@ import com.rokuan.calliopecore.sentence.structure.data.place.PlaceObject.PlaceCa
 
 @DatabaseTable(tableName = "places")
 public class PlaceInfo {
-	public static final String PLACE_FIELD_NAME = "place";
+	public static final String PLACE_FIELD_NAME = "place_name";
 	public static final String TYPE_FIELD_NAME = "place_type";
 	
 	//@Expose

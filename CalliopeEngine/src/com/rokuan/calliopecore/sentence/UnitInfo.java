@@ -9,8 +9,11 @@ public class UnitInfo {
 	public static final String UNIT_FIELD_NAME = "name";
 	public static final String TYPE_FIELD_NAME = "unit_type";
 	
+	@DatabaseField(generatedId = true)
+	private int id;
+	
 	//@Expose
-	@DatabaseField(columnName = UNIT_FIELD_NAME, id = true)
+	@DatabaseField(columnName = UNIT_FIELD_NAME, uniqueIndex = true)
 	private String name;
 	
 	//@Expose

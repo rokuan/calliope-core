@@ -6,11 +6,14 @@ import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable(tableName = "colors")
 public class ColorInfo {
-	public static final String COLOR_FIELD_NAME = "name";
-	public static final String HEX_FIELD_NAME = "hexcode";
+	public static final String COLOR_FIELD_NAME = "color_name";
+	public static final String HEX_FIELD_NAME = "color_hexcode";
+	
+	@DatabaseField(generatedId = true)
+	private int id;
 	
 	@Expose
-	@DatabaseField(columnName = COLOR_FIELD_NAME, id = true)
+	@DatabaseField(columnName = COLOR_FIELD_NAME, uniqueIndex = true)
 	private String name;
 	
 	@Expose

@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.google.gson.annotations.Expose;
 import com.rokuan.calliopecore.sentence.AdjectiveInfo.AdjectiveValue;
+import com.rokuan.calliopecore.sentence.NameInfo;
 import com.rokuan.calliopecore.sentence.structure.content.INominalObject;
 import com.rokuan.calliopecore.sentence.structure.content.IPlaceObject;
 import com.rokuan.calliopecore.sentence.structure.content.IPurposeObject;
@@ -24,7 +25,7 @@ import com.rokuan.calliopecore.sentence.structure.data.way.WayAdverbial.WayType;
 /**
  * Created by LEBEAU Christophe on 20/02/2015.
  */
-public class ComplementObject extends NominalGroup implements IPlaceObject, IWayObject, ISecondObject {
+public class NameObject extends NominalGroup implements IPlaceObject, IWayObject, ISecondObject {
 	@Expose
 	private PlaceContext placePreposition;
 	
@@ -38,7 +39,7 @@ public class ComplementObject extends NominalGroup implements IPlaceObject, IWay
 	public List<AdjectiveValue> adjectives = new ArrayList<AdjectiveValue>();
 
 	@Expose
-    public String object = "";
+    public NameInfo object;
 
 	@Expose
     private INominalObject of;
@@ -64,7 +65,7 @@ public class ComplementObject extends NominalGroup implements IPlaceObject, IWay
     @Override
     public String toString(){
     	// TODO: ajouter les autres attributs si besoin
-    	return object;
+    	return String.valueOf(object);
     }
 
 	@Override

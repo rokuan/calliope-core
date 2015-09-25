@@ -3,7 +3,7 @@ package com.rokuan.calliopecore.sentence.structure.data.way;
 import com.google.gson.annotations.Expose;
 import com.rokuan.calliopecore.sentence.structure.content.IWayObject;
 import com.rokuan.calliopecore.sentence.structure.data.nominal.ColorObject;
-import com.rokuan.calliopecore.sentence.structure.data.nominal.ComplementObject;
+import com.rokuan.calliopecore.sentence.structure.data.nominal.NameObject;
 import com.rokuan.calliopecore.sentence.structure.data.nominal.LanguageObject;
 import com.rokuan.calliopecore.sentence.structure.data.nominal.UnitObject;
 import com.rokuan.calliopecore.sentence.structure.data.nominal.VerbalGroup;
@@ -47,7 +47,7 @@ public abstract class WayAdverbial implements IWayObject {
 			clazz = LanguageObject.class;
 			break;
 		case NOMINAL:
-			clazz = ComplementObject.class;
+			clazz = NameObject.class;
 			break;
 		case VERBAL:
 			clazz = VerbalGroup.class;
