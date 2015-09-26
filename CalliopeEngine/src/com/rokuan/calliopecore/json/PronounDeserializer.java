@@ -9,7 +9,7 @@ import com.google.gson.JsonParseException;
 import com.rokuan.calliopecore.sentence.IPronoun;
 import com.rokuan.calliopecore.sentence.IPronoun.PronounSource;
 
-public class IPronounDeserializer implements JsonDeserializer<IPronoun>{
+public class PronounDeserializer implements JsonDeserializer<IPronoun>{
 
 	@Override
 	public IPronoun deserialize(JsonElement arg0, Type arg1,

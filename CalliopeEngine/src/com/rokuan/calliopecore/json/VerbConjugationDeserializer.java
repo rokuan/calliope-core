@@ -14,7 +14,7 @@ import com.rokuan.calliopecore.sentence.IVerbConjugation;
 import com.rokuan.calliopecore.sentence.IVerbConjugation.Form;
 import com.rokuan.calliopecore.sentence.IVerbConjugation.Tense;
 
-public class IVerbConjugationDeserializer implements JsonDeserializer<IVerbConjugation> {
+public class VerbConjugationDeserializer implements JsonDeserializer<IVerbConjugation> {
 
 	@Override
 	public IVerbConjugation deserialize(JsonElement arg0, Type arg1,
@@ -22,7 +22,7 @@ public class IVerbConjugationDeserializer implements JsonDeserializer<IVerbConju
 		JsonObject obj = arg0.getAsJsonObject();
 		final Tense tense = Tense.valueOf(obj.get("tense").getAsString());
 		final Form form = Form.valueOf(obj.get("form").getAsString());
-		final IVerb verb = new GsonBuilder().registerTypeAdapter(IVerb.class, new IVerbDeserializer())
+		final IVerb verb = new GsonBuilder().registerTypeAdapter(IVerb.class, new VerbDeserializer())
 				.create()
 				.fromJson(obj.get("verb"), IVerb.class);
 		

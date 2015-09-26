@@ -14,7 +14,7 @@ import com.rokuan.calliopecore.sentence.structure.data.time.SingleTimeObject;
 public abstract class NominalGroup implements INominalObject {	
     public enum GroupType {
     	PRONOUN,
-    	COMPLEMENT,
+    	COMMON_NAME,
     	VERB,
     	ABSTRACT,
     	LANGUAGE,
@@ -43,7 +43,7 @@ public abstract class NominalGroup implements INominalObject {
 		case ABSTRACT:
 			clazz = AbstractTarget.class;
 			break;
-		case COMPLEMENT:
+		case COMMON_NAME:
 			clazz = NameObject.class;
 			break;
 		case COLOR:

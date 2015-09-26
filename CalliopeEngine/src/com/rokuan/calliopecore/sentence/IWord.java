@@ -9,37 +9,39 @@ public interface IWord {
 
 	IVerbConjugation getVerbInfo();
 
-	void setVerbInfo(IVerbConjugation verbInfo);
-
-	public LanguageInfo getLanguageInfo();
-
-	public ColorInfo getColorInfo();
-
-	public CountryInfo getCountryInfo();
-
-	public CityInfo getCityInfo();
-
-	public TransportInfo getTransportInfo();
-
-	public UnitInfo getUnitInfo();
-
-	public CharacterInfo getCharacterInfo();
-
-	public PlaceInfo getPlaceInfo();
-
-	public ITimePreposition getTimePreposition();
-
-	public IPlacePreposition getPlacePreposition();
-
-	public IWayPreposition getWayPreposition();
-
-	public IPurposePreposition getPurposePreposition();
-
-	public CustomObject getCustomObject();
-
-	public CustomPlace getCustomPlace();
+	INameInfo getNameInfo();
 	
-	public CustomPerson getCustomPerson();
+	IAdjectiveInfo getAdjectiveInfo();
+	
+	ILanguageInfo getLanguageInfo();
 
-	public CustomMode getCustomMode();
+	IColorInfo getColorInfo();
+
+	ICountryInfo getCountryInfo();
+
+	ICityInfo getCityInfo();
+
+	ITransportInfo getTransportInfo();
+
+	IUnitInfo getUnitInfo();
+
+	ICharacterInfo getCharacterInfo();
+
+	IPlaceInfo getPlaceInfo();
+
+	ITimePreposition getTimePreposition();
+
+	IPlacePreposition getPlacePreposition();
+
+	IWayPreposition getWayPreposition();
+
+	IPurposePreposition getPurposePreposition();
+
+	CustomObject getCustomObject();
+
+	CustomPlace getCustomPlace();
+	
+	CustomPerson getCustomPerson();
+
+	CustomMode getCustomMode();
 }

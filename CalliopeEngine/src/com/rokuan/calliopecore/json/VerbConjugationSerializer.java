@@ -11,7 +11,7 @@ import com.google.gson.JsonSerializer;
 import com.rokuan.calliopecore.sentence.IVerb;
 import com.rokuan.calliopecore.sentence.IVerbConjugation;
 
-public class IVerbConjugationSerializer implements JsonSerializer<IVerbConjugation> {
+public class VerbConjugationSerializer implements JsonSerializer<IVerbConjugation> {
 
 	@Override
 	public JsonElement serialize(IVerbConjugation arg0, Type arg1,
@@ -20,7 +20,7 @@ public class IVerbConjugationSerializer implements JsonSerializer<IVerbConjugati
 		
 		obj.add("tense", new JsonPrimitive(arg0.getTense().toString()));
 		obj.add("form", new JsonPrimitive(arg0.getForm().toString()));
-		obj.add("verb", new GsonBuilder().registerTypeAdapter(IVerb.class, new IVerbSerializer())
+		obj.add("verb", new GsonBuilder().registerTypeAdapter(IVerb.class, new VerbSerializer())
 				.create()
 				.toJsonTree(arg0.getVerb(), IVerb.class));
 		

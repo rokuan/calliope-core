@@ -11,7 +11,7 @@ import com.google.gson.JsonSerializer;
 import com.rokuan.calliopecore.sentence.IVerb;
 import com.rokuan.calliopecore.sentence.Action.ActionType;
 
-public class IVerbSerializer implements JsonSerializer<IVerb> {
+public class VerbSerializer implements JsonSerializer<IVerb> {
 
 	@Override
 	public JsonElement serialize(IVerb arg0, Type arg1,

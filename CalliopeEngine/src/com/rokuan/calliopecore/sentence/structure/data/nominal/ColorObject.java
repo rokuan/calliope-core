@@ -1,7 +1,7 @@
 package com.rokuan.calliopecore.sentence.structure.data.nominal;
 
 import com.google.gson.annotations.Expose;
-import com.rokuan.calliopecore.sentence.ColorInfo;
+import com.rokuan.calliopecore.sentence.IColorInfo;
 import com.rokuan.calliopecore.sentence.structure.content.IWayObject;
 import com.rokuan.calliopecore.sentence.structure.data.way.WayAdverbial.WayContext;
 import com.rokuan.calliopecore.sentence.structure.data.way.WayAdverbial.WayType;
@@ -11,7 +11,7 @@ public class ColorObject extends NominalGroup implements IWayObject {
 	private WayContext wayPreposition;
 	
 	@Expose
-	public ColorInfo color;
+	public IColorInfo color;
 
 	@Override
 	public GroupType getGroupType() {

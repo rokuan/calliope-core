@@ -9,13 +9,13 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import com.rokuan.calliopecore.sentence.IPronoun;
 
-public class IPronounSerializer implements JsonSerializer<IPronoun>{
+public class PronounSerializer implements JsonSerializer<IPronoun>{
 
 	@Override
 	public JsonElement serialize(IPronoun arg0, Type arg1,
 			JsonSerializationContext arg2) {
 		JsonObject obj = new JsonObject();		
-		obj.add("source", new JsonPrimitive(arg0.getSource().toString()));		
+		obj.add("source", new JsonPrimitive(arg0.getSource().name()));		
 		return obj;
 	}
 

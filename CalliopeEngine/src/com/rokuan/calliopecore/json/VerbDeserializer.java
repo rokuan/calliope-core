@@ -14,7 +14,7 @@ import com.google.gson.JsonParseException;
 import com.rokuan.calliopecore.sentence.Action.ActionType;
 import com.rokuan.calliopecore.sentence.IVerb;
 
-public class IVerbDeserializer implements JsonDeserializer<IVerb>{
+public class VerbDeserializer implements JsonDeserializer<IVerb>{
 
 	@Override
 	public IVerb deserialize(JsonElement arg0, Type arg1,

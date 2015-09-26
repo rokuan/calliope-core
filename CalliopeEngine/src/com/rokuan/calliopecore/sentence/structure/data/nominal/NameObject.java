@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gson.annotations.Expose;
-import com.rokuan.calliopecore.sentence.AdjectiveInfo.AdjectiveValue;
-import com.rokuan.calliopecore.sentence.NameInfo;
+import com.rokuan.calliopecore.sentence.IAdjectiveInfo;
+import com.rokuan.calliopecore.sentence.INameInfo;
 import com.rokuan.calliopecore.sentence.structure.content.INominalObject;
 import com.rokuan.calliopecore.sentence.structure.content.IPlaceObject;
 import com.rokuan.calliopecore.sentence.structure.content.IPurposeObject;
@@ -36,10 +36,10 @@ public class NameObject extends NominalGroup implements IPlaceObject, IWayObject
 	public CountObject count = new AllItemsObject();
 
 	@Expose
-	public List<AdjectiveValue> adjectives = new ArrayList<AdjectiveValue>();
+	public List<IAdjectiveInfo> adjectives = new ArrayList<IAdjectiveInfo>();
 
 	@Expose
-    public NameInfo object;
+    public INameInfo object;
 
 	@Expose
     private INominalObject of;
@@ -70,7 +70,7 @@ public class NameObject extends NominalGroup implements IPlaceObject, IWayObject
 
 	@Override
 	public GroupType getGroupType() {
-		return GroupType.COMPLEMENT;
+		return GroupType.COMMON_NAME;
 	}
 
 	@Override
