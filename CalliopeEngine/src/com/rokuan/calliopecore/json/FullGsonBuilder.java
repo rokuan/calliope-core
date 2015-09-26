@@ -22,56 +22,63 @@ import com.rokuan.calliopecore.sentence.structure.content.IWayObject;
 import com.rokuan.calliopecore.sentence.structure.data.count.CountObject;
 
 public class FullGsonBuilder {
+	private static GsonBuilder serializationBuilder;
+	private static GsonBuilder deserializationBuilder;
+
 	public static GsonBuilder getSerializationGsonBuilder(){
-		GsonBuilder builder = new GsonBuilder();
-		
-		builder.excludeFieldsWithoutExposeAnnotation();
-		builder.registerTypeAdapter(InterpretationObject.class, new InterpretationObjectSerializer());
-		builder.registerTypeAdapter(INominalObject.class, new NominalGroupSerializer());
-		builder.registerTypeAdapter(IPlaceObject.class, new PlaceAdverbialSerializer());
-		builder.registerTypeAdapter(ITimeObject.class, new TimeAdverbialSerializer());
-		builder.registerTypeAdapter(IWayObject.class, new WayAdverbialSerializer());
-		builder.registerTypeAdapter(IPurposeObject.class, new PurposeAdverbialSerializer());
-		builder.registerTypeAdapter(IVerbConjugation.class, new VerbConjugationSerializer());
-		builder.registerTypeAdapter(IPronoun.class, new PronounSerializer());
-		builder.registerTypeAdapter(IAdjectiveInfo.class, new AdjectiveSerializer());
-		builder.registerTypeAdapter(ICharacterInfo.class, new CharacterSerializer());
-		builder.registerTypeAdapter(ICityInfo.class, new CitySerializer());
-		builder.registerTypeAdapter(IColorInfo.class, new ColorSerializer());
-		builder.registerTypeAdapter(ICountryInfo.class, new CountrySerializer());
-		builder.registerTypeAdapter(ILanguageInfo.class, new LanguageSerializer());
-		builder.registerTypeAdapter(INameInfo.class, new NameSerializer());
-		builder.registerTypeAdapter(IPlaceInfo.class, new PlaceSerializer());
-		builder.registerTypeAdapter(ITransportInfo.class, new TransportSerializer());
-		builder.registerTypeAdapter(IUnitInfo.class, new UnitSerializer());
-		
-		return builder;
+		if(serializationBuilder == null){
+			serializationBuilder = new GsonBuilder();
+
+			serializationBuilder.excludeFieldsWithoutExposeAnnotation();
+			serializationBuilder.registerTypeAdapter(InterpretationObject.class, new InterpretationObjectSerialization.Serializer());
+			serializationBuilder.registerTypeAdapter(INominalObject.class, new NominalGroupSerialization.Serializer());
+			serializationBuilder.registerTypeAdapter(IPlaceObject.class, new PlaceAdverbialSerialization.Serializer());
+			serializationBuilder.registerTypeAdapter(ITimeObject.class, new TimeAdverbialSerialization.Serializer());
+			serializationBuilder.registerTypeAdapter(IWayObject.class, new WayAdverbialSerialization.Serializer());
+			serializationBuilder.registerTypeAdapter(IPurposeObject.class, new PurposeAdverbialSerialization.Serializer());
+			serializationBuilder.registerTypeAdapter(IVerbConjugation.class, new VerbConjugationSerialization.Serializer());
+			serializationBuilder.registerTypeAdapter(IPronoun.class, new PronounSerialization.Serializer());
+			serializationBuilder.registerTypeAdapter(IAdjectiveInfo.class, new AdjectiveSerialization.Serializer());
+			serializationBuilder.registerTypeAdapter(ICharacterInfo.class, new CharacterSerialization.Serializer());
+			serializationBuilder.registerTypeAdapter(ICityInfo.class, new CitySerialization.Serializer());
+			serializationBuilder.registerTypeAdapter(IColorInfo.class, new ColorSerialization.Serializer());
+			serializationBuilder.registerTypeAdapter(ICountryInfo.class, new CountrySerialization.Serializer());
+			serializationBuilder.registerTypeAdapter(ILanguageInfo.class, new LanguageSerialization.Serializer());
+			serializationBuilder.registerTypeAdapter(INameInfo.class, new NameSerialization.Serializer());
+			serializationBuilder.registerTypeAdapter(IPlaceInfo.class, new PlaceSerialization.Serializer());
+			serializationBuilder.registerTypeAdapter(ITransportInfo.class, new TransportSerialization.Serializer());
+			serializationBuilder.registerTypeAdapter(IUnitInfo.class, new UnitSerialization.Serializer());
+		}
+
+		return serializationBuilder;
 	}
-	
+
 	public static GsonBuilder getDeserializationGsonBuilder(){
-		GsonBuilder builder = new GsonBuilder();
-		
-		builder.excludeFieldsWithoutExposeAnnotation();
-		builder.registerTypeAdapter(InterpretationObject.class, new InterpretationObjectDeserializer());
-		builder.registerTypeAdapter(INominalObject.class, new NominalGroupDeserializer());
-		builder.registerTypeAdapter(IPlaceObject.class, new PlaceAdverbialDeserializer());
-		builder.registerTypeAdapter(ITimeObject.class, new TimeAdverbialDeserializer());
-		builder.registerTypeAdapter(IWayObject.class, new WayAdverbialDeserializer());
-		builder.registerTypeAdapter(IPurposeObject.class, new PurposeAdverbialDeserializer());
-		builder.registerTypeAdapter(CountObject.class, new CountObjectDeserializer());
-		builder.registerTypeAdapter(IVerbConjugation.class, new VerbConjugationDeserializer());
-		builder.registerTypeAdapter(IPronoun.class, new PronounDeserializer());
-		builder.registerTypeAdapter(IAdjectiveInfo.class, new AdjectiveDeserializer());
-		builder.registerTypeAdapter(ICharacterInfo.class, new CharacterDeserializer());
-		builder.registerTypeAdapter(ICityInfo.class, new CityDeserializer());
-		builder.registerTypeAdapter(IColorInfo.class, new ColorDeserializer());
-		builder.registerTypeAdapter(ICountryInfo.class, new CountryDeserializer());
-		builder.registerTypeAdapter(ILanguageInfo.class, new LanguageDeserializer());
-		builder.registerTypeAdapter(INameInfo.class, new NameDeserializer());
-		builder.registerTypeAdapter(IPlaceInfo.class, new PlaceDeserializer());
-		builder.registerTypeAdapter(ITransportInfo.class, new TransportDeserializer());
-		builder.registerTypeAdapter(IUnitInfo.class, new UnitDeserializer());
-		
-		return builder;
+		if(deserializationBuilder == null){
+			deserializationBuilder = new GsonBuilder();
+
+			deserializationBuilder.excludeFieldsWithoutExposeAnnotation();
+			deserializationBuilder.registerTypeAdapter(InterpretationObject.class, new InterpretationObjectSerialization.Deserializer());
+			deserializationBuilder.registerTypeAdapter(INominalObject.class, new NominalGroupSerialization.Deserializer());
+			deserializationBuilder.registerTypeAdapter(IPlaceObject.class, new PlaceAdverbialSerialization.Deserializer());
+			deserializationBuilder.registerTypeAdapter(ITimeObject.class, new TimeAdverbialSerialization.Deserializer());
+			deserializationBuilder.registerTypeAdapter(IWayObject.class, new WayAdverbialSerialization.Deserializer());
+			deserializationBuilder.registerTypeAdapter(IPurposeObject.class, new PurposeAdverbialSerialization.Deserializer());
+			deserializationBuilder.registerTypeAdapter(CountObject.class, new CountObjectSerialization.Deserializer());
+			deserializationBuilder.registerTypeAdapter(IVerbConjugation.class, new VerbConjugationSerialization.Deserializer());
+			deserializationBuilder.registerTypeAdapter(IPronoun.class, new PronounSerialization.Deserializer());
+			deserializationBuilder.registerTypeAdapter(IAdjectiveInfo.class, new AdjectiveSerialization.Deserializer());
+			deserializationBuilder.registerTypeAdapter(ICharacterInfo.class, new CharacterSerialization.Deserializer());
+			deserializationBuilder.registerTypeAdapter(ICityInfo.class, new CitySerialization.Deserializer());
+			deserializationBuilder.registerTypeAdapter(IColorInfo.class, new ColorSerialization.Deserializer());
+			deserializationBuilder.registerTypeAdapter(ICountryInfo.class, new CountrySerialization.Deserializer());
+			deserializationBuilder.registerTypeAdapter(ILanguageInfo.class, new LanguageSerialization.Deserializer());
+			deserializationBuilder.registerTypeAdapter(INameInfo.class, new NameSerialization.Deserializer());
+			deserializationBuilder.registerTypeAdapter(IPlaceInfo.class, new PlaceSerialization.Deserializer());
+			deserializationBuilder.registerTypeAdapter(ITransportInfo.class, new TransportSerialization.Deserializer());
+			deserializationBuilder.registerTypeAdapter(IUnitInfo.class, new UnitSerialization.Deserializer());
+		}
+
+		return deserializationBuilder;
 	}
 }

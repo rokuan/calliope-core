@@ -20,6 +20,8 @@ public interface IVerbConjugation {
         PARTICIPLE,
     }
 	
+    String getValue();
+    
     IVerb getVerb();
 
     Form getForm();
