@@ -135,10 +135,12 @@ public class ArrayListDataSource<DataType> extends ArrayList<DataType> implement
 		return this.get(++currentIndex);
 	}
 
+	@Override
 	public boolean hasPreviousData(){
 		return currentIndex > 0;
 	}
 
+	@Override
 	public boolean hasNextData(){
 		return currentIndex < this.size() - 1;
 	}

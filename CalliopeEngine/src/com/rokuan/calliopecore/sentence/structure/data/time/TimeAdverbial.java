@@ -1,6 +1,7 @@
 package com.rokuan.calliopecore.sentence.structure.data.time;
 
 import com.google.gson.annotations.Expose;
+import com.rokuan.calliopecore.sentence.ITimePreposition;
 import com.rokuan.calliopecore.sentence.structure.content.ITimeObject;
 import com.rokuan.calliopecore.sentence.structure.data.nominal.VerbalGroup;
 
@@ -62,7 +63,17 @@ public abstract class TimeAdverbial implements ITimeObject {
     }
 
     @Expose
-    private TimeContext timePreposition = TimeContext.WHEN;
+    private ITimePreposition timePreposition = new ITimePreposition() {		
+		@Override
+		public String getValue() {
+			return "";
+		}
+		
+		@Override
+		public TimeContext getTimeContext() {
+			return TimeContext.WHEN;
+		}
+	};
     
 	/*@Expose
     public TimeTense tense = TimeTense.PRESENT;
@@ -71,12 +82,12 @@ public abstract class TimeAdverbial implements ITimeObject {
     public TimeInterval interval = TimeInterval.SINGLE;*/
 	
 	@Override
-	public TimeContext getTimePreposition() {
+	public ITimePreposition getTimePreposition() {
 		return timePreposition;
 	}
 
 	@Override
-	public void setTimePreposition(TimeContext prep) {
+	public void setTimePreposition(ITimePreposition prep) {
 		timePreposition = prep;
 	}
 	

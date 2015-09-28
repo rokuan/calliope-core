@@ -37,11 +37,11 @@ public interface IWord {
 
 	IPurposePreposition getPurposePreposition();
 
-	CustomObject getCustomObject();
+	ICustomObject getCustomObject();
 
-	CustomPlace getCustomPlace();
+	ICustomPlace getCustomPlace();
 	
-	CustomPerson getCustomPerson();
+	ICustomPerson getCustomPerson();
 
-	CustomMode getCustomMode();
+	ICustomMode getCustomMode();
 }

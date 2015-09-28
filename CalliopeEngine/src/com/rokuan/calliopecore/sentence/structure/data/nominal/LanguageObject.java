@@ -2,13 +2,13 @@ package com.rokuan.calliopecore.sentence.structure.data.nominal;
 
 import com.google.gson.annotations.Expose;
 import com.rokuan.calliopecore.sentence.ILanguageInfo;
+import com.rokuan.calliopecore.sentence.IWayPreposition;
 import com.rokuan.calliopecore.sentence.structure.content.IWayObject;
-import com.rokuan.calliopecore.sentence.structure.data.way.WayAdverbial.WayContext;
 import com.rokuan.calliopecore.sentence.structure.data.way.WayAdverbial.WayType;
 
 public class LanguageObject extends NominalGroup implements IWayObject {
 	@Expose
-	private WayContext wayPreposition;
+	private IWayPreposition wayPreposition;
 	
 	@Expose
 	public ILanguageInfo language;
@@ -24,12 +24,12 @@ public class LanguageObject extends NominalGroup implements IWayObject {
 	}
 
 	@Override
-	public WayContext getWayPreposition() {
+	public IWayPreposition getWayPreposition() {
 		return wayPreposition;
 	}
 
 	@Override
-	public void setWayPreposition(WayContext prep) {
+	public void setWayPreposition(IWayPreposition prep) {
 		wayPreposition = prep;
 	}
 }

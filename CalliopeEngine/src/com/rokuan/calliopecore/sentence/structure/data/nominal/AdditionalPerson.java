@@ -1,11 +1,11 @@
 package com.rokuan.calliopecore.sentence.structure.data.nominal;
 
 import com.google.gson.annotations.Expose;
-import com.rokuan.calliopecore.sentence.CustomPerson;
+import com.rokuan.calliopecore.sentence.ICustomPerson;
 
 public class AdditionalPerson extends NominalGroup {
 	@Expose
-	public CustomPerson person;
+	public ICustomPerson person;
 
 	@Override
 	public GroupType getGroupType() {

@@ -2,29 +2,29 @@ package com.rokuan.calliopecore.sentence.structure.data.nominal;
 
 import com.google.gson.annotations.Expose;
 import com.rokuan.calliopecore.sentence.ActionObject;
+import com.rokuan.calliopecore.sentence.IPurposePreposition;
+import com.rokuan.calliopecore.sentence.ITimePreposition;
+import com.rokuan.calliopecore.sentence.IWayPreposition;
 import com.rokuan.calliopecore.sentence.structure.content.INominalObject;
 import com.rokuan.calliopecore.sentence.structure.content.IPlaceObject;
 import com.rokuan.calliopecore.sentence.structure.content.IPurposeObject;
 import com.rokuan.calliopecore.sentence.structure.content.ITimeObject;
 import com.rokuan.calliopecore.sentence.structure.content.IVerbalObject;
 import com.rokuan.calliopecore.sentence.structure.content.IWayObject;
-import com.rokuan.calliopecore.sentence.structure.data.purpose.PurposeAdverbial.PurposeContext;
 import com.rokuan.calliopecore.sentence.structure.data.purpose.PurposeAdverbial.PurposeType;
-import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial.TimeContext;
 import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial.TimeType;
-import com.rokuan.calliopecore.sentence.structure.data.way.WayAdverbial.WayContext;
 import com.rokuan.calliopecore.sentence.structure.data.way.WayAdverbial.WayType;
 
 
 public class VerbalGroup extends NominalGroup implements IWayObject, ITimeObject, IPurposeObject, IVerbalObject {
 	@Expose
-	private WayContext wayPreposition;
+	private IWayPreposition wayPreposition;
 	
 	@Expose
-	private TimeContext timePreposition;
+	private ITimePreposition timePreposition;
 	
 	@Expose
-	private PurposeContext purposePreposition;
+	private IPurposePreposition purposePreposition;
 	
 	@Expose
 	private INominalObject subject;
@@ -71,32 +71,32 @@ public class VerbalGroup extends NominalGroup implements IWayObject, ITimeObject
 	}
 
 	@Override
-	public PurposeContext getPurposePreposition() {
+	public IPurposePreposition getPurposePreposition() {
 		return purposePreposition;
 	}
 
 	@Override
-	public void setPurposePreposition(PurposeContext prep) {
+	public void setPurposePreposition(IPurposePreposition prep) {
 		purposePreposition = prep;
 	}
 
 	@Override
-	public TimeContext getTimePreposition() {
+	public ITimePreposition getTimePreposition() {
 		return timePreposition;
 	}
 
 	@Override
-	public void setTimePreposition(TimeContext prep) {
+	public void setTimePreposition(ITimePreposition prep) {
 		timePreposition = prep;
 	}
 
 	@Override
-	public WayContext getWayPreposition() {
+	public IWayPreposition getWayPreposition() {
 		return wayPreposition;
 	}
 
 	@Override
-	public void setWayPreposition(WayContext prep) {
+	public void setWayPreposition(IWayPreposition prep) {
 		wayPreposition = prep;		
 	}
 

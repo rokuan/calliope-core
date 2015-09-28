@@ -16,5 +16,7 @@ public interface IPronoun {
         UNDEFINED
     }
 	
+	String getValue();
+	
 	PronounSource getSource();
 }

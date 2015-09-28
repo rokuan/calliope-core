@@ -37,11 +37,16 @@ public abstract class CountObject {
 	public ArticleType definition = ArticleType.NONE;
 
 	@Expose
-	public IPronoun possessiveTarget = new IPronoun() {		
+	public IPronoun possessiveTarget = new IPronoun() {
+		@Override
+		public String getValue() {
+			return "";
+		}
+		
 		@Override
 		public PronounSource getSource() {
 			return PronounSource.UNDEFINED;
-		}
+		}		
 	};
 
 	// TODO: ajouter les intervalles du type "du 5eme au dernier"

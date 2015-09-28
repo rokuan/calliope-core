@@ -6,6 +6,8 @@ import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.rokuan.calliopecore.sentence.IAdjectiveInfo;
 import com.rokuan.calliopecore.sentence.INameInfo;
+import com.rokuan.calliopecore.sentence.IPlacePreposition;
+import com.rokuan.calliopecore.sentence.IWayPreposition;
 import com.rokuan.calliopecore.sentence.structure.content.INominalObject;
 import com.rokuan.calliopecore.sentence.structure.content.IPlaceObject;
 import com.rokuan.calliopecore.sentence.structure.content.IPurposeObject;
@@ -16,9 +18,7 @@ import com.rokuan.calliopecore.sentence.structure.content.IWayObject;
 import com.rokuan.calliopecore.sentence.structure.data.count.AllItemsObject;
 import com.rokuan.calliopecore.sentence.structure.data.count.CountObject;
 import com.rokuan.calliopecore.sentence.structure.data.criteria.CriterionObject;
-import com.rokuan.calliopecore.sentence.structure.data.place.PlaceAdverbial.PlaceContext;
 import com.rokuan.calliopecore.sentence.structure.data.place.PlaceAdverbial.PlaceType;
-import com.rokuan.calliopecore.sentence.structure.data.way.WayAdverbial.WayContext;
 import com.rokuan.calliopecore.sentence.structure.data.way.WayAdverbial.WayType;
 
 
@@ -27,10 +27,10 @@ import com.rokuan.calliopecore.sentence.structure.data.way.WayAdverbial.WayType;
  */
 public class NameObject extends NominalGroup implements IPlaceObject, IWayObject, ISecondObject {
 	@Expose
-	private PlaceContext placePreposition;
+	private IPlacePreposition placePreposition;
 	
 	@Expose
-	private WayContext wayPreposition;
+	private IWayPreposition wayPreposition;
 	
 	@Expose
 	public CountObject count = new AllItemsObject();
@@ -79,12 +79,12 @@ public class NameObject extends NominalGroup implements IPlaceObject, IWayObject
 	}
 
 	@Override
-	public WayContext getWayPreposition() {
+	public IWayPreposition getWayPreposition() {
 		return wayPreposition;
 	}
 
 	@Override
-	public void setWayPreposition(WayContext prep) {
+	public void setWayPreposition(IWayPreposition prep) {
 		wayPreposition = prep;
 	}
 
@@ -114,12 +114,12 @@ public class NameObject extends NominalGroup implements IPlaceObject, IWayObject
 	}
 
 	@Override
-	public PlaceContext getPlacePreposition() {
+	public IPlacePreposition getPlacePreposition() {
 		return placePreposition;
 	}
 
 	@Override
-	public void setPlacePreposition(PlaceContext prep) {
+	public void setPlacePreposition(IPlacePreposition prep) {
 		placePreposition = prep;
 	}
 }
