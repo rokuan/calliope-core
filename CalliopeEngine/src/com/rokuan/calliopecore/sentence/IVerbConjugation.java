@@ -28,5 +28,5 @@ public interface IVerbConjugation {
     
     Tense getTense();
 
-	boolean does(Action.ActionType action);
+	boolean does(Action.ActionType action);	
 }

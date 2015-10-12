@@ -20,6 +20,8 @@ import com.rokuan.calliopecore.sentence.Action.ActionType;
 public class VerbSerialization {
 	private static final String JSON_VALUE_KEY = "value";
 	private static final String JSON_ACTIONS_KEY = "actions";
+	private static final String JSON_IS_FIELD_KEY = "is_field";
+	private static final String JSON_FIELD_KEY = "field";
 	
 	public static class Serializer implements JsonSerializer<IVerb> {
 
@@ -38,6 +40,8 @@ public class VerbSerialization {
 			
 			obj.add(JSON_VALUE_KEY, new JsonPrimitive(arg0.getValue()));
 			obj.add(JSON_ACTIONS_KEY, actionsArray);
+			obj.add(JSON_IS_FIELD_KEY, new JsonPrimitive(arg0.isAFieldAction()));
+			obj.add(JSON_FIELD_KEY, new JsonPrimitive(arg0.getBoundField()));
 			
 			return obj;
 		}
@@ -59,6 +63,8 @@ public class VerbSerialization {
 			
 			final String value = obj.get(JSON_VALUE_KEY).getAsString();
 			final Set<ActionType> actions = new HashSet<ActionType>(Arrays.asList(actionTypes));
+			final boolean isFieldBound = obj.get(JSON_IS_FIELD_KEY).getAsBoolean();
+			final String field = obj.get(JSON_FIELD_KEY).getAsString();
 			
 			return new IVerb() {		
 				@Override
@@ -74,6 +80,16 @@ public class VerbSerialization {
 				@Override
 				public Set<ActionType> getActions() {
 					return actions;
+				}
+
+				@Override
+				public boolean isAFieldAction() {
+					return isFieldBound;
+				}
+
+				@Override
+				public String getBoundField() {
+					return field;
 				}
 			};
 		}

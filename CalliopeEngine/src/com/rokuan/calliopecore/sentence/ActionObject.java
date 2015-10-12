@@ -43,4 +43,12 @@ public class ActionObject {
 	public boolean does(Action.ActionType action){
 		return mainVerb != null && mainVerb.does(action);
 	}
+	
+	public boolean isAFieldAction(){
+		return mainVerb.getVerb().isAFieldAction();
+	}
+	
+	public String getBoundField(){
+		return mainVerb.getVerb().getBoundField();
+	}
 }

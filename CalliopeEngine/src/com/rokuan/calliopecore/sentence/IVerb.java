@@ -13,5 +13,9 @@ public interface IVerb {
     
     boolean hasAction(Action.ActionType action);
     
+    boolean isAFieldAction();
+	
+	String getBoundField();
+    
     Set<ActionType> getActions();
 }
