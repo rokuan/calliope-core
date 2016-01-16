@@ -1,6 +1,5 @@
 package com.rokuan.calliopecore.sentence.structure.data.count;
 
-import com.google.gson.annotations.Expose;
 import com.rokuan.calliopecore.sentence.IPronoun;
 
 /**
@@ -30,13 +29,8 @@ public abstract class CountObject {
 		POSSESSIVE
 	}
 
-	@Expose
 	private CountType countType = CountType.ALL;
-
-	@Expose
 	public ArticleType definition = ArticleType.NONE;
-
-	@Expose
 	public IPronoun possessiveTarget = new IPronoun() {
 		@Override
 		public String getValue() {

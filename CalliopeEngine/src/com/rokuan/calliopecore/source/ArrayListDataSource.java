@@ -16,7 +16,6 @@ public class ArrayListDataSource<DataType> extends ArrayList<DataType> implement
 	 * 
 	 */
 	private static final long serialVersionUID = 1908414990889304385L;
-
 	private int currentIndex = 0;
 
 	public ArrayListDataSource() {

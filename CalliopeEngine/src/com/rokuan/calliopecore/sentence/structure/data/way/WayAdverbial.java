@@ -1,6 +1,5 @@
 package com.rokuan.calliopecore.sentence.structure.data.way;
 
-import com.google.gson.annotations.Expose;
 import com.rokuan.calliopecore.sentence.IWayPreposition;
 import com.rokuan.calliopecore.sentence.structure.content.IWayObject;
 import com.rokuan.calliopecore.sentence.structure.data.nominal.ColorObject;
@@ -24,7 +23,6 @@ public abstract class WayAdverbial implements IWayObject {
 		BY
 	}
 
-	@Expose
 	private IWayPreposition wayPreposition;
 
 	@Override

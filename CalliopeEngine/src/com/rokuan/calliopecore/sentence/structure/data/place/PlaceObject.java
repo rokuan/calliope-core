@@ -1,6 +1,5 @@
 package com.rokuan.calliopecore.sentence.structure.data.place;
 
-import com.google.gson.annotations.Expose;
 import com.rokuan.calliopecore.sentence.structure.content.INominalObject;
 import com.rokuan.calliopecore.sentence.structure.content.ISecondObject;
 import com.rokuan.calliopecore.sentence.structure.content.IVerbalObject;
@@ -81,16 +80,9 @@ public class PlaceObject extends PlaceAdverbial implements INominalObject, ISeco
 		ZOO
 	}
 	
-	@Expose
-	public CountObject count;
-	
-	@Expose
-	public PlaceCategory placeCategory;
-	
-	@Expose
-	private INominalObject of;
-	
-	@Expose
+	public CountObject count;	
+	public PlaceCategory placeCategory;	
+	private INominalObject of;	
 	private IVerbalObject which;
 	
 	@Override

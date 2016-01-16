@@ -1,7 +1,5 @@
 package com.rokuan.calliopecore.sentence;
 
-public interface ICountryInfo {
-	String getValue();
-	
+public interface ICountryInfo extends IValue {
 	String getCountryCode();
 }

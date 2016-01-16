@@ -1,6 +1,5 @@
 package com.rokuan.calliopecore.sentence.structure.data.place;
 
-import com.google.gson.annotations.Expose;
 import com.rokuan.calliopecore.sentence.IPlacePreposition;
 import com.rokuan.calliopecore.sentence.structure.content.IPlaceObject;
 import com.rokuan.calliopecore.sentence.structure.data.nominal.CityObject;
@@ -53,7 +52,6 @@ public abstract class PlaceAdverbial implements IPlaceObject {
 		ADDRESS
 	}
 
-	@Expose
 	private IPlacePreposition location;
 	
 	@Override

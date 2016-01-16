@@ -1,6 +1,5 @@
 package com.rokuan.calliopecore.sentence.structure.data.nominal;
 
-import com.google.gson.annotations.Expose;
 import com.rokuan.calliopecore.sentence.structure.content.INominalObject;
 import com.rokuan.calliopecore.sentence.structure.content.ISecondObject;
 import com.rokuan.calliopecore.sentence.structure.content.IVerbalObject;
@@ -28,16 +27,9 @@ public class CharacterObject extends NominalGroup implements ISecondObject {
 		NEIGHBOUR
 	};
 	
-	@Expose
-	public CountObject count;
-	
-	@Expose
+	public CountObject count;	
 	public CharacterType characterType;	
-	
-	@Expose
-	private INominalObject of;
-	
-	@Expose
+	private INominalObject of;	
 	private IVerbalObject which;
 
 	@Override

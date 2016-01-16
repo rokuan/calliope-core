@@ -1,6 +1,5 @@
 package com.rokuan.calliopecore.sentence.structure.data.way;
 
-import com.google.gson.annotations.Expose;
 
 public class TransportObject extends WayAdverbial {
 	public enum TransportType {
@@ -13,7 +12,6 @@ public class TransportObject extends WayAdverbial {
 		BIKE
 	}
 	
-	@Expose
 	public TransportType transportType = TransportType.WALK;
 	
 	public TransportObject(){

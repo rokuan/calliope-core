@@ -1,7 +1,5 @@
 package com.rokuan.calliopecore.sentence;
 
-public interface IColorInfo {
-	String getValue();
-	
+public interface IColorInfo extends IValue {
 	String getColorHexCode();
 }

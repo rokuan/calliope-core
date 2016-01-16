@@ -3,10 +3,7 @@ package com.rokuan.calliopecore.sentence.structure.data.count;
 import java.util.Arrays;
 import java.util.Set;
 
-import com.google.gson.annotations.Expose;
-
 public class MultipleItemsObject extends CountObject {
-	@Expose
 	public Integer[] items;
 	
 	public MultipleItemsObject(Set<Integer> i){

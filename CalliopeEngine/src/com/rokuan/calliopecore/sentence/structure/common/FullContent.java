@@ -1,6 +1,5 @@
 package com.rokuan.calliopecore.sentence.structure.common;
 
-import com.google.gson.annotations.Expose;
 import com.rokuan.calliopecore.sentence.ActionObject;
 import com.rokuan.calliopecore.sentence.structure.content.INominalObject;
 import com.rokuan.calliopecore.sentence.structure.content.IPlaceObject;
@@ -11,28 +10,13 @@ import com.rokuan.calliopecore.sentence.structure.content.IWayObject;
 
 //public abstract class FullContent implements ISubjectContent, IVerbalContent, IComplementContent {
 public abstract class FullContent implements IVerbalObject {
-	@Expose
 	public INominalObject subject;
-
-	@Expose
 	public ActionObject action;
-
-	@Expose
 	public INominalObject what;
-
-	@Expose
 	public INominalObject target;
-
-	@Expose
 	public IPlaceObject where;
-
-	@Expose
 	public ITimeObject when;
-
-	@Expose
 	public IWayObject how;
-
-	@Expose
 	public IPurposeObject why;
 
 	@Override

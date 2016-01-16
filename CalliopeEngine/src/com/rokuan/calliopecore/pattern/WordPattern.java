@@ -97,37 +97,10 @@ public abstract class WordPattern {
 		}
 	}
 
-	static class WordSimplePattern extends WordPattern {
-		/*private Word.WordType[] types;
-		private String valuePattern = null;
-		private String verbPattern = null;
+	static class WordSimplePattern<T extends IWord> extends WordPattern {
+		private WordMatcher<T> matcher;
 
-		public WordSimplePattern(Word.WordType[] ty){
-			types = ty ;
-		}
-
-		public WordSimplePattern(WordType[] ty, String valPattern) {
-			this(ty);
-			valuePattern = valPattern;
-		}
-
-		public WordSimplePattern(WordType[] ty, String valPattern, String infinitivePattern) {
-			this(ty, valPattern);
-			verbPattern = infinitivePattern;
-		}
-
-		@Override
-		protected int getLength() {
-			return 1;
-		}
-
-		@Override
-		protected boolean mayBeOptional() {
-			return false;
-		}*/
-		private WordMatcher matcher;
-
-		public WordSimplePattern(WordMatcher m){
+		public WordSimplePattern(WordMatcher<T> m){
 			matcher = m;
 		}
 
@@ -190,8 +163,8 @@ public abstract class WordPattern {
 		return new WordOptionalPattern(pattern);
 	}
 	
-	public static WordPattern simple(WordMatcher matcher){
-		return new WordSimplePattern(matcher);
+	public static <T extends IWord> WordPattern simple(WordMatcher<T> matcher){
+		return new WordSimplePattern<T>(matcher);
 	}
 
 	public static WordPattern sequence(WordPattern... patterns){
@@ -206,7 +179,7 @@ public abstract class WordPattern {
 		return new WordSeparatedListPattern(part, separator);
 	}
 
-	public static <T extends IWord> boolean  syntaxStartsWith(WordBuffer<T> words, WordPattern... patterns){
+	public static <T extends IWord> boolean syntaxStartsWith(WordBuffer<T> words, WordPattern... patterns){
 		if(!words.isIntoBounds()){
 			return false;
 		}
@@ -235,7 +208,8 @@ public abstract class WordPattern {
 				return false;
 			}                
 		} else if (pattern instanceof WordSimplePattern){
-			WordSimplePattern simple = (WordSimplePattern)pattern;
+			@SuppressWarnings("unchecked")
+			WordSimplePattern<T> simple = (WordSimplePattern<T>)pattern;
 
 			if(words.getCurrentIndex() >= words.size()){
 				return false;

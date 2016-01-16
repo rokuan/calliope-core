@@ -1,8 +1,6 @@
 package com.rokuan.calliopecore.sentence;
 
 
-public interface ICustomData {
-	String getValue();
-
+public interface ICustomData extends IValue {
 	String getCode();
 }

@@ -1,6 +1,6 @@
 package com.rokuan.calliopecore.sentence;
 
-public interface IAdjectiveInfo {
+public interface IAdjectiveInfo extends IValue {
 	public enum AdjectiveValue {
 		SMALL,
 		MEDIUM,
@@ -9,8 +9,6 @@ public interface IAdjectiveInfo {
 		NEW,
 		UNDEFINED
 	}
-	
-	String getValue();
 	
 	AdjectiveValue getAdjectiveType();
 }

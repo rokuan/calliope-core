@@ -1,7 +1,5 @@
 package com.rokuan.calliopecore.sentence;
 
-public interface ILanguageInfo {
-	String getValue();
-	
+public interface ILanguageInfo extends IValue {
 	String getLanguageCode();
 }

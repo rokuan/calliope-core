@@ -1,7 +1,6 @@
 package com.rokuan.calliopecore.sentence.structure;
 
 import com.google.gson.GsonBuilder;
-import com.google.gson.annotations.Expose;
 import com.rokuan.calliopecore.json.InterpretationObjectSerialization;
 import com.rokuan.calliopecore.sentence.structure.common.FullContent;
 
@@ -15,7 +14,6 @@ public abstract class InterpretationObject extends FullContent {
 		AFFIRMATION
 	}
 
-	@Expose
 	private RequestType requestType;
 
 	protected InterpretationObject(RequestType t){
@@ -23,13 +21,13 @@ public abstract class InterpretationObject extends FullContent {
 	}
 
 	public static String toJSON(InterpretationObject object){		
-		GsonBuilder builder = new GsonBuilder().excludeFieldsWithoutExposeAnnotation()
+		GsonBuilder builder = new GsonBuilder()
 				.registerTypeAdapter(InterpretationObject.class, new InterpretationObjectSerialization.Serializer());
 		return builder.create().toJson(object, InterpretationObject.class);
 	}
 
 	public static InterpretationObject fromJSON(String json){
-		GsonBuilder builder = new GsonBuilder().excludeFieldsWithoutExposeAnnotation()
+		GsonBuilder builder = new GsonBuilder()
 				.registerTypeAdapter(InterpretationObject.class, new InterpretationObjectSerialization.Deserializer());
 		return builder.create().fromJson(json, InterpretationObject.class);
 	}

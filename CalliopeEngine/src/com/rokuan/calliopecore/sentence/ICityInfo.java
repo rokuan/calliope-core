@@ -1,6 +1,6 @@
 package com.rokuan.calliopecore.sentence;
 
-public interface ICityInfo {
+public interface ICityInfo extends IValue {
 	public class Location {
 		private double latitude;
 		private double longitude;
@@ -18,8 +18,6 @@ public interface ICityInfo {
 			return longitude;
 		}
 	}
-	
-	String getValue();
 	
 	Location getLocation();
 }

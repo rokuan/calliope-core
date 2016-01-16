@@ -3,19 +3,13 @@ package com.rokuan.calliopecore.sentence.structure.data.time;
 import java.util.Calendar;
 import java.util.Date;
 
-import com.google.gson.annotations.Expose;
 
 /**
  * Created by LEBEAU Christophe on 20/02/2015.
  */
 public class RelativeTimeObject extends TimeAdverbial {
-	@Expose
     public int[] periods = new int[TimeUnit.values().length];
-
-	@Expose
-    public DateDefinition dateDefinition = DateDefinition.DATE_AND_TIME;
-	
-	@Expose
+    public DateDefinition dateDefinition = DateDefinition.DATE_AND_TIME;	
 	public TimeTense tense = TimeTense.PRESENT;
 
     public RelativeTimeObject(){    	

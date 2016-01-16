@@ -7,7 +7,7 @@ package com.rokuan.calliopecore.sentence;
 public interface IWord {
 	String getValue();
 
-	IVerbConjugation getVerbInfo();
+	IAction getVerbInfo();
 
 	INameInfo getNameInfo();
 	

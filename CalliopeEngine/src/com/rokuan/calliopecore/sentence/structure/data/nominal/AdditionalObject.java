@@ -1,6 +1,5 @@
 package com.rokuan.calliopecore.sentence.structure.data.nominal;
 
-import com.google.gson.annotations.Expose;
 import com.rokuan.calliopecore.sentence.ICustomObject;
 import com.rokuan.calliopecore.sentence.structure.content.INominalObject;
 import com.rokuan.calliopecore.sentence.structure.content.ISecondObject;
@@ -8,16 +7,9 @@ import com.rokuan.calliopecore.sentence.structure.content.IVerbalObject;
 import com.rokuan.calliopecore.sentence.structure.data.count.CountObject;
 
 public class AdditionalObject extends NominalGroup implements ISecondObject {
-	@Expose
 	public CountObject count;
-
-	@Expose
 	public ICustomObject object;
-	
-	@Expose
-	public INominalObject of;
-	
-	@Expose
+	public INominalObject of;	
 	public IVerbalObject which;
 
 	@Override

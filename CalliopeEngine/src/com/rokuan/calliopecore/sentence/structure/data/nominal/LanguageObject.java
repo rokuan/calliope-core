@@ -1,16 +1,12 @@
 package com.rokuan.calliopecore.sentence.structure.data.nominal;
 
-import com.google.gson.annotations.Expose;
 import com.rokuan.calliopecore.sentence.ILanguageInfo;
 import com.rokuan.calliopecore.sentence.IWayPreposition;
 import com.rokuan.calliopecore.sentence.structure.content.IWayObject;
 import com.rokuan.calliopecore.sentence.structure.data.way.WayAdverbial.WayType;
 
 public class LanguageObject extends NominalGroup implements IWayObject {
-	@Expose
-	private IWayPreposition wayPreposition;
-	
-	@Expose
+	private IWayPreposition wayPreposition;	
 	public ILanguageInfo language;
 
 	@Override

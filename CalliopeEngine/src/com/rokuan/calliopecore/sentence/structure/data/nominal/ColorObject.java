@@ -1,16 +1,12 @@
 package com.rokuan.calliopecore.sentence.structure.data.nominal;
 
-import com.google.gson.annotations.Expose;
 import com.rokuan.calliopecore.sentence.IColorInfo;
 import com.rokuan.calliopecore.sentence.IWayPreposition;
 import com.rokuan.calliopecore.sentence.structure.content.IWayObject;
 import com.rokuan.calliopecore.sentence.structure.data.way.WayAdverbial.WayType;
 
 public class ColorObject extends NominalGroup implements IWayObject {
-	@Expose
-	private IWayPreposition wayPreposition;
-	
-	@Expose
+	private IWayPreposition wayPreposition;	
 	public IColorInfo color;
 
 	@Override

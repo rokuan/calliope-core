@@ -1,7 +1,5 @@
 package com.rokuan.calliopecore.sentence;
 
-public interface INameInfo {
-	String getValue();
-	
+public interface INameInfo extends IValue {
 	String getNameTag();
 }

@@ -1,6 +1,7 @@
 package com.rokuan.calliopecore.json;
 
 import com.google.gson.GsonBuilder;
+import com.rokuan.calliopecore.sentence.IAction;
 import com.rokuan.calliopecore.sentence.IAdjectiveInfo;
 import com.rokuan.calliopecore.sentence.ICharacterInfo;
 import com.rokuan.calliopecore.sentence.ICityInfo;
@@ -19,7 +20,6 @@ import com.rokuan.calliopecore.sentence.IPurposePreposition;
 import com.rokuan.calliopecore.sentence.ITimePreposition;
 import com.rokuan.calliopecore.sentence.ITransportInfo;
 import com.rokuan.calliopecore.sentence.IUnitInfo;
-import com.rokuan.calliopecore.sentence.IVerbConjugation;
 import com.rokuan.calliopecore.sentence.IWayPreposition;
 import com.rokuan.calliopecore.sentence.structure.InterpretationObject;
 import com.rokuan.calliopecore.sentence.structure.content.INominalObject;
@@ -36,8 +36,6 @@ public class FullGsonBuilder {
 	public static GsonBuilder getSerializationGsonBuilder(){
 		if(serializationBuilder == null){
 			serializationBuilder = new GsonBuilder();
-
-			serializationBuilder.excludeFieldsWithoutExposeAnnotation();
 			
 			serializationBuilder.registerTypeAdapter(InterpretationObject.class, new InterpretationObjectSerialization.Serializer());
 			
@@ -47,7 +45,7 @@ public class FullGsonBuilder {
 			serializationBuilder.registerTypeAdapter(IWayObject.class, new WayAdverbialSerialization.Serializer());
 			serializationBuilder.registerTypeAdapter(IPurposeObject.class, new PurposeAdverbialSerialization.Serializer());
 			
-			serializationBuilder.registerTypeAdapter(IVerbConjugation.class, new VerbConjugationSerialization.Serializer());
+			serializationBuilder.registerTypeAdapter(IAction.class, new ActionSerialization.Serializer());
 			serializationBuilder.registerTypeAdapter(IPronoun.class, new PronounSerialization.Serializer());
 			
 			serializationBuilder.registerTypeAdapter(IAdjectiveInfo.class, new AdjectiveSerialization.Serializer());
@@ -78,8 +76,6 @@ public class FullGsonBuilder {
 	public static GsonBuilder getDeserializationGsonBuilder(){
 		if(deserializationBuilder == null){
 			deserializationBuilder = new GsonBuilder();
-
-			deserializationBuilder.excludeFieldsWithoutExposeAnnotation();
 			
 			deserializationBuilder.registerTypeAdapter(InterpretationObject.class, new InterpretationObjectSerialization.Deserializer());
 			
@@ -91,7 +87,7 @@ public class FullGsonBuilder {
 			
 			deserializationBuilder.registerTypeAdapter(CountObject.class, new CountObjectSerialization.Deserializer());
 			
-			deserializationBuilder.registerTypeAdapter(IVerbConjugation.class, new VerbConjugationSerialization.Deserializer());
+			deserializationBuilder.registerTypeAdapter(IAction.class, new ActionSerialization.Deserializer());
 			deserializationBuilder.registerTypeAdapter(IPronoun.class, new PronounSerialization.Deserializer());
 			
 			deserializationBuilder.registerTypeAdapter(IAdjectiveInfo.class, new AdjectiveSerialization.Deserializer());

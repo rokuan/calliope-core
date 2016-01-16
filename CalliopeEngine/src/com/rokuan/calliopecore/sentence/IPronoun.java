@@ -1,6 +1,6 @@
 package com.rokuan.calliopecore.sentence;
 
-public interface IPronoun {
+public interface IPronoun extends IValue {
 	public enum PronounSource {
         I,
         YOU,
@@ -15,8 +15,6 @@ public interface IPronoun {
         THEY,
         UNDEFINED
     }
-	
-	String getValue();
 	
 	PronounSource getSource();
 }
