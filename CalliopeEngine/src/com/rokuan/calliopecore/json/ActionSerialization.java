@@ -35,7 +35,11 @@ public class ActionSerialization {
 			obj.add(JSON_FORM_KEY, new JsonPrimitive(arg0.getForm().name()));
 			obj.add(JSON_ACTION_KEY, new JsonPrimitive(arg0.getAction().name()));
 			obj.add(JSON_IS_FIELD_KEY, new JsonPrimitive(arg0.isFieldBound()));
-			obj.add(JSON_FIELD_KEY, new JsonPrimitive(arg0.getBoundField()));
+			//obj.add(JSON_FIELD_KEY, new JsonPrimitive(arg0.getBoundField()));
+			
+			if(arg0.isFieldBound()){
+				obj.add(JSON_FIELD_KEY, new JsonPrimitive(arg0.getBoundField()));
+			}
 			
 			return obj;
 		}
@@ -54,7 +58,7 @@ public class ActionSerialization {
 			final Form form = Form.valueOf(obj.get(JSON_FORM_KEY).getAsString());
 			final ActionType action = ActionType.valueOf(obj.get(JSON_ACTION_KEY).getAsString());
 			final boolean fieldBound = obj.get(JSON_IS_FIELD_KEY).getAsBoolean();
-			final String field = obj.get(JSON_FIELD_KEY).getAsString();
+			final String field = fieldBound ? obj.get(JSON_FIELD_KEY).getAsString() : null;
 			
 			return new IAction() {	
 				@Override
