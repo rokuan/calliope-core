@@ -20,6 +20,7 @@ public abstract class NominalGroup implements INominalObject {
     	LANGUAGE,
     	//PLACE,
     	PERSON,
+    	ADDITIONAL_PERSON,
     	COLOR,
     	NUMBER,
     	PHONE_NUMBER,
@@ -59,6 +60,9 @@ public abstract class NominalGroup implements INominalObject {
 			clazz = AdditionalObject.class;
 			break;
 		case PERSON:
+			clazz = PersonObject.class;
+			break;
+		case ADDITIONAL_PERSON:
 			clazz = AdditionalPerson.class;
 			break;				
 		case PRONOUN:

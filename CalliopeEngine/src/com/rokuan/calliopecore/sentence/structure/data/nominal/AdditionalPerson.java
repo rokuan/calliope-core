@@ -7,6 +7,6 @@ public class AdditionalPerson extends NominalGroup {
 
 	@Override
 	public GroupType getGroupType() {
-		return GroupType.PERSON;
+		return GroupType.ADDITIONAL_PERSON;
 	}
 }
