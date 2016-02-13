@@ -37,6 +37,7 @@ public interface IAction extends IValue {
         ATTACK,
         AVOID,
         BE,
+        BE_NAMED,
         BEAT,
         BECOME,
         BELONG,
