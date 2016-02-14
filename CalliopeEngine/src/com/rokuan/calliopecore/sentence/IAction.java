@@ -3,7 +3,7 @@ package com.rokuan.calliopecore.sentence;
 /**
  * Created by LEBEAU Christophe on 19/02/2015.
  */
-public interface IAction extends IValue {
+public interface IAction extends IValue, IFieldObject, IStateObject {
     public static enum ActionType {
         ABANDON,
         ABSTRACT,
@@ -487,10 +487,6 @@ public interface IAction extends IValue {
     } 
     
     ActionType getAction();
-    
-    boolean isFieldBound();
-    
-    String getBoundField();
     
     Form getForm();
     

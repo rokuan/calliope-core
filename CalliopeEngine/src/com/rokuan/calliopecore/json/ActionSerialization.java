@@ -22,6 +22,9 @@ public class ActionSerialization {
 	private static final String JSON_ACTION_KEY = "action";
 	private static final String JSON_IS_FIELD_KEY = "is_field";
 	private static final String JSON_FIELD_KEY = "field";
+	private static final String JSON_IS_STATE_KEY = "is_state";
+	private static final String JSON_STATE_KEY = "state";
+	private static final String JSON_STATE_VALUE_KEY = "state_value";
 	
 	public static class Serializer implements JsonSerializer<IAction> {
 
@@ -35,10 +38,15 @@ public class ActionSerialization {
 			obj.add(JSON_FORM_KEY, new JsonPrimitive(arg0.getForm().name()));
 			obj.add(JSON_ACTION_KEY, new JsonPrimitive(arg0.getAction().name()));
 			obj.add(JSON_IS_FIELD_KEY, new JsonPrimitive(arg0.isFieldBound()));
-			//obj.add(JSON_FIELD_KEY, new JsonPrimitive(arg0.getBoundField()));
+			obj.add(JSON_IS_STATE_KEY, new JsonPrimitive(arg0.isStateBound()));
 			
 			if(arg0.isFieldBound()){
 				obj.add(JSON_FIELD_KEY, new JsonPrimitive(arg0.getBoundField()));
+			}
+			
+			if(arg0.isStateBound()){
+				obj.add(JSON_STATE_KEY, new JsonPrimitive(arg0.getBoundState()));
+				obj.add(JSON_STATE_VALUE_KEY, new JsonPrimitive(arg0.getState()));
 			}
 			
 			return obj;
@@ -59,6 +67,9 @@ public class ActionSerialization {
 			final ActionType action = ActionType.valueOf(obj.get(JSON_ACTION_KEY).getAsString());
 			final boolean fieldBound = obj.get(JSON_IS_FIELD_KEY).getAsBoolean();
 			final String field = fieldBound ? obj.get(JSON_FIELD_KEY).getAsString() : null;
+			final boolean stateBound = obj.get(JSON_IS_STATE_KEY).getAsBoolean();
+			final String state = stateBound ? obj.get(JSON_STATE_KEY).getAsString() : null;
+			final String stateValue = stateBound ? obj.get(JSON_STATE_VALUE_KEY).getAsString() : null;
 			
 			return new IAction() {	
 				@Override
@@ -90,8 +101,22 @@ public class ActionSerialization {
 				public String getBoundField() {
 					return field;
 				}
+
+				@Override
+				public boolean isStateBound() {
+					return stateBound;
+				}
+
+				@Override
+				public String getBoundState() {
+					return state;
+				}
+
+				@Override
+				public String getState() {
+					return stateValue;
+				}
 			};
 		}
-
 	}
 }
