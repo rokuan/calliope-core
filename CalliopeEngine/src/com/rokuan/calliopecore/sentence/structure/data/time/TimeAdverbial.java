@@ -68,7 +68,7 @@ public abstract class TimeAdverbial implements ITimeObject {
 		}
 		
 		@Override
-		public TimeContext getTimeContext() {
+		public TimeContext getContext() {
 			return TimeContext.WHEN;
 		}
 	};

@@ -31,7 +31,7 @@ public class PrepositionSerialization {
 					JsonSerializationContext arg2) {
 				JsonObject obj = new JsonObject();
 				obj.add(JSON_PREP_VALUE_KEY, new JsonPrimitive(arg0.getValue()));
-				obj.add(JSON_PREP_CONTEXT_KEY, new JsonPrimitive(arg0.getPlaceContext().name()));
+				obj.add(JSON_PREP_CONTEXT_KEY, new JsonPrimitive(arg0.getContext().name()));
 				return obj;
 			}
 			
@@ -54,7 +54,7 @@ public class PrepositionSerialization {
 					}
 					
 					@Override
-					public PlaceContext getPlaceContext() {
+					public PlaceContext getContext() {
 						return context;
 					}
 				};
@@ -71,7 +71,7 @@ public class PrepositionSerialization {
 					JsonSerializationContext arg2) {
 				JsonObject obj = new JsonObject();
 				obj.add(JSON_PREP_VALUE_KEY, new JsonPrimitive(arg0.getValue()));
-				obj.add(JSON_PREP_CONTEXT_KEY, new JsonPrimitive(arg0.getTimeContext().name()));
+				obj.add(JSON_PREP_CONTEXT_KEY, new JsonPrimitive(arg0.getContext().name()));
 				return obj;
 			}
 			
@@ -94,7 +94,7 @@ public class PrepositionSerialization {
 					}
 					
 					@Override
-					public TimeContext getTimeContext() {
+					public TimeContext getContext() {
 						return context;
 					}
 				};
@@ -111,7 +111,7 @@ public class PrepositionSerialization {
 					JsonSerializationContext arg2) {
 				JsonObject obj = new JsonObject();
 				obj.add(JSON_PREP_VALUE_KEY, new JsonPrimitive(arg0.getValue()));
-				obj.add(JSON_PREP_CONTEXT_KEY, new JsonPrimitive(arg0.getWayContext().name()));
+				obj.add(JSON_PREP_CONTEXT_KEY, new JsonPrimitive(arg0.getContext().name()));
 				return obj;
 			}
 			
@@ -134,7 +134,7 @@ public class PrepositionSerialization {
 					}
 					
 					@Override
-					public WayContext getWayContext() {
+					public WayContext getContext() {
 						return context;
 					}
 				};
@@ -151,7 +151,7 @@ public class PrepositionSerialization {
 					JsonSerializationContext arg2) {
 				JsonObject obj = new JsonObject();
 				obj.add(JSON_PREP_VALUE_KEY, new JsonPrimitive(arg0.getValue()));
-				obj.add(JSON_PREP_CONTEXT_KEY, new JsonPrimitive(arg0.getPurposeContext().name()));
+				obj.add(JSON_PREP_CONTEXT_KEY, new JsonPrimitive(arg0.getContext().name()));
 				return obj;
 			}
 			
@@ -174,7 +174,7 @@ public class PrepositionSerialization {
 					}
 					
 					@Override
-					public PurposeContext getPurposeContext() {
+					public PurposeContext getContext() {
 						return context;
 					}
 				};
