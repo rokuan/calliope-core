@@ -13,7 +13,7 @@ import com.rokuan.calliopecore.sentence.structure.data.criteria.CriterionObject;
 
 public class ArrayListDataSource<DataType> extends ArrayList<DataType> implements DataSource<DataType> {
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1908414990889304385L;
 	private int currentIndex = 0;
@@ -53,7 +53,7 @@ public class ArrayListDataSource<DataType> extends ArrayList<DataType> implement
 				switch(limited.range){
 				case FIRST:
 					result.addAll(this.subList(0, (int)Math.min(this.size(), limited.count)));
-					break;				
+					break;
 
 				case LAST:
 					result.addAll(this.subList((int)Math.max(0, this.size() - limited.count), this.size()));
@@ -153,7 +153,7 @@ public class ArrayListDataSource<DataType> extends ArrayList<DataType> implement
 	public DataSource<DataType> removeData(CountObject count,
 			List<CriterionObject> criteria) {
 		ArrayListDataSource<DataType> result = new ArrayListDataSource<DataType>();
-		int fromIndex = 0, toIndex = 0;
+		int fromIndex, toIndex;
 
 		if(count != null){
 			switch(count.getType()){

@@ -25,7 +25,7 @@ public class CharacterObject extends NominalGroup implements ISecondObject {
 		GRAND_SON,
 		GRAND_DAUGHTER,
 		NEIGHBOUR
-	};
+	}
 	
 	public CountObject count;	
 	public CharacterType characterType;	

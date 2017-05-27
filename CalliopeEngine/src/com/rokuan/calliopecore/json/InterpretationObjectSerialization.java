@@ -15,7 +15,7 @@ import com.google.gson.JsonSerializer;
 import com.rokuan.calliopecore.sentence.structure.InterpretationObject;
 
 public class InterpretationObjectSerialization {
-	private static final String JSON_REQUEST_TYPE_KEY = "requestType";
+	private static final String JSON_REQUEST_TYPE_KEY = "request_type";
 	
 	public static class Serializer implements JsonSerializer<InterpretationObject> {
 

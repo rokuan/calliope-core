@@ -8,7 +8,6 @@ import com.rokuan.calliopecore.sentence.structure.content.ITimeObject;
 import com.rokuan.calliopecore.sentence.structure.content.IVerbalObject;
 import com.rokuan.calliopecore.sentence.structure.content.IWayObject;
 
-//public abstract class FullContent implements ISubjectContent, IVerbalContent, IComplementContent {
 public abstract class FullContent implements IVerbalObject {
 	public INominalObject subject;
 	public ActionObject action;
@@ -35,7 +34,6 @@ public abstract class FullContent implements IVerbalObject {
 	}
 
 	@Override
-	//public void setIndirectObject(INominalObject indirect){
 	public void setTarget(INominalObject indirect){
 		target = indirect;
 	}
@@ -76,7 +74,6 @@ public abstract class FullContent implements IVerbalObject {
 	}
 
 	@Override
-	//public INominalObject getIndirectObject(){
 	public INominalObject getTarget(){
 		return target;
 	}

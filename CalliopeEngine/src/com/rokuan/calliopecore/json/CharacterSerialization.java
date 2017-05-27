@@ -15,7 +15,7 @@ import com.rokuan.calliopecore.sentence.structure.data.nominal.CharacterObject.C
 
 public class CharacterSerialization {
 	private static final String JSON_VALUE_KEY = "value";
-	private static final String JSON_CHARACTER_TYPE_KEY = "characterType";
+	private static final String JSON_CHARACTER_TYPE_KEY = "character_type";
 	
 	public static class Serializer implements JsonSerializer<ICharacterInfo> {
 

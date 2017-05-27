@@ -4,7 +4,7 @@ package com.rokuan.calliopecore.sentence;
  * Created by LEBEAU Christophe on 19/02/2015.
  */
 public interface IAction extends IValue, IFieldObject, IStateObject {
-    public static enum ActionType {
+    enum ActionType {
         ABANDON,
         ABSTRACT,
         ACCEPT,
@@ -403,7 +403,7 @@ public interface IAction extends IValue, IFieldObject, IStateObject {
         SUBSCRIBE,
         SUBSCRIBE_AGAIN,
         SUBSTITUTE,
-        SUBSTRACT,
+        SUBTRACT,
         SUCCEED,
         SUCK,
         SUGGEST,
@@ -471,13 +471,13 @@ public interface IAction extends IValue, IFieldObject, IStateObject {
         WRITE_AGAIN
     }
     
-    public enum Tense {
+    enum Tense {
         PAST,
         PRESENT,
         FUTURE
     }
 
-    public enum Form {
+    enum Form {
         INDICATIVE,
         CONDITIONAL,
         SUBJUNCTIVE,
@@ -487,8 +487,7 @@ public interface IAction extends IValue, IFieldObject, IStateObject {
     } 
     
     ActionType getAction();
-    
     Form getForm();
-    
     Tense getTense();
+    boolean isTargetAction();
 }

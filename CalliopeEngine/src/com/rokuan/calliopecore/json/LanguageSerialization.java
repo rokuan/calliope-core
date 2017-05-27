@@ -14,7 +14,7 @@ import com.rokuan.calliopecore.sentence.ILanguageInfo;
 
 public class LanguageSerialization {
 	private static final String JSON_VALUE_KEY = "value";
-	private static final String JSON_LANGUAGE_CODE_KEY = "languageCode";
+	private static final String JSON_LANGUAGE_CODE_KEY = "language_code";
 	
 	public static class Serializer implements JsonSerializer<ILanguageInfo> {
 

@@ -15,14 +15,14 @@ import com.rokuan.calliopecore.sentence.structure.content.IPurposeObject;
 import com.rokuan.calliopecore.sentence.structure.data.purpose.PurposeAdverbial;
 
 public class PurposeAdverbialSerialization {
-	private static final String JSON_PURPOSE_TYPE_KEY = "purposeType";
+	private static final String JSON_PURPOSE_TYPE_KEY = "purpose_type";
 	
 	public static class Serializer implements JsonSerializer<IPurposeObject> {
 
 		@Override
 		public JsonElement serialize(IPurposeObject arg0, Type arg1,
 				JsonSerializationContext arg2) {
-			JsonElement result = null;
+			JsonElement result;
 			Class<? extends IPurposeObject> clazz = PurposeAdverbial.getClassFromPurposeType(arg0.getPurposeType());
 			GsonBuilder builder = FullGsonBuilder.getSerializationGsonBuilder();
 			

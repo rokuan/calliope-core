@@ -15,7 +15,7 @@ import com.rokuan.calliopecore.sentence.structure.data.way.TransportObject.Trans
 
 public class TransportSerialization {
 	private static final String JSON_VALUE_KEY = "value";
-	private static final String JSON_TRANSPORT_TYPE_KEY = "transportType";
+	private static final String JSON_TRANSPORT_TYPE_KEY = "transport_type";
 	
 	public static class Serializer implements JsonSerializer<ITransportInfo> {
 

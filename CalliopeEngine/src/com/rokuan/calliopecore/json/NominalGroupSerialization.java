@@ -15,14 +15,14 @@ import com.rokuan.calliopecore.sentence.structure.content.INominalObject;
 import com.rokuan.calliopecore.sentence.structure.data.nominal.NominalGroup;
 
 public class NominalGroupSerialization {
-	private static final String JSON_GROUP_TYPE_KEY = "groupType";
+	private static final String JSON_GROUP_TYPE_KEY = "group_type";
 	
 	public static class Serializer implements JsonSerializer<INominalObject> {
 
 		@Override
 		public JsonElement serialize(INominalObject arg0, Type arg1,
 				JsonSerializationContext arg2) {
-			JsonElement result = null;
+			JsonElement result;
 			Class<? extends INominalObject> clazz = NominalGroup.getClassFromGroupType(arg0.getGroupType());
 			GsonBuilder builder = FullGsonBuilder.getSerializationGsonBuilder();
 			

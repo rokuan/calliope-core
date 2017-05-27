@@ -1,7 +1,7 @@
 package com.rokuan.calliopecore.sentence;
 
 public interface IAdjectiveInfo extends IValue, IFieldObject, IStateObject {
-	public enum AdjectiveValue {
+	enum AdjectiveValue {
 		SMALL,
 		MEDIUM,
 		BIG,

@@ -19,7 +19,7 @@ import com.rokuan.calliopecore.sentence.ICustomPlace;
 
 public class CustomDataSerialization {
 	private static final String JSON_VALUE_KEY = "value";
-	private static final String JSON_DATA_CODE_KEY = "dataCode";
+	private static final String JSON_DATA_CODE_KEY = "data_code";
 
 	private static class CustomData {
 		private static class Serializer implements JsonSerializer<ICustomData> {

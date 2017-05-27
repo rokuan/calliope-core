@@ -6,17 +6,17 @@ import com.rokuan.calliopecore.sentence.structure.data.count.CountObject;
 import com.rokuan.calliopecore.sentence.structure.data.criteria.CriterionObject;
 
 public interface DataSource<DataType> {	
-	public DataSource<DataType> getData(CountObject count);
-	public DataSource<DataType> getData(CountObject count, List<CriterionObject> criteria);
-	public DataSource<DataType> removeData(CountObject count);
-	public DataSource<DataType> removeData(CountObject count, List<CriterionObject> criteria);
+	DataSource<DataType> getData(CountObject count);
+	DataSource<DataType> getData(CountObject count, List<CriterionObject> criteria);
+	DataSource<DataType> removeData(CountObject count);
+	DataSource<DataType> removeData(CountObject count, List<CriterionObject> criteria);
 		
-	public DataType getData(int index);
-	public DataType removeData(int index);
-	public DataType previousData();
-	public DataType currentData();
-	public DataType nextData();
+	DataType getData(int index);
+	DataType removeData(int index);
+	DataType previousData();
+	DataType currentData();
+	DataType nextData();
 	
-	public boolean hasPreviousData();
-	public boolean hasNextData();
+	boolean hasPreviousData();
+	boolean hasNextData();
 }

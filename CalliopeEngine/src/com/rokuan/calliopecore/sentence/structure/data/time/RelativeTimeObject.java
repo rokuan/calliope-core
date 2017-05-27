@@ -8,7 +8,7 @@ import java.util.Date;
  * Created by LEBEAU Christophe on 20/02/2015.
  */
 public class RelativeTimeObject extends TimeAdverbial {
-    public int[] periods = new int[TimeUnit.values().length];
+    public final int[] periods = new int[TimeUnit.values().length];
     public DateDefinition dateDefinition = DateDefinition.DATE_AND_TIME;	
 	public TimeTense tense = TimeTense.PRESENT;
 

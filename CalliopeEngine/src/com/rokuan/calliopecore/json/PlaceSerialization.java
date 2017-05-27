@@ -15,7 +15,7 @@ import com.rokuan.calliopecore.sentence.structure.data.place.PlaceObject.PlaceCa
 
 public class PlaceSerialization {
 	private static final String JSON_VALUE_KEY = "value";
-	private static final String JSON_PLACE_CATEGORY_KEY = "placeCategory";
+	private static final String JSON_PLACE_CATEGORY_KEY = "place_category";
 	
 	public static class Serializer implements JsonSerializer<IPlaceInfo> {
 

@@ -15,14 +15,14 @@ import com.rokuan.calliopecore.sentence.structure.content.IWayObject;
 import com.rokuan.calliopecore.sentence.structure.data.way.WayAdverbial;
 
 public class WayAdverbialSerialization {
-	private static final String JSON_WAY_TYPE_KEY = "wayType";
+	private static final String JSON_WAY_TYPE_KEY = "way_type";
 	
 	public static class Serializer implements JsonSerializer<IWayObject> {
 
 		@Override
 		public JsonElement serialize(IWayObject arg0, Type arg1,
 				JsonSerializationContext arg2) {
-			JsonElement result = null;
+			JsonElement result;
 			Class<? extends IWayObject> clazz = WayAdverbial.getClassFromWayType(arg0.getWayType());		
 			GsonBuilder builder = FullGsonBuilder.getSerializationGsonBuilder();
 			

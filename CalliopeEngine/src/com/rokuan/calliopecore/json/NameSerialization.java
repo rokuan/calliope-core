@@ -14,7 +14,7 @@ import com.rokuan.calliopecore.sentence.INameInfo;
 
 public class NameSerialization {
 	private static final String JSON_VALUE_KEY = "value";
-	private static final String JSON_TAG_KEY = "nameTag";
+	private static final String JSON_TAG_KEY = "name_tag";
 	
 	public static class Serializer implements JsonSerializer<INameInfo> {
 

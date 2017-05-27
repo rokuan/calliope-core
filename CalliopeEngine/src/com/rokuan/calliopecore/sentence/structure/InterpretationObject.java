@@ -14,7 +14,7 @@ public abstract class InterpretationObject extends FullContent {
 		AFFIRMATION
 	}
 
-	private RequestType requestType;
+	private final RequestType requestType;
 
 	protected InterpretationObject(RequestType t){
 		requestType = t;

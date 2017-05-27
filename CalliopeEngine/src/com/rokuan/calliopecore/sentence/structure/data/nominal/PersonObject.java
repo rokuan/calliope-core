@@ -4,7 +4,7 @@ import com.rokuan.calliopecore.sentence.structure.content.INominalObject;
 import com.rokuan.calliopecore.sentence.structure.data.nominal.NominalGroup.GroupType;
 
 public class PersonObject implements INominalObject {
-	public String name;
+	public final String name;
 	
 	public PersonObject(String n){
 		name = n;

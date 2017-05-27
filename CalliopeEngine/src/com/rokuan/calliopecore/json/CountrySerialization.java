@@ -14,7 +14,7 @@ import com.rokuan.calliopecore.sentence.ICountryInfo;
 
 public class CountrySerialization {
 	private static final String JSON_VALUE_KEY = "value";
-	private static final String JSON_COUNTRY_CODE_KEY = "countryCode"; 
+	private static final String JSON_COUNTRY_CODE_KEY = "country_code";
 	
 	public static class Serializer implements JsonSerializer<ICountryInfo> {
 

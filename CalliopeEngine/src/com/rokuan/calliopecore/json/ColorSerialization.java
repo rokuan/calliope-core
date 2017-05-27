@@ -14,7 +14,7 @@ import com.rokuan.calliopecore.sentence.IColorInfo;
 
 public class ColorSerialization {
 	private static final String JSON_VALUE_KEY = "value";
-	private static final String JSON_HEX_CODE_KEY = "hexCode";
+	private static final String JSON_HEX_CODE_KEY = "hex_code";
 
 	public static class Serializer implements JsonSerializer<IColorInfo> {
 

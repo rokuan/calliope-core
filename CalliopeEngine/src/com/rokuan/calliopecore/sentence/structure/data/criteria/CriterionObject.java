@@ -11,7 +11,7 @@ public abstract class CriterionObject {
 		MORE
 	}
 
-	private CriterionType criterionType;
+	private final CriterionType criterionType;
 	
 	public CriterionObject(CriterionType ty){
 		criterionType = ty;

@@ -15,7 +15,7 @@ import com.rokuan.calliopecore.sentence.IAdjectiveInfo.AdjectiveValue;
 
 public class AdjectiveSerialization {
 	private static final String JSON_VALUE_KEY = "value";
-	private static final String JSON_ADJECTIVE_TYPE_KEY = "adjectiveType";
+	private static final String JSON_ADJECTIVE_TYPE_KEY = "adjective_type";
 	private static final String JSON_IS_FIELD_KEY = "is_field";
 	private static final String JSON_FIELD_KEY = "field";
 	private static final String JSON_IS_STATE_KEY = "is_state";

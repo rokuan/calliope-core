@@ -15,14 +15,14 @@ import com.rokuan.calliopecore.sentence.structure.content.ITimeObject;
 import com.rokuan.calliopecore.sentence.structure.data.time.TimeAdverbial;
 
 public class TimeAdverbialSerialization {
-	private static final String JSON_TIME_TYPE_KEY = "timeType";
+	private static final String JSON_TIME_TYPE_KEY = "time_type";
 	
 	public static class Serializer implements JsonSerializer<ITimeObject> {
 
 		@Override
 		public JsonElement serialize(ITimeObject arg0, Type arg1,
 				JsonSerializationContext arg2) {
-			JsonElement result = null;
+			JsonElement result;
 			Class<? extends ITimeObject> clazz = TimeAdverbial.getClassFromTimeType(arg0.getTimeType());
 			GsonBuilder builder = FullGsonBuilder.getSerializationGsonBuilder();
 			

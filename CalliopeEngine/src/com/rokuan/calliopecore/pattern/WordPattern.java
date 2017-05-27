@@ -1,6 +1,7 @@
 package com.rokuan.calliopecore.pattern;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.rokuan.calliopecore.parser.WordBuffer;
@@ -14,14 +15,10 @@ public abstract class WordPattern {
 	protected abstract boolean mayBeOptional();
 
 	static class WordOrPattern extends WordPattern {
-		private List<WordPattern> choices;
+		private final List<WordPattern> choices;
 
 		public WordOrPattern(WordPattern... ps){
-			choices = new ArrayList<WordPattern>(ps.length);
-
-			for(WordPattern pattern: ps){
-				choices.add(pattern);
-			}
+			choices = Arrays.asList(ps);
 		}
 
 		@Override
@@ -42,14 +39,10 @@ public abstract class WordPattern {
 	}
 
 	static class WordSequencePattern extends WordPattern {
-		private List<WordPattern> parts;
+		private final List<WordPattern> parts;
 
 		public WordSequencePattern(WordPattern... ps){
-			parts = new ArrayList<WordPattern>(ps.length);
-
-			for(WordPattern p: ps){
-				parts.add(p);
-			}
+			parts = Arrays.asList(ps);
 		}
 
 		public WordSequencePattern(List<WordPattern> ps) {
@@ -180,11 +173,7 @@ public abstract class WordPattern {
 	}
 
 	public static <T extends IWord> boolean syntaxStartsWith(WordBuffer<T> words, WordPattern... patterns){
-		if(!words.isIntoBounds()){
-			return false;
-		}
-
-		return realSyntaxStartsWith(new WordBuffer<T>(words), new WordSequencePattern(patterns));
+		return words.isIntoBounds() && realSyntaxStartsWith(new WordBuffer<T>(words), new WordSequencePattern(patterns));
 	}
 
 	private static <T extends IWord> boolean realSyntaxStartsWith(WordBuffer<T> words, WordPattern pattern){		

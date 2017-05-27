@@ -1,9 +1,9 @@
 package com.rokuan.calliopecore.sentence;
 
 public interface ICityInfo extends IValue {
-	public class Location {
-		private double latitude;
-		private double longitude;
+	class Location {
+		private final double latitude;
+		private final double longitude;
 		
 		public Location(double lat, double lng){
 			latitude = lat;

@@ -6,9 +6,9 @@ import java.util.List;
 import com.rokuan.calliopecore.sentence.IAction.Tense;
 
 public class ActionObject {
-	private Tense tense = Tense.PRESENT;
-	private List<IAction> prefixVerbs = new ArrayList<IAction>();
-	private IAction mainVerb;
+	private final Tense tense;
+	private final List<IAction> prefixVerbs = new ArrayList<IAction>();
+	private final IAction mainVerb;
 
 	public ActionObject(Tense groupTense, IAction verb){
 		tense = groupTense;

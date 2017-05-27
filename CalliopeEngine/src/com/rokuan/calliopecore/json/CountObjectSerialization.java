@@ -18,7 +18,7 @@ import com.rokuan.calliopecore.sentence.structure.data.count.QuantityObject;
 import com.rokuan.calliopecore.sentence.structure.data.count.CountObject.CountType;
 
 public class CountObjectSerialization {
-	private static final String JSON_COUNT_TYPE_KEY = "countType"; 
+	private static final String JSON_COUNT_TYPE_KEY = "count_type";
 	
 	public static class Deserializer implements JsonDeserializer<CountObject> {
 		@Override

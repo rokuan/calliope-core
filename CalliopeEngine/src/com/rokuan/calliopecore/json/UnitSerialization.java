@@ -15,7 +15,7 @@ import com.rokuan.calliopecore.sentence.structure.data.nominal.UnitObject.UnitTy
 
 public class UnitSerialization {
 	private static final String JSON_VALUE_KEY = "value";
-	private static final String JSON_UNIT_TYPE_KEY = "unitType";
+	private static final String JSON_UNIT_TYPE_KEY = "unit_type";
 	
 	public static class Serializer implements JsonSerializer<IUnitInfo> {
 

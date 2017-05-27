@@ -15,14 +15,14 @@ import com.rokuan.calliopecore.sentence.structure.content.IPlaceObject;
 import com.rokuan.calliopecore.sentence.structure.data.place.PlaceAdverbial;
 
 public class PlaceAdverbialSerialization {
-	private static final String JSON_PLACE_TYPE_KEY = "placeType"; 
+	private static final String JSON_PLACE_TYPE_KEY = "place_type";
 	
 	public static class Serializer implements JsonSerializer<IPlaceObject> {
 
 		@Override
 		public JsonElement serialize(IPlaceObject arg0, Type arg1,
 				JsonSerializationContext arg2) {
-			JsonElement result = null;
+			JsonElement result;
 			Class<? extends IPlaceObject> clazz = PlaceAdverbial.getClassFromPlaceType(arg0.getPlaceType());
 			GsonBuilder builder = FullGsonBuilder.getSerializationGsonBuilder();
 			
