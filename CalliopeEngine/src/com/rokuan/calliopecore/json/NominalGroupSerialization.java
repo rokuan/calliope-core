@@ -18,10 +18,8 @@ public class NominalGroupSerialization {
 	private static final String JSON_GROUP_TYPE_KEY = "group_type";
 	
 	public static class Serializer implements JsonSerializer<INominalObject> {
-
 		@Override
-		public JsonElement serialize(INominalObject arg0, Type arg1,
-				JsonSerializationContext arg2) {
+		public JsonElement serialize(INominalObject arg0, Type arg1, JsonSerializationContext arg2) {
 			JsonElement result;
 			Class<? extends INominalObject> clazz = NominalGroup.getClassFromGroupType(arg0.getGroupType());
 			GsonBuilder builder = FullGsonBuilder.getSerializationGsonBuilder();
@@ -31,19 +29,15 @@ public class NominalGroupSerialization {
 			
 			return result;
 		}
-
 	}
 	
 	public static class Deserializer implements JsonDeserializer<INominalObject> {
-		
 		@Override
-		public INominalObject deserialize(JsonElement arg0, Type arg1,
-				JsonDeserializationContext arg2) throws JsonParseException {
+		public INominalObject deserialize(JsonElement arg0, Type arg1, JsonDeserializationContext arg2) throws JsonParseException {
 			GsonBuilder builder = FullGsonBuilder.getDeserializationGsonBuilder();		
 			Gson gson = builder.create();
 			Class<? extends INominalObject> clazz = NominalGroup.getClassFromGroupType(NominalGroup.GroupType.valueOf(arg0.getAsJsonObject().get(JSON_GROUP_TYPE_KEY).getAsString()));		
 			return gson.fromJson(arg0, clazz);
 		}
-		
 	}
 }

@@ -37,73 +37,73 @@ public abstract class TimeAdverbial implements ITimeObject {
     }*/
 
     public enum TimeType {
-    	SINGLE,
-    	RELATIVE,
-    	PERIOD,
-    	VERBAL,
-    	DAY_PART
+        SINGLE,
+        RELATIVE,
+        PERIOD,
+        VERBAL,
+        DAY_PART
     }
-    
+
     public enum DateDefinition {
-    	DATE_AND_TIME,
-    	DATE_ONLY,
-    	TIME_ONLY
+        DATE_AND_TIME,
+        DATE_ONLY,
+        TIME_ONLY
     }
-    
+
     public enum TimeContext {
-    	BEFORE,
-    	AFTER,
-    	DURING,
-    	UNTIL,
-    	WHEN,
-    	SINCE,
-    	START,
-    	END
+        BEFORE,
+        AFTER,
+        DURING,
+        UNTIL,
+        WHEN,
+        SINCE,
+        START,
+        END
     }
 
-    private ITimePreposition timePreposition = new ITimePreposition() {		
-		@Override
-		public String getValue() {
-			return "";
-		}
-		
-		@Override
-		public TimeContext getContext() {
-			return TimeContext.WHEN;
-		}
-	};
-	
-	@Override
-	public ITimePreposition getTimePreposition() {
-		return timePreposition;
-	}
+    private ITimePreposition timePreposition = new ITimePreposition() {
+        @Override
+        public String getValue() {
+            return "";
+        }
 
-	@Override
-	public void setTimePreposition(ITimePreposition prep) {
-		timePreposition = prep;
-	}
-	
-	public static Class<? extends ITimeObject> getClassFromTimeType(TimeType ty){
-		Class<? extends ITimeObject> clazz = null;
-		
-		switch(ty){
-		case PERIOD:
-			clazz = TimePeriodObject.class;
-			break;
-		case RELATIVE:
-			clazz = RelativeTimeObject.class;
-			break;
-		case SINGLE:
-			clazz = SingleTimeObject.class;
-			break;
-		case VERBAL:
-			clazz = VerbalGroup.class;
-			break;
-		case DAY_PART:
-			clazz = DayPartObject.class;
-			break;
-		}
-		
-		return clazz;
-	}
+        @Override
+        public TimeContext getContext() {
+            return TimeContext.WHEN;
+        }
+    };
+
+    @Override
+    public ITimePreposition getTimePreposition() {
+        return timePreposition;
+    }
+
+    @Override
+    public void setTimePreposition(ITimePreposition prep) {
+        timePreposition = prep;
+    }
+
+    public static Class<? extends ITimeObject> getClassFromTimeType(TimeType ty) {
+        Class<? extends ITimeObject> clazz = null;
+
+        switch (ty) {
+            case PERIOD:
+                clazz = TimePeriodObject.class;
+                break;
+            case RELATIVE:
+                clazz = RelativeTimeObject.class;
+                break;
+            case SINGLE:
+                clazz = SingleTimeObject.class;
+                break;
+            case VERBAL:
+                clazz = VerbalGroup.class;
+                break;
+            case DAY_PART:
+                clazz = DayPartObject.class;
+                break;
+        }
+
+        return clazz;
+    }
 }

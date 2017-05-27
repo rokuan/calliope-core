@@ -15,35 +15,29 @@ import com.rokuan.calliopecore.sentence.structure.content.IWayObject;
 import com.rokuan.calliopecore.sentence.structure.data.way.WayAdverbial;
 
 public class WayAdverbialSerialization {
-	private static final String JSON_WAY_TYPE_KEY = "way_type";
-	
-	public static class Serializer implements JsonSerializer<IWayObject> {
+    private static final String JSON_WAY_TYPE_KEY = "way_type";
 
-		@Override
-		public JsonElement serialize(IWayObject arg0, Type arg1,
-				JsonSerializationContext arg2) {
-			JsonElement result;
-			Class<? extends IWayObject> clazz = WayAdverbial.getClassFromWayType(arg0.getWayType());		
-			GsonBuilder builder = FullGsonBuilder.getSerializationGsonBuilder();
-			
-			result = builder.create().toJsonTree(arg0, clazz);		
-			result.getAsJsonObject().add(JSON_WAY_TYPE_KEY, new JsonPrimitive(arg0.getWayType().name()));
-			
-			return result;
-		}
+    public static class Serializer implements JsonSerializer<IWayObject> {
+        @Override
+        public JsonElement serialize(IWayObject arg0, Type arg1, JsonSerializationContext arg2) {
+            JsonElement result;
+            Class<? extends IWayObject> clazz = WayAdverbial.getClassFromWayType(arg0.getWayType());
+            GsonBuilder builder = FullGsonBuilder.getSerializationGsonBuilder();
 
-	}
-	
-	public static class Deserializer implements JsonDeserializer<IWayObject> {
-		
-		@Override
-		public IWayObject deserialize(JsonElement arg0, Type arg1,
-				JsonDeserializationContext arg2) throws JsonParseException {
-			GsonBuilder builder = FullGsonBuilder.getDeserializationGsonBuilder();
-			Gson gson = builder.create();
-			Class<? extends IWayObject> clazz = WayAdverbial.getClassFromWayType(WayAdverbial.WayType.valueOf(arg0.getAsJsonObject().get(JSON_WAY_TYPE_KEY).getAsString()));		
-			return gson.fromJson(arg0, clazz);
-		}
-		
-	}
+            result = builder.create().toJsonTree(arg0, clazz);
+            result.getAsJsonObject().add(JSON_WAY_TYPE_KEY, new JsonPrimitive(arg0.getWayType().name()));
+
+            return result;
+        }
+    }
+
+    public static class Deserializer implements JsonDeserializer<IWayObject> {
+        @Override
+        public IWayObject deserialize(JsonElement arg0, Type arg1, JsonDeserializationContext arg2) throws JsonParseException {
+            GsonBuilder builder = FullGsonBuilder.getDeserializationGsonBuilder();
+            Gson gson = builder.create();
+            Class<? extends IWayObject> clazz = WayAdverbial.getClassFromWayType(WayAdverbial.WayType.valueOf(arg0.getAsJsonObject().get(JSON_WAY_TYPE_KEY).getAsString()));
+            return gson.fromJson(arg0, clazz);
+        }
+    }
 }

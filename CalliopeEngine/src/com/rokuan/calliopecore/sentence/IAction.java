@@ -470,7 +470,7 @@ public interface IAction extends IValue, IFieldObject, IStateObject {
         WRITE,
         WRITE_AGAIN
     }
-    
+
     enum Tense {
         PAST,
         PRESENT,
@@ -484,10 +484,13 @@ public interface IAction extends IValue, IFieldObject, IStateObject {
         IMPERATIVE,
         INFINITIVE,
         PARTICIPLE,
-    } 
-    
+    }
+
     ActionType getAction();
+
     Form getForm();
+
     Tense getTense();
+
     boolean isTargetAction();
 }

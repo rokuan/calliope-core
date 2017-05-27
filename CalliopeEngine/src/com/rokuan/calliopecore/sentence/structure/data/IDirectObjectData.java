@@ -5,6 +5,7 @@ import com.rokuan.calliopecore.sentence.IWord;
 import com.rokuan.calliopecore.sentence.structure.content.INominalObject;
 
 public interface IDirectObjectData<T extends IWord> {
-	boolean isADirectObjectData(WordBuffer<T> words);
-	INominalObject parseDirectObject(WordBuffer<T> words);
+    boolean isADirectObjectData(WordBuffer<T> words);
+
+    INominalObject parseDirectObject(WordBuffer<T> words);
 }

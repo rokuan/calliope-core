@@ -9,86 +9,84 @@ import java.util.Stack;
  */
 public class TokenBuffer<T> extends ArrayList<T> {
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -7427977638775743861L;
-	
-	private int currentIndex = 0;
+     *
+     */
+    private static final long serialVersionUID = -7427977638775743861L;
+
+    private int currentIndex = 0;
     private final Stack<Integer> tmpIndexes = new Stack<Integer>();
-    
-    public TokenBuffer(){
-    	super();
-    }
-    
-    public TokenBuffer(TokenBuffer<T> other){
-    	super(other);
-    	this.currentIndex = other.currentIndex;
-    }
-    
-    public TokenBuffer(List<T> buffer){
-    	super(buffer);
-    	this.currentIndex = 0;
-    }
-    
-    public boolean isIntoBounds(){
-    	return (currentIndex >= 0 && currentIndex < this.size());
+
+    public TokenBuffer() {
+        super();
     }
 
-    public boolean hasPrevious(){
-    	return currentIndex > 0;
+    public TokenBuffer(TokenBuffer<T> other) {
+        super(other);
+        this.currentIndex = other.currentIndex;
     }
-    
-    public boolean hasNext(){
-    	return currentIndex < this.size() - 1;
-    }
-    
-    public void previous(){
-    	if(currentIndex <= 0){
-    		throw new IndexOutOfBoundsException();
-    	}
 
+    public TokenBuffer(List<T> buffer) {
+        super(buffer);
+        this.currentIndex = 0;
+    }
+
+    public boolean isIntoBounds() {
+        return (currentIndex >= 0 && currentIndex < this.size());
+    }
+
+    public boolean hasPrevious() {
+        return currentIndex > 0;
+    }
+
+    public boolean hasNext() {
+        return currentIndex < this.size() - 1;
+    }
+
+    public void previous() {
+        if (currentIndex <= 0) {
+            throw new IndexOutOfBoundsException();
+        }
         currentIndex--;
     }
 
-    public void next(){
-    	if(currentIndex >= this.size()){
-    		throw new IndexOutOfBoundsException();
-    	}
-    	
+    public void next() {
+        if (currentIndex >= this.size()) {
+            throw new IndexOutOfBoundsException();
+        }
         currentIndex++;
     }
 
-    public int getCurrentIndex(){
+    public int getCurrentIndex() {
         return currentIndex;
     }
 
-    public void moveTo(int index){
+    public void moveTo(int index) {
         currentIndex = Math.max(0, index);
     }
 
-    public T getCurrentElement(){
+    public T getCurrentElement() {
         return this.get(currentIndex);
     }
-    
-    public void start(){
-    	tmpIndexes.push(currentIndex);
+
+    public void start() {
+        tmpIndexes.push(currentIndex);
     }
-    
-    public void cancel(){
-    	if(!tmpIndexes.empty()){
-    		currentIndex = tmpIndexes.pop();
-    	}
+
+    public void cancel() {
+        if (!tmpIndexes.empty()) {
+            currentIndex = tmpIndexes.pop();
+        }
     }
-    
-    public void end(){
-    	tmpIndexes.pop();
+
+    public void end() {
+        tmpIndexes.pop();
     }
-    
-    public void truncate(){
-    	this.removeRange(0, currentIndex);
+
+    public void truncate() {
+        this.removeRange(0, currentIndex);
     }
-    
-    public void consume(){
-    	this.remove(currentIndex);
+
+    public void consume() {
+        this.remove(currentIndex);
     }
 }

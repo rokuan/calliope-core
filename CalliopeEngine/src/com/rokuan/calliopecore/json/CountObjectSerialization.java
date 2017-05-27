@@ -18,38 +18,37 @@ import com.rokuan.calliopecore.sentence.structure.data.count.QuantityObject;
 import com.rokuan.calliopecore.sentence.structure.data.count.CountObject.CountType;
 
 public class CountObjectSerialization {
-	private static final String JSON_COUNT_TYPE_KEY = "count_type";
-	
-	public static class Deserializer implements JsonDeserializer<CountObject> {
-		@Override
-		public CountObject deserialize(JsonElement arg0, Type arg1,
-				JsonDeserializationContext arg2) throws JsonParseException {
-			Gson gson = new GsonBuilder().create();
-			CountType countType = CountType.valueOf(arg0.getAsJsonObject().get(JSON_COUNT_TYPE_KEY).getAsString());
-			Class<? extends CountObject> clazz = null;
+    private static final String JSON_COUNT_TYPE_KEY = "count_type";
 
-			switch(countType){
-			case ALL:
-				clazz = AllItemsObject.class;
-				break;
-			case FIXED:
-				clazz = FixedItemObject.class;
-				break;
-			case MULTIPLE:
-				clazz = MultipleItemsObject.class;
-				break;
-			case LIMIT:
-				clazz = LimitedItemsObject.class;
-				break;
-			case QUANTITY:
-				clazz = QuantityObject.class;
-				break;
-			case INTERVAL:
-				clazz = IntervalObject.class;
-				break;
-			}
+    public static class Deserializer implements JsonDeserializer<CountObject> {
+        @Override
+        public CountObject deserialize(JsonElement arg0, Type arg1, JsonDeserializationContext arg2) throws JsonParseException {
+            Gson gson = new GsonBuilder().create();
+            CountType countType = CountType.valueOf(arg0.getAsJsonObject().get(JSON_COUNT_TYPE_KEY).getAsString());
+            Class<? extends CountObject> clazz = null;
 
-			return gson.fromJson(arg0, clazz);
-		}
-	}
+            switch (countType) {
+                case ALL:
+                    clazz = AllItemsObject.class;
+                    break;
+                case FIXED:
+                    clazz = FixedItemObject.class;
+                    break;
+                case MULTIPLE:
+                    clazz = MultipleItemsObject.class;
+                    break;
+                case LIMIT:
+                    clazz = LimitedItemsObject.class;
+                    break;
+                case QUANTITY:
+                    clazz = QuantityObject.class;
+                    break;
+                case INTERVAL:
+                    clazz = IntervalObject.class;
+                    break;
+            }
+
+            return gson.fromJson(arg0, clazz);
+        }
+    }
 }

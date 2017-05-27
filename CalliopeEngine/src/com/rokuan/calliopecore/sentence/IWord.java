@@ -5,43 +5,43 @@ package com.rokuan.calliopecore.sentence;
  * Created by LEBEAU Christophe on 22/02/2015.
  */
 public interface IWord {
-	String getValue();
+    String getValue();
 
-	IAction getVerbInfo();
+    IAction getVerbInfo();
 
-	INameInfo getNameInfo();
-	
-	IAdjectiveInfo getAdjectiveInfo();
-	
-	ILanguageInfo getLanguageInfo();
+    INameInfo getNameInfo();
 
-	IColorInfo getColorInfo();
+    IAdjectiveInfo getAdjectiveInfo();
 
-	ICountryInfo getCountryInfo();
+    ILanguageInfo getLanguageInfo();
 
-	ICityInfo getCityInfo();
+    IColorInfo getColorInfo();
 
-	ITransportInfo getTransportInfo();
+    ICountryInfo getCountryInfo();
 
-	IUnitInfo getUnitInfo();
+    ICityInfo getCityInfo();
 
-	ICharacterInfo getCharacterInfo();
+    ITransportInfo getTransportInfo();
 
-	IPlaceInfo getPlaceInfo();
+    IUnitInfo getUnitInfo();
 
-	ITimePreposition getTimePreposition();
+    ICharacterInfo getCharacterInfo();
 
-	IPlacePreposition getPlacePreposition();
+    IPlaceInfo getPlaceInfo();
 
-	IWayPreposition getWayPreposition();
+    ITimePreposition getTimePreposition();
 
-	IPurposePreposition getPurposePreposition();
+    IPlacePreposition getPlacePreposition();
 
-	ICustomObject getCustomObject();
+    IWayPreposition getWayPreposition();
 
-	ICustomPlace getCustomPlace();
-	
-	ICustomPerson getCustomPerson();
+    IPurposePreposition getPurposePreposition();
 
-	ICustomMode getCustomMode();
+    ICustomObject getCustomObject();
+
+    ICustomPlace getCustomPlace();
+
+    ICustomPerson getCustomPerson();
+
+    ICustomMode getCustomMode();
 }

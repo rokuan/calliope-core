@@ -4,5 +4,5 @@ import com.rokuan.calliopecore.sentence.structure.data.place.PlaceAdverbial.Plac
 
 
 public interface IPlacePreposition extends IPreposition<PlaceContext> {
-	
+
 }

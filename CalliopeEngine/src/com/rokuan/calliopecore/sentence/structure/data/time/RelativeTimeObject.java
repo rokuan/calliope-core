@@ -9,25 +9,25 @@ import java.util.Date;
  */
 public class RelativeTimeObject extends TimeAdverbial {
     public final int[] periods = new int[TimeUnit.values().length];
-    public DateDefinition dateDefinition = DateDefinition.DATE_AND_TIME;	
-	public TimeTense tense = TimeTense.PRESENT;
+    public DateDefinition dateDefinition = DateDefinition.DATE_AND_TIME;
+    public TimeTense tense = TimeTense.PRESENT;
 
-    public RelativeTimeObject(){    	
-        for(int i=0; i<periods.length; i++){
+    public RelativeTimeObject() {
+        for (int i = 0; i < periods.length; i++) {
             periods[i] = 0;
         }
     }
 
-    public Date getDate(){
+    public Date getDate() {
         Calendar calendar = Calendar.getInstance();
 
-        if(this.tense == TimeTense.PRESENT){
+        if (this.tense == TimeTense.PRESENT) {
             return calendar.getTime();
         }
 
         int factor = 1;
 
-        if(this.tense == TimeTense.PAST) {
+        if (this.tense == TimeTense.PAST) {
             factor = -1;
         }
 
@@ -42,8 +42,8 @@ public class RelativeTimeObject extends TimeAdverbial {
         return calendar.getTime();
     }
 
-	@Override
-	public TimeType getTimeType() {
-		return TimeType.RELATIVE;
-	}
+    @Override
+    public TimeType getTimeType() {
+        return TimeType.RELATIVE;
+    }
 }

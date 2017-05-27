@@ -9,54 +9,28 @@ import com.rokuan.calliopecore.sentence.IWord;
  * Created by LEBEAU Christophe on 01/03/2015.
  */
 public class WordBuffer<T extends IWord> extends TokenBuffer<T> {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -403337949871603827L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = -403337949871603827L;
 
-	public WordBuffer(){
-		super();
-	}
-	
-	public WordBuffer(List<T> ws){
-		super(ws);
-	}
-	
-	public WordBuffer(WordBuffer<T> wb){
-		super(wb);
-	}
-	
-	public WordBuffer<T> cut(){
-		return new WordBuffer<T>(this.subList(getCurrentIndex(), this.size()));
-	}
-	
-    /*public boolean matchesSyntax(IWord.WordType... types){
-        if(types.length + this.getCurrentIndex() != this.size()){
-            return false;
-        }
-        
-        return matchesSyntax(types.length, types);
+    public WordBuffer() {
+        super();
     }
 
-    private boolean matchesSyntax(int length, IWord.WordType... types){
-        for(int i=0; i<length; i++){
-            if(!this.get(i + this.getCurrentIndex()).isOfType(types[i])){
-                return false;
-            }
-        }
-
-        return true;
+    public WordBuffer(List<T> ws) {
+        super(ws);
     }
 
-    public boolean syntaxStartsWith(IWord.WordType... types){
-        if(types.length + this.getCurrentIndex() > this.size()){
-            return false;
-        }
+    public WordBuffer(WordBuffer<T> wb) {
+        super(wb);
+    }
 
-        return matchesSyntax(types.length, types);
-    }*/
-    
-    public boolean syntaxStartsWith(WordPattern... patterns){
-    	return WordPattern.syntaxStartsWith(this, patterns);
+    public WordBuffer<T> cut() {
+        return new WordBuffer<T>(this.subList(getCurrentIndex(), this.size()));
+    }
+
+    public boolean syntaxStartsWith(WordPattern... patterns) {
+        return WordPattern.syntaxStartsWith(this, patterns);
     }
 }

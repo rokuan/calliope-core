@@ -4,10 +4,10 @@ import com.rokuan.calliopecore.sentence.ICustomMode;
 
 
 public class AdditionalMode extends WayAdverbial {
-	public ICustomMode mode;
+    public ICustomMode mode;
 
-	@Override
-	public WayType getWayType() {
-		return WayType.CUSTOM;
-	}
+    @Override
+    public WayType getWayType() {
+        return WayType.CUSTOM;
+    }
 }

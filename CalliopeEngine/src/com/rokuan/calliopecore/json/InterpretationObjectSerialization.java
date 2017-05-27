@@ -15,32 +15,26 @@ import com.google.gson.JsonSerializer;
 import com.rokuan.calliopecore.sentence.structure.InterpretationObject;
 
 public class InterpretationObjectSerialization {
-	private static final String JSON_REQUEST_TYPE_KEY = "request_type";
-	
-	public static class Serializer implements JsonSerializer<InterpretationObject> {
+    private static final String JSON_REQUEST_TYPE_KEY = "request_type";
 
-		@Override
-		public JsonElement serialize(InterpretationObject arg0, Type arg1,
-				JsonSerializationContext arg2) {
-			Class<? extends InterpretationObject> clazz = InterpretationObject.getClassFromRequestType(arg0.getRequestType());
-			GsonBuilder builder = FullGsonBuilder.getSerializationGsonBuilder();	
-			JsonObject obj = builder.create().toJsonTree(arg0, clazz).getAsJsonObject();			
-			obj.add(JSON_REQUEST_TYPE_KEY, new JsonPrimitive(arg0.getRequestType().name()));
-			return obj;
-		}
-		
-	}
-	
-	public static class Deserializer implements JsonDeserializer<InterpretationObject> {
-		
-		@Override
-		public InterpretationObject deserialize(JsonElement arg0, Type arg1,
-				JsonDeserializationContext arg2) throws JsonParseException {
-			GsonBuilder builder = FullGsonBuilder.getDeserializationGsonBuilder();		
-			Gson gson = builder.create();
-			Class<? extends InterpretationObject> clazz = InterpretationObject.getClassFromRequestType(InterpretationObject.RequestType.valueOf(arg0.getAsJsonObject().get(JSON_REQUEST_TYPE_KEY).getAsString()));
-			return gson.fromJson(arg0, clazz);
-		}
-		
-	}
+    public static class Serializer implements JsonSerializer<InterpretationObject> {
+        @Override
+        public JsonElement serialize(InterpretationObject arg0, Type arg1, JsonSerializationContext arg2) {
+            Class<? extends InterpretationObject> clazz = InterpretationObject.getClassFromRequestType(arg0.getRequestType());
+            GsonBuilder builder = FullGsonBuilder.getSerializationGsonBuilder();
+            JsonObject obj = builder.create().toJsonTree(arg0, clazz).getAsJsonObject();
+            obj.add(JSON_REQUEST_TYPE_KEY, new JsonPrimitive(arg0.getRequestType().name()));
+            return obj;
+        }
+    }
+
+    public static class Deserializer implements JsonDeserializer<InterpretationObject> {
+        @Override
+        public InterpretationObject deserialize(JsonElement arg0, Type arg1, JsonDeserializationContext arg2) throws JsonParseException {
+            GsonBuilder builder = FullGsonBuilder.getDeserializationGsonBuilder();
+            Gson gson = builder.create();
+            Class<? extends InterpretationObject> clazz = InterpretationObject.getClassFromRequestType(InterpretationObject.RequestType.valueOf(arg0.getAsJsonObject().get(JSON_REQUEST_TYPE_KEY).getAsString()));
+            return gson.fromJson(arg0, clazz);
+        }
+    }
 }

@@ -10,16 +10,16 @@ import com.rokuan.calliopecore.sentence.structure.data.nominal.NominalGroup.Grou
  * Created by LEBEAU Christophe on 20/02/2015.
  */
 public class SingleTimeObject extends TimeAdverbial implements INominalObject {
-	public DateDefinition dateDefinition = DateDefinition.DATE_AND_TIME;
-	public Date date;
+    public DateDefinition dateDefinition = DateDefinition.DATE_AND_TIME;
+    public Date date;
 
-	@Override
-	public TimeType getTimeType() {
-		return TimeType.SINGLE;
-	}
+    @Override
+    public TimeType getTimeType() {
+        return TimeType.SINGLE;
+    }
 
-	@Override
-	public GroupType getGroupType() {
-		return GroupType.DATE;
-	}
+    @Override
+    public GroupType getGroupType() {
+        return GroupType.DATE;
+    }
 }

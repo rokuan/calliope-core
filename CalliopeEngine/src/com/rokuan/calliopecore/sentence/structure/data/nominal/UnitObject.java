@@ -5,60 +5,60 @@ import com.rokuan.calliopecore.sentence.structure.content.IWayObject;
 import com.rokuan.calliopecore.sentence.structure.data.way.WayAdverbial.WayType;
 
 public class UnitObject extends NominalGroup implements IWayObject {
-	public enum UnitType {
-		NONE,
-		
-		MILLIMETER,
-		CENTIMETER,
-		DECIMETER,
-		METER,
-		DECAMETER,
-		HECTOMETER,
-		KILOMETER,
-		// TODO: ajouter les autres
-		BYTE,
-		KILOBYTE,
-		MEGABYTE,
-		GIGABYTE,
-		TERABYTE,
-		
-		MILLISECOND,
-		SECOND,
-		MINUTE,
-		HOUR,
-		DAY,
-		YEAR,
-		// TODO: ajouter les autres
-		
-		WATT,
-		
-		AMPERE,
-		
-		JOULE,
-		
-		BAR
-	}
-	
-	private IWayPreposition wayPreposition;	
-	public UnitType unitType = UnitType.NONE;
-		
-	@Override
-	public GroupType getGroupType() {
-		return GroupType.UNIT;
-	}
+    public enum UnitType {
+        NONE,
 
-	@Override
-	public WayType getWayType() {
-		return WayType.UNIT;
-	}
+        MILLIMETER,
+        CENTIMETER,
+        DECIMETER,
+        METER,
+        DECAMETER,
+        HECTOMETER,
+        KILOMETER,
+        // TODO: ajouter les autres
+        BYTE,
+        KILOBYTE,
+        MEGABYTE,
+        GIGABYTE,
+        TERABYTE,
 
-	@Override
-	public IWayPreposition getWayPreposition() {
-		return wayPreposition;
-	}
+        MILLISECOND,
+        SECOND,
+        MINUTE,
+        HOUR,
+        DAY,
+        YEAR,
+        // TODO: ajouter les autres
 
-	@Override
-	public void setWayPreposition(IWayPreposition prep) {
-		wayPreposition = prep;
-	}
+        WATT,
+
+        AMPERE,
+
+        JOULE,
+
+        BAR
+    }
+
+    private IWayPreposition wayPreposition;
+    public UnitType unitType = UnitType.NONE;
+
+    @Override
+    public GroupType getGroupType() {
+        return GroupType.UNIT;
+    }
+
+    @Override
+    public WayType getWayType() {
+        return WayType.UNIT;
+    }
+
+    @Override
+    public IWayPreposition getWayPreposition() {
+        return wayPreposition;
+    }
+
+    @Override
+    public void setWayPreposition(IWayPreposition prep) {
+        wayPreposition = prep;
+    }
 }

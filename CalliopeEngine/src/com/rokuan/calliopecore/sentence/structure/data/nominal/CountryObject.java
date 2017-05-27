@@ -6,26 +6,26 @@ import com.rokuan.calliopecore.sentence.structure.content.IPlaceObject;
 import com.rokuan.calliopecore.sentence.structure.data.place.PlaceAdverbial.PlaceType;
 
 public class CountryObject extends NominalGroup implements IPlaceObject {
-	private IPlacePreposition placePreposition;	
-	public ICountryInfo country;
-	
-	@Override
-	public GroupType getGroupType() {
-		return GroupType.COUNTRY;
-	}
+    private IPlacePreposition placePreposition;
+    public ICountryInfo country;
 
-	@Override
-	public PlaceType getPlaceType() {
-		return PlaceType.COUNTRY;
-	}
+    @Override
+    public GroupType getGroupType() {
+        return GroupType.COUNTRY;
+    }
 
-	@Override
-	public IPlacePreposition getPlacePreposition() {
-		return placePreposition;
-	}
+    @Override
+    public PlaceType getPlaceType() {
+        return PlaceType.COUNTRY;
+    }
 
-	@Override
-	public void setPlacePreposition(IPlacePreposition prep) {
-		placePreposition = prep;
-	}
+    @Override
+    public IPlacePreposition getPlacePreposition() {
+        return placePreposition;
+    }
+
+    @Override
+    public void setPlacePreposition(IPlacePreposition prep) {
+        placePreposition = prep;
+    }
 }
