@@ -20,7 +20,7 @@ public class VerbalGroup extends NominalGroup implements IWayObject, ITimeObject
     private ITimePreposition timePreposition;
     private IPurposePreposition purposePreposition;
     private INominalObject subject;
-    private ActionObject action = null;
+    private ActionObject action;
     private INominalObject what;
     private INominalObject target;
     private IPlaceObject where;

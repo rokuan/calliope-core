@@ -2,7 +2,11 @@ package com.rokuan.calliopecore.sentence.structure.data.nominal;
 
 
 public class PhoneNumberObject extends NominalGroup {
-    public String number;
+    public final String number;
+
+    public PhoneNumberObject(String n) {
+        number = n;
+    }
 
     @Override
     public GroupType getGroupType() {

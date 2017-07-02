@@ -7,6 +7,7 @@ import com.rokuan.calliopecore.sentence.structure.content.IPurposeObject;
 import com.rokuan.calliopecore.sentence.structure.content.ITimeObject;
 import com.rokuan.calliopecore.sentence.structure.content.IVerbalObject;
 import com.rokuan.calliopecore.sentence.structure.content.IWayObject;
+import com.rokuan.calliopecore.sentence.structure.data.condition.ConditionObject;
 
 public abstract class FullContent implements IVerbalObject {
     public INominalObject subject;
@@ -17,6 +18,7 @@ public abstract class FullContent implements IVerbalObject {
     public ITimeObject when;
     public IWayObject how;
     public IPurposeObject why;
+    public ConditionObject condition;
 
     @Override
     public void setSubject(INominalObject source) {
@@ -58,6 +60,10 @@ public abstract class FullContent implements IVerbalObject {
         why = purpose;
     }
 
+    public void setCondition(ConditionObject test) {
+        condition = test;
+    }
+
     @Override
     public INominalObject getSubject() {
         return subject;
@@ -96,5 +102,9 @@ public abstract class FullContent implements IVerbalObject {
     @Override
     public IPurposeObject getPurposeAdverbial() {
         return why;
+    }
+
+    public ConditionObject getCondition() {
+        return condition;
     }
 }

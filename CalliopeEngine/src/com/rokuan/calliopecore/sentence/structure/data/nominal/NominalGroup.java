@@ -34,7 +34,9 @@ public abstract class NominalGroup implements INominalObject {
         LOCATION,
         UNIT,
         CHARACTER,
-        QUANTITY
+        QUANTITY,
+        TEXT,
+        ADJECTIVE
     }
 
     public static Class<? extends INominalObject> getClassFromGroupType(GroupType ty) {
@@ -103,6 +105,9 @@ public abstract class NominalGroup implements INominalObject {
                 break;
             case QUANTITY:
                 clazz = QuantityObject.class;
+                break;
+            case TEXT:
+                clazz = TextObject.class;
                 break;
         }
 

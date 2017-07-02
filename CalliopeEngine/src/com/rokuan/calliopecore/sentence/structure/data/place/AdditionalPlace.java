@@ -5,7 +5,11 @@ import com.rokuan.calliopecore.sentence.structure.content.INominalObject;
 import com.rokuan.calliopecore.sentence.structure.data.nominal.NominalGroup.GroupType;
 
 public class AdditionalPlace extends PlaceAdverbial implements INominalObject {
-    public ICustomPlace place;
+    public final ICustomPlace place;
+
+    public AdditionalPlace(ICustomPlace p) {
+        place = p;
+    }
 
     @Override
     public PlaceType getPlaceType() {

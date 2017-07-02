@@ -14,10 +14,6 @@ public class TransportObject extends WayAdverbial {
 
     public TransportType transportType = TransportType.WALK;
 
-    public TransportObject() {
-
-    }
-
     @Override
     public WayType getWayType() {
         return WayType.TRANSPORT;
